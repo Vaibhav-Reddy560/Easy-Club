@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MapPin, Globe, Instagram, Linkedin, Twitter, Facebook, ExternalLink, Loader2, Sparkles, Globe2, Youtube, Bookmark, BookmarkCheck } from "lucide-react";
+import { Search, MapPin, Instagram, Linkedin, Twitter, Facebook, ExternalLink, Loader2, Sparkles, Globe2, Youtube, Bookmark, BookmarkCheck } from "lucide-react";
 
 const CLUB_TYPES = [
     "Bio", "Math", "Physics", "Chemistry", "Racing", "Dance", "Singing",
@@ -132,6 +132,11 @@ export default function ExploreClubs() {
 
 
 
+    interface DiscoveryError {
+        name?: string;
+        message?: string;
+    }
+
     const handleSearch = async () => {
         setLoading(true);
         setError(null);
@@ -161,12 +166,13 @@ export default function ExploreClubs() {
             } else {
                 throw new Error("No organizations found. Try adjusting your search criteria.");
             }
-        } catch (err: any) {
+        } catch (err: unknown) {
+            const discoveryErr = err as DiscoveryError;
             clearTimeout(timeoutId);
-            console.error("Discovery Engine Error:", err);
+            console.error("Discovery Engine Error:", discoveryErr);
             
-            const isTimeout = err.name === 'AbortError';
-            const displayError = isTimeout ? "Search timed out" : (err.message || "Network Fault");
+            const isTimeout = discoveryErr.name === 'AbortError';
+            const displayError = isTimeout ? "Search timed out" : (discoveryErr.message || "Network Fault");
             setError(displayError);
 
             setClubs(MOCK_CLUBS);

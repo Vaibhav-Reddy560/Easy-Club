@@ -188,9 +188,6 @@ export default function App() {
     setIsDeleteModalOpen(false);
   };
 
-  // Cache for Explore sections to prevent loss on tab switch
-  const [exploreClubsState, setExploreClubsState] = useState<any>(null);
-  const [exploreEventsState, setExploreEventsState] = useState<any>(null);
 
   const updateEventConfig = (newData: Partial<EventConfig>) => {
     if (!activeClubId || !activeEventId) return;
@@ -372,9 +369,9 @@ export default function App() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                     >
-                      {activeDomain === 'Design' && <DesignWorkspace activeEvent={activeEvent} updateConfig={updateEventConfig} />}
+                      {activeDomain === 'Design' && <DesignWorkspace activeEvent={activeEvent} />}
                       {activeDomain === 'Content' && <ContentWorkspace activeEvent={activeEvent} activeClub={activeClub} updateConfig={updateEventConfig} />}
-                      {activeDomain === 'Social' && <SocialWorkspace activeEvent={activeEvent} updateConfig={updateEventConfig} />}
+                      {activeDomain === 'Social' && <SocialWorkspace activeEvent={activeEvent} />}
                     </motion.div>
                   </AnimatePresence>
                 </motion.div>

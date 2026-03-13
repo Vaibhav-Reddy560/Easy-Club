@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { Settings, User, Info, X, Zap, CheckCircle2, AlertCircle } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Settings, User, Info } from "lucide-react";
 
 interface UserMetadata {
   avatar_url?: string;

@@ -15,7 +15,7 @@ export interface AyrshareAnalytics {
     isMock?: boolean;
 }
 
-export async function getAyrshareAnalytics(profileKey?: string): Promise<AyrshareAnalytics> {
+export async function getAyrshareAnalytics(_profileKey?: string): Promise<AyrshareAnalytics> {
     // Return mock data if API key is missing
     if (!API_KEY) {
         console.warn("[Ayrshare] API Key missing. Returning mock data.");

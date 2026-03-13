@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MapPin, Calendar, Trophy, ExternalLink, Loader2, Sparkles, Filter } from "lucide-react";
+import { Search, MapPin, Calendar, Trophy, ExternalLink, Loader2, Sparkles } from "lucide-react";
 
 const EVENT_CATEGORIES = ["Hackathon", "Workshop", "Summit", "Competition", "Cultural", "Webinar"];
 const EVENT_TYPES = ["Technical", "Non-Technical", "Mixed"];
@@ -53,6 +53,11 @@ export default function ExploreEvents() {
         }
     ];
 
+    interface DiscoveryError {
+        name?: string;
+        message?: string;
+    }
+
     const handleSearch = async () => {
         setLoading(true);
         setError(null);
@@ -81,12 +86,13 @@ export default function ExploreEvents() {
             } else {
                 throw new Error("No live events found matching these filters.");
             }
-        } catch (err: any) {
+        } catch (err: unknown) {
+            const discoveryErr = err as DiscoveryError;
             clearTimeout(timeoutId);
-            console.error("Critical Sync Error:", err);
+            console.error("Critical Sync Error:", discoveryErr);
 
-            const isTimeout = err.name === 'AbortError';
-            const displayError = isTimeout ? "Sync timed out" : (err.message || "Feed Fault");
+            const isTimeout = discoveryErr.name === 'AbortError';
+            const displayError = isTimeout ? "Sync timed out" : (discoveryErr.message || "Feed Fault");
             setError(displayError);
 
             setEvents(MOCK_EVENTS);

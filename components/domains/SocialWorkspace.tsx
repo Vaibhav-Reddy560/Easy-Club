@@ -2,13 +2,13 @@
 
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Linkedin, ExternalLink, Users, Sparkles, MapPin, Mail, Radar, Briefcase } from "lucide-react";
+import { Linkedin, ExternalLink, Sparkles, MapPin, Mail, Radar, Briefcase } from "lucide-react";
 import { ClubEvent, EventConfig } from "@/lib/types";
 import ResourceRadar from "../ResourceRadar";
 
 interface SocialWorkspaceProps {
   activeEvent: ClubEvent | undefined;
-  updateConfig: (newData: Partial<EventConfig>) => void;
+  updateConfig?: (newData: Partial<EventConfig>) => void;
 }
 
 interface Expert {
@@ -18,7 +18,7 @@ interface Expert {
   location: string;
 }
 
-export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWorkspaceProps) {
+export default function SocialWorkspace({ activeEvent }: SocialWorkspaceProps) {
   const [activeTab, setActiveTab] = React.useState<'radar' | 'proposals'>('radar');
   const config = activeEvent?.config || {};
   const city = config.city || "Bengaluru";

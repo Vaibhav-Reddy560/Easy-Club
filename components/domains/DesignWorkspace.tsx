@@ -6,10 +6,10 @@ import { ClubEvent, EventConfig } from "@/lib/types";
 
 interface DesignWorkspaceProps {
   activeEvent: ClubEvent | undefined;
-  updateConfig: (newData: Partial<EventConfig>) => void;
+  updateConfig?: (newData: Partial<EventConfig>) => void;
 }
 
-export default function DesignWorkspace({ activeEvent, updateConfig }: DesignWorkspaceProps) {
+export default function DesignWorkspace({ activeEvent }: DesignWorkspaceProps) {
   const config = activeEvent?.config || {};
 
   const posters = [

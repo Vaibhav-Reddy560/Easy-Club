@@ -14,7 +14,13 @@ const COLLEGES = [
     { name: "Christ University", acronyms: ["CU", "Christ"] }
 ];
 
-export async function searchSerper(query: string, serperKey: string, num = 25): Promise<any[]> {
+interface SerperResult {
+    title: string;
+    link: string;
+    snippet: string;
+}
+
+export async function searchSerper(query: string, serperKey: string, num = 25): Promise<SerperResult[]> {
     try {
         const response = await fetch("https://google.serper.dev/search", {
             method: "POST",
@@ -49,7 +55,7 @@ function extractCollege(text: string): string {
     return genericMatch ? genericMatch[0] : "";
 }
 
-export function parseSerperResultsToClubs(results: any[], location: string): any[] {
+export function parseSerperResultsToClubs(results: SerperResult[], location: string): any[] {
     return results.map(r => {
         const college = extractCollege(r.title + " " + r.snippet);
         const name = cleanName(r.title, college);
@@ -64,10 +70,10 @@ export function parseSerperResultsToClubs(results: any[], location: string): any
             social: url.includes("instagram") ? { instagram: url } : url.includes("linkedin") ? { linkedin: url } : {},
             imageUrl: ""
         };
-    }).filter(Boolean);
+    }).filter((item): item is NonNullable<typeof item> => item !== null);
 }
 
-export function parseSerperResultsToEvents(results: any[], location: string): any[] {
+export function parseSerperResultsToEvents(results: SerperResult[], location: string): any[] {
     return results.map(r => {
         const fullText = (r.title + " " + r.snippet).toLowerCase();
         let imageUrl = "https://images.unsplash.com/photo-1540575467063-178a50c2df87";
@@ -88,7 +94,7 @@ export function parseSerperResultsToEvents(results: any[], location: string): an
     });
 }
 
-export function parseSerperResultsToResources(results: any[], location: string): any[] {
+export function parseSerperResultsToResources(results: SerperResult[], location: string): any[] {
     return results.map(r => {
         const url = r.link || "";
         const title = r.title || "";
@@ -114,6 +120,14 @@ export function parseSerperResultsToResources(results: any[], location: string):
         const isSearchPage = p.website.includes("/search") || p.website.includes("/explore");
         return !isSearchPage && p.name.length > 2;
     });
+}
+
+interface VerifiedResource {
+    name: string;
+    role: string;
+    college_affiliation: string;
+    reason: string;
+    website: string;
 }
 
 export async function verifyResourcesWithAI(rawResources: any[], domain: string, location: string): Promise<any[]> {
@@ -148,7 +162,7 @@ export async function verifyResourcesWithAI(rawResources: any[], domain: string,
         if (start === -1) return [];
         const verified = JSON.parse(response.substring(start, end));
 
-        return verified.map((v: any) => ({
+        return verified.map((v: VerifiedResource) => ({
             ...v,
             location,
             imageUrl: `https://ui-avatars.com/api/?name=${v.name.replace(/\s+/g, "+")}&background=random&color=fff`,

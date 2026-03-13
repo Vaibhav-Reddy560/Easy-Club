@@ -24,8 +24,8 @@ export interface EventConfig {
     isLaunched?: boolean;
     workspaceData?: {
         content?: { long: string, short: string };
-        design?: any;
-        social?: any;
+        design?: unknown;
+        social?: unknown;
     };
     [key: string]: unknown;
 }

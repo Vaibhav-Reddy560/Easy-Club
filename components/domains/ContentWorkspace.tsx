@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { FileText, Share2, Table, Link as LinkIcon, Download, Check, Copy, FileIcon, Mail, Sparkles, AlertCircle } from "lucide-react";
+import { FileText, Share2, Table, Link as LinkIcon, Download, Check, Copy, FileIcon, Sparkles, AlertCircle } from "lucide-react";
 import { Club, ClubEvent, EventConfig } from "@/lib/types";
 
 interface ContentWorkspaceProps {
@@ -26,7 +26,11 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  const handleGenerate = async () => {
+  interface GenerationError {
+    message: string;
+  }
+
+  const handleGenerate = React.useCallback(async () => {
     if (!activeEvent || !activeClub) {
       console.log("Missing data:", { activeEvent, activeClub });
       return;
@@ -67,13 +71,14 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
       } else {
         throw new Error("Invalid response format from AI");
       }
-    } catch (err: any) {
-      console.error("Generation failed:", err);
-      setError(err.message || "Failed to generate content. Check your API key.");
+    } catch (err: unknown) {
+      const genErr = err as GenerationError;
+      console.error("Generation failed:", genErr);
+      setError(genErr.message || "Failed to generate content. Check your API key.");
     } finally {
       setIsGenerating(false);
     }
-  };
+  }, [activeEvent, activeClub, updateConfig]);
 
   React.useEffect(() => {
     if (activeEvent && activeClub && !generatedContent && !isGenerating && !error) {

@@ -22,6 +22,10 @@ export default function ResourceRadar() {
     const [results, setResults] = useState<ResourcePerson[]>([]);
     const [error, setError] = useState<string | null>(null);
 
+    interface DiscoveryError {
+        message: string;
+    }
+
     const handleSearch = async () => {
         setLoading(true);
         setError(null);
@@ -34,8 +38,9 @@ export default function ResourceRadar() {
             const data = await response.json();
             if (!response.ok) throw new Error(data.error || "Search failed");
             setResults(data);
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            const discoveryErr = err as DiscoveryError;
+            setError(discoveryErr.message);
         } finally {
             setLoading(false);
         }
@@ -157,7 +162,7 @@ export default function ResourceRadar() {
                                     <div className="relative">
                                         <div className="absolute -left-2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-gold-500/20 to-transparent" />
                                         <p className="text-[11px] text-neutral-500 font-medium leading-[1.8] pl-2 italic">
-                                            "{person.reason}"
+                                            &quot;{person.reason}&quot;
                                         </p>
                                     </div>
 

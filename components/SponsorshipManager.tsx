@@ -1,24 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
     Banknote,
     Target,
-    PieChart,
     Briefcase,
     TrendingUp,
-    Users,
     FileText,
     Download,
     ChevronRight,
-    CheckCircle2,
-    Clock,
     AlertCircle,
     Building2,
     IndianRupee,
-    ArrowUpRight,
-    Search,
     Sparkles
 } from "lucide-react";
 import { Club } from "@/lib/types";
@@ -38,7 +32,7 @@ export default function SponsorshipManager({ clubs }: SponsorshipManagerProps) {
         { stage: "Closed", count: 5, value: "₹2,00,000", color: "green" },
     ];
 
-    const currentClub = clubs.find(c => c.id === selectedClubId);
+    // const currentClub = clubs.find(c => c.id === selectedClubId);
 
     if (clubs.length === 0) {
         return (
@@ -194,7 +188,7 @@ export default function SponsorshipManager({ clubs }: SponsorshipManagerProps) {
                             </div>
                         </div>
                         <p className="text-[11px] text-neutral-400 font-medium leading-relaxed">
-                            Your club's value proposition is automatically generated based on your past event success and social reach.
+                            Your club&apos;s value proposition is automatically generated based on your past event success and social reach.
                         </p>
                         <button className="w-full py-4 bg-gold-500 text-black rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xl shadow-gold-500/10">
                             Download Pitch Deck <Download className="w-4 h-4" />

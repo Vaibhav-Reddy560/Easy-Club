@@ -14,10 +14,9 @@ import {
     Globe, 
     ArrowUpRight, 
     ArrowDownRight, 
-    Radar, 
-    Zap, 
-    Sparkles, 
     Clock, 
+    AtSign as Zap,
+    Sparkles,
     Loader2 
 } from "lucide-react";
 import { Club } from "@/lib/types";
@@ -80,7 +79,7 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
                 </div>
                 <div className="space-y-2">
                     <h3 className="text-xl font-bold text-white">No Organizations Established</h3>
-                    <p className="text-neutral-500 text-sm max-w-xs mx-auto font-medium">Create a club in the "My Clubs" section to start tracking social performance.</p>
+                    <p className="text-neutral-500 text-sm max-w-xs mx-auto font-medium">Create a club in the &quot;My Clubs&quot; section to start tracking social performance.</p>
                 </div>
             </div>
         );
@@ -252,7 +251,15 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
     );
 }
 
-function MetricCard({ label, value, icon: Icon, growth, isAyrshare }: any) {
+interface MetricCardProps {
+    label: string;
+    value: string;
+    icon: React.ElementType;
+    growth?: number;
+    isAyrshare?: boolean;
+}
+
+function MetricCard({ label, value, icon: Icon, growth, isAyrshare }: MetricCardProps) {
     return (
         <div className={`p-8 bg-neutral-900/40 border border-white/5 rounded-[2.5rem] hover:border-gold-500/20 transition-all group ${isAyrshare ? 'border-gold-500/5' : ''}`}>
             <div className="flex justify-between items-start mb-6">

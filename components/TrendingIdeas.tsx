@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Loader2, ChevronRight, TrendingUp, Users, Target, Info } from "lucide-react";
+import { Sparkles, Loader2, ChevronRight, TrendingUp, Target, Info } from "lucide-react";
 
 const CLUB_TYPES = [
     "Bio", "Math", "Physics", "Chemistry", "Racing", "Dance", "Singing",
@@ -21,8 +21,13 @@ interface TrendingIdea {
     reach: string;
 }
 
+interface AdoptConfig {
+    subType: string;
+    tags: string;
+}
+
 interface TrendingIdeasProps {
-    onAdopt?: (title: string, config: any) => void;
+    onAdopt?: (title: string, config: AdoptConfig) => void;
 }
 
 export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
@@ -32,7 +37,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const fetchIdeas = async (category: string) => {
+    const fetchIdeas = React.useCallback(async (category: string) => {
         if (cache[category]) {
             setIdeas(cache[category]);
             return;
@@ -54,17 +59,18 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
             const data = await response.json();
             setIdeas(data);
             setCache(prev => ({ ...prev, [category]: data }));
-        } catch (err: any) {
-            console.error(err);
-            setError(err.message || "The Intelligence Engine is currently recalibrating. Please try again in a moment.");
+        } catch (err: unknown) {
+            const discoveryErr = err as { message?: string };
+            console.error(discoveryErr);
+            setError(discoveryErr.message || "The Intelligence Engine is currently recalibrating. Please try again in a moment.");
         } finally {
             setLoading(false);
         }
-    };
+    }, [cache]);
 
     useEffect(() => {
         fetchIdeas(selectedCategory);
-    }, [selectedCategory]);
+    }, [selectedCategory, fetchIdeas]);
 
     return (
         <motion.div
@@ -188,13 +194,13 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                                                 <Target className="w-3 h-3" /> Market Reference
                                             </div>
                                             <div className="p-4 bg-black/60 border border-white/10 rounded-2xl text-[11px] text-neutral-300 italic leading-relaxed">
-                                                "{idea.references}"
+                                                &quot;{idea.references}&quot;
                                             </div>
                                         </div>
 
                                         <div className="space-y-2">
                                             <div className="flex items-center gap-2 text-[9px] font-black text-blue-400 uppercase tracking-widest">
-                                                <Info className="w-3 h-3" /> Why It's Trending
+                                                <Info className="w-3 h-3" /> Why It&apos;s Trending
                                             </div>
                                             <p className="text-[11px] text-neutral-500 font-bold leading-relaxed">
                                                 {idea.whyTrending}

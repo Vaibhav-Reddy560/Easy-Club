@@ -30,12 +30,17 @@ export async function callGeminiSafe(prompt: string): Promise<string | null> {
             const model = genAI.getGenerativeModel({ model: modelName });
             const result = await model.generateContent(prompt);
             return result.response.text();
-        } catch (err: any) {
-            const msg = err?.message || String(err);
+        } catch (err: unknown) {
+            const geminiErr = err as { 
+                message?: string; 
+                status?: number; 
+                errorDetails?: { reason: string }[] 
+            };
+            const msg = geminiErr?.message || String(err);
             console.error(`[Gemini] ${modelName} error:`, msg);
             errors.push(`${modelName}: ${msg}`);
             
-            const status = err?.status || err?.errorDetails?.[0]?.reason;
+            const status = geminiErr?.status || geminiErr?.errorDetails?.[0]?.reason;
             if (status === 429 || msg.includes("429")) {
                 console.warn(`[Gemini] ${modelName} rate limited. Cooling down.`);
                 markRateLimited(modelName, 60000);
