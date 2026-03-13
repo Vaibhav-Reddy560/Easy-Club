@@ -8,6 +8,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        airstream: ["var(--font-airstream)", "serif"],
+        dymaxion: ["var(--font-dymaxion)", "cursive"],
+        sometype: ["var(--font-sometype)", "monospace"],
+        astronomus: ["var(--font-astronomus)", "sans-serif"],
+      },
       colors: {
         background: "#050505", // macOS Style Deep Black
         gold: {
@@ -23,6 +29,9 @@ const config: Config = {
         "gold-text": "linear-gradient(to bottom, #FEF9C3 0%, #FBBF24 50%, #D97706 100%)",
         "mac-folder": "linear-gradient(180deg, #FBBF24 0%, #F59E0B 100%)",
       },
+      boxShadow: {
+        "gold-glow": "0 0 15px 0 rgba(245, 158, 11, 0.5)",
+      }
     },
   },
   plugins: [],
