@@ -38,7 +38,7 @@ export async function exportToDocx(title: string, content: string): Promise<Blob
 /**
  * Generates an Excel spreadsheet from a JSON array.
  */
-export async function exportToExcel(filename: string, data: any[]): Promise<Blob> {
+export async function exportToExcel(filename: string, data: Record<string, unknown>[]): Promise<Blob> {
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet("Data Sheet");
 

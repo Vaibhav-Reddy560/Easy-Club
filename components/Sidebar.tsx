@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Settings, User, Info } from "lucide-react";
 
 interface UserMetadata {
@@ -54,8 +55,14 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
             title="Profile"
           >
             {user?.user_metadata?.avatar_url ? (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img src={user.user_metadata.avatar_url} alt="Avatar" className="w-full h-full object-cover" />
+              <Image 
+                src={user.user_metadata.avatar_url} 
+                alt="Avatar" 
+                width={40} 
+                height={40} 
+                className="w-full h-full object-cover" 
+                unoptimized
+              />
             ) : (
               <User className="w-5 h-5 text-[#FFA500] group-hover:scale-110 transition-transform" />
             )}
@@ -66,11 +73,14 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
               <div className="flex items-center gap-4 mb-5 pb-5 border-b border-white/5">
                 <div className="w-12 h-12 rounded-full bg-gold-500/10 flex items-center justify-center text-gold-500 font-black overflow-hidden border border-gold-500/20 shadow-inner">
                   {user?.user_metadata?.avatar_url ? (
-                    <img 
+                    <Image 
                       src={user.user_metadata.avatar_url} 
                       alt="Avatar" 
+                      width={48} 
+                      height={48} 
                       className="w-full h-full object-cover" 
                       referrerPolicy="no-referrer"
+                      unoptimized
                     />
                   ) : (
                     <span className="text-xl">{user?.user_metadata?.full_name?.charAt(0) || "G"}</span>

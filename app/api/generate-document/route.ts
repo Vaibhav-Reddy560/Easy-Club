@@ -48,7 +48,7 @@ export async function POST(req: Request) {
                 const jsonStr = text.substring(start, end + 1);
                 const data = JSON.parse(jsonStr);
                 return NextResponse.json({ data });
-            } catch (err) {
+            } catch {
                 console.error("Failed to parse sheet JSON:", text);
                 return NextResponse.json({ error: "Invalid JSON format returned from AI" }, { status: 500 });
             }

@@ -96,7 +96,7 @@ Be concise and specific. Do NOT include markdown formatting. Just plain text par
       });
 
       vibe = result || FALLBACK_VIBES[category];
-    } catch (apiError) {
+    } catch {
       // API completely unavailable — use smart local fallback
       console.log("Gemini API unavailable, using local vibe fallback for category:", category);
       vibe = FALLBACK_VIBES[category];

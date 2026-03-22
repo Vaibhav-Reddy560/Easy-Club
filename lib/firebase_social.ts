@@ -1,5 +1,4 @@
 import { 
-    getAuth, 
     GoogleAuthProvider, 
     signInWithPopup,
     GithubAuthProvider,

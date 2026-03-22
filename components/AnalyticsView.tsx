@@ -144,7 +144,7 @@ export default function AnalyticsView({ clubsCount, eventsCount, onBack }: Analy
 
             <div className="pt-6 border-t border-white/5 text-center">
               <p className="text-[10px] text-neutral-500 font-medium italic">
-                "Usage patterns indicate a high focus on Visual Identity establish flows."
+                &quot;Usage patterns indicate a high focus on Visual Identity establish flows.&quot;
               </p>
             </div>
           </div>

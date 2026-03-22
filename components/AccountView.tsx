@@ -2,6 +2,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import { User as FirebaseUser } from "firebase/auth";
 import { 
   ChevronLeft, 
   User, 
@@ -14,7 +16,7 @@ import {
 } from "lucide-react";
 
 interface AccountViewProps {
-  user: any;
+  user: FirebaseUser | null;
   onBack: () => void;
 }
 
@@ -52,7 +54,15 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
               <div className="flex items-center gap-6 mb-8">
                 <div className="w-20 h-20 rounded-[2rem] bg-gold-500/10 flex items-center justify-center border border-gold-500/20 overflow-hidden shadow-2xl">
                   {user?.photoURL ? (
-                    <img src={user.photoURL} alt="Avatar" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                    <Image 
+                      src={user.photoURL} 
+                      alt="Avatar" 
+                      width={80} 
+                      height={80} 
+                      className="w-full h-full object-cover" 
+                      referrerPolicy="no-referrer" 
+                      unoptimized
+                    />
                   ) : (
                     <User className="w-10 h-10 text-gold-500" />
                   )}
@@ -74,7 +84,7 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
                 <div className="p-4 rounded-2xl bg-black/40 border border-white/5">
                   <p className="text-[9px] font-bold text-neutral-500 uppercase tracking-widest mb-1">Authorization Method</p>
                   <div className="flex items-center gap-2">
-                    <img src="https://www.google.com/favicon.ico" className="w-3 h-3" alt="Google" />
+                    <Image src="https://www.google.com/favicon.ico" width={12} height={12} alt="Google" className="w-3 h-3" />
                     <p className="text-sm text-white font-medium">Google SSO</p>
                   </div>
                 </div>

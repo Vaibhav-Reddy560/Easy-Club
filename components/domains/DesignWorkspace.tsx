@@ -2,8 +2,9 @@
 import React, { useRef, useState, useEffect } from "react";
 import {
   ImageIcon, Sparkles, Download, RefreshCw, Upload, Sliders, Check,
-  Layout, Award, FileText, Columns, Loader2
+  Layout, Award, FileText, Columns, Loader2, ExternalLink
 } from "lucide-react";
+import NextImage from "next/image";
 import { ClubEvent, EventConfig } from "@/lib/types";
 import { useGenerator } from "@/hooks/useGenerator";
 import { motion, AnimatePresence } from "framer-motion";
@@ -245,7 +246,7 @@ export default function DesignWorkspace({ activeEvent }: DesignWorkspaceProps) {
       link.download = `${activeEvent?.name || "design"}-${activeTab}.png`;
       link.href = dataUrl;
       link.click();
-    } catch (_err) {
+    } catch {
       // Fallback: try without external fonts
       try {
         const dataUrl = await htmlToImage.toPng(posterRef.current!, {
@@ -254,7 +255,7 @@ export default function DesignWorkspace({ activeEvent }: DesignWorkspaceProps) {
           width: exportW,
           height: exportH,
           skipFonts: true,
-        } as any);
+        });
         const link = document.createElement("a");
         link.download = `${activeEvent?.name || "design"}-${activeTab}.png`;
         link.href = dataUrl;
@@ -443,7 +444,14 @@ export default function DesignWorkspace({ activeEvent }: DesignWorkspaceProps) {
                   </label>
                   {referenceImage ? (
                     <div className="relative rounded-xl overflow-hidden border border-white/10">
-                      <img src={referenceImage} alt="Reference" className="w-full h-32 object-cover" />
+                      <NextImage 
+                        src={referenceImage} 
+                        alt="Reference" 
+                        width={400} 
+                        height={128} 
+                        className="w-full h-32 object-cover" 
+                        unoptimized
+                      />
                       <button onClick={() => setReferenceImage(null)} className="absolute top-2 right-2 px-3 py-1 bg-black/80 rounded-full text-[9px] font-bold text-red-400 border border-red-500/20">Remove</button>
                     </div>
                   ) : (
@@ -498,7 +506,7 @@ export default function DesignWorkspace({ activeEvent }: DesignWorkspaceProps) {
                     <canvas ref={canvasRef} className="absolute inset-0 w-full h-full object-cover opacity-90" />
 
                     {/* SVG fallback background (for gradient fallback) */}
-                    {imageGen.result && imageGen.result.startsWith("data:image/svg") && (
+                    {typeof imageGen.result === 'string' && imageGen.result.startsWith("data:image/svg") && (
                       <div className="absolute inset-0 w-full h-full" style={{ backgroundImage: `url(${imageGen.result})`, backgroundSize: "cover", backgroundPosition: "center" }} />
                     )}
 

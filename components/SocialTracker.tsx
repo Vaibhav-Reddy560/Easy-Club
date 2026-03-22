@@ -63,9 +63,10 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
             await linkSocialAccount(selectedClubId, platform);
             alert(`${platform.toUpperCase()} Protocol Established Successfully!`);
             // In a real app, we'd refresh the club data from Firestore here
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error(err);
-            alert("Linking Failed: " + err.message);
+            const error = err as Error;
+            alert("Linking Failed: " + (error.message || "Unknown Error"));
         } finally {
             setIsConnecting(false);
         }
