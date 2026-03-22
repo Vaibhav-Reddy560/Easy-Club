@@ -27,8 +27,9 @@ export async function POST(req: Request) {
 
         return NextResponse.json(clubs);
 
-    } catch (error: any) {
-        console.error("Explore Clubs API Error:", error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch (error: unknown) {
+        const err = error as { message?: string };
+        console.error("Explore Clubs API Error:", err);
+        return NextResponse.json({ error: err.message }, { status: 500 });
     }
 }

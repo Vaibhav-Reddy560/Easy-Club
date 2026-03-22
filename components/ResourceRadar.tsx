@@ -15,16 +15,16 @@ interface ResourcePerson {
     tags: string[];
 }
 
+interface DiscoveryError {
+    message: string;
+}
+
 export default function ResourceRadar() {
     const [domain, setDomain] = useState("AI & Machine Learning");
     const [location, setLocation] = useState("Bengaluru");
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState<ResourcePerson[]>([]);
     const [error, setError] = useState<string | null>(null);
-
-    interface DiscoveryError {
-        message: string;
-    }
 
     const handleSearch = async () => {
         setLoading(true);
@@ -111,6 +111,23 @@ export default function ResourceRadar() {
                         <div className="space-y-1">
                             <h3 className="text-xl font-bold bg-gradient-to-r from-white to-neutral-500 bg-clip-text text-transparent uppercase tracking-[0.2em]">Mining Intelligence...</h3>
                             <p className="text-[10px] text-neutral-600 uppercase font-black tracking-widest">Scanning professional networks and university records</p>
+                        </div>
+                    </motion.div>
+                ) : error ? (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="py-20 text-center"
+                    >
+                        <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-8 max-w-md mx-auto">
+                            <p className="text-red-400 font-bold mb-2">Search Error</p>
+                            <p className="text-sm text-neutral-500">{error}</p>
+                            <button 
+                                onClick={handleSearch}
+                                className="mt-6 text-[10px] font-black uppercase tracking-widest text-gold-500 hover:text-gold-400 transition-colors"
+                            >
+                                Try Again
+                            </button>
                         </div>
                     </motion.div>
                 ) : results.length > 0 ? (

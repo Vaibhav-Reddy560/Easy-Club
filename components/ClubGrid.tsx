@@ -68,8 +68,8 @@ export default function ClubGrid({ items, onItemClick, onRename, onDelete, onAdd
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <header className="mb-14 flex justify-between items-end border-b border-white/5 pb-8">
         <div>
-          <h2 className="text-4xl font-bold tracking-tight">{title}</h2>
-          <p className="text-neutral-500 text-sm mt-1 font-medium tracking-tight uppercase">{subtitle}</p>
+          <h2 className="text-4xl font-astronomus text-gold-500 uppercase tracking-tighter">{title}</h2>
+          <p className="text-neutral-500 text-sm mt-1 font-medium tracking-[0.2em] uppercase">{subtitle}</p>
         </div>
       </header>
       <div className="grid grid-cols-2 md:grid-cols-6 gap-y-12 gap-x-6">

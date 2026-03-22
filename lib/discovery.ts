@@ -55,7 +55,7 @@ function extractCollege(text: string): string {
     return genericMatch ? genericMatch[0] : "";
 }
 
-export function parseSerperResultsToClubs(results: SerperResult[], location: string): any[] {
+export function parseSerperResultsToClubs(results: SerperResult[], location: string): unknown[] {
     return results.map(r => {
         const college = extractCollege(r.title + " " + r.snippet);
         const name = cleanName(r.title, college);
@@ -73,7 +73,7 @@ export function parseSerperResultsToClubs(results: SerperResult[], location: str
     }).filter((item): item is NonNullable<typeof item> => item !== null);
 }
 
-export function parseSerperResultsToEvents(results: SerperResult[], location: string): any[] {
+export function parseSerperResultsToEvents(results: SerperResult[], location: string): unknown[] {
     return results.map(r => {
         const fullText = (r.title + " " + r.snippet).toLowerCase();
         let imageUrl = "https://images.unsplash.com/photo-1540575467063-178a50c2df87";
@@ -94,7 +94,7 @@ export function parseSerperResultsToEvents(results: SerperResult[], location: st
     });
 }
 
-export function parseSerperResultsToResources(results: SerperResult[], location: string): any[] {
+export function parseSerperResultsToResources(results: SerperResult[], location: string): unknown[] {
     return results.map(r => {
         const url = r.link || "";
         const title = r.title || "";
@@ -122,7 +122,13 @@ export function parseSerperResultsToResources(results: SerperResult[], location:
     });
 }
 
-interface VerifiedResource {
+export interface BaseResource {
+    name: string;
+    description?: string;
+    website: string;
+}
+
+export interface VerifiedResource {
     name: string;
     role: string;
     college_affiliation: string;
@@ -130,7 +136,7 @@ interface VerifiedResource {
     website: string;
 }
 
-export async function verifyResourcesWithAI(rawResources: any[], domain: string, location: string): Promise<any[]> {
+export async function verifyResourcesWithAI(rawResources: BaseResource[], domain: string, location: string): Promise<unknown[]> {
     if (rawResources.length === 0) return [];
 
     const candidates = rawResources.slice(0, 15).map(r => ({

@@ -20,11 +20,11 @@ const sometype = localFont({
   display: "swap",
 });
 
-// const astronomus = localFont({
-//   src: "./fonts/astronomus.ttf",
-//   variable: "--font-astronomus",
-//   display: "swap",
-// });
+const astronomus = localFont({
+  src: "./fonts/astronomus.ttf",
+  variable: "--font-astronomus",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Easy Club",
@@ -39,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${airstream.variable} ${dymaxion.variable} ${sometype.variable} font-sometype antialiased`}
+        className={`${airstream.variable} ${dymaxion.variable} ${sometype.variable} ${astronomus.variable} font-sometype antialiased`}
       >
         {children}
       </body>

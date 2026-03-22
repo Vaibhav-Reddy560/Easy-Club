@@ -68,7 +68,7 @@ export async function POST(req: Request) {
         if (!text) {
             console.error("[TrendingIdeas] Gemini failed. Using Premium Fallback Library.");
             
-            const library: Record<string, any[]> = {
+            const library: Record<string, { title: string, tags: string[], summary: string, references: string, whyTrending: string, complexity: string, reach: string }[]> = {
                 "Coding": [
                     { title: "The 404 Debug Duel", tags: ["Competitive", "Technical"], summary: "A fast-paced contest where teams race to fix intentional bugs in complex production-grade codebases.", references: "Inspired by Microsoft's internal Bug Bash events.", whyTrending: "Gamified learning is seeing 40% higher engagement in tech clubs.", complexity: "Medium", reach: "60-100" },
                     { title: "Agent-A-Thon", tags: ["AI", "Hackathon"], summary: "Build and deploy 3 functional AI agents for campus productivity in 12 hours.", references: "Inspired by recent YC-backed AI hackathons in SF.", whyTrending: "Agentic AI is the #1 requested topic among student developers.", complexity: "High", reach: "40-80" },
@@ -104,8 +104,9 @@ export async function POST(req: Request) {
         const ideas = JSON.parse(jsonMatch[0]);
         return NextResponse.json(ideas);
 
-    } catch (error: any) {
-        console.error("Trending Ideas API Error:", error);
-        return NextResponse.json({ error: "Failed to fetch trending ideas", details: error.message }, { status: 500 });
+    } catch (error: unknown) {
+        const err = error as { message?: string };
+        console.error("Trending Ideas API Error:", err);
+        return NextResponse.json({ error: "Failed to fetch trending ideas", details: err.message }, { status: 500 });
     }
 }

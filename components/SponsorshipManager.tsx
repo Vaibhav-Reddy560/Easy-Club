@@ -56,8 +56,8 @@ export default function SponsorshipManager({ clubs }: SponsorshipManagerProps) {
         >
             <header className="border-b border-white/5 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
-                    <h2 className="text-4xl font-black tracking-tight text-white flex items-center gap-3">
-                        Funding Forge <Banknote className="w-8 h-8 text-gold-500" />
+                    <h2 className="text-4xl font-astronomus text-gold-500 uppercase tracking-tighter flex items-center gap-3">
+                        Funding Forge
                     </h2>
                     <p className="text-neutral-500 text-sm mt-1 uppercase font-bold tracking-widest">Sponsorship Pipeline & Financial Resource Manager</p>
                 </div>

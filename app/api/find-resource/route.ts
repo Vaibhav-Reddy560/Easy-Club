@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import {
     searchSerper,
     parseSerperResultsToResources,
-    verifyResourcesWithAI
+    verifyResourcesWithAI,
+    BaseResource
 } from "@/lib/discovery";
 
 export async function POST(req: Request) {
@@ -34,12 +35,13 @@ export async function POST(req: Request) {
         const rawResources = parseSerperResultsToResources(allResults, location);
 
         // Phase 2: AI Verification (Semantic Expertise Mining)
-        const verifiedResources = await verifyResourcesWithAI(rawResources, domain, location);
+        const verifiedResources = await verifyResourcesWithAI(rawResources as BaseResource[], domain, location);
 
         return NextResponse.json(verifiedResources);
 
-    } catch (error: any) {
-        console.error("Resource Sync Error:", error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch (error: unknown) {
+        const err = error as { message?: string };
+        console.error("Resource Sync Error:", err);
+        return NextResponse.json({ error: err.message }, { status: 500 });
     }
 }

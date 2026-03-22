@@ -81,7 +81,7 @@ export async function POST(req: Request) {
 
             const jsonStr = text.substring(start, end + 1);
             jsonResponse = JSON.parse(jsonStr);
-        } catch (parseError) {
+        } catch {
             console.error("Failed to parse Gemini response:", text);
             return NextResponse.json({
                 error: "AI returned invalid format",
@@ -94,16 +94,17 @@ export async function POST(req: Request) {
         }
 
         return NextResponse.json(jsonResponse);
-    } catch (error: any) {
-        console.error("Gemini API Error:", error);
+    } catch (error: unknown) {
+        const err = error as { message?: string };
+        console.error("Gemini API Error:", err);
 
         // Check for API Key issues specifically
-        if (error.message?.includes("API_KEY_INVALID") || error.message?.includes("403")) {
+        if (err.message?.includes("API_KEY_INVALID") || err.message?.includes("403")) {
             return NextResponse.json({ error: "Invalid API Key. Please check .env.local" }, { status: 403 });
         }
 
         return NextResponse.json({
-            error: error.message || "Internal Server Error"
+            error: err.message || "Internal Server Error"
         }, { status: 500 });
     }
 }

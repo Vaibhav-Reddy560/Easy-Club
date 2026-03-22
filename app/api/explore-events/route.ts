@@ -19,8 +19,9 @@ export async function POST(req: Request) {
 
         return NextResponse.json(events);
 
-    } catch (error: any) {
-        console.error("Event Sync Error:", error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch (error: unknown) {
+        const err = error as { message?: string };
+        console.error("Event Sync Error:", err);
+        return NextResponse.json({ error: err.message }, { status: 500 });
     }
 }

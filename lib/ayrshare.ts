@@ -15,7 +15,7 @@ export interface AyrshareAnalytics {
     isMock?: boolean;
 }
 
-export async function getAyrshareAnalytics(_profileKey?: string): Promise<AyrshareAnalytics> {
+export async function getAyrshareAnalytics(): Promise<AyrshareAnalytics> {
     // Return mock data if API key is missing
     if (!API_KEY) {
         console.warn("[Ayrshare] API Key missing. Returning mock data.");
@@ -30,8 +30,6 @@ export async function getAyrshareAnalytics(_profileKey?: string): Promise<Ayrsha
                 "Authorization": `Bearer ${API_KEY}`
             },
             body: JSON.stringify({
-                // Ayrshare analytics endpoint params
-                // Note: specifics depend on whether we want post or profile analytics
                 metadata: true
             })
         });

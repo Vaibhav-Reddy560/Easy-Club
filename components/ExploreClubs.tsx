@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, MapPin, Instagram, Linkedin, Twitter, Facebook, ExternalLink, Loader2, Sparkles, Globe2, Youtube, Bookmark, BookmarkCheck } from "lucide-react";
+import { useAuth } from "@/lib/auth";
 
 const CLUB_TYPES = [
     "Bio", "Math", "Physics", "Chemistry", "Racing", "Dance", "Singing",
@@ -29,54 +30,57 @@ interface ScrapedClub {
 
 const SAVED_CLUBS_KEY = "easyclub_saved_clubs";
 
-function getSavedClubs(): ScrapedClub[] {
-    if (typeof window === "undefined") return [];
+function getSavedClubs(userId: string | null): ScrapedClub[] {
+    if (typeof window === "undefined" || !userId) return [];
     try {
-        const saved = localStorage.getItem(SAVED_CLUBS_KEY);
+        const saved = localStorage.getItem(`${SAVED_CLUBS_KEY}_${userId}`);
         return saved ? JSON.parse(saved) : [];
     } catch { return []; }
 }
 
-function saveClubToStorage(club: ScrapedClub) {
-    const saved = getSavedClubs();
+function saveClubToStorage(club: ScrapedClub, userId: string | null) {
+    if (!userId) return;
+    const saved = getSavedClubs(userId);
     // Avoid duplicates by name + college
     if (!saved.some(c => c.name === club.name && c.college === club.college)) {
         saved.push(club);
-        localStorage.setItem(SAVED_CLUBS_KEY, JSON.stringify(saved));
+        localStorage.setItem(`${SAVED_CLUBS_KEY}_${userId}`, JSON.stringify(saved));
     }
 }
 
-function removeClubFromStorage(club: ScrapedClub) {
-    const saved = getSavedClubs().filter(c => !(c.name === club.name && c.college === club.college));
-    localStorage.setItem(SAVED_CLUBS_KEY, JSON.stringify(saved));
+function removeClubFromStorage(club: ScrapedClub, userId: string | null) {
+    if (!userId) return;
+    const saved = getSavedClubs(userId).filter(c => !(c.name === club.name && c.college === club.college));
+    localStorage.setItem(`${SAVED_CLUBS_KEY}_${userId}`, JSON.stringify(saved));
 }
 
-function isClubSaved(club: ScrapedClub): boolean {
-    return getSavedClubs().some(c => c.name === club.name && c.college === club.college);
-}
+
 
 export default function ExploreClubs() {
+    const { user } = useAuth();
+    const userId = user?.uid || null;
     const [type, setType] = useState(CLUB_TYPES[9]); // Default to Coding
     const [category, setCategory] = useState<"College" | "Non-College">("College");
     const [location, setLocation] = useState("India");
     const [clubs, setClubs] = useState<ScrapedClub[]>([]);
     const [loading, setLoading] = useState(false);
+    // const isClubSaved = (id: string) => savedClubs.some(c => c.id === id);
     const [error, setError] = useState<string | null>(null);
     const [isMock, setIsMock] = useState(false);
     const [savedClubKeys, setSavedClubKeys] = useState<Set<string>>(new Set());
     const [showSaved, setShowSaved] = useState(false);
     const [saveToast, setSaveToast] = useState<string | null>(null);
 
-    // Load saved state on mount
+    // Load saved state on mount and when user changes
     useEffect(() => {
-        const saved = getSavedClubs();
+        const saved = getSavedClubs(userId);
         setSavedClubKeys(new Set(saved.map(c => `${c.name}__${c.college}`)));
-    }, []);
+    }, [userId]);
 
     const toggleSaveClub = (club: ScrapedClub) => {
         const key = `${club.name}__${club.college}`;
         if (savedClubKeys.has(key)) {
-            removeClubFromStorage(club);
+            removeClubFromStorage(club, userId);
             setSavedClubKeys(prev => {
                 const next = new Set(prev);
                 next.delete(key);
@@ -84,7 +88,7 @@ export default function ExploreClubs() {
             });
             setSaveToast(`Removed "${club.name}" from saved`);
         } else {
-            saveClubToStorage(club);
+            saveClubToStorage(club, userId);
             setSavedClubKeys(prev => new Set(prev).add(key));
             setSaveToast(`Saved "${club.name}"`);
         }
@@ -199,26 +203,15 @@ export default function ExploreClubs() {
         return images[key];
     };
 
-    const getCleanerError = (errString: string) => {
-        if (errString.includes("429")) {
-            const match = errString.match(/retry in ([\d.]+)s/);
-            return match ? `Quota Limit Hit. Please wait ${Math.ceil(parseFloat(match[1]))}s before syncing.` : "Engine Throttled. Please try again in 1 minute.";
-        }
-        return errString.split(":")[0];
-    };
 
-    const hasSocialLinks = (club: ScrapedClub) => {
-        if (!club.social) return false;
-        return Object.values(club.social).some(v => v && v.trim() !== "");
-    };
 
-    const displayedClubs = showSaved ? getSavedClubs() : clubs;
+    const displayedClubs = showSaved ? getSavedClubs(userId) : clubs;
 
     return (
         <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <header className="border-b border-white/5 pb-8 flex justify-between items-end">
                 <div>
-                    <h2 className="text-4xl font-black tracking-tight text-white uppercase italic">Explore Clubs</h2>
+                    <h2 className="text-4xl font-astronomus text-gold-500 uppercase tracking-tighter">Explore Clubs</h2>
                     <p className="text-neutral-500 text-sm mt-1 uppercase font-bold tracking-[0.2em] ml-1">Universal Organization Discovery</p>
                 </div>
                 <div className="flex gap-4 items-end">
@@ -234,7 +227,7 @@ export default function ExploreClubs() {
                         }`}
                     >
                         <BookmarkCheck className="w-3.5 h-3.5" />
-                        Saved ({getSavedClubs().length})
+                        Saved ({getSavedClubs(userId).length})
                     </button>
                     <div className="text-right">
                         <p className="text-[10px] font-black text-gold-500 uppercase tracking-widest leading-none">Powered by Web Search</p>
@@ -355,7 +348,7 @@ export default function ExploreClubs() {
                         <h3 className="text-lg font-black uppercase tracking-widest text-white">Saved Clubs</h3>
                     </div>
                     <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">
-                        {getSavedClubs().length} {getSavedClubs().length === 1 ? "club" : "clubs"} saved
+                        {getSavedClubs(userId).length} {getSavedClubs(userId).length === 1 ? "club" : "clubs"} saved
                     </span>
                 </div>
             )}

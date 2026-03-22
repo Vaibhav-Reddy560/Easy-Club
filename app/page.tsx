@@ -5,23 +5,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import TrendingIdeas from "@/components/TrendingIdeas";
 import SocialTracker from "@/components/SocialTracker";
 import SponsorshipManager from "@/components/SponsorshipManager";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import {
-  Plus,
   Trash2,
   ChevronLeft,
   Palette,
   FileText,
   Share2,
-  Layout,
-  Sparkles,
-  Edit3,
-  Search,
-  Zap,
-  Clock,
-  LayoutDashboard,
-  Compass,
-  Trophy
+  Edit3
 } from "lucide-react";
 
 // Import components from the components directory
@@ -35,20 +25,23 @@ import ExploreEvents from "@/components/ExploreEvents";
 import DesignWorkspace from "@/components/domains/DesignWorkspace";
 import ContentWorkspace from "@/components/domains/ContentWorkspace";
 import SocialWorkspace from "@/components/domains/SocialWorkspace";
-import { User, Club, ClubEvent, EventConfig } from "@/lib/types";
+import AccountView from "@/components/AccountView";
+import AnalyticsView from "@/components/AnalyticsView";
+import SettingsView from "@/components/SettingsView";
+import { Club, ClubEvent, EventConfig } from "@/lib/types";
+import { useAuth } from "@/lib/auth";
+import { signInWithGoogle, logout } from "@/lib/firebase";
+import { Globe } from "lucide-react";
 
 // --- MAIN APPLICATION ---
 
 export default function App() {
-  const [user] = useState<User>({
-    id: "guest-user",
-    user_metadata: { full_name: "Guest User" }
-  });
+  const { user, loading: authLoading } = useAuth();
   const [clubs, setClubs] = useState<Club[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [activeNav, setActiveNav] = useState<NavSection>('my-clubs');
-  const [view, setView] = useState<'clubs' | 'events' | 'questionnaire' | 'domains' | 'about'>('clubs');
+  const [view, setView] = useState<'clubs' | 'events' | 'questionnaire' | 'domains' | 'about' | 'account' | 'analytics' | 'settings'>('clubs');
   const [activeClubId, setActiveClubId] = useState<string | null>(null);
   const [activeEventId, setActiveEventId] = useState<string | null>(null);
   const [activeDomain, setActiveDomain] = useState<'Design' | 'Content' | 'Social'>('Design');
@@ -63,28 +56,35 @@ export default function App() {
   const activeClub = clubs.find(c => c.id === activeClubId);
   const activeEvent = activeClub?.events?.find((e: ClubEvent) => e.id === activeEventId);
 
-  // Load data from localStorage on mount
+  // Load data for the specific user from localStorage on mount
   useEffect(() => {
-    const savedClubs = localStorage.getItem("easy-club-data");
-    if (savedClubs) {
-      try {
-        setClubs(JSON.parse(savedClubs));
-      } catch (e) {
-        console.error("Failed to parse saved data", e);
+    if (authLoading) return; // Wait until auth state is known
+    
+    if (user) {
+      const savedClubs = localStorage.getItem(`easy-club-data-${user.uid}`);
+      if (savedClubs) {
+        try {
+          setClubs(JSON.parse(savedClubs));
+        } catch (e) {
+          console.error("Failed to parse saved data", e);
+          setClubs([]);
+        }
+      } else {
+        // Default initial data if none exists
+        setClubs([]);
       }
     } else {
-      // Default initial data if none exists
       setClubs([]);
     }
     setLoading(false);
-  }, []);
+  }, [user, authLoading]);
 
   // Save data to localStorage whenever clubs state changes
   useEffect(() => {
-    if (!loading) {
-      localStorage.setItem("easy-club-data", JSON.stringify(clubs));
+    if (!loading && user) {
+      localStorage.setItem(`easy-club-data-${user.uid}`, JSON.stringify(clubs));
     }
-  }, [clubs, loading]);
+  }, [clubs, loading, user]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -122,7 +122,7 @@ export default function App() {
     setInputValue("");
   };
 
-  const handleAdoptIdea = (title: string, config: any) => {
+  const handleAdoptIdea = (title: string, ideaConfig: { subType: string, tags: string }) => {
     // If we have clubs, add it to the first one as a default, or the active one
     const targetClubId = activeClubId || clubs[0]?.id;
     
@@ -133,14 +133,16 @@ export default function App() {
     }
 
     const newEvent: ClubEvent = {
-      id: Date.now().toString(),
+      id: Math.random().toString(36).substr(2, 9),
       name: title,
       config: {
-        city: "Bengaluru",
-        type: 'Technical', // Fallback
-        subType: 'Workshop', // Fallback
-        isLaunched: true, // Auto-launch since it's from a blueprint
-        ...config
+        subType: ideaConfig.subType,
+        description: "",
+        date: "",
+        time: "",
+        venue: "",
+        city: "",
+        isLaunched: false
       }
     };
 
@@ -210,17 +212,69 @@ export default function App() {
     // This allows users to "leave off" where they were.
   };
 
-  if (loading) {
+  if (authLoading || loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center text-gold-500 font-bold uppercase tracking-widest">
-        Loading Hub...
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-4">
+        <div className="w-12 h-12 border-4 border-gold-500/20 border-t-gold-500 rounded-full animate-spin" />
+        <p className="text-gold-500 font-bold uppercase tracking-[0.3em] text-[10px] animate-pulse">Syncing Hub...</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center p-6 relative overflow-hidden">
+        {/* Background Effects */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(250,164,26,0.05)_0%,transparent_50%)]" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 pointer-events-none" />
+
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-md w-full z-10 text-center space-y-10"
+        >
+          <div className="space-y-6 pt-8">
+            <div className="relative inline-block">
+              <div className="absolute inset-0 bg-[#FFA500] blur-2xl opacity-20 animate-pulse" />
+              <h1 className="relative text-7xl font-normal text-[#FFA500] tracking-tight font-airstream leading-none">Easy Club</h1>
+            </div>
+            <p className="text-neutral-500 text-sm font-medium tracking-wide max-w-[280px] mx-auto leading-relaxed">
+              Professional club management and nationwide networking, made easy.
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            <button
+              onClick={signInWithGoogle}
+              className="w-full group relative flex items-center justify-center gap-4 px-8 py-5 bg-white text-black font-black uppercase tracking-widest text-[11px] rounded-[1.5rem] transition-all duration-500 hover:bg-gold-500 hover:text-black hover:shadow-[0_20px_40px_-15px_rgba(250,164,26,0.3)] overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              <img src="https://www.google.com/favicon.ico" className="w-4 h-4" alt="Google" />
+              Sign in with Google
+            </button>
+            <p className="text-[9px] text-neutral-600 font-black uppercase tracking-[0.2em]">Authorized Access Only</p>
+          </div>
+        </motion.div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-background text-white antialiased">
-      <Sidebar user={user} onLogout={() => { }} onAboutClick={() => setView('about')} />
+      <Sidebar 
+        user={{
+          id: user.uid,
+          user_metadata: { 
+            full_name: user.displayName || "Club Member",
+            avatar_url: user.photoURL || undefined
+          }
+        }} 
+        onLogout={logout} 
+        onAboutClick={() => setView('about')} 
+        onAccountClick={() => setView('account')}
+        onAnalyticsClick={() => setView('analytics')}
+        onSettingsClick={() => setView('settings')}
+      />
 
       <div className="max-w-[1600px] mx-auto flex px-6">
         <AppSidebar activeSection={activeNav} onSectionChange={handleNavChange} />
@@ -339,8 +393,8 @@ export default function App() {
                   </div>
 
                   <div className="mb-12 border-b border-white/5 pb-8">
-                    <h2 className="text-3xl font-bold tracking-tighter">
-                      {activeEvent?.name} <span className="text-neutral-600 font-normal ml-3">/ Workspace</span>
+                    <h2 className="text-4xl font-astronomus text-gold-500 uppercase tracking-tighter">
+                      {activeEvent?.name} <span className="text-neutral-600 font-normal ml-3 font-sans">/ Workspace</span>
                     </h2>
                   </div>
 
@@ -379,6 +433,22 @@ export default function App() {
 
               {view === 'about' && (
                 <AboutPage onBack={() => setView('clubs')} />
+              )}
+
+              {view === 'account' && (
+                <AccountView user={user} onBack={() => setView('clubs')} />
+              )}
+
+              {view === 'analytics' && (
+                <AnalyticsView 
+                  clubsCount={clubs.length} 
+                  eventsCount={clubs.reduce((acc, c) => acc + (c.events?.length || 0), 0)} 
+                  onBack={() => setView('clubs')} 
+                />
+              )}
+
+              {view === 'settings' && (
+                <SettingsView onBack={() => setView('clubs')} />
               )}
             </AnimatePresence>
           </div>

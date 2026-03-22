@@ -20,6 +20,7 @@ import {
     Loader2 
 } from "lucide-react";
 import { Club } from "@/lib/types";
+import { linkSocialAccount } from "@/lib/firebase_social";
 
 interface SocialTrackerProps {
     clubs: Club[];
@@ -53,9 +54,26 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
         }
     };
 
+    const [isConnecting, setIsConnecting] = useState(false);
+
+    const handleFirebaseLink = async (platform: 'google' | 'x') => {
+        if (!selectedClubId) return;
+        setIsConnecting(true);
+        try {
+            await linkSocialAccount(selectedClubId, platform);
+            alert(`${platform.toUpperCase()} Protocol Established Successfully!`);
+            // In a real app, we'd refresh the club data from Firestore here
+        } catch (err: any) {
+            console.error(err);
+            alert("Linking Failed: " + err.message);
+        } finally {
+            setIsConnecting(false);
+        }
+    };
+
     useEffect(() => {
         fetchAyrshare();
-    }, []);
+    }, [selectedClubId]);
 
     // Simulated stats for each club
     const getStats = (clubId: string) => {
@@ -96,8 +114,8 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
             <header className="border-b border-white/5 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div className="space-y-4">
                     <div>
-                        <h2 className="text-4xl font-black tracking-tight text-white flex items-center gap-3">
-                            Social Pulse <BarChart3 className="w-8 h-8 text-gold-500" />
+                        <h2 className="text-4xl font-astronomus text-gold-500 uppercase tracking-tighter flex items-center gap-3">
+                            Social Pulse
                         </h2>
                         <p className="text-neutral-500 text-sm mt-1 uppercase font-bold tracking-widest">Universal Organization & Profile Intelligence</p>
                     </div>
@@ -140,37 +158,81 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
                         className="space-y-16"
                     >
                         {/* Club Performance Section */}
-                        <div className="space-y-8">
-                            <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 bg-gold-gradient rounded-xl flex items-center justify-center text-black shadow-lg shadow-gold-500/10">
-                                    <Globe className="w-5 h-5" />
-                                </div>
-                                <div>
-                                    <h3 className="text-xl font-black text-white">{activeClub.name} Performance</h3>
-                                    <p className="text-[9px] text-neutral-600 font-bold uppercase tracking-widest">Organization Metrics</p>
+                        {Object.values(activeClub.socialConnections || {}).every(conn => !conn.isConnected) ? (
+                            <div className="bg-neutral-900/40 border border-gold-500/10 rounded-[2.5rem] p-12 text-center space-y-8 relative overflow-hidden group">
+                                <div className="absolute inset-0 bg-gold-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <div className="relative z-10 space-y-6">
+                                    <div className="w-16 h-16 bg-gold-500/10 border border-gold-500/20 rounded-2xl flex items-center justify-center mx-auto shadow-2xl">
+                                        <Sparkles className="w-8 h-8 text-gold-500" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <h4 className="text-2xl font-bold text-white tracking-tight">Establish Social Connectivity</h4>
+                                        <p className="text-neutral-500 text-sm max-w-sm mx-auto font-medium">Link your organization&apos;s accounts via Firebase to enable live tracker stability.</p>
+                                    </div>
+                                    
+                                    <div className="flex flex-wrap justify-center gap-4">
+                                        <button 
+                                            onClick={() => handleFirebaseLink('google')}
+                                            disabled={isConnecting}
+                                            className="px-6 py-3 bg-white text-black font-black text-[10px] uppercase tracking-widest rounded-xl hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-2"
+                                        >
+                                            <Globe className="w-4 h-4" /> Connect Google
+                                        </button>
+                                        <button 
+                                            onClick={() => handleFirebaseLink('x')}
+                                            disabled={isConnecting}
+                                            className="px-6 py-3 bg-neutral-800 text-white font-black text-[10px] uppercase tracking-widest rounded-xl hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-2"
+                                        >
+                                            <Twitter className="w-4 h-4" /> Connect X
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+                        ) : (
+                            <div className="space-y-8">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-10 h-10 bg-gold-gradient rounded-xl flex items-center justify-center text-black shadow-lg shadow-gold-500/10">
+                                            <Globe className="w-5 h-5" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-xl font-black text-white">{activeClub.name} Performance</h3>
+                                            <div className="flex items-center gap-2">
+                                                <p className="text-[9px] text-neutral-600 font-bold uppercase tracking-widest">Organization Metrics</p>
+                                                <div className="h-1 w-1 rounded-full bg-green-500" />
+                                                <span className="text-[8px] text-gold-500 font-black uppercase tracking-widest">Firebase Linked</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button 
+                                        onClick={() => handleFirebaseLink('google')}
+                                        className="px-4 py-2 border border-white/5 bg-black/40 rounded-xl text-[8px] font-black uppercase tracking-widest text-neutral-500 hover:text-white transition-all"
+                                    >
+                                        Manage Connections
+                                    </button>
+                                </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                                <MetricCard 
-                                    label="Followers" 
-                                    value={stats.followers.toLocaleString()} 
-                                    icon={Users} 
-                                    growth={stats.growth} 
-                                />
-                                <MetricCard 
-                                    label="Engagement" 
-                                    value={`${stats.engagement}%`} 
-                                    icon={Heart} 
-                                />
-                                <MetricCard 
-                                    label="Monthly Impressions" 
-                                    value={`${(stats.reach / 1000).toFixed(1)}K`} 
-                                    icon={BarChart3} 
-                                />
-                                <SocialMetricCard />
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                    <MetricCard 
+                                        label="Followers" 
+                                        value={stats.followers.toLocaleString()} 
+                                        icon={Users} 
+                                        growth={stats.growth} 
+                                    />
+                                    <MetricCard 
+                                        label="Engagement" 
+                                        value={`${stats.engagement}%`} 
+                                        icon={Heart} 
+                                    />
+                                    <MetricCard 
+                                        label="Monthly Impressions" 
+                                        value={`${(stats.reach / 1000).toFixed(1)}K`} 
+                                        icon={BarChart3} 
+                                    />
+                                    <SocialMetricCard />
+                                </div>
                             </div>
-                        </div>
+                        )}
 
                         {/* Personal Profile Analytics (Ayrshare) */}
                         <div className="space-y-8 pt-8 border-t border-white/5">

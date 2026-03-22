@@ -40,6 +40,13 @@ export interface Club {
     id: string;
     name: string;
     events: ClubEvent[];
+    socialConnections?: {
+        [platform: string]: {
+            lastConnected: string;
+            isConnected: boolean;
+            platformName: string;
+        };
+    };
 }
 
 export interface UserMetadata {
@@ -50,4 +57,13 @@ export interface UserMetadata {
 export interface User {
     id: string;
     user_metadata?: UserMetadata;
+}
+
+export type GenerationStatus = 'idle' | 'generating' | 'success' | 'error';
+
+export interface GenerationState {
+    status: GenerationStatus;
+    progress: number;
+    error: string | null;
+    result: any;
 }

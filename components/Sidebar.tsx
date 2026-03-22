@@ -17,9 +17,12 @@ interface SidebarProps {
   user: User | null;
   onLogout: () => void;
   onAboutClick: () => void;
+  onAccountClick: () => void;
+  onAnalyticsClick: () => void;
+  onSettingsClick: () => void;
 }
 
-export default function Sidebar({ user, onLogout, onAboutClick }: SidebarProps) {
+export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, onAnalyticsClick, onSettingsClick }: SidebarProps) {
   const [isProfileOpen, setIsProfileOpen] = React.useState(false);
 
   return (
@@ -38,7 +41,7 @@ export default function Sidebar({ user, onLogout, onAboutClick }: SidebarProps) 
         </button>
 
         <button
-          onClick={() => alert("Settings configured for AI & Brand preferences.")}
+          onClick={onSettingsClick}
           className="p-2 rounded-xl hover:bg-white/5 transition-colors group"
         >
           <Settings className="w-5 h-5 text-neutral-500 group-hover:text-gold-400 transition-colors" />
@@ -59,36 +62,58 @@ export default function Sidebar({ user, onLogout, onAboutClick }: SidebarProps) 
           </button>
 
           {isProfileOpen && (
-            <div className="absolute right-0 mt-3 w-64 bg-neutral-900 border border-white/10 rounded-2xl p-4 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200 z-[60]">
-              <div className="flex items-center gap-3 mb-4 pb-4 border-b border-white/5">
-                <div className="w-10 h-10 rounded-full bg-gold-500/20 flex items-center justify-center text-gold-500 font-black">
-                  {user?.user_metadata?.full_name?.charAt(0) || "G"}
+            <div className="absolute right-0 mt-3 w-72 bg-neutral-900/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] animate-in fade-in slide-in-from-top-2 duration-300 z-[60]">
+              <div className="flex items-center gap-4 mb-5 pb-5 border-b border-white/5">
+                <div className="w-12 h-12 rounded-full bg-gold-500/10 flex items-center justify-center text-gold-500 font-black overflow-hidden border border-gold-500/20 shadow-inner">
+                  {user?.user_metadata?.avatar_url ? (
+                    <img 
+                      src={user.user_metadata.avatar_url} 
+                      alt="Avatar" 
+                      className="w-full h-full object-cover" 
+                      referrerPolicy="no-referrer"
+                    />
+                  ) : (
+                    <span className="text-xl">{user?.user_metadata?.full_name?.charAt(0) || "G"}</span>
+                  )}
                 </div>
-                <div>
-                  <p className="text-xs font-black uppercase tracking-widest text-white">
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-bold text-white tracking-tight truncate">
                     {user?.user_metadata?.full_name || "Guest User"}
                   </p>
-                  <p className="text-[9px] text-neutral-500 font-mono tracking-tighter truncate w-32">
-                    {user?.id}
-                  </p>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                    <span className="text-[10px] text-neutral-400 font-medium uppercase tracking-wider">Verified Account</span>
+                  </div>
                 </div>
               </div>
-              <div className="space-y-1">
-                <button className="w-full text-left px-3 py-2 rounded-xl hover:bg-white/5 text-[10px] font-bold text-neutral-400 hover:text-white transition-all">
-                  Account Preferences
-                </button>
-                <button className="w-full text-left px-3 py-2 rounded-xl hover:bg-white/5 text-[10px] font-bold text-neutral-400 hover:text-white transition-all">
-                  Usage Analytics
-                </button>
-                <button
-                  onClick={() => {
-                    setIsProfileOpen(false);
-                    onLogout();
-                  }}
-                  className="w-full text-left px-3 py-2 rounded-xl hover:bg-red-500/10 text-[10px] font-bold text-red-400 hover:text-red-300 transition-all mt-2"
+              
+              <div className="space-y-1.5">
+                <button 
+                  onClick={() => { setIsProfileOpen(false); onAccountClick(); }}
+                  className="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 text-[11px] font-semibold text-neutral-400 hover:text-white transition-all flex items-center justify-between group"
                 >
-                  Terminate Session
+                  <span>Account Preferences</span>
+                  <div className="w-1 h-1 rounded-full bg-gold-500/50 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </button>
+                <button 
+                  onClick={() => { setIsProfileOpen(false); onAnalyticsClick(); }}
+                  className="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 text-[11px] font-semibold text-neutral-400 hover:text-white transition-all flex items-center justify-between group"
+                >
+                  <span>Usage Analytics</span>
+                  <div className="w-1 h-1 rounded-full bg-gold-500/50 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </button>
+                
+                <div className="pt-2">
+                  <button
+                    onClick={() => {
+                      setIsProfileOpen(false);
+                      onLogout();
+                    }}
+                    className="w-full text-center px-4 py-3 rounded-xl bg-red-500/5 border border-red-500/10 hover:bg-red-500/10 text-[11px] font-bold text-red-400 hover:text-red-300 transition-all"
+                  >
+                    Terminate Session
+                  </button>
+                </div>
               </div>
             </div>
           )}
