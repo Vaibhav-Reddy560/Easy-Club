@@ -249,7 +249,7 @@ export default function App() {
               className="w-full group relative flex items-center justify-center gap-4 px-8 py-5 bg-white text-black font-black uppercase tracking-widest text-[11px] rounded-[1.5rem] transition-all duration-500 hover:bg-gold-500 hover:text-black hover:shadow-[0_20px_40px_-15px_rgba(250,164,26,0.3)] overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-              <Image src="https://www.google.com/favicon.ico" width={16} height={16} alt="Google" className="w-4 h-4" />
+              <Image src="https://www.google.com/favicon.ico" width={16} height={16} alt="Google" className="w-4 h-4" unoptimized />
               Sign in with Google
             </button>
             <p className="text-[9px] text-neutral-600 font-black uppercase tracking-[0.2em]">Authorized Access Only</p>

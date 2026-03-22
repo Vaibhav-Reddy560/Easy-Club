@@ -84,7 +84,7 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
                 <div className="p-4 rounded-2xl bg-black/40 border border-white/5">
                   <p className="text-[9px] font-bold text-neutral-500 uppercase tracking-widest mb-1">Authorization Method</p>
                   <div className="flex items-center gap-2">
-                    <Image src="https://www.google.com/favicon.ico" width={12} height={12} alt="Google" className="w-3 h-3" />
+                    <Image src="https://www.google.com/favicon.ico" width={12} height={12} alt="Google" className="w-3 h-3" unoptimized />
                     <p className="text-sm text-white font-medium">Google SSO</p>
                   </div>
                 </div>
