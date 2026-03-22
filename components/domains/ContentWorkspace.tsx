@@ -105,7 +105,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
   };
 
   const downloadDocx = async () => {
-    if (!letterGen.result) return;
+    if (!letterGen.result || typeof letterGen.result !== 'string') return;
     const blob = await exportToDocx(`${activeEvent?.name} - Permission Letter`, letterGen.result);
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -115,8 +115,8 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
   };
 
   const downloadExcel = async () => {
-    if (!sheetGen.result) return;
-    const blob = await exportToExcel(`${activeEvent?.name} Data`, sheetGen.result);
+    if (!sheetGen.result || !Array.isArray(sheetGen.result)) return;
+    const blob = await exportToExcel(`${activeEvent?.name} Data`, sheetGen.result as Record<string, unknown>[]);
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -203,7 +203,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
             {letterGen.status === 'success' ? (
               <div className="space-y-4">
                 <div className="bg-black/80 p-6 rounded-3xl border border-gold-500/20 max-h-[300px] overflow-auto text-[11px] text-neutral-300 font-mono leading-relaxed">
-                  {letterGen.result}
+                  {typeof letterGen.result === 'string' ? letterGen.result : "No content available"}
                 </div>
                 <div className="flex gap-4">
                   <button 
@@ -259,13 +259,13 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
             <table className="w-full text-left text-[11px]">
               <thead className="bg-white/5 text-gold-500 font-black uppercase tracking-tighter">
                 <tr>
-                  {Object.keys(sheetGen.result[0]).map(key => (
+                  {Array.isArray(sheetGen.result) && sheetGen.result.length > 0 && Object.keys(sheetGen.result[0] as Record<string, unknown>).map(key => (
                     <th key={key} className="px-6 py-4">{key}</th>
                   ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5 text-neutral-400">
-                {sheetGen.result.map((row: Record<string, string | number>, i: number) => (
+                {Array.isArray(sheetGen.result) && sheetGen.result.map((row: Record<string, string | number>, i: number) => (
                   <tr key={i} className="hover:bg-white/5 transition-colors">
                     {Object.values(row).map((val: string | number, j: number) => (
                       <td key={j} className="px-6 py-4">{val}</td>
