@@ -30,7 +30,7 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
     | { type: "toggle"; label: string; value: string | boolean; enabled: boolean; onChange: () => void }
     | { type: "badge" | "text" | "color"; label: string; value: string | boolean; onChange?: (v: string) => void };
 
-  const sections: { id: string; title: string; icon: any; description: string; options: SettingsOption[] }[] = [
+  const sections: { id: string; title: string; icon: React.ElementType; description: string; options: SettingsOption[] }[] = [
     {
       id: "ai",
       title: "AI Orchestration",
