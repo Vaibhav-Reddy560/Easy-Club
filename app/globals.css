@@ -2,6 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Airstream';
+  src: url('/fonts/airstream.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Dymaxion';
+  src: url('/fonts/dymaxion.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sometype Mono';
+  src: url('/fonts/sometype-mono.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Astronomus';
+  src: url('/fonts/astronomus.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --font-airstream: 'Airstream', sans-serif;
+    --font-dymaxion: 'Dymaxion', sans-serif;
+    --font-sometype: 'Sometype Mono', monospace;
+    --font-astronomus: 'Astronomus', sans-serif;
+  }
+}
+
 :root {
   --background: #050505;
   --foreground: #ffffff;
