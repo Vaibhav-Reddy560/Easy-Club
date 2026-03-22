@@ -60,8 +60,9 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
       } else {
         throw new Error("Invalid response format from AI");
       }
-    } catch (err: any) {
-      setPromoError(err.message || "Failed to generate promo content");
+    } catch (err: unknown) {
+      const error = err as Error;
+      setPromoError(error.message || "Failed to generate promo content");
     } finally {
       setIsGeneratingPromo(false);
     }
@@ -79,8 +80,9 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
       if (!response.ok) throw new Error("Letter generation failed");
       const data = await response.json();
       letterGen.setSuccess(data.content);
-    } catch (err: any) {
-      letterGen.setError(err.message);
+    } catch (err: unknown) {
+      const error = err as Error;
+      letterGen.setError(error.message);
     }
   };
 
@@ -96,8 +98,9 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
       if (!response.ok) throw new Error("Sheet generation failed");
       const data = await response.json();
       sheetGen.setSuccess(data.data);
-    } catch (err: any) {
-      sheetGen.setError(err.message);
+    } catch (err: unknown) {
+      const error = err as Error;
+      sheetGen.setError(error.message);
     }
   };
 
@@ -262,9 +265,9 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5 text-neutral-400">
-                {sheetGen.result.map((row: any, i: number) => (
+                {sheetGen.result.map((row: Record<string, string | number>, i: number) => (
                   <tr key={i} className="hover:bg-white/5 transition-colors">
-                    {Object.values(row).map((val: any, j: number) => (
+                    {Object.values(row).map((val: string | number, j: number) => (
                       <td key={j} className="px-6 py-4">{val}</td>
                     ))}
                   </tr>

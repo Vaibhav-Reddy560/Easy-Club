@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { Search, MapPin, Instagram, Linkedin, Twitter, Facebook, ExternalLink, Loader2, Sparkles, Globe2, Youtube, Bookmark, BookmarkCheck } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 
@@ -387,12 +388,12 @@ export default function ExploreClubs() {
                                     >
                                         {isSaved ? <BookmarkCheck className="w-4 h-4" /> : <Bookmark className="w-4 h-4" />}
                                     </button>
-                                    <img
+                                    <Image
                                         src={club.imageUrl || getFallbackImage(type)}
-                                        alt=""
-                                        onError={(e) => {
-                                            (e.target as HTMLImageElement).src = getFallbackImage(type);
-                                        }}
+                                        alt={club.name}
+                                        width={800}
+                                        height={400}
+                                        unoptimized
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[0.5] group-hover:grayscale-0"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />

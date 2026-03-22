@@ -20,6 +20,42 @@ interface SerperResult {
     snippet: string;
 }
 
+export interface Club {
+    name: string;
+    college: string;
+    description: string;
+    location: string;
+    website: string;
+    social: {
+        instagram?: string;
+        linkedin?: string;
+    };
+    imageUrl: string;
+}
+
+export interface Event {
+    name: string;
+    clubName: string;
+    college: string;
+    description: string;
+    date: string;
+    location: string;
+    website: string;
+    imageUrl: string;
+    tags: string[];
+}
+
+export interface Resource {
+    name: string;
+    role: string;
+    location: string;
+    website: string;
+    platform: string;
+    imageUrl: string;
+    tags: string[];
+    reason?: string;
+}
+
 export async function searchSerper(query: string, serperKey: string, num = 25): Promise<SerperResult[]> {
     try {
         const response = await fetch("https://google.serper.dev/search", {
@@ -55,7 +91,7 @@ function extractCollege(text: string): string {
     return genericMatch ? genericMatch[0] : "";
 }
 
-export function parseSerperResultsToClubs(results: SerperResult[], location: string): unknown[] {
+export function parseSerperResultsToClubs(results: SerperResult[], location: string): Club[] {
     return results.map(r => {
         const college = extractCollege(r.title + " " + r.snippet);
         const name = cleanName(r.title, college);
@@ -73,7 +109,7 @@ export function parseSerperResultsToClubs(results: SerperResult[], location: str
     }).filter((item): item is NonNullable<typeof item> => item !== null);
 }
 
-export function parseSerperResultsToEvents(results: SerperResult[], location: string): unknown[] {
+export function parseSerperResultsToEvents(results: SerperResult[], location: string): Event[] {
     return results.map(r => {
         const fullText = (r.title + " " + r.snippet).toLowerCase();
         let imageUrl = "https://images.unsplash.com/photo-1540575467063-178a50c2df87";
@@ -94,7 +130,7 @@ export function parseSerperResultsToEvents(results: SerperResult[], location: st
     });
 }
 
-export function parseSerperResultsToResources(results: SerperResult[], location: string): unknown[] {
+export function parseSerperResultsToResources(results: SerperResult[], location: string): Resource[] {
     return results.map(r => {
         const url = r.link || "";
         const title = r.title || "";
@@ -136,7 +172,7 @@ export interface VerifiedResource {
     website: string;
 }
 
-export async function verifyResourcesWithAI(rawResources: BaseResource[], domain: string, location: string): Promise<unknown[]> {
+export async function verifyResourcesWithAI(rawResources: BaseResource[], domain: string, location: string): Promise<Resource[]> {
     if (rawResources.length === 0) return [];
 
     const candidates = rawResources.slice(0, 15).map(r => ({
@@ -160,7 +196,18 @@ export async function verifyResourcesWithAI(rawResources: BaseResource[], domain
     RETURN ONLY a JSON array: [{ name, role, college_affiliation, reason, website }].`;
 
     const response = await callGeminiSafe(prompt);
-    if (!response) return rawResources;
+    if (!response) {
+        return (rawResources as BaseResource[]).map(r => ({
+            name: r.name,
+            role: "Resource",
+            location,
+            website: r.website,
+            platform: "web",
+            imageUrl: `https://ui-avatars.com/api/?name=${r.name.replace(/\s+/g, "+")}&background=random&color=fff`,
+            tags: [domain, "Found"],
+            reason: r.description
+        }));
+    }
 
     try {
         const start = response.indexOf("[");
@@ -176,6 +223,15 @@ export async function verifyResourcesWithAI(rawResources: BaseResource[], domain
         }));
     } catch {
         // Ensure even on parse failure we return something renderable
-        return rawResources.map(r => ({ ...r, tags: [domain, "Found"] }));
+        return (rawResources as BaseResource[]).map(r => ({
+            name: r.name,
+            role: "Resource",
+            location,
+            website: r.website,
+            platform: "web",
+            imageUrl: `https://ui-avatars.com/api/?name=${r.name.replace(/\s+/g, "+")}&background=random&color=fff`,
+            tags: [domain, "Found"],
+            reason: r.description
+        }));
     }
 }

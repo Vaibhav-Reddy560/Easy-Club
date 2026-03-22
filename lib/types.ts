@@ -62,8 +62,8 @@ export interface User {
 export type GenerationStatus = 'idle' | 'generating' | 'success' | 'error';
 
 export interface GenerationState {
-    status: GenerationStatus;
-    progress: number;
-    error: string | null;
-    result: any;
+  status: GenerationStatus;
+  progress: number;
+  error: string | null;
+  result: unknown;
 }

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { Search, MapPin, Calendar, Trophy, ExternalLink, Loader2, Sparkles } from "lucide-react";
 
 const EVENT_CATEGORIES = ["Hackathon", "Workshop", "Summit", "Competition", "Cultural", "Webinar"];
@@ -221,9 +222,12 @@ export default function ExploreEvents() {
                             </div>
 
                             <div className="h-48 relative overflow-hidden">
-                                <img
+                                <Image
                                     src={event.imageUrl}
                                     alt={event.name}
+                                    width={400}
+                                    height={200}
+                                    unoptimized
                                     className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { Search, MapPin, Users, Award, ExternalLink, Linkedin, Twitter, Github, Globe, Loader2, Sparkles, Trophy } from "lucide-react";
 
 interface ResourcePerson {
@@ -158,9 +159,12 @@ export default function ResourceRadar() {
                                     <div className="flex items-start gap-4">
                                         <div className="relative">
                                             <div className="absolute inset-0 bg-gold-500/20 blur-xl scale-125 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                            <img
+                                            <Image
                                                 src={person.imageUrl}
                                                 alt={person.name}
+                                                width={64}
+                                                height={64}
+                                                unoptimized
                                                 className="w-16 h-16 rounded-2xl object-cover border border-white/10 relative z-10"
                                             />
                                         </div>

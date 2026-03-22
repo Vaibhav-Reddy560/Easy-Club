@@ -4,7 +4,7 @@
  */
 
 const API_KEY = process.env.AYRSHARE_API_KEY;
-const API_URL = "https://app.ayrshare.com/api/analytics";
+const API_URL = "https://api.ayrshare.com/api/analytics";
 
 export interface AyrshareAnalytics {
     likes: number;
