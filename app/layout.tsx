@@ -1,30 +1,8 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const airstream = localFont({
-  src: "./fonts/airstream.ttf",
-  variable: "--font-airstream",
-  display: "swap",
-});
-
-const dymaxion = localFont({
-  src: "./fonts/dymaxion.ttf",
-  variable: "--font-dymaxion",
-  display: "swap",
-});
-
-const sometype = localFont({
-  src: "./fonts/sometype-mono.ttf",
-  variable: "--font-sometype",
-  display: "swap",
-});
-
-const astronomus = localFont({
-  src: "./fonts/astronomus.ttf",
-  variable: "--font-astronomus",
-  display: "swap",
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Easy Club",
@@ -38,9 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${airstream.variable} ${dymaxion.variable} ${sometype.variable} ${astronomus.variable} font-sometype antialiased`}
-      >
+      <body className={`${inter.className} antialiased`}>
         {children}
       </body>
     </html>
