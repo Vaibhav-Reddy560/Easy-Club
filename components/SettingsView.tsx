@@ -25,7 +25,12 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
   const [animations, setAnimations] = useState(true);
   const [density, setDensity] = useState("stable");
 
-  const sections = [
+  type SettingsOption = 
+    | { type: "select" | "segments"; label: string; value: string; options: string[]; onChange: (v: string) => void }
+    | { type: "toggle"; label: string; value: string | boolean; enabled: boolean; onChange: () => void }
+    | { type: "badge" | "text" | "color"; label: string; value: string | boolean; onChange?: (v: string) => void };
+
+  const sections: { id: string; title: string; icon: any; description: string; options: SettingsOption[] }[] = [
     {
       id: "ai",
       title: "AI Orchestration",
@@ -34,7 +39,7 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
       options: [
         { label: "Active Model", value: aiModel, type: "select", options: ["Gemini 2.0 Pro", "Gemini 1.5 Flash", "Gemini Ultra"], onChange: (v: string) => setAiModel(v.toLowerCase().replace(/ /g, '-')) },
         { label: "Creativity bias", value: "High", type: "badge" },
-        { label: "Token Optimization", value: "Active", type: "toggle", enabled: true }
+        { label: "Token Optimization", value: "Active", type: "toggle", enabled: true, onChange: () => {} }
       ]
     },
     {
