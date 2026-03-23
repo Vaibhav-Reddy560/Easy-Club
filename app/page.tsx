@@ -29,6 +29,7 @@ import SocialWorkspace from "@/components/domains/SocialWorkspace";
 import AccountView from "@/components/AccountView";
 import AnalyticsView from "@/components/AnalyticsView";
 import SettingsView from "@/components/SettingsView";
+import MembershipView from "@/components/MembershipView";
 import { Club, ClubEvent, EventConfig } from "@/lib/types";
 import { useAuth } from "@/lib/auth";
 import { signInWithGoogle, logout } from "@/lib/firebase";
@@ -459,6 +460,10 @@ export default function App() {
 
           <div className={`${activeNav === 'explore-events' ? 'block' : 'hidden'}`}>
             <ExploreEvents />
+          </div>
+
+          <div className={`${activeNav === 'membership' ? 'block' : 'hidden'}`}>
+            <MembershipView clubs={clubs} setClubs={setClubs} />
           </div>
 
           <div className={`${activeNav === 'social-tracker' ? 'block' : 'hidden'}`}>

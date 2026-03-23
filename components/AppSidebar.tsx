@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { Globe, Trophy, Folder, Zap, BarChart3, Banknote } from "lucide-react";
+import { Globe, Trophy, Folder, Zap, BarChart3, Banknote, Users } from "lucide-react";
 import { motion } from "framer-motion";
 
-export type NavSection = 'explore-clubs' | 'explore-events' | 'my-clubs' | 'trending' | 'social-tracker' | 'sponsorship';
+export type NavSection = 'explore-clubs' | 'explore-events' | 'my-clubs' | 'trending' | 'social-tracker' | 'sponsorship' | 'membership';
 
 interface AppSidebarProps {
     activeSection: NavSection;
@@ -16,6 +16,7 @@ export default function AppSidebar({ activeSection, onSectionChange }: AppSideba
         { id: 'explore-clubs' as NavSection, label: 'Explore Clubs', icon: Globe },
         { id: 'explore-events' as NavSection, label: 'Explore Events', icon: Trophy },
         { id: 'my-clubs' as NavSection, label: 'My Clubs', icon: Folder },
+        { id: 'membership' as NavSection, label: 'Membership & Core', icon: Users },
         { id: 'trending' as NavSection, label: 'Trending Event Ideas', icon: Zap },
         { id: 'social-tracker' as NavSection, label: 'Social Tracker', icon: BarChart3 },
         { id: 'sponsorship' as NavSection, label: 'Funding & Sponsorship', icon: Banknote },

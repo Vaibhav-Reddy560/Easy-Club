@@ -36,10 +36,24 @@ export interface ClubEvent {
     config: EventConfig;
 }
 
+export type MemberRole = 'General Member' | 'Junior Core' | 'Senior Core';
+export type RecruitmentBasis = 'Fee Paid' | 'Test Passed';
+
+export interface ClubMember {
+    id: string;
+    name: string;
+    email: string;
+    role: MemberRole;
+    joinDate: string;
+    basis: RecruitmentBasis;
+    testDetails?: string;
+}
+
 export interface Club {
     id: string;
     name: string;
     events: ClubEvent[];
+    members?: ClubMember[];
     socialConnections?: {
         [platform: string]: {
             lastConnected: string;
