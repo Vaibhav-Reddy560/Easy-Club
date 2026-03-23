@@ -1,26 +1,32 @@
 "use client";
 
 import React from "react";
-import { Globe, Trophy, Folder, Zap, BarChart3, Banknote, Users } from "lucide-react";
+import { Globe, Trophy, Folder, Zap, BarChart3, Banknote, Users, Shield } from "lucide-react";
 import { motion } from "framer-motion";
+import { MemberRole } from "@/lib/types";
 
-export type NavSection = 'explore-clubs' | 'explore-events' | 'my-clubs' | 'trending' | 'social-tracker' | 'sponsorship' | 'membership';
+export type NavSection = 'explore-clubs' | 'explore-events' | 'my-clubs' | 'my-team' | 'membership' | 'trending' | 'social-tracker' | 'sponsorship';
 
 interface AppSidebarProps {
     activeSection: NavSection;
     onSectionChange: (section: NavSection) => void;
+    userRole?: MemberRole;
 }
 
-export default function AppSidebar({ activeSection, onSectionChange }: AppSidebarProps) {
+export default function AppSidebar({ activeSection, onSectionChange, userRole = 'Admin' }: AppSidebarProps) {
     const sections = [
+        { id: 'my-team' as NavSection, label: 'My Team Hub', icon: Shield },
         { id: 'explore-clubs' as NavSection, label: 'Explore Clubs', icon: Globe },
         { id: 'explore-events' as NavSection, label: 'Explore Events', icon: Trophy },
         { id: 'my-clubs' as NavSection, label: 'My Clubs', icon: Folder },
-        { id: 'membership' as NavSection, label: 'Membership & Core', icon: Users },
+        { id: 'membership' as NavSection, label: 'Membership and Recruitment', icon: Users, restricted: true },
         { id: 'trending' as NavSection, label: 'Trending Event Ideas', icon: Zap },
         { id: 'social-tracker' as NavSection, label: 'Social Tracker', icon: BarChart3 },
-        { id: 'sponsorship' as NavSection, label: 'Funding & Sponsorship', icon: Banknote },
-    ];
+        { id: 'sponsorship' as NavSection, label: 'Funding & Sponsorship', icon: Banknote, restricted: true },
+    ].filter(section => {
+        if (userRole === 'Junior Core' && section.restricted) return false;
+        return true;
+    });
 
     return (
         <aside className="w-80 flex flex-col pt-16 pr-8 border-r border-white/5 space-y-8 sticky top-20 h-[calc(100vh-5rem)]">

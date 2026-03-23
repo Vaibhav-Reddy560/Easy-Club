@@ -10,9 +10,10 @@ interface ContentWorkspaceProps {
   activeEvent: ClubEvent | undefined;
   activeClub: Club | undefined;
   updateConfig: (newData: Partial<EventConfig>) => void;
+  onLogActivity: (domain: 'Design' | 'Content' | 'Social' | 'Management', action: string, details?: string) => void;
 }
 
-export default function ContentWorkspace({ activeEvent, activeClub, updateConfig }: ContentWorkspaceProps) {
+export default function ContentWorkspace({ activeEvent, activeClub, updateConfig, onLogActivity }: ContentWorkspaceProps) {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [isGeneratingPromo, setIsGeneratingPromo] = useState(false);
   const [promoError, setPromoError] = useState<string | null>(null);
@@ -57,6 +58,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
             content: { long: data.standard, short: data.concise }
           }
         });
+        onLogActivity('Content', 'Generated Event Promo', `Blueprinted standard and concise copy for ${activeEvent.name}`);
       } else {
         throw new Error("Invalid response format from AI");
       }
@@ -80,6 +82,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
       if (!response.ok) throw new Error("Letter generation failed");
       const data = await response.json();
       letterGen.setSuccess(data.content);
+      onLogActivity('Content', 'Generated Permission Letter', `Created official documentation for ${activeEvent.name}`);
     } catch (err: unknown) {
       const error = err as Error;
       letterGen.setError(error.message);
@@ -98,6 +101,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
       if (!response.ok) throw new Error("Sheet generation failed");
       const data = await response.json();
       sheetGen.setSuccess(data.data);
+      onLogActivity('Content', 'Generated Roster Template', `Initialized member tracking sheet for ${activeEvent.name}`);
     } catch (err: unknown) {
       const error = err as Error;
       sheetGen.setError(error.message);

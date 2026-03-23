@@ -12,7 +12,7 @@ interface MembershipViewProps {
 
 export default function MembershipView({ clubs, setClubs }: MembershipViewProps) {
   const [selectedClubId, setSelectedClubId] = useState<string | null>(clubs[0]?.id || null);
-  const [activeTab, setActiveTab] = useState<'directory' | 'recruitment'>('directory');
+  const [activeTab, setActiveTab] = useState<'junior-core' | 'recruitment-pool' | 'new-recruit'>('junior-core');
 
   // Form State
   const [newName, setNewName] = useState("");
@@ -51,7 +51,7 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
     setNewName("");
     setNewEmail("");
     setNewTestDetails("");
-    setActiveTab('directory');
+    setActiveTab('recruitment-pool');
   };
 
   const handlePromote = (memberId: string, currentRole: MemberRole) => {
@@ -87,9 +87,9 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
       {/* Header & Selector */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h2 className="text-4xl font-astronomus text-gold-500 uppercase tracking-tighter">Membership & Core</h2>
+          <h2 className="text-4xl font-astronomus text-gold-500 uppercase tracking-tighter">Membership and Recruitment</h2>
           <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-[0.2em] mt-2">
-            Recruitment, Roster, and Leadership Hierarchy
+            Selective Onboarding and Core Team Management
           </p>
         </div>
 
@@ -107,46 +107,25 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-neutral-900/40 border border-white/5 rounded-3xl p-6 hover:border-gold-500/30 transition-colors">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="p-3 bg-white/5 rounded-xl"><Users className="w-5 h-5 text-gold-500" /></div>
-            <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">Total Roster</p>
-          </div>
-          <p className="text-4xl font-astronomus text-white">{members.length}</p>
-        </div>
-        <div className="bg-neutral-900/40 border border-white/5 rounded-3xl p-6 hover:border-gold-500/30 transition-colors">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="p-3 bg-white/5 rounded-xl"><Shield className="w-5 h-5 text-gold-500" /></div>
-            <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">Junior Core</p>
-          </div>
-          <p className="text-4xl font-astronomus text-white">
-            {members.filter(m => m.role === 'Junior Core').length}
-          </p>
-        </div>
-        <div className="bg-neutral-900/40 border border-white/5 rounded-3xl p-6 hover:border-gold-500/30 transition-colors">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="p-3 bg-white/5 rounded-xl"><Award className="w-5 h-5 text-gold-500" /></div>
-            <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">Senior Core</p>
-          </div>
-          <p className="text-4xl font-astronomus text-white">
-            {members.filter(m => m.role === 'Senior Core').length}
-          </p>
-        </div>
-      </div>
+      {/* Stats Section Removed as per User Request */}
 
       {/* Tabs */}
       <div className="flex gap-4 border-b border-white/10">
         <button
-          onClick={() => setActiveTab('directory')}
-          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'directory' ? 'text-gold-500 border-gold-500' : 'text-neutral-500 border-transparent hover:text-neutral-300'}`}
+          onClick={() => setActiveTab('junior-core')}
+          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'junior-core' ? 'text-gold-500 border-gold-500' : 'text-neutral-500 border-transparent hover:text-neutral-300'}`}
         >
-          Member Directory
+          Junior Core Team
         </button>
         <button
-          onClick={() => setActiveTab('recruitment')}
-          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'recruitment' ? 'text-gold-500 border-gold-500' : 'text-neutral-500 border-transparent hover:text-neutral-300'}`}
+          onClick={() => setActiveTab('recruitment-pool')}
+          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'recruitment-pool' ? 'text-gold-500 border-gold-500' : 'text-neutral-500 border-transparent hover:text-neutral-300'}`}
+        >
+          General Roster
+        </button>
+        <button
+          onClick={() => setActiveTab('new-recruit')}
+          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'new-recruit' ? 'text-gold-500 border-gold-500' : 'text-neutral-500 border-transparent hover:text-neutral-300'}`}
         >
           New Recruitment
         </button>
@@ -154,7 +133,7 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
 
       {/* Content */}
       <div className="min-h-[500px]">
-        {activeTab === 'directory' && (
+        {activeTab === 'junior-core' && (
           <div className="bg-neutral-900/40 border border-white/5 rounded-[2rem] overflow-hidden">
             <table className="w-full text-left text-sm">
               <thead className="bg-black/40 text-[10px] font-black uppercase tracking-widest text-gold-500/70 border-b border-white/5">
@@ -167,14 +146,16 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
-                {members.length === 0 ? (
+                {members.filter(m => m.role === 'Junior Core').length === 0 ? (
                   <tr>
                     <td colSpan={5} className="py-20 text-center text-neutral-500 uppercase tracking-widest font-bold text-[10px]">
-                      No members recruited yet.
+                      No Junior Core members recruited yet.
                     </td>
                   </tr>
                 ) : (
-                  members.map(member => (
+                  members
+                    .filter(m => m.role === 'Junior Core')
+                    .map(member => (
                     <tr key={member.id} className="hover:bg-white/[0.02] transition-colors group">
                       <td className="px-8 py-6">
                         <p className="font-bold text-white mb-1">{member.name}</p>
@@ -227,7 +208,48 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
           </div>
         )}
 
-        {activeTab === 'recruitment' && (
+        {activeTab === 'recruitment-pool' && (
+          <div className="bg-neutral-900/40 border border-white/5 rounded-[2rem] overflow-hidden">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-black/40 text-[10px] font-black uppercase tracking-widest text-neutral-500/70 border-b border-white/5">
+                <tr>
+                  <th className="px-8 py-5">General Member</th>
+                  <th className="px-8 py-5 text-right">Selection for Core</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {members.filter(m => m.role === 'General Member').length === 0 ? (
+                  <tr>
+                    <td colSpan={2} className="py-20 text-center text-neutral-500 uppercase tracking-widest font-bold text-[10px]">
+                      No members available for promotion. Recruit first.
+                    </td>
+                  </tr>
+                ) : (
+                  members
+                    .filter(m => m.role === 'General Member')
+                    .map(member => (
+                    <tr key={member.id} className="hover:bg-white/[0.02] transition-colors group">
+                      <td className="px-8 py-6">
+                        <p className="font-bold text-white mb-1">{member.name}</p>
+                        <p className="text-[10px] text-neutral-500 uppercase tracking-wider">{member.email}</p>
+                      </td>
+                      <td className="px-8 py-6 text-right">
+                        <button
+                          onClick={() => handlePromote(member.id, 'General Member')}
+                          className="px-6 py-2 bg-gold-500 text-black rounded-lg text-[9px] font-black uppercase tracking-widest hover:brightness-110 transition-all"
+                        >
+                          Select for Junior Core
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {activeTab === 'new-recruit' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <form onSubmit={handleRecruitMember} className="bg-neutral-900/60 border border-white/5 rounded-[2.5rem] p-10 space-y-8">
               <div>
@@ -306,10 +328,10 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
                 The Club Core is composed of driven individuals who manage the club. Recruit members first, then promote exceptional candidates to <strong className="text-blue-400 font-bold">Junior Core</strong> and <strong className="text-gold-400 font-bold">Senior Core</strong> from the Member Directory.
               </p>
               <button 
-                onClick={() => setActiveTab('directory')}
+                onClick={() => setActiveTab('recruitment-pool')}
                 className="px-6 py-3 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest text-neutral-400 hover:text-white hover:bg-white/5 transition-all"
               >
-                Go to Directory to Promote
+                Go to Recruitment Pool
               </button>
             </div>
           </div>

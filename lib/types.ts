@@ -36,8 +36,26 @@ export interface ClubEvent {
     config: EventConfig;
 }
 
-export type MemberRole = 'General Member' | 'Junior Core' | 'Senior Core';
+export type MemberRole = 'Admin' | 'Senior Core' | 'Junior Core' | 'General Member';
 export type RecruitmentBasis = 'Fee Paid' | 'Test Passed';
+
+export interface TeamInvite {
+    id: string;
+    email: string;
+    role: MemberRole;
+    status: 'pending' | 'accepted' | 'declined';
+    sentAt: string;
+}
+
+export interface ActivityLogEvent {
+    id: string;
+    userId: string;
+    userName: string;
+    action: string;
+    domain: 'Design' | 'Content' | 'Social' | 'Management';
+    timestamp: string;
+    details?: string;
+}
 
 export interface ClubMember {
     id: string;
@@ -54,6 +72,8 @@ export interface Club {
     name: string;
     events: ClubEvent[];
     members?: ClubMember[];
+    invites?: TeamInvite[];
+    activityLog?: ActivityLogEvent[];
     socialConnections?: {
         [platform: string]: {
             lastConnected: string;

@@ -14,6 +14,7 @@ import * as htmlToImage from "html-to-image";
 interface DesignWorkspaceProps {
   activeEvent: ClubEvent | undefined;
   updateConfig?: (newData: Partial<EventConfig>) => void;
+  onLogActivity: (domain: 'Design' | 'Content' | 'Social' | 'Management', action: string, details?: string) => void;
 }
 
 interface VibeData {
@@ -70,7 +71,7 @@ function getCertificateUrl(subType?: string): string {
 }
 
 // ─── Component ───────────────────────────────────────────────────────
-export default function DesignWorkspace({ activeEvent }: DesignWorkspaceProps) {
+export default function DesignWorkspace({ activeEvent, updateConfig, onLogActivity }: DesignWorkspaceProps) {
   const config = activeEvent?.config || {};
   const posterRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -151,6 +152,7 @@ export default function DesignWorkspace({ activeEvent }: DesignWorkspaceProps) {
       const data: VibeData = await res.json();
       setVibeData(data);
       vibeGen.setSuccess(data);
+      onLogActivity('Design', 'Drafted Design Vibe', `Engineered ${data.vibe} aesthetic for ${activeEvent.name} ${activeTab}`);
     } catch (err: unknown) {
       vibeGen.setError(err instanceof Error ? err.message : "Unknown error");
     }
@@ -211,6 +213,7 @@ export default function DesignWorkspace({ activeEvent }: DesignWorkspaceProps) {
         }
         imageGen.updateProgress(100);
         imageGen.setSuccess(data.image);
+        onLogActivity('Design', 'Generated Visual Asset', `Composed AI background for ${activeEvent.name} using Pollinations engine`);
       };
       img.onerror = () => imageGen.setError("Failed to load generated image");
     } catch (err: unknown) {
@@ -246,6 +249,7 @@ export default function DesignWorkspace({ activeEvent }: DesignWorkspaceProps) {
       link.download = `${activeEvent?.name || "design"}-${activeTab}.png`;
       link.href = dataUrl;
       link.click();
+      onLogActivity('Design', 'Exported Design', `Finalized and downloaded ${activeTab} for ${activeEvent?.name}`);
     } catch {
       // Fallback: try without external fonts
       try {

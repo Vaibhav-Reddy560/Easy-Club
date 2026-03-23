@@ -30,7 +30,8 @@ import AccountView from "@/components/AccountView";
 import AnalyticsView from "@/components/AnalyticsView";
 import SettingsView from "@/components/SettingsView";
 import MembershipView from "@/components/MembershipView";
-import { Club, ClubEvent, EventConfig } from "@/lib/types";
+import MyTeamView from "@/components/MyTeamView";
+import { Club, ClubEvent, EventConfig, MemberRole, ActivityLogEvent } from "@/lib/types";
 import { useAuth } from "@/lib/auth";
 import { signInWithGoogle, logout } from "@/lib/firebase";
 
@@ -46,6 +47,8 @@ export default function App() {
   const [activeClubId, setActiveClubId] = useState<string | null>(null);
   const [activeEventId, setActiveEventId] = useState<string | null>(null);
   const [activeDomain, setActiveDomain] = useState<'Design' | 'Content' | 'Social'>('Design');
+
+  const [currentUserRole, setCurrentUserRole] = useState<MemberRole>('Admin');
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'club' | 'event'>('club');
@@ -79,6 +82,21 @@ export default function App() {
     }
     setLoading(false);
   }, [user, authLoading]);
+
+  // Calculate current user role whenever club or user changes
+  useEffect(() => {
+    if (!user || !activeClub) {
+      setCurrentUserRole('Admin'); // Default to Admin for personal clips
+      return;
+    }
+
+    const memberMatch = activeClub.members?.find(m => m.email === user.email);
+    if (memberMatch) {
+      setCurrentUserRole(memberMatch.role);
+    } else {
+      setCurrentUserRole('Admin'); // Original owner
+    }
+  }, [user, activeClub]);
 
   // Save data to localStorage whenever clubs state changes
   useEffect(() => {
@@ -192,6 +210,26 @@ export default function App() {
   };
 
 
+  const handleLogActivity = (domain: 'Design' | 'Content' | 'Social' | 'Management', action: string, details?: string) => {
+    if (!activeClubId || !user) return;
+    
+    const newEvent: ActivityLogEvent = {
+      id: Math.random().toString(36).substr(2, 9),
+      userId: user.uid,
+      userName: user.displayName || "Unknown Member",
+      action,
+      domain,
+      timestamp: new Date().toISOString(),
+      details
+    };
+
+    setClubs(prev => prev.map(c => 
+      c.id === activeClubId 
+        ? { ...c, activityLog: [...(c.activityLog || []), newEvent].slice(-50) } // Keep last 50
+        : c
+    ));
+  };
+
   const updateEventConfig = (newData: Partial<EventConfig>) => {
     if (!activeClubId || !activeEventId) return;
     setClubs(clubs.map(c => {
@@ -278,7 +316,11 @@ export default function App() {
       />
 
       <div className="max-w-[1600px] mx-auto flex px-6">
-        <AppSidebar activeSection={activeNav} onSectionChange={handleNavChange} />
+        <AppSidebar 
+          activeSection={activeNav} 
+          onSectionChange={handleNavChange} 
+          userRole={currentUserRole}
+        />
 
         <main className="flex-1 py-16 px-12">
           {/* We use display management instead of simple conditional rendering for Explore tabs 
@@ -424,9 +466,9 @@ export default function App() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                     >
-                      {activeDomain === 'Design' && <DesignWorkspace activeEvent={activeEvent} />}
-                      {activeDomain === 'Content' && <ContentWorkspace activeEvent={activeEvent} activeClub={activeClub} updateConfig={updateEventConfig} />}
-                      {activeDomain === 'Social' && <SocialWorkspace activeEvent={activeEvent} />}
+                      {activeDomain === 'Design' && <DesignWorkspace activeEvent={activeEvent} onLogActivity={handleLogActivity} />}
+                      {activeDomain === 'Content' && <ContentWorkspace activeEvent={activeEvent} activeClub={activeClub} updateConfig={updateEventConfig} onLogActivity={handleLogActivity} />}
+                      {activeDomain === 'Social' && <SocialWorkspace activeEvent={activeEvent} onLogActivity={handleLogActivity} />}
                     </motion.div>
                   </AnimatePresence>
                 </motion.div>
@@ -460,6 +502,16 @@ export default function App() {
 
           <div className={`${activeNav === 'explore-events' ? 'block' : 'hidden'}`}>
             <ExploreEvents />
+          </div>
+
+          <div className={`${activeNav === 'my-team' ? 'block' : 'hidden'}`}>
+            <MyTeamView 
+              user={user} 
+              activeClub={activeClub} 
+              onUpdateClub={(updatedClub: Club) => {
+                setClubs(prev => prev.map(c => c.id === activeClubId ? updatedClub : c));
+              }}
+            />
           </div>
 
           <div className={`${activeNav === 'membership' ? 'block' : 'hidden'}`}>
