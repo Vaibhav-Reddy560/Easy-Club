@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Users, Shield, UserPlus, Check, Award, ChevronDown, UserCheck } from "lucide-react";
+import { motion } from "framer-motion";
+import { Users, Shield, UserPlus, Check, Award, ChevronDown, UserCheck, X } from "lucide-react";
 import { Club, ClubMember, MemberRole, RecruitmentBasis } from "@/lib/types";
 
 interface MembershipViewProps {
@@ -76,7 +77,7 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
       <div className="flex flex-col items-center justify-center py-32 text-center">
         <Users className="w-16 h-16 text-neutral-800 mb-6" />
         <h3 className="text-2xl font-bold text-white mb-2 uppercase tracking-widest">No Clubs Established</h3>
-        <p className="text-neutral-500 text-sm">Create a club in "My Clubs" before tracking members.</p>
+        <p className="text-neutral-500 text-sm">Create a club in &quot;My Clubs&quot; before tracking members.</p>
       </div>
     );
   }
