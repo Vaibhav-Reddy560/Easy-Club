@@ -20,15 +20,14 @@ import {
     Share2,
     Info
 } from "lucide-react";
-import { Club, MemberRole, TeamInvite, ActivityLogEvent } from "@/lib/types";
+import { Club, MemberRole, TeamInvite, ActivityLogEvent, ClubMember } from "@/lib/types";
 
 interface MyTeamViewProps {
-    user: any;
     activeClub: Club | undefined;
     onUpdateClub: (updatedClub: Club) => void;
 }
 
-export default function MyTeamView({ user, activeClub, onUpdateClub }: MyTeamViewProps) {
+export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps) {
     const [activeTab, setActiveTab] = useState<'roster' | 'invites' | 'activity'>('roster');
     const [inviteEmail, setInviteEmail] = useState("");
     const [inviteRole, setInviteRole] = useState<MemberRole>('Junior Core');
@@ -71,7 +70,7 @@ export default function MyTeamView({ user, activeClub, onUpdateClub }: MyTeamVie
         const invite = invites.find((i: TeamInvite) => i.id === inviteId);
         if (!invite) return;
 
-        let updatedMembers = [...members];
+        const updatedMembers = [...members];
         if (action === 'accepted') {
             updatedMembers.push({
                 id: Math.random().toString(36).substr(2, 9),
@@ -177,7 +176,7 @@ export default function MyTeamView({ user, activeClub, onUpdateClub }: MyTeamVie
                                     <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">No core members yet. Send an invite to begin collaborating.</p>
                                 </div>
                             ) : (
-                                members.map((member: any) => (
+                                members.map((member: ClubMember) => (
                                     <div key={member.id} className="bg-neutral-900/40 border border-white/5 rounded-3xl p-8 flex items-center justify-between hover:border-gold-500/30 transition-all group">
                                         <div className="flex items-center gap-6">
                                             <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-neutral-800 to-neutral-900 flex items-center justify-center text-xl font-black text-gold-500 border border-white/10 shadow-xl group-hover:scale-110 transition-transform">
@@ -239,7 +238,7 @@ export default function MyTeamView({ user, activeClub, onUpdateClub }: MyTeamVie
                                                 <button
                                                     key={role}
                                                     type="button"
-                                                    onClick={() => setInviteRole(role as any)}
+                                                    onClick={() => setInviteRole(role as MemberRole)}
                                                     className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${inviteRole === role ? 'bg-gold-500/10 border-gold-500 text-gold-500 shadow-gold-glow' : 'bg-black/40 border-white/10 text-neutral-500 hover:border-white/30'}`}
                                                 >
                                                     {role}

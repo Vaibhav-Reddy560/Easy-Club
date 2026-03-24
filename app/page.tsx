@@ -468,7 +468,7 @@ export default function App() {
                     >
                       {activeDomain === 'Design' && <DesignWorkspace activeEvent={activeEvent} onLogActivity={handleLogActivity} />}
                       {activeDomain === 'Content' && <ContentWorkspace activeEvent={activeEvent} activeClub={activeClub} updateConfig={updateEventConfig} onLogActivity={handleLogActivity} />}
-                      {activeDomain === 'Social' && <SocialWorkspace activeEvent={activeEvent} onLogActivity={handleLogActivity} />}
+                      {activeDomain === 'Social' && <SocialWorkspace activeEvent={activeEvent} />}
                     </motion.div>
                   </AnimatePresence>
                 </motion.div>
@@ -506,7 +506,6 @@ export default function App() {
 
           <div className={`${activeNav === 'my-team' ? 'block' : 'hidden'}`}>
             <MyTeamView 
-              user={user} 
               activeClub={activeClub} 
               onUpdateClub={(updatedClub: Club) => {
                 setClubs(prev => prev.map(c => c.id === activeClubId ? updatedClub : c));

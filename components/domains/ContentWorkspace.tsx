@@ -68,7 +68,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
     } finally {
       setIsGeneratingPromo(false);
     }
-  }, [activeEvent, activeClub, updateConfig]);
+  }, [activeEvent, activeClub, updateConfig, onLogActivity]);
 
   const handleGenerateLetter = async () => {
     if (!activeEvent || !activeClub) return;

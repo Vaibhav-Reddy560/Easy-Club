@@ -8,8 +8,6 @@ import ResourceRadar from "../ResourceRadar";
 
 interface SocialWorkspaceProps {
   activeEvent: ClubEvent | undefined;
-  updateConfig?: (newData: Partial<EventConfig>) => void;
-  onLogActivity: (domain: 'Design' | 'Content' | 'Social' | 'Management', action: string, details?: string) => void;
 }
 
 interface Expert {
@@ -19,7 +17,7 @@ interface Expert {
   location: string;
 }
 
-export default function SocialWorkspace({ activeEvent, onLogActivity }: SocialWorkspaceProps) {
+export default function SocialWorkspace({ activeEvent }: SocialWorkspaceProps) {
   const [activeTab, setActiveTab] = React.useState<'radar' | 'proposals'>('radar');
   const config = activeEvent?.config || {};
   const city = config.city || "Bengaluru";

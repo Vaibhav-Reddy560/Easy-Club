@@ -13,7 +13,6 @@ import * as htmlToImage from "html-to-image";
 // ─── Types ───────────────────────────────────────────────────────────
 interface DesignWorkspaceProps {
   activeEvent: ClubEvent | undefined;
-  updateConfig?: (newData: Partial<EventConfig>) => void;
   onLogActivity: (domain: 'Design' | 'Content' | 'Social' | 'Management', action: string, details?: string) => void;
 }
 
@@ -71,7 +70,7 @@ function getCertificateUrl(subType?: string): string {
 }
 
 // ─── Component ───────────────────────────────────────────────────────
-export default function DesignWorkspace({ activeEvent, updateConfig, onLogActivity }: DesignWorkspaceProps) {
+export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWorkspaceProps) {
   const config = activeEvent?.config || {};
   const posterRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
