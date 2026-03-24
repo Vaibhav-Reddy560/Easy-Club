@@ -15,7 +15,7 @@ interface AppSidebarProps {
 
 export default function AppSidebar({ activeSection, onSectionChange, userRole = 'Admin' }: AppSidebarProps) {
     const sections = [
-        { id: 'my-team' as NavSection, label: 'My Team Hub', icon: Shield },
+        { id: 'my-team' as NavSection, label: 'My Team', icon: Shield },
         { id: 'explore-clubs' as NavSection, label: 'Explore Clubs', icon: Globe },
         { id: 'explore-events' as NavSection, label: 'Explore Events', icon: Trophy },
         { id: 'my-clubs' as NavSection, label: 'My Clubs', icon: Folder },
