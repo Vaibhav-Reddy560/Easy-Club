@@ -288,7 +288,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
     <div className="space-y-8">
       {/* Section Header */}
       <div className="flex flex-col gap-2">
-        <h2 className="text-4xl font-astronomus text-gold-500 uppercase tracking-tighter">Design Studio</h2>
+        <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Design Studio</h2>
         <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-[0.2em]">AI-Powered Visual Asset Engine</p>
       </div>
 
@@ -325,7 +325,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
             >
               Open Canva Templates <ExternalLink className="w-4 h-4" />
             </a>
-            <p className="text-[9px] text-neutral-600 uppercase tracking-widest">Best match: <span className="text-gold-500 font-bold">{config.subType || "Event"} Certificate</span></p>
+            <p className="text-[9px] text-neutral-600 uppercase tracking-widest">Best match: <span className="text-signature-gradient font-bold">{config.subType || "Event"} Certificate</span></p>
           </motion.div>
         )}
 
@@ -339,7 +339,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                 {/* Poster sub-dimensions */}
                 {activeTab === "poster" && (
                   <section className="bg-neutral-900/40 border border-white/5 rounded-[2rem] p-6 space-y-4">
-                    <label className="text-[10px] text-gold-500 font-bold uppercase tracking-widest flex items-center gap-2">
+                    <label className="text-[10px] text-signature-gradient font-bold uppercase tracking-widest flex items-center gap-2">
                       <ImageIcon className="w-3 h-3" /> Poster Size
                     </label>
                     <div className="flex gap-2">
@@ -358,7 +358,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
 
                 {/* Creativity Slider */}
                 <section className="bg-neutral-900/40 border border-white/5 rounded-[2rem] p-6 space-y-4">
-                  <label className="text-[10px] text-gold-500 font-bold uppercase tracking-widest flex items-center gap-2">
+                  <label className="text-[10px] text-signature-gradient font-bold uppercase tracking-widest flex items-center gap-2">
                     <Sliders className="w-3 h-3" /> Creativity Level: <span className="text-white ml-1">{creativityLevel}/10</span>
                   </label>
                   <input
@@ -378,13 +378,13 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                 {/* AI Vibe Suggestion */}
                 <section className="bg-neutral-900/40 border border-white/5 rounded-[2rem] p-6 space-y-5">
                   <div className="flex justify-between items-center">
-                    <label className="text-[10px] text-gold-500 font-bold uppercase tracking-widest flex items-center gap-2">
+                    <label className="text-[10px] text-signature-gradient font-bold uppercase tracking-widest flex items-center gap-2">
                       <Sparkles className="w-3 h-3" /> AI Vibe Direction
                     </label>
                     <button
                       onClick={handleSuggestVibe}
                       disabled={vibeGen.status === "generating"}
-                      className="px-4 py-1.5 bg-gold-500/10 border border-gold-500/20 rounded-full text-[9px] font-black uppercase tracking-widest text-gold-500 hover:bg-gold-500/20 transition-all disabled:opacity-50 flex items-center gap-2"
+                      className="px-4 py-1.5 bg-gold-500/10 border border-gold-500/20 rounded-full text-[9px] font-black uppercase tracking-widest text-signature-gradient hover:bg-gold-500/20 transition-all disabled:opacity-50 flex items-center gap-2"
                     >
                       {vibeGen.status === "generating" ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
                       {vibeGen.status === "generating" ? "Thinking..." : vibeData ? "Re-Suggest" : "Suggest Vibe"}
@@ -404,7 +404,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                         {vibeData.vibe}
                       </div>
                       <div className="flex gap-2 text-[9px]">
-                        <span className="px-3 py-1 bg-gold-500/10 border border-gold-500/20 rounded-full text-gold-500 font-bold">Font: {vibeData.fontFamily}</span>
+                        <span className="px-3 py-1 bg-gold-500/10 border border-gold-500/20 rounded-full text-signature-gradient font-bold">Font: {vibeData.fontFamily}</span>
                         <span className="px-3 py-1 bg-white/5 border border-white/5 rounded-full text-neutral-400 font-bold">Effect: {vibeData.effectStyle}</span>
                       </div>
                       {!vibeAccepted && (
@@ -430,7 +430,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                 {/* User Vibe Override */}
                 {useOverride && (
                   <section className="bg-neutral-900/40 border border-white/5 rounded-[2rem] p-6 space-y-4">
-                    <label className="text-[10px] text-gold-500 font-bold uppercase tracking-widest">Your Vibe Description</label>
+                    <label className="text-[10px] text-signature-gradient font-bold uppercase tracking-widest">Your Vibe Description</label>
                     <textarea
                       value={vibeOverride}
                       onChange={e => setVibeOverride(e.target.value)}
@@ -442,7 +442,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
 
                 {/* Reference Image Upload */}
                 <section className="bg-neutral-900/40 border border-white/5 rounded-[2rem] p-6 space-y-4">
-                  <label className="text-[10px] text-gold-500 font-bold uppercase tracking-widest flex items-center gap-2">
+                  <label className="text-[10px] text-signature-gradient font-bold uppercase tracking-widest flex items-center gap-2">
                     <Upload className="w-3 h-3" /> Reference Image (Optional)
                   </label>
                   {referenceImage ? (

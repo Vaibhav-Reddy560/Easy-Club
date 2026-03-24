@@ -18,7 +18,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
         >
             <button
                 onClick={onBack}
-                className="flex items-center gap-2 text-gold-500 font-bold hover:text-gold-400 group transition-colors mb-4"
+                className="flex items-center gap-2 text-signature-gradient font-bold hover:brightness-110 group transition-colors mb-4"
             >
                 <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                 <span className="text-sm uppercase tracking-widest">Return to Dashboard</span>
@@ -33,13 +33,13 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                     </div>
                     <div>
                         <h2 className="text-5xl font-black tracking-tighter text-white uppercase italic">Easy Club</h2>
-                        <p className="text-gold-500/60 font-black text-xs uppercase tracking-[0.3em] mt-1 ml-1 leading-none">The Ultimate Operating System for Organizations</p>
+                        <p className="text-signature-gradient font-black text-xs uppercase tracking-[0.3em] mt-1 ml-1 leading-none">The Ultimate Operating System for Organizations</p>
                     </div>
                 </div>
 
                 <div className="space-y-16">
                     <section className="space-y-4">
-                        <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-gold-500 flex items-center gap-3">
+                        <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-signature-gradient flex items-center gap-3">
                             <span className="w-8 h-px bg-gold-500/30" /> The Vision
                         </h3>
                         <p className="text-lg text-neutral-300 leading-relaxed font-medium pl-11">

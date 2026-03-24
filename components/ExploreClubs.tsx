@@ -212,7 +212,7 @@ export default function ExploreClubs() {
         <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <header className="border-b border-white/5 pb-8 flex justify-between items-end">
                 <div>
-                    <h2 className="text-4xl font-astronomus text-gold-500 uppercase tracking-tighter">Explore Clubs</h2>
+                    <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Explore Clubs</h2>
                     <p className="text-neutral-500 text-sm mt-1 uppercase font-bold tracking-[0.2em] ml-1">Universal Organization Discovery</p>
                 </div>
                 <div className="flex gap-4 items-end">
@@ -231,7 +231,7 @@ export default function ExploreClubs() {
                         Saved ({getSavedClubs(userId).length})
                     </button>
                     <div className="text-right">
-                        <p className="text-[10px] font-black text-gold-500 uppercase tracking-widest leading-none">Powered by Web Search</p>
+                        <p className="text-[10px] font-black text-signature-gradient uppercase tracking-widest leading-none">Powered by Web Search</p>
                         <p className="text-[9px] text-neutral-600 mt-1">Live search aggregation</p>
                     </div>
                 </div>
@@ -400,7 +400,7 @@ export default function ExploreClubs() {
                                     {club.college && !["Academic Campus", "Independent", "None", "No", "N/A", "Independent Collective", "N/a", "no", "", location].includes(club.college) && (
                                         <div className="absolute bottom-4 left-6 pr-6 z-20">
                                             <div className="flex flex-col gap-0.5">
-                                                <span className="text-[8px] font-black uppercase tracking-[0.3em] text-gold-500/80 leading-none">Institution</span>
+                                                <span className="text-[8px] font-black uppercase tracking-[0.3em] text-signature-gradient leading-none">Institution</span>
                                                 <p className="text-[11px] font-black uppercase tracking-[0.05em] text-white drop-shadow-xl leading-tight line-clamp-2">{club.college}</p>
                                             </div>
                                         </div>
@@ -409,7 +409,7 @@ export default function ExploreClubs() {
 
                                 <div className="p-8 space-y-4 flex-1 flex flex-col">
                                     <div className="space-y-1">
-                                        <h3 className="text-xl font-bold text-white tracking-tight leading-tight group-hover:text-gold-500 transition-colors">{club.name}</h3>
+                                        <h3 className="text-xl font-bold text-white tracking-tight leading-tight group-hover:text-signature-gradient transition-colors">{club.name}</h3>
                                         <div className="flex items-center gap-1.5 text-neutral-500">
                                             <MapPin className="w-3 h-3 text-gold-500/50" />
                                             <span className="text-[10px] font-bold uppercase tracking-wider">{club.location}</span>
@@ -455,9 +455,9 @@ export default function ExploreClubs() {
                                                 href={club.website}
                                                 target="_blank"
                                                 rel="noreferrer"
-                                                className="flex items-center gap-2 text-gold-500 font-black text-[9px] uppercase tracking-widest hover:text-white transition-colors"
+                                                className="flex items-center gap-2 text-signature-gradient font-black text-[9px] uppercase tracking-widest hover:text-white transition-colors"
                                             >
-                                                Visit Portal <ExternalLink className="w-3 h-3" />
+                                                Visit Portal <ExternalLink className="w-3 h-3 text-gold-500" />
                                             </a>
                                         )}
                                     </div>

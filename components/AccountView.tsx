@@ -29,10 +29,10 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
     >
       <button
         onClick={onBack}
-        className="flex items-center gap-2 text-gold-500 mb-8 font-bold hover:text-gold-400 group transition-colors"
+        className="flex items-center gap-2 mb-8 font-bold hover:brightness-110 group transition-colors"
       >
-        <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-        <span className="text-sm uppercase tracking-widest text-[#FFA500]">Back to Hub</span>
+        <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform text-gold-500" />
+        <span className="text-sm uppercase tracking-widest text-signature-gradient">Exit Settings</span>
       </button>
 
       <div className="space-y-8">
@@ -113,7 +113,7 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
                         <item.icon className="w-5 h-5 text-neutral-500 group-hover:text-gold-500 transition-colors" />
                       </div>
                       <div>
-                        <p className="text-[11px] font-bold text-white group-hover:text-gold-400 transition-colors">{item.label}</p>
+                        <p className="text-[11px] font-bold text-white group-hover:text-signature-gradient transition-colors">{item.label}</p>
                         <p className="text-[9px] text-neutral-600 font-medium">{item.sub}</p>
                       </div>
                     </div>
@@ -127,7 +127,7 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
           {/* Quick Actions / Shortcuts */}
           <div className="space-y-8">
             <div className="bg-gold-500/5 border border-gold-500/20 rounded-[2.5rem] p-8">
-              <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-gold-500 mb-4">Quick Preferences</h4>
+              <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-signature-gradient mb-4">Quick Preferences</h4>
               <div className="space-y-4">
                 {[
                   { icon: Bell, label: "Notifications" },
@@ -148,7 +148,7 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
               <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest leading-relaxed">
                 Your data is stored securely in Firebase and localized for peak performance.
               </p>
-              <button className="mt-6 text-[10px] font-black uppercase tracking-widest text-gold-500 hover:text-gold-400 transition-colors">
+              <button className="mt-6 text-[10px] font-black uppercase tracking-widest text-signature-gradient hover:brightness-110 transition-colors">
                 Export Data Protocol →
               </button>
             </div>

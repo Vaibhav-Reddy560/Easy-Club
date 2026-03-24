@@ -30,7 +30,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
     <nav className="h-20 border-b border-white/5 flex items-center justify-between px-8 bg-black/60 backdrop-blur-xl sticky top-0 z-50">
       <div className="flex items-center gap-4">
         <div className="w-3 h-3 rounded-full bg-[#FFA500]" />
-        <h1 className="text-3xl font-normal text-[#FFA500] tracking-tight font-airstream leading-none">Easy Club</h1>
+        <h1 className="text-3xl font-normal text-signature-gradient tracking-tight font-airstream leading-none">Easy Club</h1>
       </div>
       <div className="flex gap-6 items-center">
         <button
@@ -38,7 +38,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
           className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-gold-500/50 hover:bg-gold-500/5 transition-all group"
         >
           <Info className="w-4 h-4 text-neutral-400 group-hover:text-gold-400 transition-colors" />
-          <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 group-hover:text-white transition-colors">About the App</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 group-hover:text-signature-gradient transition-colors">About the App</span>
         </button>
 
         <button
@@ -71,7 +71,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
           {isProfileOpen && (
             <div className="absolute right-0 mt-3 w-72 bg-neutral-900/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] animate-in fade-in slide-in-from-top-2 duration-300 z-[60]">
               <div className="flex items-center gap-4 mb-5 pb-5 border-b border-white/5">
-                <div className="w-12 h-12 rounded-full bg-gold-500/10 flex items-center justify-center text-gold-500 font-black overflow-hidden border border-gold-500/20 shadow-inner">
+                <div className="w-12 h-12 rounded-full bg-gold-500/10 flex items-center justify-center text-signature-gradient font-black overflow-hidden border border-gold-500/20 shadow-inner">
                   {user?.user_metadata?.avatar_url ? (
                     <Image 
                       src={user.user_metadata.avatar_url} 

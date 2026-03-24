@@ -40,7 +40,7 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
                             key={section.id}
                             onClick={() => onSectionChange(section.id)}
                             className={`w-full flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 group relative ${isActive
-                                ? 'bg-gold-500/10 text-gold-400 border border-gold-500/20 shadow-lg shadow-gold-500/5'
+                                ? 'bg-gold-500/10 text-signature-gradient border border-gold-500/20 shadow-lg shadow-gold-500/5'
                                 : 'text-neutral-500 hover:text-neutral-300 hover:bg-white/5 border border-transparent'
                                 }`}
                         >
@@ -51,7 +51,7 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
                                 />
                             )}
                             <Icon className={`w-5 h-5 transition-transform duration-300 group-hover:scale-110 ${isActive ? 'text-gold-400' : 'text-neutral-500'}`} />
-                            <span className={`text-[10px] font-bold uppercase tracking-wider whitespace-nowrap ${isActive ? 'translate-x-1' : ''} transition-transform`}>
+                            <span className={`text-[10px] font-bold uppercase tracking-wider whitespace-nowrap ${isActive ? 'translate-x-1 text-signature-gradient' : ''} transition-transform`}>
                                 {section.label}
                             </span>
                         </button>

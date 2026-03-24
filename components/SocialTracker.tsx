@@ -115,7 +115,7 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
             <header className="border-b border-white/5 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div className="space-y-4">
                     <div>
-                        <h2 className="text-4xl font-astronomus text-gold-500 uppercase tracking-tighter flex items-center gap-3">
+                        <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter flex items-center gap-3">
                             Social Pulse
                         </h2>
                         <p className="text-neutral-500 text-sm mt-1 uppercase font-bold tracking-widest">Universal Organization & Profile Intelligence</p>
@@ -201,7 +201,7 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
                                             <div className="flex items-center gap-2">
                                                 <p className="text-[9px] text-neutral-600 font-bold uppercase tracking-widest">Organization Metrics</p>
                                                 <div className="h-1 w-1 rounded-full bg-green-500" />
-                                                <span className="text-[8px] text-gold-500 font-black uppercase tracking-widest">Firebase Linked</span>
+                                                <span className="text-[8px] text-signature-gradient font-black uppercase tracking-widest">Firebase Linked</span>
                                             </div>
                                         </div>
                                     </div>
@@ -251,7 +251,7 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
                                 </div>
                                 {ayrshareData?.isMock && (
                                     <div className="px-3 py-1 bg-gold-500/10 border border-gold-500/20 rounded-full">
-                                        <span className="text-[8px] font-black text-gold-500 uppercase tracking-widest">Mock Enabled</span>
+                                        <span className="text-[8px] font-black text-signature-gradient uppercase tracking-widest">Mock Enabled</span>
                                     </div>
                                 )}
                             </div>
@@ -326,7 +326,7 @@ function MetricCard({ label, value, icon: Icon, growth, isAyrshare }: MetricCard
     return (
         <div className={`p-8 bg-neutral-900/40 border border-white/5 rounded-[2.5rem] hover:border-gold-500/20 transition-all group ${isAyrshare ? 'border-gold-500/5' : ''}`}>
             <div className="flex justify-between items-start mb-6">
-                <div className={`w-10 h-10 bg-neutral-950 border border-white/5 rounded-xl flex items-center justify-center ${isAyrshare ? 'group-hover:text-gold-500' : ''}`}>
+                <div className={`w-10 h-10 bg-neutral-950 border border-white/5 rounded-xl flex items-center justify-center ${isAyrshare ? 'group-hover:text-signature-gradient' : ''}`}>
                     <Icon className="w-5 h-5 text-neutral-500 group-hover:text-gold-500 transition-colors" />
                 </div>
                 {growth !== undefined && (
@@ -337,7 +337,7 @@ function MetricCard({ label, value, icon: Icon, growth, isAyrshare }: MetricCard
                 )}
             </div>
             <p className="text-[9px] text-neutral-500 font-black uppercase tracking-widest mb-1">{label}</p>
-            <p className="text-3xl font-black text-white group-hover:text-gold-500 transition-colors tracking-tight">{value}</p>
+            <p className="text-3xl font-black text-white group-hover:text-signature-gradient transition-colors tracking-tight">{value}</p>
         </div>
     );
 }

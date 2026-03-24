@@ -102,7 +102,7 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
         <div className="space-y-8 max-w-6xl mx-auto">
             {/* Header */}
             <div>
-                <h2 className="text-4xl font-astronomus text-gold-500 uppercase tracking-tighter">My Team Hub</h2>
+                <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">My Team Hub</h2>
                 <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-[0.2em] mt-2">
                     Collaboration, Permissions & Global Activity Tracking
                 </p>
@@ -152,7 +152,7 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
                     <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id as 'roster' | 'invites' | 'activity')}
-                        className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all flex items-center gap-2 ${activeTab === tab.id ? 'text-gold-500 border-gold-500' : 'text-neutral-500 border-transparent hover:text-neutral-300'}`}
+                        className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all flex items-center gap-2 ${activeTab === tab.id ? 'text-signature-gradient border-gold-500' : 'text-neutral-500 border-transparent hover:text-neutral-300'}`}
                     >
                         <tab.icon className="w-3 h-3" />
                         {tab.label}
@@ -179,14 +179,14 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
                                 members.map((member: ClubMember) => (
                                     <div key={member.id} className="bg-neutral-900/40 border border-white/5 rounded-3xl p-8 flex items-center justify-between hover:border-gold-500/30 transition-all group">
                                         <div className="flex items-center gap-6">
-                                            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-neutral-800 to-neutral-900 flex items-center justify-center text-xl font-black text-gold-500 border border-white/10 shadow-xl group-hover:scale-110 transition-transform">
+                                            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-neutral-800 to-neutral-900 flex items-center justify-center text-xl font-black text-signature-gradient border border-white/10 shadow-xl group-hover:scale-110 transition-transform">
                                                 {member.name.charAt(0)}
                                             </div>
                                             <div>
                                                 <h4 className="font-bold text-white tracking-tight">{member.name}</h4>
                                                 <div className="flex items-center gap-2 mt-1">
                                                     <span className={`text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full border ${
-                                                        member.role === 'Senior Core' ? 'text-gold-400 border-gold-400/30 bg-gold-400/5' :
+                                                        member.role === 'Senior Core' ? 'text-signature-gradient border-gold-400/30 bg-gold-400/5' :
                                                         member.role === 'Junior Core' ? 'text-blue-400 border-blue-400/30 bg-blue-400/5' :
                                                         'text-neutral-500 border-white/10 bg-white/5'
                                                     }`}>
@@ -239,7 +239,7 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
                                                     key={role}
                                                     type="button"
                                                     onClick={() => setInviteRole(role as MemberRole)}
-                                                    className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${inviteRole === role ? 'bg-gold-500/10 border-gold-500 text-gold-500 shadow-gold-glow' : 'bg-black/40 border-white/10 text-neutral-500 hover:border-white/30'}`}
+                                                    className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${inviteRole === role ? 'bg-gold-500/10 border-gold-500 text-signature-gradient shadow-gold-glow' : 'bg-black/40 border-white/10 text-neutral-500 hover:border-white/30'}`}
                                                 >
                                                     {role}
                                                 </button>
@@ -265,7 +265,7 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
                                 <h4 className="text-[10px] font-black uppercase tracking-widest text-neutral-500 ml-2">Pending Clearances</h4>
                                 {invites.length === 0 ? (
                                     <div className="py-20 text-center bg-neutral-900/20 rounded-[2.5rem] border border-dashed border-white/5">
-                                        <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">No pending invites</p>
+                                        <p className="text-[10px] font-bold text-signature-gradient uppercase tracking-widest line-clamp-1">{person.role}</p>
                                     </div>
                                 ) : (
                                     invites.map((invite: TeamInvite) => (
@@ -273,7 +273,7 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
                                             <div className="flex justify-between items-start">
                                                 <div>
                                                     <p className="text-sm font-bold text-white mb-1">{invite.email}</p>
-                                                    <p className="text-[9px] font-black text-gold-500 uppercase tracking-widest">{invite.role}</p>
+                                                    <p className="text-[9px] font-black text-signature-gradient uppercase tracking-widest">{invite.role}</p>
                                                 </div>
                                                 <div className="flex items-center gap-2">
                                                     <button 
@@ -293,7 +293,7 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
                                             </div>
                                             <div className="pt-4 border-t border-white/5 flex items-center justify-between">
                                                 <span className="text-[9px] text-neutral-600 font-bold uppercase tracking-widest">Token: {invite.id}</span>
-                                                <button className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">
+                                                <button className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-signature-gradient hover:brightness-110 transition-colors">
                                                     <Copy className="w-3 h-3" /> Copy Link
                                                 </button>
                                             </div>
@@ -328,7 +328,7 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
                                                 <div className="w-10 h-10 rounded-xl bg-neutral-800 border border-white/5 flex items-center justify-center text-gold-400 group-hover:scale-110 transition-transform">
                                                     {getDomainIcon(event.domain)}
                                                 </div>
-                                                <span className="text-[8px] font-black uppercase tracking-tight text-neutral-600">{event.domain}</span>
+                                                <h1 className="text-3xl font-black uppercase tracking-tighter text-white">Resource <span className="text-signature-gradient">Radar</span></h1>
                                             </div>
                                             <div className="flex-1">
                                                 <div className="flex items-center gap-3 mb-1">

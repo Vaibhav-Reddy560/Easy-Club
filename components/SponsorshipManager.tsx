@@ -56,7 +56,7 @@ export default function SponsorshipManager({ clubs }: SponsorshipManagerProps) {
         >
             <header className="border-b border-white/5 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
-                    <h2 className="text-4xl font-astronomus text-gold-500 uppercase tracking-tighter flex items-center gap-3">
+                    <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter flex items-center gap-3">
                         Funding Forge
                     </h2>
                     <p className="text-neutral-500 text-sm mt-1 uppercase font-bold tracking-widest">Sponsorship Pipeline & Financial Resource Manager</p>
@@ -102,7 +102,7 @@ export default function SponsorshipManager({ clubs }: SponsorshipManagerProps) {
                         <h4 className="text-lg font-bold text-white flex items-center gap-3">
                             <TrendingUp className="w-5 h-5 text-gold-500" /> Active Deals Pipeline
                         </h4>
-                        <button className="text-[10px] font-black text-gold-500 uppercase tracking-widest hover:underline flex items-center gap-1">
+                        <button className="text-[10px] font-black text-signature-gradient uppercase tracking-widest hover:underline flex items-center gap-1">
                             Add Lead <ChevronRight className="w-3 h-3" />
                         </button>
                     </div>
@@ -157,7 +157,7 @@ export default function SponsorshipManager({ clubs }: SponsorshipManagerProps) {
                                         <td className="px-8 py-6 font-bold text-white">{deal.val}</td>
                                         <td className="px-8 py-6">
                                             <span className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-tighter border ${deal.status === 'Closed' ? 'bg-green-500/10 border-green-500/20 text-green-400' :
-                                                deal.status === 'Negotiating' ? 'bg-gold-500/10 border-gold-500/20 text-gold-400' :
+                                                deal.status === 'Negotiating' ? 'bg-gold-500/10 border-gold-500/20 text-signature-gradient' :
                                                     'bg-blue-500/10 border-blue-500/20 text-blue-400'
                                                 }`}>
                                                 {deal.status}
@@ -184,7 +184,7 @@ export default function SponsorshipManager({ clubs }: SponsorshipManagerProps) {
                             </div>
                             <div>
                                 <h5 className="font-bold text-lg text-white">Sponsorship Deck</h5>
-                                <p className="text-[10px] text-gold-500/60 font-black uppercase tracking-widest">AI Content Ready</p>
+                                <p className="text-[10px] text-signature-gradient font-black uppercase tracking-widest">AI Content Ready</p>
                             </div>
                         </div>
                         <p className="text-[11px] text-neutral-400 font-medium leading-relaxed">

@@ -56,7 +56,7 @@ export default function ResourceRadar() {
                         <div className="p-2 bg-gold-500/10 rounded-lg border border-gold-500/20">
                             <Users className="w-5 h-5 text-gold-500" />
                         </div>
-                        <h1 className="text-3xl font-black uppercase tracking-tighter text-white">Resource <span className="text-gold-500">Radar</span></h1>
+                        <h1 className="text-3xl font-black uppercase tracking-tighter text-white">Resource <span className="text-signature-gradient">Radar</span></h1>
                     </div>
                     <p className="text-sm text-neutral-500 font-medium max-w-lg">
                         Elite professional discovery. Find mentors, speakers, and industry experts for your club sessions.
@@ -125,7 +125,7 @@ export default function ResourceRadar() {
                             <p className="text-sm text-neutral-500">{error}</p>
                             <button 
                                 onClick={handleSearch}
-                                className="mt-6 text-[10px] font-black uppercase tracking-widest text-gold-500 hover:text-gold-400 transition-colors"
+                                className="mt-6 text-[10px] font-black uppercase tracking-widest text-signature-gradient hover:brightness-110 transition-colors"
                             >
                                 Try Again
                             </button>
@@ -170,7 +170,7 @@ export default function ResourceRadar() {
                                         </div>
                                         <div className="flex-1 space-y-1 min-w-0">
                                             <h3 className="text-lg font-black text-white truncate leading-none uppercase tracking-tighter">{person.name}</h3>
-                                            <p className="text-[10px] font-bold text-gold-500 uppercase tracking-widest line-clamp-1">{person.role}</p>
+                                            <p className="text-[10px] font-bold text-signature-gradient uppercase tracking-widest line-clamp-1">{person.role}</p>
                                             {person.college_affiliation && (
                                                 <div className="flex items-center gap-1.5 text-[8px] font-black text-white/40 uppercase tracking-widest pt-1">
                                                     <Award className="w-2.5 h-2.5 text-gold-500" />

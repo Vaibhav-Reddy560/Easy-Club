@@ -57,3 +57,13 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+
+@layer utilities {
+  .text-signature-gradient {
+    background: linear-gradient(90deg, #FF8800 0%, #FF9D00 18%, #FFB405 36%, #FFBF44 49%, #F99A00 63%, #AE7102 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+  }
+}

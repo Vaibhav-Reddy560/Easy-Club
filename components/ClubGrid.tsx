@@ -39,7 +39,7 @@ const GoldFolder = ({ name, onClick, onRename, onDelete }: { name: string; onCli
     </div>
 
     <div className="flex flex-col items-center gap-1 w-full">
-      <span className="text-[11px] font-semibold text-neutral-400 group-hover:text-gold-400 transition-colors text-center truncate w-full px-1 font-sans">
+      <span className="text-[11px] font-semibold text-neutral-400 group-hover:text-signature-gradient transition-colors text-center truncate w-full px-1 font-sans">
         {name}
       </span>
 
@@ -68,7 +68,7 @@ export default function ClubGrid({ items, onItemClick, onRename, onDelete, onAdd
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <header className="mb-14 flex justify-between items-end border-b border-white/5 pb-8">
         <div>
-          <h2 className="text-4xl font-astronomus text-gold-500 uppercase tracking-tighter">{title}</h2>
+          <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">{title}</h2>
           <p className="text-neutral-500 text-sm mt-1 font-medium tracking-[0.2em] uppercase">{subtitle}</p>
         </div>
       </header>
@@ -77,7 +77,7 @@ export default function ClubGrid({ items, onItemClick, onRename, onDelete, onAdd
           <div className="w-20 h-16 rounded-xl border-2 border-dashed border-neutral-800 flex items-center justify-center group-hover:border-gold-500/60 transition-all duration-500">
             <Plus className="w-7 h-7 text-neutral-700 group-hover:text-gold-400 group-hover:rotate-90 transition-transform" />
           </div>
-          <span className="text-[11px] font-bold text-neutral-600 group-hover:text-gold-500 uppercase tracking-widest">{addLabel}</span>
+          <span className="text-[11px] font-bold text-neutral-600 group-hover:text-signature-gradient uppercase tracking-widest">{addLabel}</span>
         </div>
         {items.map((item) => (
           <GoldFolder

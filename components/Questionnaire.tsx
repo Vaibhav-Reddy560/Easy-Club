@@ -20,15 +20,15 @@ export default function Questionnaire({ activeEvent, activeEventId, updateConfig
 
   return (
     <div className="flex flex-col items-center">
-      <button onClick={onBack} className="self-start flex items-center gap-2 text-gold-500 mb-6 font-bold hover:text-gold-400 transition-colors">
-        <ChevronLeft className="w-4 h-4" /> Back to Events
+      <button onClick={onBack} className="self-start flex items-center gap-2 mb-6 font-bold hover:text-gold-400 transition-colors">
+        <ChevronLeft className="w-4 h-4 text-gold-500" /> <span className="text-signature-gradient">Back to Events</span>
       </button>
 
       <div className="w-full max-w-5xl bg-neutral-900/40 border border-white/5 rounded-[3rem] p-8 md:p-12 shadow-2xl space-y-12">
         <header className="border-b border-white/5 pb-8 flex justify-between items-end">
           <div>
             <h2 className="text-3xl font-bold tracking-tight">Event Name: {activeEvent?.name}</h2>
-            <p className="text-gold-500/70 font-medium">Define the core blueprint...</p>
+            <p className="text-signature-gradient font-medium">Define the core blueprint...</p>
           </div>
           <span className="text-[9px] text-neutral-600 font-mono border border-neutral-800 px-3 py-1 rounded-full uppercase">
             ID: {activeEventId?.substring(0, 8)}
@@ -38,8 +38,8 @@ export default function Questionnaire({ activeEvent, activeEventId, updateConfig
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* SECTION 1: CLASSIFICATION */}
           <div className="space-y-6">
-            <label className="text-[10px] font-bold text-gold-500 uppercase tracking-widest flex items-center gap-2">
-              <Info className="w-3 h-3" /> A. Classification
+            <label className="text-[10px] font-bold text-signature-gradient uppercase tracking-widest flex items-center gap-2">
+              <Info className="w-3 h-3 text-gold-500" /> A. Classification
             </label>
             <div className="flex gap-2">
               {['Technical', 'Social'].map(t => (
@@ -53,6 +53,9 @@ export default function Questionnaire({ activeEvent, activeEventId, updateConfig
               ))}
             </div>
 
+            <button className="px-8 py-3 bg-neutral-950 border border-neutral-800 rounded-xl text-[10px] font-black uppercase tracking-widest text-neutral-300 hover:text-signature-gradient hover:border-gold-500 transition-all">
+          Unlock Automation
+        </button>
             <select
               className="w-full bg-black border border-neutral-800 rounded-xl p-4 text-white outline-none focus:border-gold-500/50 transition-colors"
               value={config.subType || ""}
@@ -93,8 +96,8 @@ export default function Questionnaire({ activeEvent, activeEventId, updateConfig
 
           {/* SECTION 2: LOGISTICS */}
           <div className="space-y-6">
-            <label className="text-[10px] font-bold text-gold-500 uppercase tracking-widest flex items-center gap-2">
-              <MapPin className="w-3 h-3" /> B. Location & Fee
+            <label className="text-[10px] font-bold text-signature-gradient uppercase tracking-widest flex items-center gap-2">
+              <MapPin className="w-3 h-3 text-gold-500" /> B. Location & Fee
             </label>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
@@ -169,7 +172,7 @@ export default function Questionnaire({ activeEvent, activeEventId, updateConfig
               </div>
               <div className="space-y-4">
                 <div className="space-y-1">
-                  <span className="text-[9px] text-neutral-600 font-bold uppercase ml-3 tracking-tighter">Resource Person (LinkedIn/GitHub)</span>
+                      <div className="text-[9px] font-black text-signature-gradient uppercase tracking-widest mb-1">Target Persona</div>
                   <input placeholder="Link to profile" className="w-full bg-black border border-neutral-800 rounded-xl p-4 text-sm focus:border-gold-500/50 outline-none" value={config.resourceLink || ""} onChange={(e) => updateConfig({ resourceLink: e.target.value })} />
                 </div>
                 <div className="space-y-1">
@@ -182,7 +185,7 @@ export default function Questionnaire({ activeEvent, activeEventId, updateConfig
 
           {/* SECTION 5: SCOPE & LOGOS */}
           <div className="col-span-full space-y-8">
-            <label className="text-[10px] font-bold text-gold-500 uppercase tracking-widest">E. Scope & Assets</label>
+            <label className="text-[10px] font-bold text-signature-gradient uppercase tracking-widest">E. Scope & Assets</label>
             <div className="flex gap-4 p-1 bg-black border border-neutral-800 rounded-[1.25rem]">
               {['College Event', 'Non-College Event'].map(opt => (
                 <button
@@ -230,8 +233,8 @@ export default function Questionnaire({ activeEvent, activeEventId, updateConfig
               ].map(asset => (
                 <div key={asset.key} className="flex flex-col gap-2">
                   <div className="aspect-square bg-black border-2 border-dashed border-neutral-800 rounded-3xl flex flex-col items-center justify-center gap-2 hover:border-gold-500/40 cursor-pointer group transition-all relative overflow-hidden">
-                    <Upload className="w-5 h-5 text-neutral-700 group-hover:text-gold-500 transition-colors" />
-                    <span className="text-[9px] font-bold text-neutral-600 group-hover:text-gold-400 uppercase">{asset.label}</span>
+                        <h5 className="font-bold text-lg text-white group-hover:text-signature-gradient transition-colors">{asset.label}</h5>
+                        <p className="text-[10px] text-neutral-600 uppercase font-black tracking-widest mt-1">{asset.key}</p>
                   </div>
                 </div>
               ))}

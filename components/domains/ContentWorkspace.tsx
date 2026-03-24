@@ -138,7 +138,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
     <div className="space-y-12">
       {/* Section Header */}
       <div className="flex flex-col gap-2">
-        <h2 className="text-4xl font-astronomus text-gold-500 uppercase tracking-tighter">Content Lab</h2>
+        <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Content Lab</h2>
         <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-[0.2em]">AI-Powered Promotional & Document Engine</p>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -147,13 +147,13 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
           <div className="absolute top-0 right-0 w-32 h-32 bg-gold-500/5 blur-3xl -z-10" />
 
           <div className="flex justify-between items-center">
-            <h4 className="text-gold-400 font-bold uppercase text-xs tracking-widest flex items-center gap-2">
-              <Share2 className="w-4 h-4" /> Promotional Campaign
+            <h4 className="text-signature-gradient font-bold uppercase text-xs tracking-widest flex items-center gap-2">
+              <Share2 className="w-4 h-4 text-gold-500" /> Promotional Campaign
             </h4>
             <button
               onClick={handleGeneratePromo}
               disabled={isGeneratingPromo}
-              className="px-3 py-1 border border-white/10 rounded-full text-[9px] font-bold uppercase tracking-tighter text-neutral-500 hover:text-gold-500 transition-all"
+              className="px-3 py-1 border border-white/10 rounded-full text-[9px] font-bold uppercase tracking-tighter text-neutral-500 hover:text-signature-gradient transition-all"
             >
               {isGeneratingPromo ? <Loader2 className="w-3 h-3 animate-spin" /> : 'Regenerate'}
             </button>
@@ -171,8 +171,8 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-[10px] font-bold text-neutral-600 uppercase">Standard (WhatsApp / Email)</span>
-                    <button onClick={() => copyToClipboard(generatedPromo.long, 'long')} className="text-gold-500 text-[10px] font-bold flex items-center gap-1">
-                      {copiedId === 'long' ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />} Copy
+                    <button onClick={() => copyToClipboard(generatedPromo.long, 'long')} className="text-signature-gradient text-[10px] font-bold flex items-center gap-1">
+                      {copiedId === 'long' ? <Check className="w-3 h-3 text-gold-500" /> : <Copy className="w-3 h-3 text-gold-500" />} Copy
                     </button>
                   </div>
                   <div className="bg-black/60 p-5 rounded-2xl border border-white/5 text-[11px] text-neutral-300 whitespace-pre-wrap leading-relaxed">
@@ -184,8 +184,8 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-[10px] font-bold text-neutral-600 uppercase">Short (Instagram Caption / Story)</span>
-                    <button onClick={() => copyToClipboard(generatedPromo.short, 'short')} className="text-gold-500 text-[10px] font-bold flex items-center gap-1">
-                      {copiedId === 'short' ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />} Copy
+                    <button onClick={() => copyToClipboard(generatedPromo.short, 'short')} className="text-signature-gradient text-[10px] font-bold flex items-center gap-1">
+                      {copiedId === 'short' ? <Check className="w-3 h-3 text-gold-500" /> : <Copy className="w-3 h-3 text-gold-500" />} Copy
                     </button>
                   </div>
                   <div className="bg-black/60 p-5 rounded-2xl border border-gold-500/10 text-[11px] text-neutral-300 whitespace-pre-wrap leading-relaxed">
@@ -199,8 +199,8 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
 
         {/* Official Documents Section */}
         <div className="bg-neutral-900/60 rounded-[3rem] p-8 md:p-10 border border-white/5 space-y-8 shadow-2xl relative">
-          <h4 className="text-gold-400 font-bold uppercase text-xs tracking-widest flex items-center gap-2 justify-center">
-            <FileText className="w-4 h-4" /> Official Paperwork
+          <h4 className="text-signature-gradient font-bold uppercase text-xs tracking-widest flex items-center gap-2 justify-center">
+            <FileText className="w-4 h-4 text-gold-500" /> Official Paperwork
           </h4>
 
           <div className="space-y-6">
@@ -245,13 +245,13 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
       {/* Sheet / Data Section */}
       <div className="bg-neutral-900/40 border border-white/5 rounded-[3rem] p-8 md:p-12 shadow-2xl">
         <div className="flex justify-between items-center mb-10">
-          <h4 className="text-gold-500 font-bold uppercase text-xs tracking-widest flex items-center gap-2">
-            <Table className="w-4 h-4" /> Data Sheet Agent
+          <h4 className="text-signature-gradient font-bold uppercase text-xs tracking-widest flex items-center gap-2">
+            <Table className="w-4 h-4 text-gold-500" /> Data Sheet Agent
           </h4>
           {sheetGen.status === 'success' && (
             <button 
               onClick={downloadExcel}
-              className="px-6 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] font-bold text-white hover:text-gold-500 hover:border-gold-500/30 transition-all uppercase tracking-widest flex items-center gap-2"
+              className="px-6 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] font-bold text-white hover:text-signature-gradient hover:border-gold-500/30 transition-all uppercase tracking-widest flex items-center gap-2"
             >
               <Download className="w-3 h-3" /> Export to Excel
             </button>
@@ -261,7 +261,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
         {sheetGen.status === 'success' ? (
           <div className="overflow-hidden rounded-3xl border border-white/5 bg-black/40">
             <table className="w-full text-left text-[11px]">
-              <thead className="bg-white/5 text-gold-500 font-black uppercase tracking-tighter">
+              <thead className="bg-white/5 text-signature-gradient font-black uppercase tracking-tighter">
                 <tr>
                   {Array.isArray(sheetGen.result) && sheetGen.result.length > 0 && Object.keys(sheetGen.result[0] as Record<string, unknown>).map(key => (
                     <th key={key} className="px-6 py-4">{key}</th>
@@ -292,7 +292,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
             </div>
             <button 
               onClick={handleGenerateSheet}
-              className="px-8 py-3 bg-neutral-900 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest text-gold-500 hover:bg-gold-500/5 transition-all"
+              className="px-8 py-3 bg-neutral-900 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest text-signature-gradient hover:bg-gold-500/5 transition-all"
             >
               Initialize Data Agent
             </button>

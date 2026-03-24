@@ -255,7 +255,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-4">
         <div className="w-12 h-12 border-4 border-gold-500/20 border-t-gold-500 rounded-full animate-spin" />
-        <p className="text-gold-500 font-bold uppercase tracking-[0.3em] text-[10px] animate-pulse">Syncing Hub...</p>
+        <p className="text-signature-gradient font-bold uppercase tracking-[0.3em] text-[10px] animate-pulse">Syncing Hub...</p>
       </div>
     );
   }
@@ -275,7 +275,7 @@ export default function App() {
           <div className="space-y-6 pt-8">
             <div className="relative inline-block">
               <div className="absolute inset-0 bg-[#FFA500] blur-2xl opacity-20 animate-pulse" />
-              <h1 className="relative text-7xl font-normal text-[#FFA500] tracking-tight font-airstream leading-none">Easy Club</h1>
+              <h1 className="relative text-7xl font-normal text-signature-gradient tracking-tight font-airstream leading-none">Easy Club</h1>
             </div>
             <p className="text-neutral-500 text-sm font-medium tracking-wide max-w-[280px] mx-auto leading-relaxed">
               Professional club management and nationwide networking, made easy.
@@ -361,10 +361,10 @@ export default function App() {
                 <motion.div key="events" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
                   <button
                     onClick={() => { setView('clubs'); setActiveClubId(null); }}
-                    className="flex items-center gap-2 text-gold-500 mb-8 font-bold hover:text-gold-400 group transition-colors"
+                    className="flex items-center gap-2 mb-8 font-bold hover:text-gold-400 group transition-colors"
                   >
-                    <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                    <span className="text-sm uppercase tracking-widest">Back to Clubs</span>
+                    <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform text-gold-500" />
+                    <span className="text-sm uppercase tracking-widest text-signature-gradient">Back to Clubs</span>
                   </button>
                   <ClubGrid
                     items={activeClub?.events || []}
@@ -420,13 +420,13 @@ export default function App() {
               {view === 'domains' && (
                 <motion.div key="domains" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                   <div className="flex justify-between items-center mb-8">
-                    <button
-                      onClick={() => setView('events')}
-                      className="flex items-center gap-2 text-gold-500 font-bold hover:text-gold-400 group transition-colors"
-                    >
-                      <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                      <span className="text-sm uppercase tracking-widest">Back to Dashboard</span>
-                    </button>
+                      <button
+                        onClick={() => setView('events')}
+                        className="flex items-center gap-2 font-bold hover:text-gold-400 group transition-colors"
+                      >
+                        <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform text-gold-500" />
+                        <span className="text-sm uppercase tracking-widest text-signature-gradient">Back to Dashboard</span>
+                      </button>
                     <button
                       onClick={() => setView('questionnaire')}
                       className="flex items-center gap-2 px-6 py-2 bg-neutral-900 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest hover:border-gold-500/50 hover:text-gold-400 transition-all shadow-xl"
@@ -436,7 +436,7 @@ export default function App() {
                   </div>
 
                   <div className="mb-12 border-b border-white/5 pb-8">
-                    <h2 className="text-4xl font-astronomus text-gold-500 uppercase tracking-tighter">
+                    <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">
                       {activeEvent?.name} <span className="text-neutral-600 font-normal ml-3 font-sans">/ Workspace</span>
                     </h2>
                   </div>

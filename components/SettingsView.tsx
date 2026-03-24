@@ -74,10 +74,10 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
       <div className="flex justify-between items-center mb-12">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-gold-500 font-bold hover:text-gold-400 group transition-colors"
+          className="flex items-center gap-2 text-signature-gradient font-bold hover:brightness-110 group transition-colors"
         >
           <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-          <span className="text-sm uppercase tracking-widest text-[#FFA500]">Exit Settings</span>
+          <span className="text-sm uppercase tracking-widest text-signature-gradient">Exit Settings</span>
         </button>
 
         <button className="flex items-center gap-2 px-6 py-2.5 bg-gold-500 text-black font-black text-[10px] uppercase tracking-widest rounded-xl hover:bg-gold-400 transition-all shadow-[0_0_20px_rgba(250,164,26,0.2)]">

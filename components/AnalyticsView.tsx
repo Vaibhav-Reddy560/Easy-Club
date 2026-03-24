@@ -35,10 +35,10 @@ export default function AnalyticsView({ clubsCount, eventsCount, onBack }: Analy
     >
       <button
         onClick={onBack}
-        className="flex items-center gap-2 text-gold-500 mb-8 font-bold hover:text-gold-400 group transition-colors"
+        className="flex items-center gap-2 text-signature-gradient font-bold hover:brightness-110 group transition-colors"
       >
         <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-        <span className="text-sm uppercase tracking-widest text-[#FFA500]">Back to Hub</span>
+        <span className="text-sm uppercase tracking-widest text-signature-gradient">Exit Settings</span>
       </button>
 
       <div className="space-y-12">

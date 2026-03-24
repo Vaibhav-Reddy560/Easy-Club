@@ -117,13 +117,13 @@ export default function SocialWorkspace({ activeEvent }: SocialWorkspaceProps) {
                         <Linkedin className="w-7 h-7 text-gold-400 group-hover:brightness-110 group-hover:drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
                       </div>
                       <div>
-                        <h5 className="font-bold text-lg text-white group-hover:text-gold-100 transition-colors">{person.name}</h5>
+                        <h5 className="font-bold text-lg text-white group-hover:text-signature-gradient transition-colors">{person.name}</h5>
                         <p className="text-[10px] text-neutral-600 uppercase font-black tracking-widest mt-1">{person.location}</p>
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <div className="text-[9px] font-black text-gold-500 uppercase tracking-widest mb-1">Target Persona</div>
+                      <div className="text-[9px] font-black text-signature-gradient uppercase tracking-widest mb-1">Target Persona</div>
                       <div className="bg-neutral-900/40 p-3 rounded-xl border border-white/5 text-[11px] font-bold text-neutral-400 group-hover:text-neutral-200">
                         {person.role}
                       </div>
@@ -156,7 +156,7 @@ export default function SocialWorkspace({ activeEvent }: SocialWorkspaceProps) {
             <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-widest mt-1 text-center md:text-left">AI-generated outreach templates coming soon</p>
           </div>
         </div>
-        <button className="px-8 py-3 bg-neutral-950 border border-neutral-800 rounded-xl text-[10px] font-black uppercase tracking-widest text-neutral-300 hover:text-gold-500 hover:border-gold-500 transition-all">
+        <button className="px-8 py-3 bg-neutral-950 border border-neutral-800 rounded-xl text-[10px] font-black uppercase tracking-widest text-neutral-300 hover:text-signature-gradient hover:border-gold-500 transition-all">
           Unlock Automation
         </button>
       </div>

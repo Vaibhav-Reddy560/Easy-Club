@@ -107,12 +107,12 @@ export default function ExploreEvents() {
         <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <header className="border-b border-white/5 pb-8 flex justify-between items-end">
                 <div>
-                    <h2 className="text-4xl font-astronomus text-gold-500 uppercase tracking-tighter">Explore Events</h2>
+                    <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Explore Events</h2>
                     <p className="text-neutral-500 text-sm mt-1 uppercase font-bold tracking-[0.2em] ml-1">National Activity Stream</p>
                 </div>
                 <div className="flex gap-4">
                     <div className="text-right">
-                        <p className="text-[10px] font-black text-gold-500 uppercase tracking-widest leading-none">Direct Feed Mode</p>
+                        <p className="text-[10px] font-black text-signature-gradient uppercase tracking-widest leading-none">Direct Feed Mode</p>
                         <p className="text-[9px] text-neutral-600 mt-1">Live search aggregation</p>
                     </div>
                 </div>
@@ -216,7 +216,7 @@ export default function ExploreEvents() {
                             className="bg-neutral-900/30 border border-white/5 rounded-[3rem] overflow-hidden group hover:border-gold-500/30 transition-all shadow-2xl flex flex-col relative"
                         >
                             <div className="absolute top-6 right-6 z-10">
-                                <div className="bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-[9px] font-black text-gold-500 uppercase tracking-widest">
+                                <div className="bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-[9px] font-black text-signature-gradient uppercase tracking-widest">
                                     {event.date}
                                 </div>
                             </div>
@@ -235,14 +235,14 @@ export default function ExploreEvents() {
 
                             <div className="p-8 space-y-4 flex-1 flex flex-col">
                                 <div className="space-y-1">
-                                    <h3 className="text-xl font-bold text-white tracking-tight leading-tight group-hover:text-gold-500 transition-colors uppercase italic">{event.name}</h3>
+                                    <h3 className="text-xl font-bold text-white tracking-tight leading-tight group-hover:text-signature-gradient transition-colors uppercase italic">{event.name}</h3>
                                     <div className="flex flex-col gap-1">
                                         <div className="flex items-center gap-2 text-[10px] font-black text-neutral-400 uppercase tracking-widest leading-none">
                                             <Trophy className="w-3 h-3 text-gold-500" />
                                             <span>{event.clubName}</span>
                                         </div>
                                         {event.college && event.college !== event.location && (
-                                            <div className="text-[9px] font-bold text-gold-500/80 uppercase tracking-widest pl-5">
+                                            <div className="text-[9px] font-bold text-signature-gradient uppercase tracking-widest pl-5">
                                                 @{event.college}
                                             </div>
                                         )}
@@ -271,9 +271,9 @@ export default function ExploreEvents() {
                                             href={event.website}
                                             target="_blank"
                                             rel="noreferrer"
-                                            className="flex items-center gap-2 text-white font-black text-[10px] uppercase tracking-widest hover:text-gold-500 transition-colors"
+                                            className="flex items-center gap-2 text-white font-black text-[10px] uppercase tracking-widest hover:text-signature-gradient transition-colors"
                                         >
-                                            Visit Source <ExternalLink className="w-3 h-3" />
+                                            Visit Source <ExternalLink className="w-3 h-3 text-gold-500" />
                                         </a>
                                     )}
                                 </div>

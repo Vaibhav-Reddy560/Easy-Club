@@ -81,12 +81,12 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
             <header className="border-b border-white/5 pb-8">
                 <div className="flex justify-between items-end">
                     <div>
-                        <h2 className="text-4xl font-astronomus text-gold-500 uppercase tracking-tighter flex items-center gap-3">
+                        <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter flex items-center gap-3">
                             Trending Ideas <TrendingUp className="w-8 h-8 text-gold-500" />
                         </h2>
                         <p className="text-neutral-500 text-sm mt-1 uppercase font-bold tracking-widest">AI-Curated Event Blueprints & Market Analysis</p>
                     </div>
-                    <div className="hidden md:flex items-center gap-2 text-[10px] font-bold text-gold-500/60 uppercase tracking-tighter bg-gold-500/5 px-4 py-2 rounded-full border border-gold-500/10">
+                    <div className="hidden md:flex items-center gap-2 text-[10px] font-bold text-signature-gradient uppercase tracking-tighter bg-gold-500/5 px-4 py-2 rounded-full border border-gold-500/10">
                         <Sparkles className="w-3 h-3 text-gold-500" /> Real-time Trend Extraction
                     </div>
                 </div>
@@ -157,7 +157,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                                     <div className="flex justify-between items-start">
                                         <div className="flex gap-2">
                                             {idea.tags.map(t => (
-                                                <span key={t} className="px-3 py-1 bg-black/40 border border-white/5 text-[8px] font-black uppercase tracking-tighter text-gold-400 rounded-lg">
+                                                <span key={t} className="px-3 py-1 bg-black/40 border border-white/5 text-[8px] font-black uppercase tracking-tighter text-signature-gradient rounded-lg">
                                                     {t}
                                                 </span>
                                             ))}
@@ -174,7 +174,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                                     <div className="grid grid-cols-2 gap-4 py-4 border-y border-white/5">
                                         <div className="space-y-1">
                                             <p className="text-[8px] text-neutral-500 font-black uppercase tracking-widest">Complexity</p>
-                                            <p className={`text-xs font-bold ${idea.complexity === 'High' ? 'text-red-400' : idea.complexity === 'Medium' ? 'text-gold-400' : 'text-green-400'}`}>
+                                            <p className={`text-xs font-bold ${idea.complexity === 'High' ? 'text-red-400' : idea.complexity === 'Medium' ? 'text-signature-gradient' : 'text-green-400'}`}>
                                                 {idea.complexity}
                                             </p>
                                         </div>
@@ -190,7 +190,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
 
                                     <div className="space-y-4 pt-6 border-t border-white/5">
                                         <div className="space-y-2">
-                                            <div className="flex items-center gap-2 text-[9px] font-black text-gold-500 uppercase tracking-widest">
+                                            <div className="flex items-center gap-2 text-[9px] font-black text-signature-gradient uppercase tracking-widest">
                                                 <Target className="w-3 h-3" /> Market Reference
                                             </div>
                                             <div className="p-4 bg-black/60 border border-white/10 rounded-2xl text-[11px] text-neutral-300 italic leading-relaxed">

@@ -86,7 +86,7 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
       {/* Header & Selector */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h2 className="text-4xl font-astronomus text-gold-500 uppercase tracking-tighter">Membership and Recruitment</h2>
+          <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Membership and Recruitment</h2>
           <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-[0.2em] mt-2">
             Selective Onboarding and Core Team Management
           </p>
@@ -112,19 +112,19 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
       <div className="flex gap-4 border-b border-white/10">
         <button
           onClick={() => setActiveTab('junior-core')}
-          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'junior-core' ? 'text-gold-500 border-gold-500' : 'text-neutral-500 border-transparent hover:text-neutral-300'}`}
+          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'junior-core' ? 'text-signature-gradient border-gold-500' : 'text-neutral-500 border-transparent hover:text-neutral-300'}`}
         >
           Junior Core Team
         </button>
         <button
           onClick={() => setActiveTab('recruitment-pool')}
-          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'recruitment-pool' ? 'text-gold-500 border-gold-500' : 'text-neutral-500 border-transparent hover:text-neutral-300'}`}
+          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'recruitment-pool' ? 'text-signature-gradient border-gold-500' : 'text-neutral-500 border-transparent hover:text-neutral-300'}`}
         >
           General Roster
         </button>
         <button
           onClick={() => setActiveTab('new-recruit')}
-          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'new-recruit' ? 'text-gold-500 border-gold-500' : 'text-neutral-500 border-transparent hover:text-neutral-300'}`}
+          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'new-recruit' ? 'text-signature-gradient border-gold-500' : 'text-neutral-500 border-transparent hover:text-neutral-300'}`}
         >
           New Recruitment
         </button>
@@ -135,7 +135,7 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
         {activeTab === 'junior-core' && (
           <div className="bg-neutral-900/40 border border-white/5 rounded-[2rem] overflow-hidden">
             <table className="w-full text-left text-sm">
-              <thead className="bg-black/40 text-[10px] font-black uppercase tracking-widest text-gold-500/70 border-b border-white/5">
+              <thead className="bg-black/40 text-[10px] font-black uppercase tracking-widest text-signature-gradient border-b border-white/5">
                 <tr>
                   <th className="px-8 py-5">Member</th>
                   <th className="px-8 py-5">Role</th>
@@ -162,7 +162,7 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
                       </td>
                       <td className="px-8 py-6">
                         <span className={`inline-flex px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
-                          member.role === 'Senior Core' ? 'bg-gold-500/20 text-gold-400 border border-gold-500/30' :
+                          member.role === 'Senior Core' ? 'bg-gold-500/20 text-signature-gradient border border-gold-500/30' :
                           member.role === 'Junior Core' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
                           'bg-white/5 text-neutral-400 border border-white/10'
                         }`}>
@@ -185,7 +185,7 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
                           {member.role !== 'Senior Core' && (
                             <button
                               onClick={() => handlePromote(member.id, member.role)}
-                              className="px-4 py-2 bg-white/5 hover:bg-gold-500/20 text-white hover:text-gold-400 rounded-lg text-[9px] font-bold uppercase tracking-widest border border-transparent hover:border-gold-500/30 transition-all"
+                              className="px-4 py-2 bg-white/5 hover:bg-gold-500/20 text-white hover:brightness-110 rounded-lg text-[9px] font-bold uppercase tracking-widest border border-transparent hover:border-gold-500/30 transition-all"
                             >
                               Promote to {member.role === 'General Member' ? 'Junior Core' : 'Senior Core'}
                             </button>
@@ -284,14 +284,14 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
                     <button
                       type="button"
                       onClick={() => setNewBasis('Fee Paid')}
-                      className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${newBasis === 'Fee Paid' ? 'bg-gold-500/10 border-gold-500 text-gold-500' : 'bg-black/40 border-white/10 text-neutral-500 hover:border-white/30'}`}
+                      className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${newBasis === 'Fee Paid' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black/40 border-white/10 text-neutral-500 hover:border-white/30'}`}
                     >
                       Fee Paid
                     </button>
                     <button
                       type="button"
                       onClick={() => setNewBasis('Test Passed')}
-                      className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${newBasis === 'Test Passed' ? 'bg-gold-500/10 border-gold-500 text-gold-500' : 'bg-black/40 border-white/10 text-neutral-500 hover:border-white/30'}`}
+                      className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${newBasis === 'Test Passed' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black/40 border-white/10 text-neutral-500 hover:border-white/30'}`}
                     >
                       Test Passed
                     </button>
@@ -324,7 +324,7 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
               <Shield className="w-16 h-16 text-neutral-700 mb-6" />
               <h4 className="text-xl font-bold text-white mb-4">Core Team Hierarchy</h4>
               <p className="text-sm text-neutral-500 leading-relaxed max-w-sm mb-8">
-                The Club Core is composed of driven individuals who manage the club. Recruit members first, then promote exceptional candidates to <strong className="text-blue-400 font-bold">Junior Core</strong> and <strong className="text-gold-400 font-bold">Senior Core</strong> from the Member Directory.
+                The Club Core is composed of driven individuals who manage the club. Recruit members first, then promote exceptional candidates to <strong className="text-blue-400 font-bold">Junior Core</strong> and <strong className="text-signature-gradient font-bold">Senior Core</strong> from the Member Directory.
               </p>
               <button 
                 onClick={() => setActiveTab('recruitment-pool')}
