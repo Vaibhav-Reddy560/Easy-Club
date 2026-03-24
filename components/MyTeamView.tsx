@@ -68,7 +68,7 @@ export default function MyTeamView({ user, activeClub, onUpdateClub }: MyTeamVie
     };
 
     const handleAction = (inviteId: string, action: 'accepted' | 'declined') => {
-        const invite = invites.find(i => i.id === inviteId);
+        const invite = invites.find((i: TeamInvite) => i.id === inviteId);
         if (!invite) return;
 
         let updatedMembers = [...members];
@@ -85,7 +85,7 @@ export default function MyTeamView({ user, activeClub, onUpdateClub }: MyTeamVie
 
         onUpdateClub({
             ...activeClub,
-            invites: invites.filter(i => i.id !== inviteId),
+            invites: invites.filter((i: TeamInvite) => i.id !== inviteId),
             members: updatedMembers
         });
     };
@@ -152,7 +152,7 @@ export default function MyTeamView({ user, activeClub, onUpdateClub }: MyTeamVie
                 ].map(tab => (
                     <button
                         key={tab.id}
-                        onClick={() => setActiveTab(tab.id as any)}
+                        onClick={() => setActiveTab(tab.id as 'roster' | 'invites' | 'activity')}
                         className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all flex items-center gap-2 ${activeTab === tab.id ? 'text-gold-500 border-gold-500' : 'text-neutral-500 border-transparent hover:text-neutral-300'}`}
                     >
                         <tab.icon className="w-3 h-3" />
@@ -177,7 +177,7 @@ export default function MyTeamView({ user, activeClub, onUpdateClub }: MyTeamVie
                                     <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">No core members yet. Send an invite to begin collaborating.</p>
                                 </div>
                             ) : (
-                                members.map(member => (
+                                members.map((member: any) => (
                                     <div key={member.id} className="bg-neutral-900/40 border border-white/5 rounded-3xl p-8 flex items-center justify-between hover:border-gold-500/30 transition-all group">
                                         <div className="flex items-center gap-6">
                                             <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-neutral-800 to-neutral-900 flex items-center justify-center text-xl font-black text-gold-500 border border-white/10 shadow-xl group-hover:scale-110 transition-transform">
@@ -269,7 +269,7 @@ export default function MyTeamView({ user, activeClub, onUpdateClub }: MyTeamVie
                                         <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">No pending invites</p>
                                     </div>
                                 ) : (
-                                    invites.map(invite => (
+                                    invites.map((invite: TeamInvite) => (
                                         <div key={invite.id} className="bg-neutral-900/40 border border-white/5 rounded-3xl p-6 flex flex-col gap-4">
                                             <div className="flex justify-between items-start">
                                                 <div>
@@ -323,7 +323,7 @@ export default function MyTeamView({ user, activeClub, onUpdateClub }: MyTeamVie
                                         Observatory is quiet. No recent collaborative actions.
                                     </div>
                                 ) : (
-                                    activityLog.slice().reverse().map(event => (
+                                    activityLog.slice().reverse().map((event: ActivityLogEvent) => (
                                         <div key={event.id} className="p-6 px-10 flex items-center gap-8 hover:bg-white/[0.02] transition-colors">
                                             <div className="flex flex-col items-center gap-1 shrink-0">
                                                 <div className="w-10 h-10 rounded-xl bg-neutral-800 border border-white/5 flex items-center justify-center text-gold-400 group-hover:scale-110 transition-transform">

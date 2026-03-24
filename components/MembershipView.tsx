@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Users, Shield, UserPlus, Check, Award, ChevronDown, UserCheck, X } from "lucide-react";
+import { Users, Shield, UserPlus, Check, ChevronDown, UserCheck, X } from "lucide-react";
 import { Club, ClubMember, MemberRole, RecruitmentBasis } from "@/lib/types";
 
 interface MembershipViewProps {
@@ -20,12 +20,12 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
   const [newBasis, setNewBasis] = useState<RecruitmentBasis>('Fee Paid');
   const [newTestDetails, setNewTestDetails] = useState("");
 
-  const activeClub = clubs.find(c => c.id === selectedClubId);
+  const activeClub = clubs.find((c: Club) => c.id === selectedClubId);
   const members = activeClub?.members || [];
 
   const handleUpdateActiveClub = (updatedClub: (c: Club) => Club) => {
     if (!selectedClubId) return;
-    setClubs(prev => prev.map(c => c.id === selectedClubId ? updatedClub(c) : c));
+    setClubs(prev => prev.map((c: Club) => c.id === selectedClubId ? updatedClub(c) : c));
   };
 
   const handleRecruitMember = (e: React.FormEvent) => {
@@ -41,8 +41,7 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
       basis: newBasis,
       testDetails: newBasis === 'Test Passed' ? newTestDetails : undefined
     };
-
-    handleUpdateActiveClub(c => ({
+    handleUpdateActiveClub((c: Club) => ({
       ...c,
       members: [...(c.members || []), newMember]
     }));
@@ -59,16 +58,16 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
     if (currentRole === 'General Member') newRole = 'Junior Core';
     else if (currentRole === 'Junior Core') newRole = 'Senior Core';
 
-    handleUpdateActiveClub(c => ({
+    handleUpdateActiveClub((c: Club) => ({
       ...c,
-      members: (c.members || []).map(m => m.id === memberId ? { ...m, role: newRole } : m)
+      members: (c.members || []).map((m: ClubMember) => m.id === memberId ? { ...m, role: newRole } : m)
     }));
   };
 
   const handleRemove = (memberId: string) => {
-    handleUpdateActiveClub(c => ({
+    handleUpdateActiveClub((c: Club) => ({
       ...c,
-      members: (c.members || []).filter(m => m.id !== memberId)
+      members: (c.members || []).filter((m: ClubMember) => m.id !== memberId)
     }));
   };
 
@@ -146,7 +145,7 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
-                {members.filter(m => m.role === 'Junior Core').length === 0 ? (
+                {members.filter((m: ClubMember) => m.role === 'Junior Core').length === 0 ? (
                   <tr>
                     <td colSpan={5} className="py-20 text-center text-neutral-500 uppercase tracking-widest font-bold text-[10px]">
                       No Junior Core members recruited yet.
@@ -154,8 +153,8 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
                   </tr>
                 ) : (
                   members
-                    .filter(m => m.role === 'Junior Core')
-                    .map(member => (
+                    .filter((m: ClubMember) => m.role === 'Junior Core')
+                    .map((member: ClubMember) => (
                     <tr key={member.id} className="hover:bg-white/[0.02] transition-colors group">
                       <td className="px-8 py-6">
                         <p className="font-bold text-white mb-1">{member.name}</p>
@@ -218,7 +217,7 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
-                {members.filter(m => m.role === 'General Member').length === 0 ? (
+                {members.filter((m: ClubMember) => m.role === 'General Member').length === 0 ? (
                   <tr>
                     <td colSpan={2} className="py-20 text-center text-neutral-500 uppercase tracking-widest font-bold text-[10px]">
                       No members available for promotion. Recruit first.
@@ -226,8 +225,8 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
                   </tr>
                 ) : (
                   members
-                    .filter(m => m.role === 'General Member')
-                    .map(member => (
+                    .filter((m: ClubMember) => m.role === 'General Member')
+                    .map((member: ClubMember) => (
                     <tr key={member.id} className="hover:bg-white/[0.02] transition-colors group">
                       <td className="px-8 py-6">
                         <p className="font-bold text-white mb-1">{member.name}</p>
