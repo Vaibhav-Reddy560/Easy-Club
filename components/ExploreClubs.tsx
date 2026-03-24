@@ -63,7 +63,7 @@ export default function ExploreClubs() {
     const [type, setType] = useState(CLUB_TYPES[9]); // Default to Coding
     const [category, setCategory] = useState<"College" | "Non-College">("College");
     const [location, setLocation] = useState("India");
-    const [clubs, setClubs] = useState<ScrapedClub[]>([]);
+    const [scrapedClubs, setScrapedClubs] = useState<ScrapedClub[]>([]);
     const [loading, setLoading] = useState(false);
     // const isClubSaved = (id: string) => savedClubs.some(c => c.id === id);
     const [error, setError] = useState<string | null>(null);
@@ -167,7 +167,7 @@ export default function ExploreClubs() {
             }
 
             if (Array.isArray(data) && data.length > 0) {
-                setClubs(data);
+                setScrapedClubs(data);
             } else {
                 throw new Error("No organizations found. Try adjusting your search criteria.");
             }
@@ -180,7 +180,7 @@ export default function ExploreClubs() {
             const displayError = isTimeout ? "Search timed out" : (discoveryErr.message || "Network Fault");
             setError(displayError);
 
-            setClubs(MOCK_CLUBS);
+            setScrapedClubs(MOCK_CLUBS);
             setIsMock(true);
         } finally {
             setLoading(false);
@@ -206,7 +206,7 @@ export default function ExploreClubs() {
 
 
 
-    const displayedClubs = showSaved ? getSavedClubs(userId) : clubs;
+    const displayedClubs = showSaved ? getSavedClubs(userId) : scrapedClubs;
 
     return (
         <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -330,7 +330,7 @@ export default function ExploreClubs() {
                         <button
                             onClick={() => {
                                 setIsMock(false);
-                                setClubs([]);
+                                setScrapedClubs([]);
                                 handleSearch();
                             }}
                             className="px-6 py-2 bg-white/5 border border-white/10 rounded-xl text-[9px] font-black uppercase tracking-widest text-white hover:bg-gold-500 hover:text-black transition-all"
@@ -502,7 +502,7 @@ export default function ExploreClubs() {
                     </div>
                 )}
 
-                {!loading && !error && !showSaved && clubs.length === 0 && (
+                {!loading && !error && !showSaved && scrapedClubs.length === 0 && (
                     <div className="col-span-full py-20 text-center space-y-4">
                         <div className="w-20 h-20 bg-gold-500/5 rounded-full flex items-center justify-center mx-auto border border-gold-500/10">
                             <Sparkles className="w-10 h-10 text-gold-500/20" />

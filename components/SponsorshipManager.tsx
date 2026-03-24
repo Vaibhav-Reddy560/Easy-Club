@@ -85,7 +85,7 @@ export default function SponsorshipManager({ clubs }: SponsorshipManagerProps) {
                     { label: "Target Funding", val: "₹10,50,000", sub: "Goal for 2024", icon: Target, color: "text-blue-400" },
                     { label: "Pipeline Value", val: "₹8,50,000", sub: "Weighted potential", icon: TrendingUp, color: "text-gold-400" },
                     { label: "Active Partners", val: "15", sub: "Global Organizations", icon: Building2, color: "text-purple-400" },
-                ].map((stat, i) => (
+                ].map((stat: { label: string; val: string; sub: string; icon: any; color: string }, i) => (
                     <div key={i} className="p-8 bg-neutral-900/40 border border-white/5 rounded-[2rem] group hover:border-gold-500/20 transition-all">
                         <stat.icon className={`w-5 h-5 mb-4 ${stat.color}`} />
                         <p className="text-[10px] text-neutral-500 font-black uppercase tracking-widest mb-1">{stat.label}</p>
