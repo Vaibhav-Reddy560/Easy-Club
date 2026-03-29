@@ -275,7 +275,7 @@ export default function App() {
           <div className="space-y-6 pt-8">
             <div className="relative inline-block px-4 overflow-visible">
               <div className="absolute inset-0 bg-[#FFA500] blur-3xl opacity-20 animate-pulse" />
-              <h1 className="relative text-6xl sm:text-7xl font-normal text-signature-gradient tracking-tight font-airstream leading-none">Easy Club</h1>
+              <h1 className="relative text-6xl sm:text-7xl font-normal text-signature-gradient tracking-tight font-airstream leading-none pr-4">Easy Club</h1>
             </div>
             <p className="text-neutral-500 text-sm font-medium tracking-wide max-w-[280px] mx-auto leading-relaxed">
               Professional club management and nationwide networking, made easy.

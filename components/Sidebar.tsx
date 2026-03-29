@@ -30,7 +30,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
     <nav className="h-20 border-b border-white/5 flex items-center justify-between px-8 bg-black/60 backdrop-blur-xl sticky top-0 z-50">
       <div className="flex items-center gap-4">
         <div className="w-3 h-3 rounded-full bg-[#FFA500] animate-pulse-gold" />
-        <h1 className="text-3xl font-normal text-signature-gradient tracking-tight font-airstream leading-none">Easy Club</h1>
+        <h1 className="text-3xl font-normal text-signature-gradient tracking-tight font-airstream leading-none pr-3">Easy Club</h1>
       </div>
       <div className="flex gap-6 items-center">
         <button
