@@ -2,44 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Airstream';
-  src: url('/fonts/airstream.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Dymaxion';
-  src: url('/fonts/dymaxion.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Sometype Mono';
-  src: url('/fonts/sometype-mono.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Astronomus';
-  src: url('/fonts/astronomus.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
 @layer base {
   :root {
-    --font-airstream: 'Airstream', sans-serif;
-    --font-dymaxion: 'Dymaxion', sans-serif;
-    --font-sometype: 'Sometype Mono', monospace;
-    --font-astronomus: 'Astronomus', sans-serif;
+    --font-airstream: var(--font-airstream);
+    --font-dymaxion: var(--font-dymaxion);
+    --font-sometype: var(--font-sometype);
+    --font-astronomus: var(--font-astronomus);
   }
 }
 
@@ -65,5 +33,22 @@ body {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     display: inline-block;
+  }
+
+  .animate-pulse-gold {
+    animation: pulse-gold-glow 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-gold-glow {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+      box-shadow: 0 0 10px 2px rgba(255, 165, 0, 0.4);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scale(0.95);
+      box-shadow: 0 0 20px 6px rgba(255, 165, 0, 0.7);
+    }
   }
 }

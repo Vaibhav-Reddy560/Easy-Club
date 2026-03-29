@@ -262,7 +262,7 @@ export default function App() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center p-6 relative overflow-hidden">
+      <div className="min-h-screen bg-black flex items-center justify-center p-8 relative overflow-hidden">
         {/* Background Effects */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(250,164,26,0.05)_0%,transparent_50%)]" />
         <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 pointer-events-none" />
@@ -270,12 +270,12 @@ export default function App() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-md w-full z-10 text-center space-y-10"
+          className="max-w-md w-full z-10 text-center space-y-10 px-4"
         >
           <div className="space-y-6 pt-8">
-            <div className="relative inline-block">
-              <div className="absolute inset-0 bg-[#FFA500] blur-2xl opacity-20 animate-pulse" />
-              <h1 className="relative text-7xl font-normal text-signature-gradient tracking-tight font-airstream leading-none">Easy Club</h1>
+            <div className="relative inline-block px-4 overflow-visible">
+              <div className="absolute inset-0 bg-[#FFA500] blur-3xl opacity-20 animate-pulse" />
+              <h1 className="relative text-6xl sm:text-7xl font-normal text-signature-gradient tracking-tight font-airstream leading-none">Easy Club</h1>
             </div>
             <p className="text-neutral-500 text-sm font-medium tracking-wide max-w-[280px] mx-auto leading-relaxed">
               Professional club management and nationwide networking, made easy.
