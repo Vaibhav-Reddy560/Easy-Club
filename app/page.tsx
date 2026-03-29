@@ -31,6 +31,7 @@ import AnalyticsView from "@/components/AnalyticsView";
 import SettingsView from "@/components/SettingsView";
 import MembershipView from "@/components/MembershipView";
 import MyTeamView from "@/components/MyTeamView";
+import MobileNav from "@/components/MobileNav";
 import { Club, ClubEvent, EventConfig, MemberRole, ActivityLogEvent } from "@/lib/types";
 import { useAuth } from "@/lib/auth";
 import { signInWithGoogle, logout } from "@/lib/firebase";
@@ -299,13 +300,13 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-white antialiased">
+    <div className="min-h-screen bg-background text-white antialiased pb-20 md:pb-0">
       <Sidebar 
         user={{
-          id: user.uid,
+          id: user?.uid || "",
           user_metadata: { 
-            full_name: user.displayName || "Club Member",
-            avatar_url: user.photoURL || undefined
+            full_name: user?.displayName || "Club Member",
+            avatar_url: user?.photoURL || undefined
           }
         }} 
         onLogout={logout} 
@@ -315,14 +316,14 @@ export default function App() {
         onSettingsClick={() => setView('settings')}
       />
 
-      <div className="max-w-[1600px] mx-auto flex px-6">
+      <div className="max-w-[1600px] mx-auto flex px-4 md:px-6">
         <AppSidebar 
           activeSection={activeNav} 
           onSectionChange={handleNavChange} 
           userRole={currentUserRole}
         />
 
-        <main className="flex-1 py-16 px-12">
+        <main className="flex-1 py-8 md:py-16 px-4 md:px-12">
           {/* We use display management instead of simple conditional rendering for Explore tabs 
               to keep their state alive without deep prop lifting for every search field. */}
           <div className={`${activeNav === 'my-clubs' ? 'block' : 'hidden'}`}>
@@ -611,6 +612,11 @@ export default function App() {
           </div>
         )}
       </AnimatePresence>
+      <MobileNav 
+        activeSection={activeNav} 
+        onSectionChange={handleNavChange} 
+        userRole={currentUserRole}
+      />
     </div>
   );
 }
