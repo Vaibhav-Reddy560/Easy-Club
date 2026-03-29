@@ -12,7 +12,7 @@ import {
   Palette,
   FileText,
   Share2,
-  Edit3
+  Pencil
 } from "lucide-react";
 
 // Import components from the components directory
@@ -431,7 +431,7 @@ export default function App() {
                       onClick={() => setView('questionnaire')}
                       className="flex items-center gap-2 px-6 py-2 bg-neutral-900 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest hover:border-gold-500/50 hover:text-gold-400 transition-all shadow-xl"
                     >
-                      <Edit3 className="w-3 h-3" /> Edit Config
+                      <Pencil className="w-3 h-3" /> Edit Config
                     </button>
                   </div>
 

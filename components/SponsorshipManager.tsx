@@ -10,7 +10,7 @@ import {
     FileText,
     Download,
     ChevronRight,
-    AlertCircle,
+    CircleAlert,
     Building2,
     IndianRupee,
     Sparkles
@@ -207,7 +207,7 @@ export default function SponsorshipManager({ clubs }: SponsorshipManagerProps) {
                             ].map((tip, i) => (
                                 <div key={i} className="flex gap-4 p-4 rounded-2xl bg-black/40 border border-white/5 group hover:border-blue-500/30 cursor-pointer transition-all">
                                     <div className="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center shrink-0">
-                                        <AlertCircle className="w-4 h-4 text-blue-500" />
+                                        <CircleAlert className="w-4 h-4 text-amber-500" />
                                     </div>
                                     <div>
                                         <p className="text-[11px] font-bold text-white group-hover:text-blue-100">{tip.title}</p>

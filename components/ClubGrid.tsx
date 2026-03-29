@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Plus, FolderClosed, Edit3, Trash2 } from "lucide-react";
+import { Plus, FolderClosed, Pencil, Trash2 } from "lucide-react";
 
 interface GridItem {
   id: string;
@@ -49,7 +49,7 @@ const GoldFolder = ({ name, onClick, onRename, onDelete }: { name: string; onCli
           className="p-1 rounded-md hover:bg-white/10 text-neutral-500 hover:text-blue-400 transition-colors"
           title="Rename"
         >
-          <Edit3 className="w-3.5 h-3.5" />
+          <Pencil className="w-3.5 h-3.5" />
         </button>
         <button
           onClick={(e) => { e.stopPropagation(); onDelete(); }}

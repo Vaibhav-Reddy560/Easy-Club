@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-    BarChart3, 
+    ChartBar, 
     TrendingUp, 
     Users, 
     Heart, 
@@ -94,7 +94,7 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
         return (
             <div className="flex flex-col items-center justify-center py-32 space-y-6 text-center">
                 <div className="w-20 h-20 bg-neutral-900 border border-white/5 rounded-full flex items-center justify-center animate-pulse">
-                    <BarChart3 className="w-10 h-10 text-neutral-700" />
+                    <ChartBar className="w-10 h-10 text-neutral-700" />
                 </div>
                 <div className="space-y-2">
                     <h3 className="text-xl font-bold text-white">No Organizations Established</h3>
@@ -228,7 +228,7 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
                                     <MetricCard 
                                         label="Monthly Impressions" 
                                         value={`${(stats.reach / 1000).toFixed(1)}K`} 
-                                        icon={BarChart3} 
+                                        icon={ChartBar} 
                                     />
                                     <SocialMetricCard />
                                 </div>

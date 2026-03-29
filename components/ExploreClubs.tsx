@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Search, MapPin, Instagram, Linkedin, Twitter, Facebook, ExternalLink, Loader2, Sparkles, Globe2, Youtube, Bookmark, BookmarkCheck } from "lucide-react";
+import { Search, MapPin, Instagram, Linkedin, Twitter, Facebook, ExternalLink, Loader2, Sparkles, Globe, Youtube, Bookmark, BookmarkCheck } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 
 const CLUB_TYPES = [
@@ -372,7 +372,7 @@ export default function ExploreClubs() {
                                 <div className="h-48 relative overflow-hidden bg-neutral-800">
                                     <div className="absolute top-4 left-4 z-10 flex gap-2">
                                         <div className="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 flex items-center gap-1.5 shadow-lg">
-                                            <Globe2 className="w-2.5 h-2.5 text-blue-400" />
+                                            <Globe className="w-3.5 h-3.5 text-blue-400" />
                                             <span className="text-[8px] font-black text-white/70 uppercase tracking-widest">Search Result</span>
                                         </div>
                                     </div>

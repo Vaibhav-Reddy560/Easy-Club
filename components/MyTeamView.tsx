@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-    Users2, 
+    UsersRound, 
     UserPlus, 
     History, 
     Shield, 
@@ -35,7 +35,7 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
     if (!activeClub) {
         return (
             <div className="flex flex-col items-center justify-center py-32 text-center">
-                <Users2 className="w-16 h-16 text-neutral-800 mb-6" />
+                <UsersRound className="w-16 h-16 text-neutral-800 mb-6" />
                 <h3 className="text-2xl font-bold text-white mb-2 uppercase tracking-widest">No Active Club</h3>
                 <p className="text-neutral-500 text-sm">Select a club folder to manage your team.</p>
             </div>
@@ -112,7 +112,7 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="bg-neutral-900/40 border border-white/5 rounded-3xl p-6">
                     <div className="flex items-center gap-4 mb-2">
-                        <Users2 className="w-4 h-4 text-gold-500" />
+                        <UsersRound className="w-4 h-4 text-gold-500" />
                         <span className="text-[9px] font-black uppercase tracking-widest text-neutral-500">Active Core</span>
                     </div>
                     <div className="flex items-baseline gap-2">
@@ -265,7 +265,7 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
                                 <h4 className="text-[10px] font-black uppercase tracking-widest text-neutral-500 ml-2">Pending Clearances</h4>
                                 {invites.length === 0 ? (
                                     <div className="py-20 text-center bg-neutral-900/20 rounded-[2.5rem] border border-dashed border-white/5">
-                                        <p className="text-[10px] font-bold text-signature-gradient uppercase tracking-widest line-clamp-1">{person.role}</p>
+                                        <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">No pending invitations. Use the form to send one.</p>
                                     </div>
                                 ) : (
                                     invites.map((invite: TeamInvite) => (
@@ -328,7 +328,6 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
                                                 <div className="w-10 h-10 rounded-xl bg-neutral-800 border border-white/5 flex items-center justify-center text-gold-400 group-hover:scale-110 transition-transform">
                                                     {getDomainIcon(event.domain)}
                                                 </div>
-                                                <h1 className="text-3xl font-black uppercase tracking-tighter text-white">Resource <span className="text-signature-gradient">Radar</span></h1>
                                             </div>
                                             <div className="flex-1">
                                                 <div className="flex items-center gap-3 mb-1">

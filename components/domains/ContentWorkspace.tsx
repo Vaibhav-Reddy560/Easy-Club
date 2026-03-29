@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useCallback, useEffect } from "react";
-import { FileText, Share2, Table, Download, Check, Copy, FileIcon, Sparkles, Loader2 } from "lucide-react";
+import { FileText, Share2, Table, Download, Check, Copy, File, Sparkles, Loader2 } from "lucide-react";
 import { Club, ClubEvent, EventConfig } from "@/lib/types";
 import { useGenerator } from "@/hooks/useGenerator";
 import { exportToDocx, exportToExcel } from "@/lib/export-utils";
@@ -234,7 +234,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
                 onClick={handleGenerateLetter}
                 className="w-full bg-black/40 border border-dashed border-white/10 rounded-3xl p-10 flex flex-col items-center gap-4 group hover:border-gold-500/40 transition-all"
               >
-                <FileIcon className="w-8 h-8 text-neutral-700 group-hover:text-gold-500 transition-colors" />
+                <File className="w-5 h-5 text-gold-500 group-hover:text-gold-500 transition-colors" />
                 <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">Generate Official Letter</span>
               </button>
             )}

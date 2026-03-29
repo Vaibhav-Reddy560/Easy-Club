@@ -2,7 +2,7 @@
 
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Linkedin, ExternalLink, Sparkles, MapPin, Mail, Radar, Briefcase } from "lucide-react";
+import { Linkedin, ExternalLink, Sparkles, MapPin, Mail, Radio, Briefcase } from "lucide-react";
 import { ClubEvent, EventConfig } from "@/lib/types";
 import ResourceRadar from "../ResourceRadar";
 
@@ -61,7 +61,7 @@ export default function SocialWorkspace({ activeEvent }: SocialWorkspaceProps) {
           onClick={() => setActiveTab('radar')}
           className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 transition-all ${activeTab === 'radar' ? 'bg-gold-500 text-black shadow-lg shadow-gold-500/10' : 'text-neutral-500 hover:text-white'}`}
         >
-          <Radar className="w-3 h-3" /> Talent Radar
+          <Radio className="w-3 h-3" /> Talent Radar
         </button>
         <button
           onClick={() => setActiveTab('proposals')}

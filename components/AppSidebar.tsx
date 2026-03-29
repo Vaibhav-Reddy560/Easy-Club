@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Globe, Trophy, Folder, Zap, BarChart3, Banknote, Users, Shield } from "lucide-react";
+import { Globe, Trophy, Folder, Zap, ChartBar, Banknote, Users, Shield } from "lucide-react";
 import { motion } from "framer-motion";
 import { MemberRole } from "@/lib/types";
 
@@ -21,7 +21,7 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
         { id: 'my-clubs' as NavSection, label: 'My Clubs', icon: Folder },
         { id: 'membership' as NavSection, label: 'Membership and Recruitment', icon: Users, restricted: true },
         { id: 'trending' as NavSection, label: 'Trending Event Ideas', icon: Zap },
-        { id: 'social-tracker' as NavSection, label: 'Social Tracker', icon: BarChart3 },
+        { id: 'social-tracker' as NavSection, label: 'Social Tracker', icon: ChartBar },
         { id: 'sponsorship' as NavSection, label: 'Funding & Sponsorship', icon: Banknote, restricted: true },
     ].filter(section => {
         if (userRole === 'Junior Core' && section.restricted) return false;

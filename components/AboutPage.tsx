@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Zap, CheckCircle2, AlertCircle, ChevronLeft } from "lucide-react";
+import { Zap, CircleCheck, CircleAlert, ChevronLeft } from "lucide-react";
 
 interface AboutPageProps {
     onBack: () => void;
@@ -50,7 +50,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-16 pl-11">
                         <section className="space-y-6">
                             <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-emerald-500 flex items-center gap-3">
-                                <CheckCircle2 className="w-4 h-4" /> Core Capabilities
+                                <CircleCheck className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" /> Core Capabilities
                             </h3>
                             <ul className="space-y-4">
                                 {[
@@ -71,7 +71,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
 
                         <section className="space-y-6">
                             <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-red-500 flex items-center gap-3">
-                                <AlertCircle className="w-4 h-4" /> Non-Capabilities
+                                <CircleAlert className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" /> Non-Capabilities
                             </h3>
                             <ul className="space-y-4">
                                 {[

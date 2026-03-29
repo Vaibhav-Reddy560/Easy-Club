@@ -1,8 +1,8 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
 import {
-  ImageIcon, Sparkles, Download, RefreshCw, Upload, Sliders, Check,
-  Layout, Award, FileText, Columns, Loader2, ExternalLink
+  Image as LucideImage, Sparkles, Download, RefreshCw, Upload, Sliders, Check,
+  Layout, Award, FileText, Columns2, Loader2, ExternalLink
 } from "lucide-react";
 import NextImage from "next/image";
 import { ClubEvent, EventConfig } from "@/lib/types";
@@ -37,9 +37,9 @@ interface FormatSpec {
 
 // ─── Constants ───────────────────────────────────────────────────────
 const FORMATS: FormatSpec[] = [
-  { id: "poster", label: "Poster", dim: "1080×1350", width: 1080, height: 1350, icon: ImageIcon, previewH: 540 },
+  { id: "poster", label: "Poster", dim: "1080×1350", width: 1080, height: 1350, icon: LucideImage, previewH: 540 },
   { id: "banner", label: "Banner", dim: "8×10 ft", width: 2400, height: 3000, icon: Layout, previewH: 400 },
-  { id: "standee", label: "Standee", dim: "3×5 ft", width: 900, height: 1500, icon: Columns, previewH: 500 },
+  { id: "standee", label: "Standee", dim: "3×5 ft", width: 900, height: 1500, icon: Columns2, previewH: 500 },
   { id: "certificate", label: "Certificate", dim: "Canva", width: 0, height: 0, icon: Award, previewH: 0 },
   { id: "forms-header", label: "Forms Header", dim: "1600×400", width: 1600, height: 400, icon: FileText, previewH: 200 },
 ];
@@ -196,7 +196,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
       }
 
       // Draw external image (Pollinations/AI) to canvas
-      const img = new Image();
+      const img = new window.Image();
       img.crossOrigin = "anonymous";
       
       img.onload = () => {
@@ -340,7 +340,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                 {activeTab === "poster" && (
                   <section className="bg-neutral-900/40 border border-white/5 rounded-[2rem] p-6 space-y-4">
                     <label className="text-[10px] text-signature-gradient font-bold uppercase tracking-widest flex items-center gap-2">
-                      <ImageIcon className="w-3 h-3" /> Poster Size
+                      <LucideImage className="w-3 h-3" /> Poster Size
                     </label>
                     <div className="flex gap-2">
                       {POSTER_DIMS.map(d => (

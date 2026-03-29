@@ -12,7 +12,7 @@ import {
   Bell, 
   Smartphone,
   ExternalLink,
-  CheckCircle2
+  CircleCheckBig
 } from "lucide-react";
 
 interface AccountViewProps {
@@ -70,7 +70,7 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
                 <div>
                   <h3 className="text-2xl font-bold text-white tracking-tight">{user?.displayName || "Club Member"}</h3>
                   <div className="flex items-center gap-2 mt-1">
-                    <CheckCircle2 className="w-4 h-4 text-green-500" />
+                    <CircleCheckBig className="w-4 h-4 text-green-500" />
                     <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-500">Verified System User</span>
                   </div>
                 </div>
