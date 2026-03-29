@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --font-airstream: var(--font-airstream);
-    --font-dymaxion: var(--font-dymaxion);
-    --font-sometype: var(--font-sometype);
-    --font-astronomus: var(--font-astronomus);
-  }
-}
 
 :root {
   --background: #050505;
