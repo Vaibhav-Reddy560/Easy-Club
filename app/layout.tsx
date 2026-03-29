@@ -6,23 +6,27 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 const airstream = localFont({
-  src: "../public/fonts/airstream.ttf",
+  src: "./fonts/airstream.ttf",
   variable: "--font-airstream",
+  display: "swap",
 });
 
 const dymaxion = localFont({
-  src: "../public/fonts/dymaxion.ttf",
+  src: "./fonts/dymaxion.ttf",
   variable: "--font-dymaxion",
+  display: "swap",
 });
 
 const sometype = localFont({
-  src: "../public/fonts/sometype-mono.ttf",
+  src: "./fonts/sometype-mono.ttf",
   variable: "--font-sometype",
+  display: "swap",
 });
 
 const astronomus = localFont({
-  src: "../public/fonts/astronomus.ttf",
+  src: "./fonts/astronomus.ttf",
   variable: "--font-astronomus",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
