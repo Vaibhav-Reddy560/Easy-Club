@@ -27,8 +27,26 @@ export default function DynamicIsland() {
     }
   }, [tasks]);
 
+  // If no active task, render the resting "notch" state
   if (!activeTask) {
-    return null;
+    return (
+      <motion.div
+        layout
+        initial={{ opacity: 0, y: -20, scale: 0.9 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        className="fixed left-1/2 -translate-x-1/2 top-4 z-[999] overflow-hidden bg-black/95 backdrop-blur-2xl border border-white/5 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] cursor-default"
+        style={{
+          borderRadius: 32,
+          width: 80,
+          height: 28,
+        }}
+      >
+        <div className="w-full h-full flex items-center justify-center gap-2 opacity-30">
+          <div className="w-1.5 h-1.5 rounded-full bg-neutral-500" />
+          <div className="w-1.5 h-1.5 rounded-full bg-neutral-600" />
+        </div>
+      </motion.div>
+    );
   }
 
   // Determine icon and color based on status
@@ -65,8 +83,9 @@ export default function DynamicIsland() {
   const hasMultipleTasks = tasks.length > 1;
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       <motion.div
+        key="active-island"
         layout
         initial={{ opacity: 0, y: -20, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
