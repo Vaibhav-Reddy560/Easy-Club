@@ -19,16 +19,33 @@ import {
     Palette,
     Share2,
     Info,
-    Trash2
+    Trash2,
+    ChevronDown
 } from "lucide-react";
 import { Club, MemberRole, TeamInvite, ActivityLogEvent, ClubMember } from "@/lib/types";
 
 interface MyTeamViewProps {
-    activeClub: Club | undefined;
-    onUpdateClub: (updatedClub: Club) => void;
+    clubs: Club[];
+    setClubs: React.Dispatch<React.SetStateAction<Club[]>>;
 }
 
-export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps) {
+export default function MyTeamView({ clubs, setClubs }: MyTeamViewProps) {
+    const [selectedClubId, setSelectedClubId] = useState<string | null>(clubs[0]?.id || null);
+    
+    // Automatically select the first club if available and none selected
+    React.useEffect(() => {
+        if (!selectedClubId && clubs.length > 0) {
+            setSelectedClubId(clubs[0].id);
+        }
+    }, [clubs, selectedClubId]);
+
+    const activeClub = clubs.find(c => c.id === selectedClubId);
+
+    const onUpdateClub = (updatedClub: Club) => {
+        if (!selectedClubId) return;
+        setClubs(prev => prev.map(c => c.id === selectedClubId ? updatedClub : c));
+    };
+
     const [activeTab, setActiveTab] = useState<'roster' | 'invites' | 'activity'>('roster');
     const [inviteEmail, setInviteEmail] = useState("");
     const [inviteRole, setInviteRole] = useState<MemberRole>('Junior Core');
@@ -37,12 +54,12 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
     const [memberToRemove, setMemberToRemove] = useState<string | null>(null);
     const [copiedId, setCopiedId] = useState<string | null>(null);
 
-    if (!activeClub) {
+    if (!activeClub || clubs.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center py-32 text-center">
                 <UsersRound className="w-16 h-16 text-neutral-800 mb-6" />
-                <h3 className="text-2xl font-bold text-white mb-2 uppercase tracking-widest">No Active Club</h3>
-                <p className="text-neutral-500 text-sm">Select a club folder to manage your team.</p>
+                <h3 className="text-2xl font-bold text-white mb-2 uppercase tracking-widest">No Clubs Established</h3>
+                <p className="text-neutral-500 text-sm">Create a club to manage your team.</p>
             </div>
         );
     }
@@ -125,11 +142,26 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
     return (
         <div className="space-y-8 max-w-6xl mx-auto">
             {/* Header */}
-            <div>
-                <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">My Team Hub</h2>
-                <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-[0.2em] mt-2">
-                    Collaboration, Permissions & Global Activity Tracking
-                </p>
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div>
+                    <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">My Team Hub</h2>
+                    <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-[0.2em] mt-2">
+                        Collaboration, Permissions & Global Activity Tracking
+                    </p>
+                </div>
+
+                <div className="relative group min-w-[250px]">
+                    <select
+                        value={selectedClubId || ""}
+                        onChange={(e) => setSelectedClubId(e.target.value)}
+                        className="w-full appearance-none bg-neutral-900 border border-white/10 rounded-2xl py-4 pl-6 pr-12 text-sm font-bold text-white uppercase tracking-widest outline-none hover:border-gold-500/50 transition-colors focus:border-gold-500"
+                    >
+                        {clubs.map((club) => (
+                            <option key={club.id} value={club.id}>{club.name}</option>
+                        ))}
+                    </select>
+                    <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500 pointer-events-none group-hover:text-gold-500 transition-colors" />
+                </div>
             </div>
 
             {/* Quick Stats */}

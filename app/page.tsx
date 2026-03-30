@@ -506,12 +506,7 @@ export default function App() {
           </div>
 
           <div className={`${activeNav === 'my-team' ? 'block' : 'hidden'}`}>
-            <MyTeamView 
-              activeClub={activeClub} 
-              onUpdateClub={(updatedClub: Club) => {
-                setClubs(prev => prev.map(c => c.id === activeClubId ? updatedClub : c));
-              }}
-            />
+            <MyTeamView clubs={clubs} setClubs={setClubs} />
           </div>
 
           <div className={`${activeNav === 'membership' ? 'block' : 'hidden'}`}>
