@@ -17,7 +17,7 @@ export default function LoginView({ onSignIn }: LoginViewProps) {
       {/* Ambient Background Effects */}
       <div className="absolute top-1/4 -left-20 ambient-glow opacity-40" />
       <div className="absolute bottom-1/4 -right-20 ambient-glow opacity-30" style={{ animationDelay: "-10s" }} />
-      <Meteors number={20} />
+      <Meteors number={25} color="#FFD700" />
 
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -63,7 +63,7 @@ export default function LoginView({ onSignIn }: LoginViewProps) {
               className="text-center"
             >
               <p className="text-neutral-400 text-sm font-medium leading-relaxed max-w-[280px] mx-auto">
-                The most advanced management engine for elite university clubs.
+                Professional club management and nationwide networking, made easy.
               </p>
             </motion.div>
 
@@ -82,7 +82,7 @@ export default function LoginView({ onSignIn }: LoginViewProps) {
                     className="w-4 h-4 transition-transform group-hover:scale-110" 
                     unoptimized 
                   />
-                  <span>Access via Google</span>
+                  <span>Sign in with Google</span>
                 </button>
               </Magnetic>
               
