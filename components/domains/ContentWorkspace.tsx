@@ -19,8 +19,8 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
   const [promoError, setPromoError] = useState<string | null>(null);
 
   // Hooks for new generators
-  const letterGen = useGenerator();
-  const sheetGen = useGenerator();
+  const letterGen = useGenerator("Generating Letter Copy...");
+  const sheetGen = useGenerator("Assembling Coverage Sheet...");
 
   // Use persisted content if available
   const generatedPromo = activeEvent?.config?.workspaceData?.content || null;

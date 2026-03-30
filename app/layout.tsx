@@ -35,6 +35,8 @@ const astronomus = localFont({
   display: "swap",
 });
 
+import { TaskProvider } from "@/lib/TaskContext";
+
 export const metadata: Metadata = {
   title: "Easy Club",
   description: "BMSCE IEEE CS Management Hub",
@@ -48,7 +50,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${airstream.variable} ${dymaxion.variable} ${sometype.variable} ${astronomus.variable}`}>
       <body className={`${inter.className} font-sometype antialiased`}>
-        {children}
+        <TaskProvider>
+            {children}
+        </TaskProvider>
       </body>
     </html>
   );

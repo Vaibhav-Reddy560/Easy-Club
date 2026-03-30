@@ -97,8 +97,8 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
   const [editPoc2, setEditPoc2] = useState(config.poc2Name ? `${config.poc2Name}: ${config.poc2Phone || ""}` : "");
 
   // Generators
-  const vibeGen = useGenerator();
-  const imageGen = useGenerator();
+  const vibeGen = useGenerator("Scanning Vibe Database...");
+  const imageGen = useGenerator("Rendering Visual Assets...");
 
   // Sync editable fields when activeEvent changes
   useEffect(() => {
