@@ -32,7 +32,26 @@ const config: Config = {
       },
       boxShadow: {
         "gold-glow": "0 0 15px 0 rgba(245, 158, 11, 0.5)",
-      }
+      },
+      animation: {
+        "meteor-effect": "meteor 5s linear infinite",
+        "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
+      },
+      keyframes: {
+        meteor: {
+          "0%": { transform: "rotate(215deg) translateX(0)", opacity: "1" },
+          "70%": { opacity: "1" },
+          "100%": {
+            transform: "rotate(215deg) translateX(-500px)",
+            opacity: "0",
+          },
+        },
+        "border-beam": {
+          "100%": {
+            "offset-distance": "100%",
+          },
+        },
+      },
     },
   },
   plugins: [],

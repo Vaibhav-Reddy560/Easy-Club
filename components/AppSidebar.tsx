@@ -2,8 +2,10 @@
 
 import React from "react";
 import { Globe, Trophy, Folder, Zap, ChartBar, Banknote, Users, Shield } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import { MemberRole } from "@/lib/types";
+import { Meteors } from "@/components/animations/Meteors";
+import { useRef } from "react";
 
 export type NavSection = 'explore-clubs' | 'explore-events' | 'my-clubs' | 'my-team' | 'membership' | 'trending' | 'social-tracker' | 'sponsorship';
 
@@ -28,15 +30,35 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
         return true;
     });
 
+    const mouseY = useMotionValue(Infinity);
+
     return (
-        <aside className="hidden md:flex w-80 flex-col pt-16 pr-8 border-r border-white/5 space-y-8 sticky top-20 h-[calc(100vh-5rem)]">
+        <aside 
+            onMouseMove={(e) => mouseY.set(e.clientY)}
+            onMouseLeave={() => mouseY.set(Infinity)}
+            className="hidden md:flex w-80 flex-col pt-16 pr-8 border-r border-white/5 space-y-8 sticky top-20 h-[calc(100vh-5rem)]"
+        >
             <div className="space-y-2">
                 {sections.map((section) => {
                     const isActive = activeSection === section.id;
                     const Icon = section.icon;
 
+                    // eslint-disable-next-line react-hooks/rules-of-hooks
+                    const ref = useRef<HTMLButtonElement>(null);
+                    
+                    // eslint-disable-next-line react-hooks/rules-of-hooks
+                    const distance = useTransform(mouseY, (val) => {
+                        const bounds = ref.current?.getBoundingClientRect() ?? { y: 0, height: 0 };
+                        return val - bounds.y - bounds.height / 2;
+                    });
+                    
+                    // eslint-disable-next-line react-hooks/rules-of-hooks
+                    const scaleSync = useTransform(distance, [-150, 0, 150], [1, 1.15, 1]);
+
                     return (
-                        <button
+                        <motion.button
+                            ref={ref}
+                            style={{ scale: scaleSync }}
                             key={section.id}
                             onClick={() => onSectionChange(section.id)}
                             className={`w-full flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 group relative ${isActive
@@ -54,13 +76,14 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
                             <span className={`text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-transform ${isActive ? 'translate-x-1 text-signature-gradient' : ''}`}>
                                 {section.label}
                             </span>
-                        </button>
+                        </motion.button>
                     );
                 })}
             </div>
 
             <div className="mt-auto pb-8">
                 <div className="glass-panel rounded-[2rem] p-6 text-center space-y-3 relative overflow-hidden group">
+                    <Meteors number={15} className="opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                     <div className="absolute top-0 left-0 w-full h-1 bg-signature-gradient" />
                     <div className="w-10 h-10 bg-gold-500/10 rounded-full flex items-center justify-center mx-auto relative z-10">
                         <Zap className="w-5 h-5 text-gold-500" />

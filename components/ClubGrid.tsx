@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Plus, FolderClosed, Pencil, Trash2 } from "lucide-react";
+import { Meteors } from "@/components/animations/Meteors";
 
 interface GridItem {
   id: string;
@@ -91,8 +92,11 @@ export default function ClubGrid({ items, onItemClick, onRename, onDelete, onAdd
         className="grid grid-cols-2 md:grid-cols-6 gap-y-12 gap-x-6"
       >
         <motion.div variants={itemVariants} onClick={onAddClick} className="group flex flex-col items-center gap-3 p-4 w-32 cursor-pointer">
-          <div className="w-20 h-16 rounded-xl glass-card flex items-center justify-center group-hover:border-gold-500/60 transition-all duration-500">
-            <Plus className="w-7 h-7 text-neutral-500 group-hover:text-gold-400 group-hover:rotate-90 transition-transform" />
+          <div className="relative overflow-hidden w-20 h-16 rounded-xl glass-card flex items-center justify-center group-hover:border-gold-500/60 transition-all duration-500">
+            <Meteors number={10} className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative z-10">
+              <Plus className="w-7 h-7 text-neutral-500 group-hover:text-gold-400 group-hover:rotate-90 transition-transform" />
+            </div>
           </div>
           <span className="text-[11px] font-bold text-neutral-500 group-hover:text-signature-gradient uppercase tracking-widest">{addLabel}</span>
         </motion.div>

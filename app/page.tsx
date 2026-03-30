@@ -26,6 +26,7 @@ import ExploreEvents from "@/components/ExploreEvents";
 import DesignWorkspace from "@/components/domains/DesignWorkspace";
 import ContentWorkspace from "@/components/domains/ContentWorkspace";
 import SocialWorkspace from "@/components/domains/SocialWorkspace";
+import { BorderBeam } from "@/components/animations/BorderBeam";
 import AccountView from "@/components/AccountView";
 import AnalyticsView from "@/components/AnalyticsView";
 import SettingsView from "@/components/SettingsView";
@@ -455,11 +456,14 @@ export default function App() {
                       <div
                         key={d.id}
                         onClick={() => setActiveDomain(d.id as 'Design' | 'Content' | 'Social')}
-                        className={`p-8 rounded-[2rem] cursor-pointer ${activeDomain === d.id ? 'glass-panel !border-gold-500 shadow-gold-glow transform -translate-y-2' : 'glass-card hover:border-gold-500/30'}`}
+                        className={`p-8 rounded-[2rem] cursor-pointer relative overflow-hidden ${activeDomain === d.id ? 'glass-panel !bg-neutral-900/60 shadow-gold-glow transform -translate-y-2' : 'glass-card hover:border-gold-500/30'}`}
                       >
-                        <d.icon className={`w-8 h-8 mb-4 transition-colors ${activeDomain === d.id ? 'text-gold-400' : 'text-neutral-500'}`} />
-                        <h3 className="text-2xl font-normal font-astronomus leading-tight text-white/90">{d.id}</h3>
-                        <p className={`text-[10px] font-bold uppercase mt-1 tracking-widest ${activeDomain === d.id ? 'text-signature-gradient' : 'text-neutral-500'}`}>{d.desc}</p>
+                        {activeDomain === d.id && <BorderBeam duration={8} size={300} />}
+                        <div className="relative z-10">
+                          <d.icon className={`w-8 h-8 mb-4 transition-colors ${activeDomain === d.id ? 'text-gold-400' : 'text-neutral-500'}`} />
+                          <h3 className="text-2xl font-normal font-astronomus leading-tight text-white/90">{d.id}</h3>
+                          <p className={`text-[10px] font-bold uppercase mt-1 tracking-widest ${activeDomain === d.id ? 'text-signature-gradient' : 'text-neutral-500'}`}>{d.desc}</p>
+                        </div>
                       </div>
                     ))}
                   </div>
