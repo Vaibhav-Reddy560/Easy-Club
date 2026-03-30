@@ -9,6 +9,8 @@ import { ClubEvent, EventConfig } from "@/lib/types";
 import { useGenerator } from "@/hooks/useGenerator";
 import { motion, AnimatePresence } from "framer-motion";
 import * as htmlToImage from "html-to-image";
+import { BorderBeam } from "@/components/animations/BorderBeam";
+import { Meteors } from "@/components/animations/Meteors";
 
 // ─── Types ───────────────────────────────────────────────────────────
 interface DesignWorkspaceProps {
@@ -309,8 +311,9 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
       <AnimatePresence mode="wait">
         {/* ─── CERTIFICATE TAB ─────────────────────────────────────── */}
         {activeTab === "certificate" && (
-          <motion.div key="cert" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="bg-neutral-900/40 border border-white/5 rounded-[3rem] p-10 text-center space-y-8">
-            <div className="w-20 h-20 bg-gold-500/10 border border-gold-500/20 rounded-3xl flex items-center justify-center mx-auto">
+          <motion.div key="cert" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="glass-panel rounded-[3rem] p-10 text-center space-y-8 relative overflow-hidden group">
+            <Meteors number={15} />
+            <div className="w-20 h-20 bg-gold-500/10 border border-gold-500/20 rounded-3xl flex items-center justify-center mx-auto relative z-10">
               <Award className="w-10 h-10 text-gold-500" />
             </div>
             <div className="space-y-2">
@@ -338,7 +341,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
               <div className="xl:col-span-2 space-y-8">
                 {/* Poster sub-dimensions */}
                 {activeTab === "poster" && (
-                  <section className="bg-neutral-900/40 border border-white/5 rounded-[2rem] p-6 space-y-4">
+                  <section className="glass-panel rounded-[2rem] p-6 space-y-4">
                     <label className="text-[10px] text-signature-gradient font-bold uppercase tracking-widest flex items-center gap-2">
                       <LucideImage className="w-3 h-3" /> Poster Size
                     </label>
@@ -357,7 +360,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                 )}
 
                 {/* Creativity Slider */}
-                <section className="bg-neutral-900/40 border border-white/5 rounded-[2rem] p-6 space-y-4">
+                <section className="glass-panel rounded-[2rem] p-6 space-y-4">
                   <label className="text-[10px] text-signature-gradient font-bold uppercase tracking-widest flex items-center gap-2">
                     <Sliders className="w-3 h-3" /> Creativity Level: <span className="text-white ml-1">{creativityLevel}/10</span>
                   </label>
@@ -376,8 +379,8 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                 </section>
 
                 {/* AI Vibe Suggestion */}
-                <section className="bg-neutral-900/40 border border-white/5 rounded-[2rem] p-6 space-y-5">
-                  <div className="flex justify-between items-center">
+                <section className="glass-panel rounded-[2rem] p-6 space-y-5 relative overflow-hidden group">
+                  <div className="flex justify-between items-center relative z-10">
                     <label className="text-[10px] text-signature-gradient font-bold uppercase tracking-widest flex items-center gap-2">
                       <Sparkles className="w-3 h-3" /> AI Vibe Direction
                     </label>
@@ -392,14 +395,15 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                   </div>
 
                   {vibeGen.status === "generating" && (
-                    <div className="py-8 flex flex-col items-center gap-3 animate-pulse">
+                    <div className="py-8 flex flex-col items-center gap-3 animate-pulse relative z-10">
+                      <BorderBeam duration={3} size={200} />
                       <Sparkles className="w-6 h-6 text-gold-500/40" />
                       <p className="text-[9px] text-neutral-500 font-bold uppercase tracking-widest">Analyzing event profile...</p>
                     </div>
                   )}
 
                   {vibeData && vibeGen.status === "success" && (
-                    <div className="space-y-4">
+                    <div className="space-y-4 relative z-10">
                       <div className="bg-black/60 p-5 rounded-2xl border border-white/5 text-[11px] text-neutral-300 leading-relaxed">
                         {vibeData.vibe}
                       </div>
@@ -429,7 +433,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
 
                 {/* User Vibe Override */}
                 {useOverride && (
-                  <section className="bg-neutral-900/40 border border-white/5 rounded-[2rem] p-6 space-y-4">
+                  <section className="glass-panel rounded-[2rem] p-6 space-y-4">
                     <label className="text-[10px] text-signature-gradient font-bold uppercase tracking-widest">Your Vibe Description</label>
                     <textarea
                       value={vibeOverride}
@@ -441,7 +445,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                 )}
 
                 {/* Reference Image Upload */}
-                <section className="bg-neutral-900/40 border border-white/5 rounded-[2rem] p-6 space-y-4">
+                <section className="glass-panel rounded-[2rem] p-6 space-y-4">
                   <label className="text-[10px] text-signature-gradient font-bold uppercase tracking-widest flex items-center gap-2">
                     <Upload className="w-3 h-3" /> Reference Image (Optional)
                   </label>
@@ -499,7 +503,8 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                 </div>
 
                 {/* UI Wrapper with rounded corners for the preview window */}
-                <div className="rounded-[2.5rem] overflow-hidden border border-white/5 shadow-2xl bg-neutral-950 mx-auto" style={{ maxWidth: activeTab === "forms-header" ? "100%" : "480px" }}>
+                <div className="rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl bg-neutral-950 mx-auto relative group" style={{ maxWidth: activeTab === "forms-header" ? "100%" : "480px" }}>
+                  <BorderBeam duration={6} size={400} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div
                     ref={posterRef}
                     className="relative w-full overflow-hidden bg-black"

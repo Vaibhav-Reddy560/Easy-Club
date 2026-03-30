@@ -33,6 +33,7 @@ import SettingsView from "@/components/SettingsView";
 import MembershipView from "@/components/MembershipView";
 import MyTeamView from "@/components/MyTeamView";
 import MobileNav from "@/components/MobileNav";
+import LoginView from "@/components/LoginView";
 import { Club, ClubEvent, EventConfig, MemberRole, ActivityLogEvent } from "@/lib/types";
 import { useAuth } from "@/lib/auth";
 import { signInWithGoogle, logout } from "@/lib/firebase";
@@ -263,41 +264,7 @@ export default function App() {
   }
 
   if (!user) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center p-8 relative overflow-hidden">
-        {/* Background Effects */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(250,164,26,0.05)_0%,transparent_50%)]" />
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 pointer-events-none" />
-
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="max-w-md w-full z-10 text-center space-y-10 px-4"
-        >
-          <div className="space-y-6 pt-8">
-            <div className="relative inline-block px-4 overflow-visible">
-              <div className="absolute inset-0 bg-[#FFA500] blur-3xl opacity-20 animate-pulse" />
-              <h1 className="relative text-6xl sm:text-7xl font-normal text-signature-gradient tracking-tight font-airstream leading-none pr-4">Easy Club</h1>
-            </div>
-            <p className="text-neutral-500 text-sm font-medium tracking-wide max-w-[280px] mx-auto leading-relaxed">
-              Professional club management and nationwide networking, made easy.
-            </p>
-          </div>
-
-          <div className="space-y-6">
-            <button
-              onClick={signInWithGoogle}
-              className="w-full group relative flex items-center justify-center gap-4 px-8 py-5 bg-white text-black font-black uppercase tracking-widest text-[11px] rounded-[1.5rem] transition-all duration-500 hover:bg-gold-500 hover:text-black hover:shadow-[0_20px_40px_-15px_rgba(250,164,26,0.3)] overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-              <Image src="https://www.google.com/favicon.ico" width={16} height={16} alt="Google" className="w-4 h-4" unoptimized />
-              Sign in with Google
-            </button>
-            <p className="text-[9px] text-neutral-600 font-black uppercase tracking-[0.2em]">Authorized Access Only</p>
-          </div>
-        </motion.div>
-      </div>
-    );
+    return <LoginView onSignIn={signInWithGoogle} />;
   }
 
   return (

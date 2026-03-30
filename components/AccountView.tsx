@@ -14,6 +14,7 @@ import {
   ExternalLink,
   CircleCheckBig
 } from "lucide-react";
+import { BorderBeam } from "@/components/animations/BorderBeam";
 
 interface AccountViewProps {
   user: FirebaseUser | null;
@@ -23,8 +24,16 @@ interface AccountViewProps {
 export default function AccountView({ user, onBack }: AccountViewProps) {
   return (
     <motion.div 
-      initial={{ opacity: 0, x: 20 }} 
-      animate={{ opacity: 1, x: 0 }}
+      initial="hidden"
+      animate="show"
+      variants={{
+        hidden: { opacity: 0, x: 20 },
+        show: { 
+          opacity: 1, 
+          x: 0,
+          transition: { staggerChildren: 0.1 }
+        }
+      }}
       className="max-w-4xl mx-auto"
     >
       <button
@@ -46,9 +55,15 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Profile Card */}
-          <div className="md:col-span-2 space-y-6">
-            <div className="bg-neutral-900/40 border border-white/5 rounded-[2.5rem] p-8 relative overflow-hidden group">
+          <motion.div 
+            variants={{
+                hidden: { opacity: 0, y: 20 },
+                show: { opacity: 1, y: 0 }
+            }}
+            className="md:col-span-2 space-y-6"
+          >
+            <div className="glass-panel rounded-[2.5rem] p-8 relative overflow-hidden group">
+              <BorderBeam size={400} duration={12} delay={2} />
               <div className="absolute top-0 right-0 w-32 h-32 bg-gold-500/5 blur-3xl -mr-16 -mt-16" />
               
               <div className="flex items-center gap-6 mb-8">
@@ -96,7 +111,7 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
             </div>
 
             {/* Security Section */}
-            <div className="bg-neutral-900/40 border border-white/5 rounded-[2.5rem] p-8">
+            <div className="glass-panel rounded-[2.5rem] p-8">
               <div className="flex items-center gap-3 mb-6">
                 <Shield className="w-5 h-5 text-gold-500" />
                 <h4 className="text-lg font-bold text-white uppercase tracking-tighter">Security & Safety</h4>
@@ -122,13 +137,20 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Quick Actions / Shortcuts */}
-          <div className="space-y-8">
-            <div className="bg-gold-500/5 border border-gold-500/20 rounded-[2.5rem] p-8">
-              <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-signature-gradient mb-4">Quick Preferences</h4>
-              <div className="space-y-4">
+          <motion.div 
+            variants={{
+                hidden: { opacity: 0, x: 20 },
+                show: { opacity: 1, x: 0 }
+            }}
+            className="space-y-8"
+          >
+            <div className="bg-gold-500/5 border border-gold-500/20 rounded-[2.5rem] p-8 relative overflow-hidden group">
+              <BorderBeam size={200} duration={6} colorFrom="#F59E0B" colorTo="#D97706" />
+              <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-signature-gradient mb-4 relative z-10">Quick Preferences</h4>
+              <div className="space-y-4 relative z-10">
                 {[
                   { icon: Bell, label: "Notifications" },
                   { icon: User, label: "Edit Persona" }
@@ -152,7 +174,7 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
                 Export Data Protocol →
               </button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </motion.div>

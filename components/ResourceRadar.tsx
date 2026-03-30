@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Search, MapPin, Users, Award, ExternalLink, Linkedin, Twitter, Github, Globe, Loader2, Sparkles, Trophy } from "lucide-react";
+import { Meteors } from "@/components/animations/Meteors";
+import { BorderBeam } from "@/components/animations/BorderBeam";
 
 interface ResourcePerson {
     name: string;
@@ -71,7 +73,7 @@ export default function ResourceRadar() {
                             value={domain}
                             onChange={(e) => setDomain(e.target.value)}
                             placeholder="Expert Domain (e.g. AI, Music, Design)"
-                            className="w-full sm:w-64 pl-12 pr-6 py-4 bg-black border border-white/10 rounded-2xl text-sm font-bold text-white focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20 outline-none transition-all placeholder:text-neutral-700"
+                            className="w-full sm:w-64 pl-12 pr-6 py-4 glass-card rounded-2xl text-sm font-bold text-white focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20 outline-none transition-all placeholder:text-neutral-700"
                         />
                     </div>
                     <div className="relative group">
@@ -81,7 +83,7 @@ export default function ResourceRadar() {
                             value={location}
                             onChange={(e) => setLocation(e.target.value)}
                             placeholder="City"
-                            className="w-full sm:w-48 pl-12 pr-6 py-4 bg-black border border-white/10 rounded-2xl text-sm font-bold text-white focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20 outline-none transition-all placeholder:text-neutral-700"
+                            className="w-full sm:w-48 pl-12 pr-6 py-4 glass-card rounded-2xl text-sm font-bold text-white focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20 outline-none transition-all placeholder:text-neutral-700"
                         />
                     </div>
                     <button
@@ -104,10 +106,11 @@ export default function ResourceRadar() {
                         exit={{ opacity: 0 }}
                         className="py-32 text-center space-y-6"
                     >
-                        <div className="relative w-20 h-20 mx-auto">
+                        <div className="relative w-40 h-40 mx-auto glass-panel rounded-full flex items-center justify-center overflow-hidden border-gold-500/20">
+                            <Meteors number={15} />
                             <div className="absolute inset-0 border-2 border-gold-500/20 rounded-full animate-ping" />
-                            <div className="absolute inset-0 border-2 border-gold-500 border-t-transparent rounded-full animate-spin" />
-                            <div className="absolute inset-4 bg-gradient-to-br from-gold-500/40 to-transparent rounded-full blur-sm" />
+                            <div className="absolute inset-0 border-2 border-gold-500 border-t-transparent rounded-full animate-spin [animation-duration:3s]" />
+                            <Users className="w-10 h-10 text-gold-500/40 relative z-10" />
                         </div>
                         <div className="space-y-1">
                             <h3 className="text-xl font-bold bg-gradient-to-r from-white to-neutral-500 bg-clip-text text-transparent uppercase tracking-[0.2em]">Mining Intelligence...</h3>
@@ -143,9 +146,11 @@ export default function ResourceRadar() {
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: idx * 0.1 }}
-                                className="group relative bg-[#0A0A0A] border border-white/5 rounded-[2rem] overflow-hidden hover:border-gold-500/30 transition-all duration-500 shadow-2xl"
+                                className="group relative glass-card p-1 rounded-[2.2rem] overflow-hidden shadow-2xl"
                             >
-                                {/* Platform Label */}
+                                <div className="bg-[#0A0A0A]/80 backdrop-blur-xl rounded-[2rem] overflow-hidden relative border border-white/5 h-full">
+                                    <BorderBeam duration={10} size={250} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    {/* Platform Label */}
                                 <div className="absolute top-6 right-6 z-20 flex items-center gap-2">
                                     <div className="px-3 py-1 bg-black/80 backdrop-blur-md rounded-full border border-white/10 flex items-center gap-2 text-[8px] font-black uppercase tracking-widest text-neutral-400">
                                         {person.website.includes("linkedin") ? <Linkedin className="w-2.5 h-2.5" /> : 
@@ -204,6 +209,7 @@ export default function ResourceRadar() {
                                         <span className="text-[9px] font-black uppercase tracking-[0.2em] group-hover/btn:scale-105 transition-transform">Initiate Connection</span>
                                         <ExternalLink className="w-3 h-3 transition-transform group-hover/btn:translate-x-0.5" />
                                     </a>
+                                </div>
                                 </div>
                             </motion.div>
                         ))}

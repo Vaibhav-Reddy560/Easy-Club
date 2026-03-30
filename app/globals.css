@@ -67,6 +67,38 @@ body {
     z-index: 1;
   }
 
+  /* Glint / Shine effect for premium buttons */
+  .glint-effect {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .glint-effect::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent 45%,
+      rgba(255, 255, 255, 0.1) 48%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0.1) 52%,
+      transparent 55%
+    );
+    transform: rotate(-45deg);
+    transition: none;
+    pointer-events: none;
+    animation: glint-slide 3s infinite;
+  }
+
+  @keyframes glint-slide {
+    0% { transform: translate(-100%, -100%) rotate(-45deg); }
+    30%, 100% { transform: translate(100%, 100%) rotate(-45deg); }
+  }
+
   /* Dynamic Aurora meshes (blurred light orbs) */
   .ambient-glow {
     position: absolute;
@@ -81,10 +113,10 @@ body {
   }
 
   @keyframes organic-drift {
-    0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.4; }
-    25% { transform: translate(150px, -50px) scale(1.2) rotate(45deg); opacity: 0.7; }
-    50% { transform: translate(50px, 150px) scale(0.9) rotate(90deg); opacity: 0.5; }
-    75% { transform: translate(-100px, 50px) scale(1.1) rotate(135deg); opacity: 0.8; }
-    100% { transform: translate(-50px, -100px) scale(1) rotate(180deg); opacity: 0.4; }
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.3; }
+    25% { transform: translate(100px, -30px) scale(1.1) rotate(20deg); opacity: 0.6; }
+    50% { transform: translate(30px, 100px) scale(0.95) rotate(40deg); opacity: 0.4; }
+    75% { transform: translate(-80px, 40px) scale(1.05) rotate(60deg); opacity: 0.7; }
+    100% { transform: translate(-30px, -80px) scale(1) rotate(80deg); opacity: 0.3; }
   }
 }

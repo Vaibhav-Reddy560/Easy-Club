@@ -5,6 +5,8 @@ import { FileText, Share2, Table, Download, Check, Copy, File, Sparkles, Loader2
 import { Club, ClubEvent, EventConfig } from "@/lib/types";
 import { useGenerator } from "@/hooks/useGenerator";
 import { exportToDocx, exportToExcel } from "@/lib/export-utils";
+import { BorderBeam } from "@/components/animations/BorderBeam";
+import { Meteors } from "@/components/animations/Meteors";
 
 interface ContentWorkspaceProps {
   activeEvent: ClubEvent | undefined;
@@ -143,7 +145,8 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Outreach & Promo Messaging Section */}
-        <div className="bg-neutral-900/60 rounded-[3rem] p-8 md:p-10 border border-white/5 space-y-8 shadow-2xl relative overflow-hidden group">
+        <div className="glass-panel rounded-[3rem] p-8 md:p-10 space-y-8 shadow-2xl relative overflow-hidden group">
+          <BorderBeam duration={10} size={300} className="opacity-0 group-hover:opacity-100 transition-opacity" />
           <div className="absolute top-0 right-0 w-32 h-32 bg-gold-500/5 blur-3xl -z-10" />
 
           <div className="flex justify-between items-center">
@@ -198,7 +201,8 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
         </div>
 
         {/* Official Documents Section */}
-        <div className="bg-neutral-900/60 rounded-[3rem] p-8 md:p-10 border border-white/5 space-y-8 shadow-2xl relative">
+        <div className="glass-panel rounded-[3rem] p-8 md:p-10 space-y-8 shadow-2xl relative overflow-hidden group">
+          <BorderBeam duration={12} size={350} colorFrom="#9c40ff" colorTo="#ffaa40" className="opacity-0 group-hover:opacity-100 transition-opacity" />
           <h4 className="text-signature-gradient font-bold uppercase text-xs tracking-widest flex items-center gap-2 justify-center">
             <FileText className="w-4 h-4 text-gold-500" /> Official Paperwork
           </h4>
@@ -243,7 +247,8 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
       </div>
 
       {/* Sheet / Data Section */}
-      <div className="bg-neutral-900/40 border border-white/5 rounded-[3rem] p-8 md:p-12 shadow-2xl">
+      <div className="glass-panel rounded-[3rem] p-8 md:p-12 shadow-2xl relative overflow-hidden group">
+        <Meteors number={10} className="opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
         <div className="flex justify-between items-center mb-10">
           <h4 className="text-signature-gradient font-bold uppercase text-xs tracking-widest flex items-center gap-2">
             <Table className="w-4 h-4 text-gold-500" /> Data Sheet Agent
