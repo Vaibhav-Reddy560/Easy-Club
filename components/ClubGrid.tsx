@@ -20,11 +20,23 @@ interface ClubGridProps {
   addLabel: string;
 }
 
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20, scale: 0.95 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 300, damping: 24 } }
+};
+
 const GoldFolder = ({ name, onClick, onRename, onDelete }: { name: string; onClick: () => void; onRename: () => void; onDelete: () => void }) => (
   <motion.div
-    initial={{ opacity: 0, scale: 0.9 }}
-    animate={{ opacity: 1, scale: 1 }}
-    whileHover={{ y: -5 }}
+    variants={itemVariants}
+    whileHover={{ y: -5, scale: 1.02 }}
     className="group relative flex flex-col items-center gap-3 p-4 w-32"
   >
     <div
@@ -72,13 +84,18 @@ export default function ClubGrid({ items, onItemClick, onRename, onDelete, onAdd
           <p className="text-neutral-500 text-sm mt-1 font-medium tracking-[0.2em] uppercase">{subtitle}</p>
         </div>
       </header>
-      <div className="grid grid-cols-2 md:grid-cols-6 gap-y-12 gap-x-6">
-        <div onClick={onAddClick} className="group flex flex-col items-center gap-3 p-4 w-32 cursor-pointer">
+      <motion.div 
+        variants={container} 
+        initial="hidden" 
+        animate="show" 
+        className="grid grid-cols-2 md:grid-cols-6 gap-y-12 gap-x-6"
+      >
+        <motion.div variants={itemVariants} onClick={onAddClick} className="group flex flex-col items-center gap-3 p-4 w-32 cursor-pointer">
           <div className="w-20 h-16 rounded-xl glass-card flex items-center justify-center group-hover:border-gold-500/60 transition-all duration-500">
             <Plus className="w-7 h-7 text-neutral-500 group-hover:text-gold-400 group-hover:rotate-90 transition-transform" />
           </div>
           <span className="text-[11px] font-bold text-neutral-500 group-hover:text-signature-gradient uppercase tracking-widest">{addLabel}</span>
-        </div>
+        </motion.div>
         {items.map((item) => (
           <GoldFolder
             key={item.id}
@@ -88,7 +105,7 @@ export default function ClubGrid({ items, onItemClick, onRename, onDelete, onAdd
             onDelete={() => onDelete(item.id, item.name)}
           />
         ))}
-      </div>
+      </motion.div>
     </motion.div>
   );
 }

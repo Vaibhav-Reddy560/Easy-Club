@@ -38,30 +38,30 @@ body {
       box-shadow: 0 0 10px 2px rgba(255, 165, 0, 0.4);
     }
     50% {
-      opacity: 0.6;
-      transform: scale(0.95);
-      box-shadow: 0 0 20px 6px rgba(255, 165, 0, 0.7);
+      opacity: 0.7;
+      transform: scale(0.98);
+      box-shadow: 0 0 25px 8px rgba(255, 165, 0, 0.6);
     }
   }
 
   /* macOS Glassmorphism utilities */
   .glass-panel {
-    @apply bg-neutral-900/40 backdrop-blur-2xl border border-white/5 shadow-2xl;
+    @apply bg-neutral-900/40 backdrop-blur-2xl border border-white/10 shadow-2xl;
   }
   
   .glass-card {
-    @apply bg-neutral-900/30 backdrop-blur-xl border border-white/5 shadow-xl transition-all duration-300;
+    @apply bg-neutral-900/30 backdrop-blur-xl border border-white/5 shadow-xl transition-all duration-500 ease-out;
   }
   
   .glass-card:hover {
-    @apply bg-neutral-900/50 border-white/10 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)];
-    transform: translateY(-2px);
+    @apply bg-neutral-900/60 border-white/20 shadow-[0_20px_50px_-15px_rgba(255,165,0,0.15)];
+    transform: translateY(-4px) scale(1.01);
   }
 
   /* Nothing OS Matrix Pattern */
   .bg-dot-matrix {
     background-color: #000000;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
     background-size: 24px 24px;
     position: relative;
     z-index: 1;
@@ -72,17 +72,19 @@ body {
     position: absolute;
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle at center, rgba(245, 158, 11, 0.15) 0%, transparent 60%);
+    background: radial-gradient(circle at center, rgba(245, 158, 11, 0.18) 0%, transparent 60%);
     border-radius: 50%;
     filter: blur(100px);
     z-index: -1;
     pointer-events: none;
-    animation: drift 20s infinite alternate ease-in-out;
+    animation: organic-drift 25s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  @keyframes drift {
-    0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
-    50% { transform: translate(100px, -50px) scale(1.1); opacity: 0.8; }
-    100% { transform: translate(-50px, 100px) scale(0.9); opacity: 0.5; }
+  @keyframes organic-drift {
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.4; }
+    25% { transform: translate(150px, -50px) scale(1.2) rotate(45deg); opacity: 0.7; }
+    50% { transform: translate(50px, 150px) scale(0.9) rotate(90deg); opacity: 0.5; }
+    75% { transform: translate(-100px, 50px) scale(1.1) rotate(135deg); opacity: 0.8; }
+    100% { transform: translate(-50px, -100px) scale(1) rotate(180deg); opacity: 0.4; }
   }
 }
