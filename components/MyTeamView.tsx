@@ -18,7 +18,8 @@ import {
     FileText,
     Palette,
     Share2,
-    Info
+    Info,
+    Trash2
 } from "lucide-react";
 import { Club, MemberRole, TeamInvite, ActivityLogEvent, ClubMember } from "@/lib/types";
 
@@ -32,6 +33,10 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
     const [inviteEmail, setInviteEmail] = useState("");
     const [inviteRole, setInviteRole] = useState<MemberRole>('Junior Core');
 
+    const [searchQuery, setSearchQuery] = useState("");
+    const [memberToRemove, setMemberToRemove] = useState<string | null>(null);
+    const [copiedId, setCopiedId] = useState<string | null>(null);
+
     if (!activeClub) {
         return (
             <div className="flex flex-col items-center justify-center py-32 text-center">
@@ -42,9 +47,28 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
         );
     }
 
-    const members = activeClub.members || [];
+    const members = (activeClub.members || []).filter(m => m.role !== 'General Member');
     const invites = activeClub.invites || [];
     const activityLog = activeClub.activityLog || [];
+
+    const handleRemoveConfirm = () => {
+        if (!memberToRemove) return;
+        onUpdateClub({
+            ...activeClub,
+            members: activeClub.members?.filter(m => m.id !== memberToRemove) || []
+        });
+        setMemberToRemove(null);
+    };
+
+    const handleCopyLink = async (id: string) => {
+        try {
+            await navigator.clipboard.writeText(id);
+            setCopiedId(id);
+            setTimeout(() => setCopiedId(null), 2000);
+        } catch (err) {
+            console.error("Failed to copy:", err);
+        }
+    };
 
     const handleInvite = (e: React.FormEvent) => {
         e.preventDefault();
@@ -197,10 +221,10 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <button className="p-2 text-neutral-500 hover:text-white hover:bg-white/5 rounded-xl transition-all">
+                                            <a href={`mailto:${member.email}`} className="p-2 text-neutral-500 hover:text-white hover:bg-white/5 rounded-xl transition-all" title="Send Email">
                                                 <Mail className="w-4 h-4" />
-                                            </button>
-                                            <button className="p-2 text-neutral-500 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all">
+                                            </a>
+                                            <button onClick={() => setMemberToRemove(member.id)} className="p-2 text-neutral-500 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all" title="Remove Member">
                                                 <X className="w-4 h-4" />
                                             </button>
                                         </div>
@@ -293,8 +317,12 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
                                             </div>
                                             <div className="pt-4 border-t border-white/5 flex items-center justify-between">
                                                 <span className="text-[9px] text-neutral-600 font-bold uppercase tracking-widest">Token: {invite.id}</span>
-                                                <button className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-signature-gradient hover:brightness-110 transition-colors">
-                                                    <Copy className="w-3 h-3" /> Copy Link
+                                                <button onClick={() => handleCopyLink(invite.id)} className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-signature-gradient hover:brightness-110 transition-colors">
+                                                    {copiedId === invite.id ? (
+                                                        <><Check className="w-3 h-3" /> Copied</>
+                                                    ) : (
+                                                        <><Copy className="w-3 h-3" /> Copy Link</>
+                                                    )}
                                                 </button>
                                             </div>
                                         </div>
@@ -313,16 +341,31 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
                                 </div>
                                 <div className="p-2 bg-neutral-950 border border-white/5 rounded-xl flex items-center gap-2 px-4 group">
                                     <Search className="w-4 h-4 text-neutral-600 group-focus-within:text-gold-500 transition-colors" />
-                                    <input className="bg-transparent outline-none text-xs text-white placeholder:text-neutral-700 w-40" placeholder="Filter actions..." />
+                                    <input 
+                                        value={searchQuery}
+                                        onChange={(e) => setSearchQuery(e.target.value)}
+                                        className="bg-transparent outline-none text-xs text-white placeholder:text-neutral-700 w-40" 
+                                        placeholder="Filter actions..." 
+                                    />
                                 </div>
                             </div>
                             <div className="divide-y divide-white/5 max-h-[600px] overflow-y-auto">
-                                {activityLog.length === 0 ? (
+                                {activityLog.filter(event => 
+                                    event.action.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                    event.userName.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                    (event.details && event.details.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                                    event.domain.toLowerCase().includes(searchQuery.toLowerCase())
+                                ).length === 0 ? (
                                     <div className="py-32 text-center text-neutral-600 uppercase tracking-[0.3em] font-black text-[10px]">
                                         Observatory is quiet. No recent collaborative actions.
                                     </div>
                                 ) : (
-                                    activityLog.slice().reverse().map((event: ActivityLogEvent) => (
+                                    activityLog.filter(event => 
+                                        event.action.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                        event.userName.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                        (event.details && event.details.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                                        event.domain.toLowerCase().includes(searchQuery.toLowerCase())
+                                    ).slice().reverse().map((event: ActivityLogEvent) => (
                                         <div key={event.id} className="p-6 px-10 flex items-center gap-8 hover:bg-white/[0.02] transition-colors">
                                             <div className="flex flex-col items-center gap-1 shrink-0">
                                                 <div className="w-10 h-10 rounded-xl bg-neutral-800 border border-white/5 flex items-center justify-center text-gold-400 group-hover:scale-110 transition-transform">
@@ -352,6 +395,42 @@ export default function MyTeamView({ activeClub, onUpdateClub }: MyTeamViewProps
                         </div>
                     )}
                 </motion.div>
+            </AnimatePresence>
+
+            {/* Remove Confirmation Modal */}
+            <AnimatePresence>
+                {memberToRemove && (
+                    <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/90 backdrop-blur-md">
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            className="relative w-full max-w-md bg-[#121212] border border-red-500/20 rounded-[2.5rem] p-10 shadow-3xl text-center"
+                        >
+                            <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <Trash2 className="w-8 h-8 text-red-500" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-white mb-2">Remove Member?</h3>
+                            <p className="text-neutral-500 text-xs mb-8 leading-relaxed">
+                                Are you sure you want to remove <strong className="text-white">{(activeClub.members || []).find(m => m.id === memberToRemove)?.name}</strong> from the core roster? This action cannot be undone.
+                            </p>
+                            <div className="flex gap-4">
+                                <button
+                                    onClick={() => setMemberToRemove(null)}
+                                    className="flex-1 px-6 py-4 rounded-xl border border-white/10 text-[10px] font-bold uppercase tracking-widest hover:bg-white/5 transition-all text-neutral-400"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={handleRemoveConfirm}
+                                    className="flex-1 px-6 py-4 rounded-xl bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-red-500 transition-all shadow-lg"
+                                >
+                                    Confirm Removal
+                                </button>
+                            </div>
+                        </motion.div>
+                    </div>
+                )}
             </AnimatePresence>
         </div>
     );
