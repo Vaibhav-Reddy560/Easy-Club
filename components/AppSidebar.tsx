@@ -60,8 +60,9 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
             </div>
 
             <div className="mt-auto pb-8">
-                <div className="bg-neutral-900/40 border border-white/5 rounded-[2rem] p-6 text-center space-y-3">
-                    <div className="w-10 h-10 bg-gold-500/10 rounded-full flex items-center justify-center mx-auto">
+                <div className="glass-panel rounded-[2rem] p-6 text-center space-y-3 relative overflow-hidden group">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-signature-gradient" />
+                    <div className="w-10 h-10 bg-gold-500/10 rounded-full flex items-center justify-center mx-auto relative z-10">
                         <Zap className="w-5 h-5 text-gold-500" />
                     </div>
                     <p className="text-[10px] font-black uppercase tracking-tighter text-white">Pro Insight</p>

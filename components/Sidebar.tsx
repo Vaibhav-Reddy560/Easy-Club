@@ -31,7 +31,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
   return (
     <>
       <DynamicIsland />
-      <nav className="h-20 border-b border-white/5 flex items-center justify-between px-4 md:px-8 bg-black/60 backdrop-blur-xl sticky top-0 z-50">
+      <nav className="h-20 border-b border-white/10 flex items-center justify-between px-4 md:px-8 bg-black/40 backdrop-blur-3xl sticky top-0 z-50 shadow-2xl">
         <div className="flex items-center gap-2 md:gap-4 transition-all">
           <div className="w-2 md:w-3 h-2 md:h-3 rounded-full bg-[#FFA500] animate-pulse-gold" />
           <h1 className="text-2xl md:text-3xl font-normal text-signature-gradient tracking-tight font-airstream leading-none pr-3">Easy Club</h1>

@@ -300,7 +300,11 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-white antialiased pb-20 md:pb-0">
+    <div className="min-h-screen bg-dot-matrix text-white antialiased pb-20 md:pb-0 relative overflow-hidden">
+      {/* Ambient Aurora Orbs */}
+      <div className="ambient-glow" style={{ top: '10%', left: '20%', animationDelay: '0s' }} />
+      <div className="ambient-glow" style={{ top: '60%', right: '10%', background: 'radial-gradient(circle at center, rgba(217, 119, 6, 0.1) 0%, transparent 60%)', animationDelay: '-10s' }} />
+
       <Sidebar 
         user={{
           id: user?.uid || "",
@@ -316,7 +320,7 @@ export default function App() {
         onSettingsClick={() => setView('settings')}
       />
 
-      <div className="max-w-[1600px] mx-auto flex px-4 md:px-6">
+      <div className="max-w-[1600px] mx-auto flex px-4 md:px-6 relative z-10">
         <AppSidebar 
           activeSection={activeNav} 
           onSectionChange={handleNavChange} 
@@ -451,11 +455,11 @@ export default function App() {
                       <div
                         key={d.id}
                         onClick={() => setActiveDomain(d.id as 'Design' | 'Content' | 'Social')}
-                        className={`p-8 rounded-[2rem] border cursor-pointer transition-all ${activeDomain === d.id ? 'bg-gold-500/10 border-gold-500 shadow-gold-glow' : 'bg-neutral-900/40 border-white/5 hover:border-gold-500/30'}`}
+                        className={`p-8 rounded-[2rem] cursor-pointer ${activeDomain === d.id ? 'glass-panel !border-gold-500 shadow-gold-glow transform -translate-y-2' : 'glass-card hover:border-gold-500/30'}`}
                       >
-                        <d.icon className={`w-8 h-8 mb-4 ${activeDomain === d.id ? 'text-gold-400' : 'text-neutral-600'}`} />
+                        <d.icon className={`w-8 h-8 mb-4 transition-colors ${activeDomain === d.id ? 'text-gold-400' : 'text-neutral-500'}`} />
                         <h3 className="text-2xl font-normal font-astronomus leading-tight text-white/90">{d.id}</h3>
-                        <p className="text-[10px] text-neutral-500 font-bold uppercase mt-1 tracking-widest">{d.desc}</p>
+                        <p className={`text-[10px] font-bold uppercase mt-1 tracking-widest ${activeDomain === d.id ? 'text-signature-gradient' : 'text-neutral-500'}`}>{d.desc}</p>
                       </div>
                     ))}
                   </div>

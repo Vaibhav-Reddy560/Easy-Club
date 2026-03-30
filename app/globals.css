@@ -43,4 +43,46 @@ body {
       box-shadow: 0 0 20px 6px rgba(255, 165, 0, 0.7);
     }
   }
+
+  /* macOS Glassmorphism utilities */
+  .glass-panel {
+    @apply bg-neutral-900/40 backdrop-blur-2xl border border-white/5 shadow-2xl;
+  }
+  
+  .glass-card {
+    @apply bg-neutral-900/30 backdrop-blur-xl border border-white/5 shadow-xl transition-all duration-300;
+  }
+  
+  .glass-card:hover {
+    @apply bg-neutral-900/50 border-white/10 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)];
+    transform: translateY(-2px);
+  }
+
+  /* Nothing OS Matrix Pattern */
+  .bg-dot-matrix {
+    background-color: #000000;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 24px 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Dynamic Aurora meshes (blurred light orbs) */
+  .ambient-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle at center, rgba(245, 158, 11, 0.15) 0%, transparent 60%);
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: -1;
+    pointer-events: none;
+    animation: drift 20s infinite alternate ease-in-out;
+  }
+
+  @keyframes drift {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+    50% { transform: translate(100px, -50px) scale(1.1); opacity: 0.8; }
+    100% { transform: translate(-50px, 100px) scale(0.9); opacity: 0.5; }
+  }
 }

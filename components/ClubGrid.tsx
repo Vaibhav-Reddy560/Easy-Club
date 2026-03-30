@@ -74,10 +74,10 @@ export default function ClubGrid({ items, onItemClick, onRename, onDelete, onAdd
       </header>
       <div className="grid grid-cols-2 md:grid-cols-6 gap-y-12 gap-x-6">
         <div onClick={onAddClick} className="group flex flex-col items-center gap-3 p-4 w-32 cursor-pointer">
-          <div className="w-20 h-16 rounded-xl border-2 border-dashed border-neutral-800 flex items-center justify-center group-hover:border-gold-500/60 transition-all duration-500">
-            <Plus className="w-7 h-7 text-neutral-700 group-hover:text-gold-400 group-hover:rotate-90 transition-transform" />
+          <div className="w-20 h-16 rounded-xl glass-card flex items-center justify-center group-hover:border-gold-500/60 transition-all duration-500">
+            <Plus className="w-7 h-7 text-neutral-500 group-hover:text-gold-400 group-hover:rotate-90 transition-transform" />
           </div>
-          <span className="text-[11px] font-bold text-neutral-600 group-hover:text-signature-gradient uppercase tracking-widest">{addLabel}</span>
+          <span className="text-[11px] font-bold text-neutral-500 group-hover:text-signature-gradient uppercase tracking-widest">{addLabel}</span>
         </div>
         {items.map((item) => (
           <GoldFolder
