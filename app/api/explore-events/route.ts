@@ -3,10 +3,15 @@ import {
     searchSerper,
     parseSerperResultsToEvents
 } from "@/lib/discovery";
+import { validateRequest, ExploreEventsSchema } from "@/lib/validation";
 
 export async function POST(req: Request) {
     try {
-        const { type, location } = await req.json();
+        const { data: body, error: validationErr } = await validateRequest(req, ExploreEventsSchema);
+        if (validationErr) {
+            return NextResponse.json({ error: validationErr }, { status: 400 });
+        }
+        const { type, location } = body!;
         const serperKey = process.env.SERPER_API_KEY;
 
         if (!serperKey) throw new Error("SERPER_API_KEY is missing.");

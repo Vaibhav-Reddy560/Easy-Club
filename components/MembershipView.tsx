@@ -2,8 +2,9 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Users, Shield, UserPlus, Check, ChevronDown, UserCheck, X } from "lucide-react";
+import { Shield, UserPlus, Check, ChevronDown, UserCheck, X, Users } from "lucide-react";
 import { Club, ClubMember, MemberRole, RecruitmentBasis } from "@/lib/types";
+import { saveClub } from "@/lib/db";
 
 interface MembershipViewProps {
   clubs: Club[];
@@ -23,9 +24,15 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
   const activeClub = clubs.find((c: Club) => c.id === selectedClubId);
   const members = activeClub?.members || [];
 
-  const handleUpdateActiveClub = (updatedClub: (c: Club) => Club) => {
+  const handleUpdateActiveClub = async (updatedClub: (c: Club) => Club) => {
     if (!selectedClubId) return;
-    setClubs(prev => prev.map((c: Club) => c.id === selectedClubId ? updatedClub(c) : c));
+    const newClubs = clubs.map((c: Club) => c.id === selectedClubId ? updatedClub(c) : c);
+    setClubs(newClubs);
+    
+    const activeC = newClubs.find(c => c.id === selectedClubId);
+    if (activeC && activeC.ownerId) {
+        await saveClub(activeC as Club & { ownerId: string });
+    }
   };
 
   const handleRecruitMember = (e: React.FormEvent) => {

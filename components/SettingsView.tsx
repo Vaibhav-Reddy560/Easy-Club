@@ -12,7 +12,8 @@ import {
   Eye, 
   MousePointer2,
   ShieldCheck,
-  Save
+  Save,
+  Loader2
 } from "lucide-react";
 
 interface SettingsViewProps {
@@ -24,6 +25,18 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
   const [brandColor, setBrandColor] = useState("#FAA41A");
   const [animations, setAnimations] = useState(true);
   const [density, setDensity] = useState("stable");
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  const handleSave = () => {
+    setSaving(true);
+    // Simulate a secure protocol write
+    setTimeout(() => {
+      setSaving(false);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    }, 1200);
+  };
 
   type SettingsOption = 
     | { type: "select" | "segments"; label: string; value: string; options: string[]; onChange: (v: string) => void }
@@ -80,8 +93,13 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
           <span className="text-sm uppercase tracking-widest text-signature-gradient">Exit Settings</span>
         </button>
 
-        <button className="flex items-center gap-2 px-6 py-2.5 bg-gold-500 text-black font-black text-[10px] uppercase tracking-widest rounded-xl hover:bg-gold-400 transition-all shadow-[0_0_20px_rgba(250,164,26,0.2)]">
-          <Save className="w-3.5 h-3.5" /> Save Configuration
+        <button 
+          onClick={handleSave}
+          disabled={saving}
+          className={`flex items-center gap-2 px-6 py-2.5 font-black text-[10px] uppercase tracking-widest rounded-xl transition-all shadow-[0_0_20px_rgba(250,164,26,0.2)] ${saved ? 'bg-green-500 text-white' : 'bg-gold-500 text-black hover:bg-gold-400'}`}
+        >
+          {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : saved ? <ShieldCheck className="w-3.5 h-3.5" /> : <Save className="w-3.5 h-3.5" />}
+          {saving ? "Encrypting..." : saved ? "Protocol Saved" : "Save Configuration"}
         </button>
       </div>
 

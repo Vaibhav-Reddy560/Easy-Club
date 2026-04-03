@@ -1,10 +1,15 @@
 import { NextResponse } from "next/server";
-import { callGeminiSafe } from "@/lib/gemini";
+import { callGeminiJSON } from "@/lib/gemini";
 import { searchSerper } from "@/lib/discovery";
+import { validateRequest, TrendingIdeasSchema } from "@/lib/validation";
 
 export async function POST(req: Request) {
     try {
-        const { category } = await req.json();
+        const { data: body, error: validationErr } = await validateRequest(req, TrendingIdeasSchema);
+        if (validationErr) {
+            return NextResponse.json({ error: validationErr }, { status: 400 });
+        }
+        const { category } = body!;
         const serperKey = process.env.SERPER_API_KEY;
 
         if (!category) {
@@ -63,9 +68,9 @@ export async function POST(req: Request) {
 
             RETURN ONLY A JSON ARRAY OF 6 OBJECTS. NO MARKDOWN. NO PREAMBLE.`;
 
-        const text = await callGeminiSafe(prompt);
+        const ideas = await callGeminiJSON<any[]>(prompt);
 
-        if (!text) {
+        if (!ideas) {
             console.error("[TrendingIdeas] Gemini failed. Using Premium Fallback Library.");
             
             const library: Record<string, { title: string, tags: string[], summary: string, references: string, whyTrending: string, complexity: string, reach: string }[]> = {
@@ -98,10 +103,6 @@ export async function POST(req: Request) {
             return NextResponse.json(categoryFallbacks);
         }
 
-        const jsonMatch = text.match(/\[[\s\S]*\]/);
-        if (!jsonMatch) throw new Error("Format Error");
-
-        const ideas = JSON.parse(jsonMatch[0]);
         return NextResponse.json(ideas);
 
     } catch (error: unknown) {

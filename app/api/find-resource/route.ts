@@ -5,10 +5,15 @@ import {
     verifyResourcesWithAI,
     BaseResource
 } from "@/lib/discovery";
+import { validateRequest, FindResourceSchema } from "@/lib/validation";
 
 export async function POST(req: Request) {
     try {
-        const { domain, location } = await req.json();
+        const { data: body, error: validationErr } = await validateRequest(req, FindResourceSchema);
+        if (validationErr) {
+            return NextResponse.json({ error: validationErr }, { status: 400 });
+        }
+        const { domain, location } = body!;
         const serperKey = process.env.SERPER_API_KEY;
 
         if (!serperKey) throw new Error("SERPER_API_KEY is missing.");

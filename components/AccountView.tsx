@@ -12,9 +12,11 @@ import {
   Bell, 
   Smartphone,
   ExternalLink,
-  CircleCheckBig
+  CircleCheckBig,
+  Download
 } from "lucide-react";
 import { BorderBeam } from "@/components/animations/BorderBeam";
+import { getUserClubs } from "@/lib/db";
 
 interface AccountViewProps {
   user: FirebaseUser | null;
@@ -22,6 +24,29 @@ interface AccountViewProps {
 }
 
 export default function AccountView({ user, onBack }: AccountViewProps) {
+  const [exporting, setExporting] = React.useState(false);
+
+  const handleExportData = async () => {
+    if (!user) return;
+    setExporting(true);
+    try {
+      const clubs = await getUserClubs(user.uid, user.email);
+      const dataStr = JSON.stringify(clubs, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(dataBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `easy-club-data-${user.uid}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      console.error(e);
+      alert("Failed to export data.");
+    } finally {
+      setExporting(false);
+    }
+  };
+
   return (
     <motion.div 
       initial="hidden"
@@ -168,10 +193,15 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
 
             <div className="bg-neutral-900/40 border border-white/5 rounded-[2.5rem] p-8">
               <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest leading-relaxed">
-                Your data is stored securely in Firebase and localized for peak performance.
+                Your data is stored securely in Firebase and localized for peak performance. You can extract your complete organization history as a JSON file.
               </p>
-              <button className="mt-6 text-[10px] font-black uppercase tracking-widest text-signature-gradient hover:brightness-110 transition-colors">
-                Export Data Protocol →
+              <button 
+                onClick={handleExportData}
+                disabled={exporting}
+                className="mt-6 flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-signature-gradient hover:brightness-110 transition-colors disabled:opacity-50"
+              >
+                <Download className="w-4 h-4" />
+                {exporting ? "Compiling Format..." : "Export Data Protocol →"}
               </button>
             </div>
           </motion.div>

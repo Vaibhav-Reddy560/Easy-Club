@@ -21,15 +21,28 @@ function markRateLimited(modelName: string, cooldownMs: number) {
     rateLimitUntil.set(modelName, Date.now() + cooldownMs);
 }
 
-export async function callGeminiSafe(prompt: string): Promise<string | null> {
+export async function callGeminiSafe(prompt: string, timeoutMs: number = 15000): Promise<string | null> {
     const errors: string[] = [];
     for (const modelName of MODEL_PRIORITY) {
         if (isModelCoolingDown(modelName)) continue;
 
         try {
             const model = genAI.getGenerativeModel({ model: modelName });
-            const result = await model.generateContent(prompt);
-            return result.response.text();
+            
+            // Generate content with AbortSignal timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+            
+            try {
+                const result = await model.generateContent({
+                   contents: [{ role: "user", parts: [{ text: prompt }] }]
+                }, { signal: controller.signal });
+                clearTimeout(timeoutId);
+                return result.response.text();
+            } catch (err) {
+                clearTimeout(timeoutId);
+                throw err;
+            }
         } catch (err: unknown) {
             const geminiErr = err as { 
                 message?: string; 
@@ -50,4 +63,44 @@ export async function callGeminiSafe(prompt: string): Promise<string | null> {
     }
     console.error("[Gemini] All models failed. Errors:", errors);
     return null;
+}
+
+// Helper to robustly extract and validate JSON from Gemini
+export async function callGeminiJSON<T>(prompt: string, schema?: any): Promise<T | null> {
+    const text = await callGeminiSafe(prompt);
+    if (!text) return null;
+    
+    try {
+        // Attempt to extract JSON block if wrapped in markdown
+        let jsonStr = text;
+        const start = text.indexOf('{');
+        const startArr = text.indexOf('[');
+        const firstChar = start !== -1 && startArr !== -1 
+                            ? Math.min(start, startArr) 
+                            : Math.max(start, startArr);
+                            
+        if (firstChar !== -1) {
+            const lastBrace = text.lastIndexOf('}');
+            const lastBracket = text.lastIndexOf(']');
+            const lastChar = Math.max(lastBrace, lastBracket);
+            
+            if (lastChar > firstChar) {
+                jsonStr = text.substring(firstChar, lastChar + 1);
+            }
+        }
+
+        const parsed = JSON.parse(jsonStr);
+        if (schema) {
+            const { data, error } = schema.validate(parsed);
+            if (error) {
+                console.error("[Gemini JSON] Schema validation failed:", error);
+                return null;
+            }
+            return data;
+        }
+        return parsed as T;
+    } catch (e) {
+        console.error("[Gemini JSON] Parse error:", e);
+        return null; // Return null on complete failure to parse
+    }
 }

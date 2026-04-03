@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Search, MapPin, Users, Award, ExternalLink, Linkedin, Twitter, Github, Globe, Loader2, Sparkles, Trophy } from "lucide-react";
+import { Search, MapPin, Users, Award, ExternalLink, Linkedin, Twitter, Github, Globe, Loader2, Sparkles, Trophy, Mail } from "lucide-react";
 import { Meteors } from "@/components/animations/Meteors";
 import { BorderBeam } from "@/components/animations/BorderBeam";
 
@@ -201,13 +201,13 @@ export default function ResourceRadar() {
                                     </div>
 
                                     <a
-                                        href={person.website}
+                                        href={`mailto:expert@example.com?subject=Invitation to Speak at Easy Club&body=Hi ${encodeURIComponent(person.name)},%0D%0A%0D%0AWe are highly impressed by your work in ${encodeURIComponent(person.tags?.[0] || 'your field')} and would love to invite you as a speaker for our upcoming event.%0D%0A%0D%0ALooking forward to connecting!`}
                                         target="_blank"
                                         rel="noreferrer"
                                         className="w-full py-4 bg-white/[0.03] hover:bg-gold-500 hover:text-black rounded-2xl border border-white/5 flex items-center justify-center gap-3 transition-all group/btn"
                                     >
-                                        <span className="text-[9px] font-black uppercase tracking-[0.2em] group-hover/btn:scale-105 transition-transform">Initiate Connection</span>
-                                        <ExternalLink className="w-3 h-3 transition-transform group-hover/btn:translate-x-0.5" />
+                                        <span className="text-[9px] font-black uppercase tracking-[0.2em] group-hover/btn:scale-105 transition-transform">Initiate Email Invitation</span>
+                                        <Mail className="w-3 h-3 transition-transform group-hover/btn:translate-x-0.5" />
                                     </a>
                                 </div>
                                 </div>

@@ -1,9 +1,15 @@
 import { NextResponse } from "next/server";
-import { callGeminiSafe } from "@/lib/gemini";
+import { callGeminiSafe, callGeminiJSON } from "@/lib/gemini";
+import { validateRequest, GenerateDocumentSchema } from "@/lib/validation";
 
 export async function POST(req: Request) {
     try {
-        const { type, event, club, config } = await req.json();
+        const { data: body, error: validationErr } = await validateRequest(req, GenerateDocumentSchema);
+        if (validationErr) {
+            return NextResponse.json({ error: validationErr }, { status: 400 });
+        }
+
+        const { type, event, club, config } = body!;
 
         let prompt = "";
 
@@ -33,25 +39,17 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Invalid generation type" }, { status: 400 });
         }
 
-        const text = await callGeminiSafe(prompt);
-
-        if (!text) {
-            return NextResponse.json({ error: "AI failed to generate content" }, { status: 503 });
-        }
-
         if (type === 'sheet') {
-            // Extract JSON from response
-            try {
-                const start = text.indexOf('[');
-                const end = text.lastIndexOf(']');
-                if (start === -1 || end === -1) throw new Error("No JSON array found");
-                const jsonStr = text.substring(start, end + 1);
-                const data = JSON.parse(jsonStr);
-                return NextResponse.json({ data });
-            } catch {
-                console.error("Failed to parse sheet JSON:", text);
+            const jsonResponse = await callGeminiJSON(prompt);
+            if (!jsonResponse) {
                 return NextResponse.json({ error: "Invalid JSON format returned from AI" }, { status: 500 });
             }
+            return NextResponse.json({ data: jsonResponse });
+        }
+
+        const text = await callGeminiSafe(prompt);
+        if (!text) {
+            return NextResponse.json({ error: "AI failed to generate content" }, { status: 503 });
         }
 
         return NextResponse.json({ content: text });

@@ -1,9 +1,15 @@
 import { NextResponse } from "next/server";
-import { callGeminiSafe } from "@/lib/gemini";
+import { callGeminiJSON } from "@/lib/gemini";
+import { validateRequest, GeneratePromoSchema } from "@/lib/validation";
 
 export async function POST(req: Request) {
     try {
-        const { event, club, config } = await req.json();
+        const { data: body, error: validationErr } = await validateRequest(req, GeneratePromoSchema);
+        if (validationErr) {
+            return NextResponse.json({ error: validationErr }, { status: 400 });
+        }
+        
+        const { event, club, config } = body!;
 
         const prompt = `
       You are an expert communications strategist for ${club.name}. 
@@ -62,35 +68,12 @@ export async function POST(req: Request) {
       Return as JSON: { "standard": "...", "concise": "..." }
     `;
 
-        const text = await callGeminiSafe(prompt);
+        const jsonResponse = await callGeminiJSON<{ standard: string, concise: string }>(prompt);
 
-        if (!text) {
+        if (!jsonResponse) {
             return NextResponse.json({
-                error: "AI is temporarily unavailable due to rate limits. Please wait about 2 minutes and try again."
+                error: "AI is temporarily unavailable due to rate limits or invalid format."
             }, { status: 503 });
-        }
-
-        console.log("Gemini Raw Response:", text);
-
-        // Robust JSON extraction
-        let jsonResponse;
-        try {
-            const start = text.indexOf('{');
-            const end = text.lastIndexOf('}');
-            if (start === -1 || end === -1) throw new Error("No JSON found in response");
-
-            const jsonStr = text.substring(start, end + 1);
-            jsonResponse = JSON.parse(jsonStr);
-        } catch {
-            console.error("Failed to parse Gemini response:", text);
-            return NextResponse.json({
-                error: "AI returned invalid format",
-                raw: text.substring(0, 100)
-            }, { status: 500 });
-        }
-
-        if (!jsonResponse.standard || !jsonResponse.concise) {
-            return NextResponse.json({ error: "Missing required fields in AI response" }, { status: 500 });
         }
 
         return NextResponse.json(jsonResponse);

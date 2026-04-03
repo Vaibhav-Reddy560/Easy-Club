@@ -1,5 +1,5 @@
 // ─── Direct Discovery Engine (v4.1 - Ultimate Hybrid) ───────────────────
-import { callGeminiSafe } from "./gemini";
+import { callGeminiJSON } from "./gemini";
 
 const COLLEGES = [
     { name: "RV College of Engineering", acronyms: ["RVCE", "RV"] },
@@ -121,7 +121,7 @@ export function parseSerperResultsToEvents(results: SerperResult[], location: st
             clubName: "Student Organization",
             college: extractCollege(r.title + " " + r.snippet) || "Campus",
             description: r.snippet,
-            date: "Upcoming 2025",
+            date: `Upcoming ${new Date().getFullYear()}`,
             location,
             website: r.link,
             imageUrl,
@@ -195,8 +195,9 @@ export async function verifyResourcesWithAI(rawResources: BaseResource[], domain
     
     RETURN ONLY a JSON array: [{ name, role, college_affiliation, reason, website }].`;
 
-    const response = await callGeminiSafe(prompt);
-    if (!response) {
+    const verified = await callGeminiJSON<VerifiedResource[]>(prompt);
+    
+    if (!verified || !Array.isArray(verified)) {
         return (rawResources as BaseResource[]).map(r => ({
             name: r.name,
             role: "Resource",
@@ -209,29 +210,10 @@ export async function verifyResourcesWithAI(rawResources: BaseResource[], domain
         }));
     }
 
-    try {
-        const start = response.indexOf("[");
-        const end = response.lastIndexOf("]") + 1;
-        if (start === -1) return [];
-        const verified = JSON.parse(response.substring(start, end));
-
-        return verified.map((v: VerifiedResource) => ({
-            ...v,
-            location,
-            imageUrl: `https://ui-avatars.com/api/?name=${v.name.replace(/\s+/g, "+")}&background=random&color=fff`,
-            tags: [domain, "Verified"]
-        }));
-    } catch {
-        // Ensure even on parse failure we return something renderable
-        return (rawResources as BaseResource[]).map(r => ({
-            name: r.name,
-            role: "Resource",
-            location,
-            website: r.website,
-            platform: "web",
-            imageUrl: `https://ui-avatars.com/api/?name=${r.name.replace(/\s+/g, "+")}&background=random&color=fff`,
-            tags: [domain, "Found"],
-            reason: r.description
-        }));
-    }
+    return verified.map((v: VerifiedResource) => ({
+        ...v,
+        location,
+        imageUrl: `https://ui-avatars.com/api/?name=${v.name.replace(/\s+/g, "+")}&background=random&color=fff`,
+        tags: [domain, "Verified"]
+    }));
 }

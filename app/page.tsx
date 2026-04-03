@@ -37,6 +37,7 @@ import LoginView from "@/components/LoginView";
 import { Club, ClubEvent, EventConfig, MemberRole, ActivityLogEvent } from "@/lib/types";
 import { useAuth } from "@/lib/auth";
 import { signInWithGoogle, logout } from "@/lib/firebase";
+import { getUserClubs, saveClub, deleteClubFromDb } from "@/lib/db";
 
 // --- MAIN APPLICATION ---
 
@@ -63,27 +64,27 @@ export default function App() {
   const activeClub = clubs.find(c => c.id === activeClubId);
   const activeEvent = activeClub?.events?.find((e: ClubEvent) => e.id === activeEventId);
 
-  // Load data for the specific user from localStorage on mount
+  // Load data from Firebase on mount
   useEffect(() => {
-    if (authLoading) return; // Wait until auth state is known
+    let isMounted = true;
+    
+    if (authLoading) return;
     
     if (user) {
-      const savedClubs = localStorage.getItem(`easy-club-data-${user.uid}`);
-      if (savedClubs) {
-        try {
-          setClubs(JSON.parse(savedClubs));
-        } catch (e) {
-          console.error("Failed to parse saved data", e);
-          setClubs([]);
+      void getUserClubs(user.uid, user.email).then(fetchedClubs => {
+        if (isMounted) {
+            setClubs(fetchedClubs);
+            setLoading(false);
         }
-      } else {
-        // Default initial data if none exists
-        setClubs([]);
-      }
+      });
     } else {
-      setClubs([]);
+      if (isMounted) {
+          setClubs([]);
+          setLoading(false);
+      }
     }
-    setLoading(false);
+    
+    return () => { isMounted = false; };
   }, [user, authLoading]);
 
   // Calculate current user role whenever club or user changes
@@ -101,12 +102,9 @@ export default function App() {
     }
   }, [user, activeClub]);
 
-  // Save data to localStorage whenever clubs state changes
-  useEffect(() => {
-    if (!loading && user) {
-      localStorage.setItem(`easy-club-data-${user.uid}`, JSON.stringify(clubs));
-    }
-  }, [clubs, loading, user]);
+  // Save data to Firebase (Debounced or on significant changes locally, 
+  // but for immediate persistence we trigger saves in the handler functions directly)
+  // We remove the auto-save useEffect to prevent aggressive writes on every state change.
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -117,14 +115,16 @@ export default function App() {
     }
   };
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     if (modalType === 'club') {
       const newClub = {
         id: Date.now().toString(),
+        ownerId: user!.uid,
         name: inputValue,
         events: []
       };
       setClubs([...clubs, newClub]);
+      await saveClub(newClub);
     } else if (activeClubId) {
       const newEvent: ClubEvent = {
         id: Date.now().toString(),
@@ -136,9 +136,12 @@ export default function App() {
           isCollegeEvent: true
         }
       };
-      setClubs(clubs.map((c: Club) =>
+      const updatedClubs = clubs.map((c: Club) =>
         c.id === activeClubId ? { ...c, events: [...(c.events || []), newEvent] } : c
-      ));
+      );
+      setClubs(updatedClubs);
+      const activeC = updatedClubs.find(c => c.id === activeClubId);
+      if (activeC) await saveClub(activeC as Club & { ownerId: string });
     }
     setIsModalOpen(false);
     setInputValue("");
@@ -168,9 +171,14 @@ export default function App() {
       }
     };
 
-    setClubs(clubs.map((c: Club) =>
+    const updatedClubs = clubs.map((c: Club) =>
       c.id === targetClubId ? { ...c, events: [...(c.events || []), newEvent] } : c
-    ));
+    );
+    setClubs(updatedClubs);
+    
+    // Save to firebase
+    const c = updatedClubs.find(c => c.id === targetClubId);
+    if (c) void saveClub(c as Club & { ownerId: string });
 
     // Navigate to the new event
     setActiveClubId(targetClubId);
@@ -179,35 +187,45 @@ export default function App() {
     setActiveNav('my-clubs');
   };
 
-  const handleRename = () => {
+  const handleRename = async () => {
     if (modalType === 'club') {
-      setClubs(clubs.map((c: Club) => c.id === targetId ? { ...c, name: inputValue } : c));
+      const updatedClubs = clubs.map((c: Club) => c.id === targetId ? { ...c, name: inputValue } : c);
+      setClubs(updatedClubs);
+      const c = updatedClubs.find(x => x.id === targetId);
+      if (c) await saveClub(c as Club & { ownerId: string });
     } else {
-      setClubs(clubs.map((c: Club) =>
+      const updatedClubs = clubs.map((c: Club) =>
         c.id === activeClubId ? {
           ...c,
           events: (c.events || []).map((e: ClubEvent) => e.id === targetId ? { ...e, name: inputValue } : e)
         } : c
-      ));
+      );
+      setClubs(updatedClubs);
+      const activeC = updatedClubs.find(x => x.id === activeClubId);
+      if (activeC) await saveClub(activeC as Club & { ownerId: string });
     }
     setIsModalOpen(false);
     setInputValue("");
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (modalType === 'club') {
       setClubs(clubs.filter(c => c.id !== targetId));
       if (activeClubId === targetId) {
         setActiveClubId(null);
         setView('clubs');
       }
+      if (targetId) await deleteClubFromDb(targetId);
     } else {
-      setClubs(clubs.map((c: Club) =>
+      const updatedClubs = clubs.map((c: Club) =>
         c.id === activeClubId ? {
           ...c,
           events: (c.events || []).filter((e: ClubEvent) => e.id !== targetId)
         } : c
-      ));
+      );
+      setClubs(updatedClubs);
+      const activeC = updatedClubs.find(x => x.id === activeClubId);
+      if (activeC) await saveClub(activeC as Club & { ownerId: string });
     }
     setIsDeleteModalOpen(false);
   };
@@ -226,16 +244,21 @@ export default function App() {
       details
     };
 
-    setClubs(prev => prev.map(c => 
+    const updatedClubs = clubs.map(c => 
       c.id === activeClubId 
         ? { ...c, activityLog: [...(c.activityLog || []), newEvent].slice(-50) } // Keep last 50
         : c
-    ));
+    );
+    setClubs(updatedClubs);
+    
+    // Fire and forget save
+    const activeC = updatedClubs.find(c => c.id === activeClubId);
+    if (activeC) void saveClub(activeC as Club & { ownerId: string });
   };
 
   const updateEventConfig = (newData: Partial<EventConfig>) => {
     if (!activeClubId || !activeEventId) return;
-    setClubs(clubs.map(c => {
+    const updatedClubs = clubs.map(c => {
       if (c.id === activeClubId) {
         return {
           ...c,
@@ -245,7 +268,11 @@ export default function App() {
         };
       }
       return c;
-    }));
+    });
+    setClubs(updatedClubs);
+    
+    const activeC = updatedClubs.find(c => c.id === activeClubId);
+    if (activeC) void saveClub(activeC as Club & { ownerId: string });
   };
 
   const handleNavChange = (section: NavSection) => {
@@ -493,7 +520,12 @@ export default function App() {
           </div>
 
           <div className={`${activeNav === 'sponsorship' ? 'block' : 'hidden'}`}>
-            <SponsorshipManager clubs={clubs} />
+            <SponsorshipManager
+              clubs={clubs}
+              onUpdateClub={(updatedClub) => {
+                setClubs(prev => prev.map(c => c.id === updatedClub.id ? updatedClub : c));
+              }}
+            />
           </div>
 
           {activeNav === 'trending' && (

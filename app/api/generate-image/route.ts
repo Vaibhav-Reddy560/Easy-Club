@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { validateRequest, GenerateImageSchema } from "@/lib/validation";
 
 // Fallback high-quality SVG themes
 const GRADIENT_THEMES: Record<string, { colors: string[]; patternType: string }> = {
@@ -69,7 +70,11 @@ function generateRichSVG(width: number, height: number, category: string): strin
 
 export async function POST(req: Request) {
     try {
-        const { vibe, creativityLevel = 5, dimensions } = await req.json();
+        const { data: body, error } = await validateRequest(req, GenerateImageSchema);
+        if (error) {
+            return NextResponse.json({ error }, { status: 400 });
+        }
+        const { vibe, creativityLevel, dimensions } = body!;
 
         // 1. Clean the prompt for the AI Image Model (Pollinations/Flux)
         // We MUST remove hex codes, parentheses, and prefixes as they confuse the model

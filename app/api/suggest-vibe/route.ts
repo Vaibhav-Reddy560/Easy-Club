@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+import { callGeminiSafe } from "@/lib/gemini";
+import { validateRequest, SuggestVibeSchema } from "@/lib/validation";
 
 // Map event types to Google Fonts style categories
 const FONT_SUGGESTIONS: Record<string, string[]> = {
@@ -31,29 +30,15 @@ function pickFontCategory(type?: string, subType?: string): string {
   return "default";
 }
 
-async function callWithRetry(fn: () => Promise<string>, maxRetries = 2): Promise<string | null> {
-  for (let attempt = 0; attempt <= maxRetries; attempt++) {
-    try {
-      return await fn();
-    } catch (error: unknown) {
-      const msg = (error as { message?: string }).message || "";
-      const isRateLimit = msg.includes("429") || msg.includes("quota") || msg.includes("Too Many Requests");
-      if (isRateLimit && attempt < maxRetries) {
-        // Wait before retry (exponential backoff)
-        const delay = (attempt + 1) * 15000; // 15s, 30s
-        console.log(`Rate limited, retrying in ${delay / 1000}s (attempt ${attempt + 1}/${maxRetries})...`);
-        await new Promise(resolve => setTimeout(resolve, delay));
-      } else {
-        throw error;
-      }
-    }
-  }
-  return null;
-}
-
 export async function POST(req: Request) {
   try {
-    const { eventName, description, type, subType, creativityLevel = 5 } = await req.json();
+    const { data: body, error } = await validateRequest(req, SuggestVibeSchema);
+    if (error) {
+      return NextResponse.json({ error }, { status: 400 });
+    }
+    
+    // Default values handled by Zod schema
+    const { eventName, description, type, subType, creativityLevel } = body!;
 
     // Pick font based on event category
     const category = pickFontCategory(type, subType);
@@ -73,12 +58,11 @@ export async function POST(req: Request) {
     let vibe: string;
 
     try {
-      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
       const creativityAdj = creativityLevel >= 7 ? "bold, daring, and highly creative" : creativityLevel >= 4 ? "professional and polished" : "clean and minimal";
 
       const prompt = `You are an expert graphic designer. Based on this event, suggest a short visual direction (3-4 sentences max) for a poster design:
 
-Event Name: "${eventName}"
+Event Name: "${eventName || 'Unnamed Event'}"
 Description: "${description || 'No description provided'}"
 Type: ${type || 'General'} / ${subType || 'Workshop'}
 Creative Direction: ${creativityAdj}
@@ -90,11 +74,7 @@ Describe:
 
 Be concise and specific. Do NOT include markdown formatting. Just plain text paragraphs.`;
 
-      const result = await callWithRetry(async () => {
-        const res = await model.generateContent(prompt);
-        return res.response.text();
-      });
-
+      const result = await callGeminiSafe(prompt);
       vibe = result || FALLBACK_VIBES[category];
     } catch {
       // API completely unavailable — use smart local fallback

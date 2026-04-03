@@ -1,9 +1,22 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Linkedin, ExternalLink, Sparkles, MapPin, Mail, Radio, Briefcase } from "lucide-react";
+import { 
+  Linkedin, 
+  ExternalLink, 
+  Sparkles, 
+  MapPin, 
+  Mail, 
+  Radio, 
+  Briefcase,
+  Loader2,
+  Check,
+  Copy,
+  X
+} from "lucide-react";
 import { ClubEvent, EventConfig } from "@/lib/types";
+import { useTasks } from "@/lib/TaskContext";
 import ResourceRadar from "../ResourceRadar";
 
 interface SocialWorkspaceProps {
@@ -18,7 +31,11 @@ interface Expert {
 }
 
 export default function SocialWorkspace({ activeEvent }: SocialWorkspaceProps) {
-  const [activeTab, setActiveTab] = React.useState<'radar' | 'proposals'>('radar');
+  const [activeTab, setActiveTab] = useState<'radar' | 'proposals'>('radar');
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [outreachTemplate, setOutreachTemplate] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+  const { startTask, finishTask } = useTasks();
   const config = activeEvent?.config || {};
   const city = config.city || "Bengaluru";
   const subType = config.subType || "Workshop";
@@ -153,13 +170,90 @@ export default function SocialWorkspace({ activeEvent }: SocialWorkspaceProps) {
           </div>
           <div>
             <h6 className="font-bold text-lg text-white">Invitation Engine</h6>
-            <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-widest mt-1 text-center md:text-left">AI-generated outreach templates coming soon</p>
+            <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-widest mt-1 text-center md:text-left">
+              {isGenerating ? "AI is drafting personalized outreach..." : "Generate professional expert invitations"}
+            </p>
           </div>
         </div>
-        <button className="px-8 py-3 bg-neutral-950 border border-neutral-800 rounded-xl text-[10px] font-black uppercase tracking-widest text-neutral-300 hover:text-signature-gradient hover:border-gold-500 transition-all">
-          Unlock Automation
+        <button 
+          disabled={isGenerating || !activeEvent}
+          onClick={async () => {
+            if (!activeEvent) return;
+            setIsGenerating(true);
+            const taskId = "outreach-" + activeEvent.id;
+            startTask(taskId, "Drafting Speaker Invitations");
+            
+            try {
+              const response = await fetch("/api/generate-outreach", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                  event: activeEvent, 
+                  expert: experts[0] // Generate for the primary suggested expert
+                })
+              });
+              const data = await response.json();
+              setOutreachTemplate(data.content);
+              finishTask(taskId, true);
+            } catch (err) {
+              console.error(err);
+              finishTask(taskId, false);
+            } finally {
+              setIsGenerating(false);
+            }
+          }}
+          className="px-8 py-3 bg-neutral-950 border border-neutral-800 rounded-xl text-[10px] font-black uppercase tracking-widest text-neutral-300 hover:text-signature-gradient hover:border-gold-500 transition-all flex items-center gap-2"
+        >
+          {isGenerating ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
+          {isGenerating ? "Processing..." : "Generate Master Invitation"}
         </button>
       </div>
+
+      {/* Outreach Template Modal */}
+      <AnimatePresence>
+        {outreachTemplate && (
+          <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/90 backdrop-blur-md">
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative w-full max-w-2xl bg-[#0a0a0a] border border-gold-500/20 rounded-[2.5rem] p-10 shadow-3xl flex flex-col max-h-[80vh]"
+            >
+              <button 
+                onClick={() => setOutreachTemplate(null)}
+                className="absolute top-8 right-8 text-neutral-500 hover:text-white"
+              >
+                <X className="w-6 h-6" />
+              </button>
+              
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold text-white mb-2 tracking-tight">AI Outreach Template</h3>
+                <p className="text-neutral-500 text-[10px] uppercase font-bold tracking-widest">Tailored for: {experts[0]?.name}</p>
+              </div>
+
+              <div className="flex-1 overflow-y-auto bg-black/40 border border-white/5 rounded-3xl p-8 mb-8 custom-scrollbar">
+                <pre className="text-sm text-neutral-300 whitespace-pre-wrap font-sans leading-relaxed">
+                  {outreachTemplate}
+                </pre>
+              </div>
+
+              <div className="flex gap-4">
+                <button
+                  onClick={async () => {
+                    await navigator.clipboard.writeText(outreachTemplate);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                  }}
+                  className="flex-1 px-6 py-4 rounded-xl bg-gold-500 text-black text-[10px] font-black uppercase tracking-widest hover:bg-gold-400 transition-all shadow-lg flex items-center justify-center gap-2"
+                >
+                  {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                  {copied ? "Copied to Buffer" : "Copy to Clipboard"}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

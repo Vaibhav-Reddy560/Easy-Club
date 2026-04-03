@@ -56,13 +56,25 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
 
     const [isConnecting, setIsConnecting] = useState(false);
 
-    const handleFirebaseLink = async (platform: 'google' | 'x') => {
-        if (!selectedClubId) return;
+    const handleConnectSocial = async () => {
         setIsConnecting(true);
         try {
-            await linkSocialAccount(selectedClubId, platform);
-            alert(`${platform.toUpperCase()} Protocol Established Successfully!`);
-            // In a real app, we'd refresh the club data from Firestore here
+            const response = await fetch("/api/social/connect");
+            if (!response.ok) throw new Error("Connection protocol failed");
+            const data = await response.json();
+            
+            // Open the Ayrshare Social Link window
+            const width = 600;
+            const height = 800;
+            const left = window.screenX + (window.outerWidth - width) / 2;
+            const top = window.screenY + (window.outerHeight - height) / 2;
+            
+            window.open(
+                data.url, 
+                'Ayrshare Social Link', 
+                `width=${width},height=${height},left=${left},top=${top}`
+            );
+
         } catch (err: unknown) {
             console.error(err);
             const error = err as Error;
@@ -77,14 +89,13 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
     }, [selectedClubId]);
 
     // Simulated stats for each club
-    const getStats = (clubId: string) => {
-        const seed = clubId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const getStats = () => {
         return {
-            followers: (seed % 5000) + 1200,
-            engagement: ((seed % 10) + 2) / 10,
-            growth: (seed % 15) - 3,
-            reach: (seed % 10000) + 5000,
-            posts: (seed % 30) + 5
+            followers: ayrshareData?.isMock ? 0 : (ayrshareData?.followerGrowth || 0),
+            engagement: ayrshareData?.isMock ? 0.0 : ((ayrshareData?.likes || 0) + (ayrshareData?.shares || 0)) / ((ayrshareData?.impressions || 1) * 100),
+            growth: ayrshareData?.isMock ? 0 : (ayrshareData?.followerGrowth || 0),
+            reach: ayrshareData?.isMock ? 0 : (ayrshareData?.impressions || 0),
+            posts: ayrshareData?.isMock ? 0 : 0
         };
     };
 
@@ -104,7 +115,7 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
         );
     }
 
-    const stats = activeClub ? getStats(activeClub.id) : null;
+    const stats = activeClub ? getStats() : null;
 
     return (
         <motion.div
@@ -173,18 +184,11 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
                                     
                                     <div className="flex flex-wrap justify-center gap-4">
                                         <button 
-                                            onClick={() => handleFirebaseLink('google')}
+                                            onClick={handleConnectSocial}
                                             disabled={isConnecting}
-                                            className="px-6 py-3 bg-white text-black font-black text-[10px] uppercase tracking-widest rounded-xl hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-2"
+                                            className="px-8 py-4 bg-gold-gradient text-black font-black text-[10px] uppercase tracking-widest rounded-xl hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-3 shadow-gold-glow"
                                         >
-                                            <Globe className="w-4 h-4" /> Connect Google
-                                        </button>
-                                        <button 
-                                            onClick={() => handleFirebaseLink('x')}
-                                            disabled={isConnecting}
-                                            className="px-6 py-3 bg-neutral-800 text-white font-black text-[10px] uppercase tracking-widest rounded-xl hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-2"
-                                        >
-                                            <Twitter className="w-4 h-4" /> Connect X
+                                            <Zap className="w-4 h-4" /> Initialize Social Link
                                         </button>
                                     </div>
                                 </div>
@@ -206,10 +210,10 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
                                         </div>
                                     </div>
                                     <button 
-                                        onClick={() => handleFirebaseLink('google')}
-                                        className="px-4 py-2 border border-white/5 bg-black/40 rounded-xl text-[8px] font-black uppercase tracking-widest text-neutral-500 hover:text-white transition-all"
+                                        onClick={handleConnectSocial}
+                                        className="px-4 py-2 border border-white/5 bg-black/40 rounded-xl text-[8px] font-black uppercase tracking-widest text-neutral-500 hover:text-white transition-all underline decoration-gold-500/30"
                                     >
-                                        Manage Connections
+                                        Manage Protocols
                                     </button>
                                 </div>
 

@@ -106,7 +106,7 @@ export default function LoginView({ onSignIn }: LoginViewProps) {
         >
           <p className="text-[8px] text-neutral-700 font-bold uppercase tracking-widest leading-loose">
             Enterprise Grade Encryption<br />
-            Powered by Gemini 1.5 Pro & Firebase Hub
+            Powered by Gemini 3.1 Flash-Lite & Firebase Hub
           </p>
         </motion.div>
       </motion.div>

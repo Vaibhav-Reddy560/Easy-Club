@@ -6,6 +6,7 @@ import { Club, ClubEvent, EventConfig } from "@/lib/types";
 import { useGenerator } from "@/hooks/useGenerator";
 import { exportToDocx, exportToExcel } from "@/lib/export-utils";
 import { BorderBeam } from "@/components/animations/BorderBeam";
+import { useTasks } from "@/lib/TaskContext";
 import { Meteors } from "@/components/animations/Meteors";
 
 interface ContentWorkspaceProps {
@@ -23,6 +24,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
   // Hooks for new generators
   const letterGen = useGenerator("Generating Letter Copy...");
   const sheetGen = useGenerator("Assembling Coverage Sheet...");
+  const { startTask, finishTask } = useTasks();
 
   // Use persisted content if available
   const generatedPromo = activeEvent?.config?.workspaceData?.content || null;
@@ -39,6 +41,8 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
 
     setIsGeneratingPromo(true);
     setPromoError(null);
+    const taskId = 'promo-' + activeEvent.id;
+    startTask(taskId, `Writing Copy for ${activeEvent.name}`);
     try {
       const response = await fetch("/api/generate-promo", {
         method: "POST",
@@ -64,17 +68,21 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
       } else {
         throw new Error("Invalid response format from AI");
       }
+      finishTask(taskId, true);
     } catch (err: unknown) {
       const error = err as Error;
       setPromoError(error.message || "Failed to generate promo content");
+      finishTask(taskId, false);
     } finally {
       setIsGeneratingPromo(false);
     }
-  }, [activeEvent, activeClub, updateConfig, onLogActivity]);
+  }, [activeEvent, activeClub, updateConfig, onLogActivity, startTask, finishTask]);
 
   const handleGenerateLetter = async () => {
     if (!activeEvent || !activeClub) return;
     letterGen.startGeneration();
+    const taskId = 'letter-' + activeEvent.id;
+    startTask(taskId, `Drafting Letter for ${activeEvent.name}`);
     try {
       const response = await fetch("/api/generate-document", {
         method: "POST",
@@ -85,15 +93,19 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
       const data = await response.json();
       letterGen.setSuccess(data.content);
       onLogActivity('Content', 'Generated Permission Letter', `Created official documentation for ${activeEvent.name}`);
+      finishTask(taskId, true);
     } catch (err: unknown) {
       const error = err as Error;
       letterGen.setError(error.message);
+      finishTask(taskId, false);
     }
   };
 
   const handleGenerateSheet = async () => {
     if (!activeEvent || !activeClub) return;
     sheetGen.startGeneration();
+    const taskId = 'sheet-' + activeEvent.id;
+    startTask(taskId, `Building Roster Data ${activeEvent.name}`);
     try {
       const response = await fetch("/api/generate-document", {
         method: "POST",
@@ -104,9 +116,11 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
       const data = await response.json();
       sheetGen.setSuccess(data.data);
       onLogActivity('Content', 'Generated Roster Template', `Initialized member tracking sheet for ${activeEvent.name}`);
+      finishTask(taskId, true);
     } catch (err: unknown) {
       const error = err as Error;
       sheetGen.setError(error.message);
+      finishTask(taskId, false);
     }
   };
 

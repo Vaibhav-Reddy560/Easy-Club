@@ -23,6 +23,7 @@ import {
     ChevronDown
 } from "lucide-react";
 import { Club, MemberRole, TeamInvite, ActivityLogEvent, ClubMember } from "@/lib/types";
+import { saveClub } from "@/lib/db";
 
 interface MyTeamViewProps {
     clubs: Club[];
@@ -41,9 +42,15 @@ export default function MyTeamView({ clubs, setClubs }: MyTeamViewProps) {
 
     const activeClub = clubs.find(c => c.id === selectedClubId);
 
-    const onUpdateClub = (updatedClub: Club) => {
+    const onUpdateClub = async (updatedClub: Club) => {
         if (!selectedClubId) return;
-        setClubs(prev => prev.map(c => c.id === selectedClubId ? updatedClub : c));
+        const newClubs = clubs.map(c => c.id === selectedClubId ? updatedClub : c);
+        setClubs(newClubs);
+        
+        const activeC = newClubs.find(c => c.id === selectedClubId);
+        if (activeC && activeC.ownerId) {
+            void saveClub(activeC as Club & { ownerId: string });
+        }
     };
 
     const [activeTab, setActiveTab] = useState<'roster' | 'invites' | 'activity'>('roster');

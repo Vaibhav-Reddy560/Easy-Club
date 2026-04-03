@@ -36,6 +36,18 @@ export interface ClubEvent {
     config: EventConfig;
 }
 
+export type SponsorStage = 'Prospecting' | 'Contacted' | 'Negotiating' | 'Closed';
+
+export interface Sponsor {
+    id: string;
+    company: string;
+    category: string;
+    value: number; // in INR
+    stage: SponsorStage;
+    addedAt: string;
+    notes?: string;
+}
+
 export type MemberRole = 'Admin' | 'Senior Core' | 'Junior Core' | 'General Member';
 export type RecruitmentBasis = 'Fee Paid' | 'Test Passed';
 
@@ -69,11 +81,13 @@ export interface ClubMember {
 
 export interface Club {
     id: string;
+    ownerId?: string;
     name: string;
     events: ClubEvent[];
     members?: ClubMember[];
     invites?: TeamInvite[];
     activityLog?: ActivityLogEvent[];
+    sponsors?: Sponsor[];
     socialConnections?: {
         [platform: string]: {
             lastConnected: string;
