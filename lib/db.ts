@@ -19,35 +19,23 @@ import {
     if (!db) return [];
   
     try {
-      // 1. Fetch clubs where user is the owner
+      const mappedClubs = new Map<string, Club>();
+
+      // 1. Fetch clubs where user is the owner (indexed query, fast)
       const ownerQuery = query(collection(db, CLUBS_COLLECTION), where("ownerId", "==", userId));
       const ownerSnapshot = await getDocs(ownerQuery);
-      
-      const ownerClubs = ownerSnapshot.docs.map(doc => doc.data() as Club);
-  
-      // NOTE: In a true production app, querying for membership would require an array-contains
-      // setup or a separate members collection. For simplicity and to match the current 
-      // document structure with a flat `members` array of objects, we will fetch all clubs
-      // and filter locally if they aren't the owner, OR we just trust `ownerClubs` for now 
-      // along with any clubs where their email is in the members list.
-      // Firestore cannot do 'array-contains' on an array of objects directly based on a specific field.
-      // Therefore, if they are not the owner, we have to fetch clubs where they are invited.
-      // We will perform a simple fallback:
-      
-      const allSnapshot = await getDocs(collection(db, CLUBS_COLLECTION));
-      const allClubs = allSnapshot.docs.map(doc => doc.data() as Club);
-      
-      // Merge unique clubs where they are owner OR their email is inside members array
-      const mappedClubs = new Map<string, Club>();
-      
-      allClubs.forEach(club => {
-        if (club.ownerId === userId) {
-            mappedClubs.set(club.id, club);
-        } else if (userEmail && club.members?.some(m => m.email === userEmail)) {
-            mappedClubs.set(club.id, club);
-        }
-      });
-  
+      ownerSnapshot.docs.forEach(d => mappedClubs.set(d.id, d.data() as Club));
+
+      // 2. Fetch clubs where user is a team member via denormalized email array
+      // Uses array-contains which is a single indexed lookup in Firestore
+      if (userEmail) {
+        const memberQuery = query(collection(db, CLUBS_COLLECTION), where("memberEmails", "array-contains", userEmail));
+        const memberSnapshot = await getDocs(memberQuery);
+        memberSnapshot.docs.forEach(d => {
+          if (!mappedClubs.has(d.id)) mappedClubs.set(d.id, d.data() as Club);
+        });
+      }
+
       return Array.from(mappedClubs.values());
     } catch (error) {
       console.error("Error fetching clubs from Firestore:", error);
@@ -57,13 +45,16 @@ import {
   
   /**
    * Saves or entirely updates a single club document.
+   * Denormalizes member emails into a flat array for efficient querying.
    */
   export async function saveClub(club: Club & { ownerId: string }): Promise<boolean> {
     if (!db) return false;
   
     try {
       const clubRef = doc(db, CLUBS_COLLECTION, club.id);
-      await setDoc(clubRef, club, { merge: true });
+      // Denormalize member emails for array-contains queries
+      const memberEmails = (club.members || []).map(m => m.email).filter(Boolean);
+      await setDoc(clubRef, { ...club, memberEmails }, { merge: true });
       return true;
     } catch (error) {
       console.error("Error saving club to Firestore:", error);
