@@ -158,15 +158,15 @@ const GoldFolder = ({
           )}
 
           {/* Hover actions */}
-          <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 mt-1 flex-wrap justify-center">
+          <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 mt-1 items-center justify-center">
             {/* View Report (only for completed events with report) */}
             {hasReport && (
               <button
                 onClick={(e) => { e.stopPropagation(); onViewReport?.(); }}
-                className="px-2 py-0.5 rounded-md bg-green-500/10 border border-green-500/20 text-[8px] font-bold text-green-400 hover:bg-green-500/20 transition-colors"
+                className="p-1 rounded-md bg-green-500/10 border border-green-500/20 text-green-400 hover:bg-green-500/20 transition-colors"
                 title="View Report"
               >
-                <FileText className="w-3 h-3 inline mr-0.5" />Report
+                <FileText className="w-3 h-3" />
               </button>
             )}
 
@@ -174,10 +174,10 @@ const GoldFolder = ({
             {isCancelled && onRevive && (
               <button
                 onClick={(e) => { e.stopPropagation(); onRevive(); }}
-                className="px-2 py-0.5 rounded-md bg-blue-500/10 border border-blue-500/20 text-[8px] font-bold text-blue-400 hover:bg-blue-500/20 transition-colors"
+                className="p-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 hover:bg-blue-500/20 transition-colors"
                 title="Revive Event"
               >
-                <RotateCcw className="w-3 h-3 inline mr-0.5" />Revive
+                <RotateCcw className="w-3 h-3" />
               </button>
             )}
 
@@ -185,10 +185,10 @@ const GoldFolder = ({
             {isEventGrid && status !== 'completed' && !isCancelled && onStatusChange && (
               <button
                 onClick={(e) => { e.stopPropagation(); onStatusChange(); }}
-                className="px-2 py-0.5 rounded-md bg-gold-500/10 border border-gold-500/20 text-[8px] font-bold text-gold-400 hover:bg-gold-500/20 transition-colors"
+                className="p-1 rounded-md bg-gold-500/10 border border-gold-500/20 text-gold-400 hover:bg-gold-500/20 transition-colors"
                 title="Update Status"
               >
-                <Clock className="w-3 h-3 inline mr-0.5" />Status
+                <Clock className="w-3 h-3" />
               </button>
             )}
 
