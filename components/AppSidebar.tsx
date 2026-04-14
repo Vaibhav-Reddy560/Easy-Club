@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Globe, Trophy, Folder, ChartBar, Banknote, Users, Shield } from "lucide-react";
+import { Globe, Trophy, Folder, ChartBar, Banknote, Users, Shield, Zap } from "lucide-react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { MemberRole } from "@/lib/types";
 import { useRef } from "react";
