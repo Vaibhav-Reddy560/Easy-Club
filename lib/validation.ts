@@ -82,7 +82,7 @@ export const SuggestVibeSchema = {
 };
 
 // Generic Request Validator
-export async function validateRequest<T>(req: Request, schema: any): Promise<ValidationResult<T>> {
+export async function validateRequest<T = any>(req: Request, schema: any): Promise<ValidationResult<T>> {
   try {
     const body = await req.json();
     return schema.validate(body);
