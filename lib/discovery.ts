@@ -213,6 +213,7 @@ export async function verifyResourcesWithAI(rawResources: BaseResource[], domain
     return verified.map((v: VerifiedResource) => ({
         ...v,
         location,
+        platform: "web",
         imageUrl: `https://ui-avatars.com/api/?name=${v.name.replace(/\s+/g, "+")}&background=random&color=fff`,
         tags: [domain, "Verified"]
     }));
