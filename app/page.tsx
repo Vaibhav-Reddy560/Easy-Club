@@ -121,7 +121,7 @@ export default function App() {
     }
   };
 
-  const handleCreate = async () => {
+  const handleCreate = () => {
     if (modalType === 'club') {
       const newClub = {
         id: Date.now().toString(),
@@ -130,7 +130,7 @@ export default function App() {
         events: []
       };
       setClubs([...clubs, newClub]);
-      await saveClub(newClub);
+      void saveClub(newClub);
     } else if (activeClubId) {
       const newEvent: ClubEvent = {
         id: Date.now().toString(),
@@ -147,7 +147,7 @@ export default function App() {
       );
       setClubs(updatedClubs);
       const activeC = updatedClubs.find(c => c.id === activeClubId);
-      if (activeC) await saveClub(activeC as Club & { ownerId: string });
+      if (activeC) void saveClub(activeC as Club & { ownerId: string });
     }
     setIsModalOpen(false);
     setInputValue("");
@@ -193,12 +193,12 @@ export default function App() {
     setActiveNav('my-clubs');
   };
 
-  const handleRename = async () => {
+  const handleRename = () => {
     if (modalType === 'club') {
       const updatedClubs = clubs.map((c: Club) => c.id === targetId ? { ...c, name: inputValue } : c);
       setClubs(updatedClubs);
       const c = updatedClubs.find(x => x.id === targetId);
-      if (c) await saveClub(c as Club & { ownerId: string });
+      if (c) void saveClub(c as Club & { ownerId: string });
     } else {
       const updatedClubs = clubs.map((c: Club) =>
         c.id === activeClubId ? {
@@ -208,20 +208,20 @@ export default function App() {
       );
       setClubs(updatedClubs);
       const activeC = updatedClubs.find(x => x.id === activeClubId);
-      if (activeC) await saveClub(activeC as Club & { ownerId: string });
+      if (activeC) void saveClub(activeC as Club & { ownerId: string });
     }
     setIsModalOpen(false);
     setInputValue("");
   };
 
-  const confirmDelete = async () => {
+  const confirmDelete = () => {
     if (modalType === 'club') {
       setClubs(clubs.filter(c => c.id !== targetId));
       if (activeClubId === targetId) {
         setActiveClubId(null);
         setView('clubs');
       }
-      if (targetId) await deleteClubFromDb(targetId);
+      if (targetId) void deleteClubFromDb(targetId);
     } else {
       const updatedClubs = clubs.map((c: Club) =>
         c.id === activeClubId ? {
@@ -231,7 +231,7 @@ export default function App() {
       );
       setClubs(updatedClubs);
       const activeC = updatedClubs.find(x => x.id === activeClubId);
-      if (activeC) await saveClub(activeC as Club & { ownerId: string });
+      if (activeC) void saveClub(activeC as Club & { ownerId: string });
     }
     setIsDeleteModalOpen(false);
   };
@@ -289,7 +289,7 @@ export default function App() {
 
   const lifecycleTargetEvent = activeClub?.events?.find(e => e.id === lifecycleTargetId);
 
-  const handleStatusChange = async (eventId: string, status: EventStatus, extra?: { postponedTo?: string; postEventData?: PostEventData; reportContent?: string }) => {
+  const handleStatusChange = (eventId: string, status: EventStatus, extra?: { postponedTo?: string; postEventData?: PostEventData; reportContent?: string }) => {
     if (!activeClubId) return;
 
     const updatedClubs = clubs.map(c => {
@@ -318,13 +318,13 @@ export default function App() {
 
     setClubs(updatedClubs);
     const activeC = updatedClubs.find(c => c.id === activeClubId);
-    if (activeC) await saveClub(activeC as Club & { ownerId: string });
+    if (activeC) void saveClub(activeC as Club & { ownerId: string });
     
     // Log the status change
     handleLogActivity('Management', `Marked event "${lifecycleTargetEvent?.name}" as ${status.toUpperCase()}`);
   };
 
-  const handleSaveReport = async (updatedContent: string) => {
+  const handleSaveReport = (updatedContent: string) => {
     if (!activeClubId || !lifecycleTargetId) return;
 
     const updatedClubs = clubs.map(c => {
@@ -354,7 +354,7 @@ export default function App() {
 
     setClubs(updatedClubs);
     const activeC = updatedClubs.find(c => c.id === activeClubId);
-    if (activeC) await saveClub(activeC as Club & { ownerId: string });
+    if (activeC) void saveClub(activeC as Club & { ownerId: string });
   };
 
   if (authLoading || loading) {
