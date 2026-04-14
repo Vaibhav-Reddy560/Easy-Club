@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --background: #050505;
+  --foreground: #ffffff;
+}
+
+/* Global rule to prevent any italic styles */
+* {
+  font-style: normal !important;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@layer utilities {
+  .text-signature-gradient {
+    background: linear-gradient(180deg, #FF8800 0%, #FF9D00 18%, #FFB405 36%, #FFBF44 49%, #F99A00 63%, #AE7102 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+  }
+
+  .animate-pulse-gold {
+    animation: pulse-gold-glow 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-gold-glow {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+      box-shadow: 0 0 10px 2px rgba(255, 165, 0, 0.4);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scale(0.98);
+      box-shadow: 0 0 25px 8px rgba(255, 165, 0, 0.6);
+    }
+  }
+
+  /* macOS Glassmorphism utilities */
+  .glass-panel {
+    @apply bg-neutral-900/40 backdrop-blur-2xl border border-white/10 shadow-2xl;
+  }
+  
+  .glass-card {
+    @apply bg-neutral-900/30 backdrop-blur-xl border border-white/5 shadow-xl transition-all duration-500 ease-out;
+  }
+  
+  .glass-card:hover {
+    @apply bg-neutral-900/60 border-white/20 shadow-[0_20px_50px_-15px_rgba(255,165,0,0.15)];
+    transform: translateY(-4px) scale(1.01);
+  }
+
+  /* Nothing OS Matrix Pattern */
+  .bg-dot-matrix {
+    background-color: #000000;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+    background-size: 24px 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Glint / Shine effect for premium buttons */
+  .glint-effect {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .glint-effect::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent 45%,
+      rgba(255, 255, 255, 0.1) 48%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0.1) 52%,
+      transparent 55%
+    );
+    transform: rotate(-45deg);
+    transition: none;
+    pointer-events: none;
+    animation: glint-slide 3s infinite;
+  }
+
+  @keyframes glint-slide {
+    0% { transform: translate(-100%, -100%) rotate(-45deg); }
+    30%, 100% { transform: translate(100%, 100%) rotate(-45deg); }
+  }
+
+  /* Dynamic Aurora meshes (blurred light orbs) */
+  .ambient-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle at center, rgba(245, 158, 11, 0.18) 0%, transparent 60%);
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: -1;
+    pointer-events: none;
+    animation: organic-drift 25s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes organic-drift {
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.3; }
+    25% { transform: translate(100px, -30px) scale(1.1) rotate(20deg); opacity: 0.6; }
+    50% { transform: translate(30px, 100px) scale(0.95) rotate(40deg); opacity: 0.4; }
+    75% { transform: translate(-80px, 40px) scale(1.05) rotate(60deg); opacity: 0.7; }
+    100% { transform: translate(-30px, -80px) scale(1) rotate(80deg); opacity: 0.3; }
+  }
+}
