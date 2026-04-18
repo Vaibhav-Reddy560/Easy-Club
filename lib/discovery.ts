@@ -251,7 +251,7 @@ export async function verifyResourcesWithAI(rawResources: BaseResource[], domain
         }));
     }
 
-    return verified.map((v: VerifiedResource) => ({
+    return results.map((v: VerifiedResource) => ({
         ...v,
         location,
         platform: "web",
