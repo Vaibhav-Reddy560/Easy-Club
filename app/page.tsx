@@ -174,15 +174,8 @@ export default function App() {
         setClubs(updatedClubs);
         const activeC = updatedClubs.find(c => c.id === activeClubId);
         if (activeC) {
-          try {
-            const clubRef = doc(db, CLUBS_COLLECTION, club.id);
-            const memberEmails = (club.members || []).map(m => m.email).filter(Boolean);
-            await setDoc(clubRef, { ...club, memberEmails }, { merge: true });
-            return true;
-          } catch (error) {
-            console.error("Error saving club:", error);
-            return false;
-          }
+          const success = await saveClub(activeC as Club & { ownerId: string });
+          if (!success) throw new Error("Event save failed");
         }
       }
       setIsModalOpen(false);
