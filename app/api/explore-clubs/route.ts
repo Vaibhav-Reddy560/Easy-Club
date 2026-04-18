@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import {
     searchSerper,
-    parseSerperResultsToClubs
+    parseSerperResultsToClubs,
+    getCachedDiscovery,
+    setCachedDiscovery
 } from "@/lib/discovery";
 import { validateRequest, ExploreClubsSchema } from "@/lib/validation";
 
@@ -16,19 +18,21 @@ export async function POST(req: Request) {
 
         if (!serperKey) throw new Error("SERPER_API_KEY is missing.");
 
-        // Tailored queries based on category to prevent "college" clubs leaking into "non-college" results
-        const query = category === "College" 
-            ? `student "${type}" club ${location} university college -retail`
-            : `"${type}" community organization ${location} -university -college -student`;
+        // Check Cache first
+        const cacheKey = `clubs_${category}_${type}_${location}`.toLowerCase().replace(/\s+/g, "_");
+        const cachedResults = await getCachedDiscovery<any[]>(cacheKey);
+        if (cachedResults) return NextResponse.json(cachedResults);
 
         console.log(`[ExploreClubs v4] Fetching: ${type} Category: ${category} @ ${location}`);
         
+        const query = `${type} ${category} in ${location}`;
         const results = await searchSerper(query, serperKey, 25);
-        
         if (!results || results.length === 0) return NextResponse.json([]);
 
-        // Phase 1: Robust Deterministic Extraction
         const clubs = parseSerperResultsToClubs(results, location);
+        
+        // Save to cache
+        if (clubs.length > 0) await setCachedDiscovery(cacheKey, clubs);
 
         return NextResponse.json(clubs);
 

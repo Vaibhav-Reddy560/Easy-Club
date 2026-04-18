@@ -14,6 +14,7 @@ import {
   
   /**
    * Fetches all clubs owned by or containing the user as a member.
+   * Uses parallelism and a timeout to ensure fast initial loading.
    */
   export async function getUserClubs(userId: string, userEmail: string | null): Promise<Club[]> {
     if (!db) return [];
@@ -21,24 +22,34 @@ import {
     try {
       const mappedClubs = new Map<string, Club>();
 
-      // 1. Fetch clubs where user is the owner (indexed query, fast)
-      const ownerQuery = query(collection(db, CLUBS_COLLECTION), where("ownerId", "==", userId));
-      const ownerSnapshot = await getDocs(ownerQuery);
-      ownerSnapshot.docs.forEach(d => mappedClubs.set(d.id, d.data() as Club));
+      // Parallelize queries with a safety timeout (8s)
+      const fetchPromise = (async () => {
+        const queries = [
+          query(collection(db, CLUBS_COLLECTION), where("ownerId", "==", userId))
+        ];
 
-      // 2. Fetch clubs where user is a team member via denormalized email array
-      // Uses array-contains which is a single indexed lookup in Firestore
-      if (userEmail) {
-        const memberQuery = query(collection(db, CLUBS_COLLECTION), where("memberEmails", "array-contains", userEmail));
-        const memberSnapshot = await getDocs(memberQuery);
-        memberSnapshot.docs.forEach(d => {
-          if (!mappedClubs.has(d.id)) mappedClubs.set(d.id, d.data() as Club);
+        if (userEmail) {
+          queries.push(query(collection(db, CLUBS_COLLECTION), where("memberEmails", "array-contains", userEmail)));
+        }
+
+        const snapshots = await Promise.all(queries.map(q => getDocs(q)));
+        
+        snapshots.forEach(snapshot => {
+          snapshot.docs.forEach(d => mappedClubs.set(d.id, d.data() as Club));
         });
-      }
 
-      return Array.from(mappedClubs.values());
+        return Array.from(mappedClubs.values());
+      })();
+
+      // Timeout wrapper to prevent hanging forever
+      const timeoutPromise = new Promise<Club[]>((_, reject) => 
+        setTimeout(() => reject(new Error("Database fetch timed out")), 8000)
+      );
+
+      return await Promise.race([fetchPromise, timeoutPromise]);
     } catch (error) {
       console.error("Error fetching clubs from Firestore:", error);
+      // Return empty array instead of hanging the entire app
       return [];
     }
   }

@@ -61,6 +61,7 @@ export default function App() {
   const [targetId, setTargetId] = useState<string | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   // Lifecycle Modals State
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
@@ -74,23 +75,44 @@ export default function App() {
   useEffect(() => {
     let isMounted = true;
     
-    if (authLoading) return;
+    // Safety timeout to prevent infinite "Syncing Hub" hang
+    const safetyTimeout = setTimeout(() => {
+      if (isMounted) {
+        setLoading(false);
+      }
+    }, 10000);
+
+    if (authLoading) return () => { 
+      isMounted = false; 
+      clearTimeout(safetyTimeout); 
+    };
     
     if (user) {
       void getUserClubs(user.uid, user.email).then(fetchedClubs => {
         if (isMounted) {
             setClubs(fetchedClubs);
             setLoading(false);
+            clearTimeout(safetyTimeout);
+        }
+      }).catch(err => {
+        console.error("Data load failed:", err);
+        if (isMounted) {
+          setLoading(false);
+          clearTimeout(safetyTimeout);
         }
       });
     } else {
       if (isMounted) {
           setClubs([]);
           setLoading(false);
+          clearTimeout(safetyTimeout);
       }
     }
     
-    return () => { isMounted = false; };
+    return () => { 
+      isMounted = false; 
+      clearTimeout(safetyTimeout);
+    };
   }, [user, authLoading]);
 
   // Calculate current user role whenever club or user changes
@@ -108,56 +130,70 @@ export default function App() {
     }
   }, [user, activeClub]);
 
-  // Save data to Firebase (Debounced or on significant changes locally, 
-  // but for immediate persistence we trigger saves in the handler functions directly)
+  // Save in the handler functions directly
   // We remove the auto-save useEffect to prevent aggressive writes on every state change.
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (modalOperation === 'create') {
-      handleCreate();
+      void handleCreate();
     } else {
-      handleRename();
+      void handleRename();
     }
   };
 
-  const handleCreate = () => {
-    if (modalType === 'club') {
-      const newClub = {
-        id: Date.now().toString(),
-        ownerId: user!.uid,
-        name: inputValue,
-        events: []
-      };
-      setClubs([...clubs, newClub]);
-      void saveClub(newClub);
-    } else if (activeClubId) {
-      const newEvent: ClubEvent = {
-        id: Date.now().toString(),
-        name: inputValue,
-        config: {
-          city: "Bengaluru",
-          type: 'Technical',
-          subType: 'Workshop',
-          isCollegeEvent: true
+  const handleCreate = async () => {
+    if (!user) return;
+    setIsSaving(true);
+    
+    try {
+      if (modalType === 'club') {
+        const newClub: Club = {
+          id: Date.now().toString(),
+          ownerId: user.uid,
+          name: inputValue,
+          events: []
+        };
+        // Optimistic UI
+        setClubs([...clubs, newClub]);
+        // Await save for persistence reliability
+        const success = await saveClub(newClub as Club & { ownerId: string });
+        if (!success) throw new Error("Club save failed");
+      } else if (activeClubId) {
+        const newEvent: ClubEvent = {
+          id: Date.now().toString(),
+          name: inputValue,
+          config: {
+            city: "Bengaluru",
+            type: 'Technical',
+            subType: 'Workshop',
+            isCollegeEvent: true
+          }
+        };
+        const updatedClubs = clubs.map((c: Club) =>
+          c.id === activeClubId ? { ...c, events: [...(c.events || []), newEvent] } : c
+        );
+        setClubs(updatedClubs);
+        const activeC = updatedClubs.find(c => c.id === activeClubId);
+        if (activeC) {
+          const success = await saveClub(activeC as Club & { ownerId: string });
+          if (!success) throw new Error("Event save failed");
         }
-      };
-      const updatedClubs = clubs.map((c: Club) =>
-        c.id === activeClubId ? { ...c, events: [...(c.events || []), newEvent] } : c
-      );
-      setClubs(updatedClubs);
-      const activeC = updatedClubs.find(c => c.id === activeClubId);
-      if (activeC) void saveClub(activeC as Club & { ownerId: string });
+      }
+      setIsModalOpen(false);
+      setInputValue("");
+    } catch (err) {
+      console.error("Save error:", err);
+      alert("Failed to save. Please check your connection.");
+    } finally {
+      setIsSaving(false);
     }
-    setIsModalOpen(false);
-    setInputValue("");
   };
 
-  const handleAdoptIdea = (title: string, ideaConfig: { subType: string, tags: string }) => {
-    // If we have clubs, add it to the first one as a default, or the active one
+  const handleAdoptIdea = async (title: string, ideaConfig: { subType: string, tags: string }) => {
     const targetClubId = activeClubId || clubs[0]?.id;
     
-    if (!targetClubId) {
+    if (!targetClubId || !user) {
         alert("Please establish at least one club folder before adopting a blueprint.");
         setActiveNav('my-clubs');
         return;
@@ -182,58 +218,77 @@ export default function App() {
     );
     setClubs(updatedClubs);
     
-    // Save to firebase
     const c = updatedClubs.find(c => c.id === targetClubId);
-    if (c) void saveClub(c as Club & { ownerId: string });
+    if (c) await saveClub(c as Club & { ownerId: string });
 
-    // Navigate to the new event
     setActiveClubId(targetClubId);
     setActiveEventId(newEvent.id);
     setView('domains');
     setActiveNav('my-clubs');
   };
 
-  const handleRename = () => {
-    if (modalType === 'club') {
-      const updatedClubs = clubs.map((c: Club) => c.id === targetId ? { ...c, name: inputValue } : c);
-      setClubs(updatedClubs);
-      const c = updatedClubs.find(x => x.id === targetId);
-      if (c) void saveClub(c as Club & { ownerId: string });
-    } else {
-      const updatedClubs = clubs.map((c: Club) =>
-        c.id === activeClubId ? {
-          ...c,
-          events: (c.events || []).map((e: ClubEvent) => e.id === targetId ? { ...e, name: inputValue } : e)
-        } : c
-      );
-      setClubs(updatedClubs);
-      const activeC = updatedClubs.find(x => x.id === activeClubId);
-      if (activeC) void saveClub(activeC as Club & { ownerId: string });
+  const handleRename = async () => {
+    setIsSaving(true);
+    try {
+      if (modalType === 'club') {
+        const updatedClubs = clubs.map((c: Club) => c.id === targetId ? { ...c, name: inputValue } : c);
+        setClubs(updatedClubs);
+        const c = updatedClubs.find(x => x.id === targetId);
+        if (c) await saveClub(c as Club & { ownerId: string });
+      } else {
+        const updatedClubs = clubs.map((c: Club) =>
+          c.id === activeClubId ? {
+            ...c,
+            events: (c.events || []).map((e: ClubEvent) => e.id === targetId ? { ...e, name: inputValue } : e)
+          } : c
+        );
+        setClubs(updatedClubs);
+        const activeC = updatedClubs.find(x => x.id === activeClubId);
+        if (activeC) await saveClub(activeC as Club & { ownerId: string });
+      }
+      setIsModalOpen(false);
+      setInputValue("");
+    } catch (err) {
+      console.error("Rename failed:", err);
+    } finally {
+      setIsSaving(false);
     }
-    setIsModalOpen(false);
-    setInputValue("");
   };
 
-  const confirmDelete = () => {
-    if (modalType === 'club') {
-      setClubs(clubs.filter(c => c.id !== targetId));
-      if (activeClubId === targetId) {
-        setActiveClubId(null);
-        setView('clubs');
+  const confirmDelete = async () => {
+    setIsSaving(true);
+    try {
+      if (modalType === 'club') {
+        const oldClubs = [...clubs];
+        setClubs(clubs.filter(c => c.id !== targetId));
+        if (activeClubId === targetId) {
+          setActiveClubId(null);
+          setView('clubs');
+        }
+        if (targetId) {
+          const success = await deleteClubFromDb(targetId);
+          if (!success) {
+            setClubs(oldClubs); // Revert on failure
+            throw new Error("Delete failed");
+          }
+        }
+      } else {
+        const updatedClubs = clubs.map((c: Club) =>
+          c.id === activeClubId ? {
+            ...c,
+            events: (c.events || []).filter((e: ClubEvent) => e.id !== targetId)
+          } : c
+        );
+        setClubs(updatedClubs);
+        const activeC = updatedClubs.find(x => x.id === activeClubId);
+        if (activeC) await saveClub(activeC as Club & { ownerId: string });
       }
-      if (targetId) void deleteClubFromDb(targetId);
-    } else {
-      const updatedClubs = clubs.map((c: Club) =>
-        c.id === activeClubId ? {
-          ...c,
-          events: (c.events || []).filter((e: ClubEvent) => e.id !== targetId)
-        } : c
-      );
-      setClubs(updatedClubs);
-      const activeC = updatedClubs.find(x => x.id === activeClubId);
-      if (activeC) void saveClub(activeC as Club & { ownerId: string });
+      setIsDeleteModalOpen(false);
+    } catch (err) {
+      console.error("Delete failed:", err);
+    } finally {
+      setIsSaving(false);
     }
-    setIsDeleteModalOpen(false);
   };
 
 

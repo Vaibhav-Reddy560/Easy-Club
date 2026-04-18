@@ -1,5 +1,8 @@
 // ─── Direct Discovery Engine (v4.1 - Ultimate Hybrid) ───────────────────
 import { callGeminiJSON } from "./gemini";
+import { callOpenAIJSON } from "./openai";
+import { db } from "./firebase";
+import { collection, doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
 
 const COLLEGES = [
     { name: "RV College of Engineering", acronyms: ["RVCE", "RV"] },
@@ -130,6 +133,36 @@ export function parseSerperResultsToEvents(results: SerperResult[], location: st
     });
 }
 
+// ─── Caching Layer ───────────────────────────────────────────────────────
+
+const DISCOVERY_CACHE = "discovery_cache";
+
+export async function getCachedDiscovery<T>(key: string): Promise<T | null> {
+    if (!db) return null;
+    try {
+        const cacheDoc = await getDoc(doc(db, DISCOVERY_CACHE, key));
+        if (cacheDoc.exists()) {
+            const data = cacheDoc.data();
+            // TTL: 3 days
+            const threeDaysAgo = Date.now() - (3 * 24 * 60 * 60 * 1000);
+            if (data.timestamp?.toMillis() > threeDaysAgo) {
+                return data.results as T;
+            }
+        }
+    } catch (e) { console.error("Cache read failed:", e); }
+    return null;
+}
+
+export async function setCachedDiscovery(key: string, results: any) {
+    if (!db) return;
+    try {
+        await setDoc(doc(db, DISCOVERY_CACHE, key), {
+            results,
+            timestamp: Timestamp.now()
+        });
+    } catch (e) { console.error("Cache write failed:", e); }
+}
+
 export function parseSerperResultsToResources(results: SerperResult[], location: string): Resource[] {
     return results.map(r => {
         const url = r.link || "";
@@ -195,9 +228,17 @@ export async function verifyResourcesWithAI(rawResources: BaseResource[], domain
     
     RETURN ONLY a JSON array: [{ name, role, college_affiliation, reason, website }].`;
 
-    const verified = await callGeminiJSON<VerifiedResource[]>(prompt);
+    // Try OpenAI first (GPT-4o-mini), fallback to Gemini
+    let verified = await callOpenAIJSON<{ results: VerifiedResource[] }>(prompt);
     
-    if (!verified || !Array.isArray(verified)) {
+    // If OpenAI returned a wrapped object or null, check and fallback
+    let results = verified?.results || null;
+    if (!results) {
+        // Fallback to Gemini if OpenAI fails or key is missing
+        results = await callGeminiJSON<VerifiedResource[]>(prompt);
+    }
+    
+    if (!results || !Array.isArray(results)) {
         return (rawResources as BaseResource[]).map(r => ({
             name: r.name,
             role: "Resource",
