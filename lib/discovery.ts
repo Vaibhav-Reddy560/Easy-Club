@@ -133,22 +133,36 @@ export function parseSerperResultsToEvents(results: SerperResult[], location: st
     });
 }
 
-// ─── Caching Layer ───────────────────────────────────────────────────────
+// ─── Caching Layer (with timeout to prevent serverless hangs) ────────────
 
 const DISCOVERY_CACHE = "discovery_cache";
+const CACHE_TIMEOUT_MS = 2000; // 2s max for cache ops — fail fast on serverless
+
+function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Promise<T> {
+    return Promise.race([
+        promise,
+        new Promise<T>((resolve) => setTimeout(() => resolve(fallback), ms))
+    ]);
+}
 
 export async function getCachedDiscovery<T>(key: string): Promise<T | null> {
     if (!db) return null;
     try {
-        const cacheDoc = await getDoc(doc(db, DISCOVERY_CACHE, key));
-        if (cacheDoc.exists()) {
-            const data = cacheDoc.data();
-            // TTL: 3 days
-            const threeDaysAgo = Date.now() - (3 * 24 * 60 * 60 * 1000);
-            if (data.timestamp?.toMillis() > threeDaysAgo) {
-                return data.results as T;
-            }
-        }
+        return await withTimeout(
+            (async () => {
+                const cacheDoc = await getDoc(doc(db, DISCOVERY_CACHE, key));
+                if (cacheDoc.exists()) {
+                    const data = cacheDoc.data();
+                    const threeDaysAgo = Date.now() - (3 * 24 * 60 * 60 * 1000);
+                    if (data.timestamp?.toMillis() > threeDaysAgo) {
+                        return data.results as T;
+                    }
+                }
+                return null;
+            })(),
+            CACHE_TIMEOUT_MS,
+            null
+        );
     } catch (e) { console.error("Cache read failed:", e); }
     return null;
 }
@@ -156,10 +170,15 @@ export async function getCachedDiscovery<T>(key: string): Promise<T | null> {
 export async function setCachedDiscovery(key: string, results: any) {
     if (!db) return;
     try {
-        await setDoc(doc(db, DISCOVERY_CACHE, key), {
-            results,
-            timestamp: Timestamp.now()
-        });
+        // Fire-and-forget with timeout — don't block the API response
+        await withTimeout(
+            setDoc(doc(db, DISCOVERY_CACHE, key), {
+                results,
+                timestamp: Timestamp.now()
+            }),
+            CACHE_TIMEOUT_MS,
+            undefined
+        );
     } catch (e) { console.error("Cache write failed:", e); }
 }
 
