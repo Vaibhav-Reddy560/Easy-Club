@@ -5,7 +5,7 @@ import {
     signInWithPopup, 
     signOut 
 } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -24,7 +24,9 @@ const app = (getApps().length > 0)
     : (isConfigured ? initializeApp(firebaseConfig) : null);
 
 const auth = app ? getAuth(app) : null;
-const db = app ? getFirestore(app) : null;
+const db = app ? initializeFirestore(app, {
+  localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() })
+}) : null;
 const googleProvider = new GoogleAuthProvider();
 
 export const signInWithGoogle = async () => {

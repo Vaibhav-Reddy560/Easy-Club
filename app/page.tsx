@@ -141,10 +141,8 @@ export default function App() {
       void handleRename();
     }
   };
-
   const handleCreate = async () => {
     if (!user) return;
-    setIsSaving(true);
     
     try {
       if (modalType === 'club') {
@@ -155,6 +153,8 @@ export default function App() {
           events: []
         };
         setClubs([...clubs, newClub]);
+        setIsModalOpen(false); // Close UI instantly
+        setInputValue("");
         const success = await saveClub(newClub as Club & { ownerId: string });
         if (!success) throw new Error("Club save failed");
       } else if (activeClubId) {
@@ -172,19 +172,17 @@ export default function App() {
           c.id === activeClubId ? { ...c, events: [...(c.events || []), newEvent] } : c
         );
         setClubs(updatedClubs);
+        setIsModalOpen(false); // Close UI instantly
+        setInputValue("");
         const activeC = updatedClubs.find(c => c.id === activeClubId);
         if (activeC) {
           const success = await saveClub(activeC as Club & { ownerId: string });
           if (!success) throw new Error("Event save failed");
         }
       }
-      setIsModalOpen(false);
-      setInputValue("");
     } catch (err) {
       console.error("Save error:", err);
       alert("Failed to save. Please check your connection.");
-    } finally {
-      setIsSaving(false);
     }
   };
 
@@ -216,21 +214,23 @@ export default function App() {
     );
     setClubs(updatedClubs);
     
-    const c = updatedClubs.find(c => c.id === targetClubId);
-    if (c) await saveClub(c as Club & { ownerId: string });
-
+    // Switch completely immediately, save in background
     setActiveClubId(targetClubId);
     setActiveEventId(newEvent.id);
     setView('domains');
     setActiveNav('my-clubs');
+
+    const c = updatedClubs.find(c => c.id === targetClubId);
+    if (c) await saveClub(c as Club & { ownerId: string });
   };
 
   const handleRename = async () => {
-    setIsSaving(true);
     try {
       if (modalType === 'club') {
         const updatedClubs = clubs.map((c: Club) => c.id === targetId ? { ...c, name: inputValue } : c);
         setClubs(updatedClubs);
+        setIsModalOpen(false); // Close instantly
+        setInputValue("");
         const c = updatedClubs.find(x => x.id === targetId);
         if (c) await saveClub(c as Club & { ownerId: string });
       } else {
@@ -241,20 +241,17 @@ export default function App() {
           } : c
         );
         setClubs(updatedClubs);
+        setIsModalOpen(false); // Close instantly
+        setInputValue("");
         const activeC = updatedClubs.find(x => x.id === activeClubId);
         if (activeC) await saveClub(activeC as Club & { ownerId: string });
       }
-      setIsModalOpen(false);
-      setInputValue("");
     } catch (err) {
       console.error("Rename failed:", err);
-    } finally {
-      setIsSaving(false);
     }
   };
 
   const confirmDelete = async () => {
-    setIsSaving(true);
     try {
       if (modalType === 'club') {
         const oldClubs = [...clubs];
@@ -263,6 +260,7 @@ export default function App() {
           setActiveClubId(null);
           setView('clubs');
         }
+        setIsDeleteModalOpen(false); // Close instantly
         if (targetId) {
           const success = await deleteClubFromDb(targetId);
           if (!success) {
@@ -278,14 +276,12 @@ export default function App() {
           } : c
         );
         setClubs(updatedClubs);
+        setIsDeleteModalOpen(false); // Close instantly
         const activeC = updatedClubs.find(x => x.id === activeClubId);
         if (activeC) await saveClub(activeC as Club & { ownerId: string });
       }
-      setIsDeleteModalOpen(false);
     } catch (err) {
       console.error("Delete failed:", err);
-    } finally {
-      setIsSaving(false);
     }
   };
 
