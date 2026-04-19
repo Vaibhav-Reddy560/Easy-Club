@@ -65,7 +65,7 @@ export default function AnalyticsView({ clubsCount, eventsCount, onBack }: Analy
                 <m.icon className={`w-6 h-6 ${m.color}`} />
               </div>
               <p className="text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-1">{m.label}</p>
-              <h4 className="text-2xl font-astronomus text-white tracking-tighter">{m.value}</h4>
+              <h4 className="text-2xl text-white tracking-tighter" style={{ fontFamily: 'var(--font-astronomus)' }}>{m.value}</h4>
             </motion.div>
           ))}
         </div>

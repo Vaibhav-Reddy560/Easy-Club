@@ -179,7 +179,7 @@ export default function MyTeamView({ clubs, setClubs }: MyTeamViewProps) {
                         <span className="text-[9px] font-black uppercase tracking-widest text-neutral-500">Active Core</span>
                     </div>
                     <div className="flex items-baseline gap-2">
-                        <span className="text-2xl font-astronomus text-white">{members.length}</span>
+                        <span className="text-2xl text-white" style={{ fontFamily: 'var(--font-astronomus)' }}>{members.length}</span>
                         <span className="text-[10px] text-neutral-600 font-bold">MEMBERS</span>
                     </div>
                 </div>
@@ -189,7 +189,7 @@ export default function MyTeamView({ clubs, setClubs }: MyTeamViewProps) {
                         <span className="text-[9px] font-black uppercase tracking-widest text-neutral-500">Pending Requests</span>
                     </div>
                     <div className="flex items-baseline gap-2">
-                        <span className="text-2xl font-astronomus text-white">{invites.length}</span>
+                        <span className="text-2xl text-white" style={{ fontFamily: 'var(--font-astronomus)' }}>{invites.length}</span>
                         <span className="text-[10px] text-neutral-600 font-bold">INVITES</span>
                     </div>
                 </div>
@@ -199,7 +199,7 @@ export default function MyTeamView({ clubs, setClubs }: MyTeamViewProps) {
                         <span className="text-[9px] font-black uppercase tracking-widest text-neutral-500">Global Actions</span>
                     </div>
                     <div className="flex items-baseline gap-2">
-                        <span className="text-2xl font-astronomus text-white">{activityLog.length}</span>
+                        <span className="text-2xl text-white" style={{ fontFamily: 'var(--font-astronomus)' }}>{activityLog.length}</span>
                         <span className="text-[10px] text-neutral-600 font-bold">LOGGED</span>
                     </div>
                 </div>
