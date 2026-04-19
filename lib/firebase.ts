@@ -5,7 +5,7 @@ import {
     signInWithPopup, 
     signOut 
 } from "firebase/auth";
-import { getFirestore, initializeFirestore, persistentLocalCache, persistentMultipleTabManager, Firestore } from "firebase/firestore";
+import { getFirestore, initializeFirestore, persistentLocalCache, persistentMultipleTabManager, Firestore, Timestamp } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -62,4 +62,4 @@ export const signInWithGoogle = async () => {
 
 export const logout = () => auth && signOut(auth);
 
-export { app, auth, db };
+export { app, auth, db, Timestamp };

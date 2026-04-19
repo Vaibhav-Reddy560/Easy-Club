@@ -216,7 +216,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
                     {finalizing ? (
                         <><Loader2 className="w-3 h-3 animate-spin"/> Generating</>
                     ) : (
-                        <><CheckCircle2 className="w-3 h-3 group-hover:text-black" /> Finalize Blueprint</>
+                        <><CheckCircle2 className="w-3 h-3 group-hover:text-black" /> Confirm Generation</>
                     )}
                 </button>
             </div>

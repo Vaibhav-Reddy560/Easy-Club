@@ -71,21 +71,25 @@ export async function callGeminiJSON<T>(prompt: string, schema?: any): Promise<T
     if (!text) return null;
     
     try {
-        // Attempt to extract JSON block if wrapped in markdown
+        // Attempt to extract JSON block using a more robust regex-first approach
         let jsonStr = text;
-        const start = text.indexOf('{');
-        const startArr = text.indexOf('[');
-        const firstChar = start !== -1 && startArr !== -1 
-                            ? Math.min(start, startArr) 
-                            : Math.max(start, startArr);
-                            
-        if (firstChar !== -1) {
-            const lastBrace = text.lastIndexOf('}');
-            const lastBracket = text.lastIndexOf(']');
-            const lastChar = Math.max(lastBrace, lastBracket);
-            
-            if (lastChar > firstChar) {
-                jsonStr = text.substring(firstChar, lastChar + 1);
+        const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+        if (jsonMatch && jsonMatch[1]) {
+            jsonStr = jsonMatch[1];
+        } else {
+            // Fallback: manually find first and last matching braces
+            const start = text.indexOf('{');
+            const startArr = text.indexOf('[');
+            const firstChar = start !== -1 && (startArr === -1 || start < startArr) ? start : startArr;
+
+            if (firstChar !== -1) {
+                const lastBrace = text.lastIndexOf('}');
+                const lastBracket = text.lastIndexOf(']');
+                const lastChar = Math.max(lastBrace, lastBracket);
+
+                if (lastChar > firstChar) {
+                    jsonStr = text.substring(firstChar, lastChar + 1);
+                }
             }
         }
 

@@ -144,6 +144,7 @@ export default function App() {
   const handleCreate = async () => {
     if (!user) return;
     
+    setIsSaving(true);
     try {
       if (modalType === 'club') {
         const newClub: Club = {
@@ -183,6 +184,8 @@ export default function App() {
     } catch (err) {
       console.error("Save error:", err);
       alert("Failed to save. Please check your connection.");
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -221,10 +224,15 @@ export default function App() {
     setActiveNav('my-clubs');
 
     const c = updatedClubs.find(c => c.id === targetClubId);
-    if (c) await saveClub(c as Club & { ownerId: string });
+    if (c) {
+      setIsSaving(true);
+      await saveClub(c as Club & { ownerId: string });
+      setIsSaving(false);
+    }
   };
 
   const handleRename = async () => {
+    setIsSaving(true);
     try {
       if (modalType === 'club') {
         const updatedClubs = clubs.map((c: Club) => c.id === targetId ? { ...c, name: inputValue } : c);
@@ -248,10 +256,13 @@ export default function App() {
       }
     } catch (err) {
       console.error("Rename failed:", err);
+    } finally {
+      setIsSaving(false);
     }
   };
 
   const confirmDelete = async () => {
+    setIsSaving(true);
     try {
       if (modalType === 'club') {
         const oldClubs = [...clubs];
@@ -282,6 +293,8 @@ export default function App() {
       }
     } catch (err) {
       console.error("Delete failed:", err);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -308,7 +321,10 @@ export default function App() {
     
     // Fire and forget save
     const activeC = updatedClubs.find(c => c.id === activeClubId);
-    if (activeC) void saveClub(activeC as Club & { ownerId: string });
+    if (activeC) {
+      setIsSaving(true);
+      void saveClub(activeC as Club & { ownerId: string }).finally(() => setIsSaving(false));
+    }
   };
 
   const updateEventConfig = (newData: Partial<EventConfig>) => {
@@ -327,7 +343,10 @@ export default function App() {
     setClubs(updatedClubs);
     
     const activeC = updatedClubs.find(c => c.id === activeClubId);
-    if (activeC) void saveClub(activeC as Club & { ownerId: string });
+    if (activeC) {
+      setIsSaving(true);
+      void saveClub(activeC as Club & { ownerId: string }).finally(() => setIsSaving(false));
+    }
   };
 
   const handleNavChange = (section: NavSection) => {
@@ -421,6 +440,21 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-dot-matrix text-white antialiased pb-20 md:pb-0 relative overflow-hidden">
+      {/* Global Sync Indicator */}
+      <AnimatePresence>
+        {isSaving && (
+          <motion.div
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 20, opacity: 1 }}
+            exit={{ y: -50, opacity: 0 }}
+            className="fixed top-0 left-1/2 -translate-x-1/2 z-[200] px-6 py-2 bg-black/80 backdrop-blur-xl border border-gold-500/20 rounded-full flex items-center gap-3 shadow-2xl shadow-gold-500/5 group"
+          >
+            <div className="w-2 h-2 bg-gold-500 rounded-full animate-ping" />
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-signature-gradient">Synchronizing Hub...</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Ambient Aurora Orbs */}
       <div className="ambient-glow" style={{ top: '10%', left: '20%', animationDelay: '0s' }} />
       <div className="ambient-glow" style={{ top: '60%', right: '10%', background: 'radial-gradient(circle at center, rgba(217, 119, 6, 0.1) 0%, transparent 60%)', animationDelay: '-10s' }} />
@@ -707,9 +741,17 @@ export default function App() {
                 />
                 <button
                   type="submit"
-                  className="w-full bg-gold-gradient text-black font-bold py-4 rounded-xl shadow-xl uppercase tracking-widest hover:scale-[1.02] transition-transform"
+                  disabled={isSaving}
+                  className="w-full bg-gold-gradient text-black font-bold py-4 rounded-xl shadow-xl uppercase tracking-widest hover:scale-[1.02] transition-transform flex items-center justify-center gap-3 disabled:opacity-50 disabled:scale-100"
                 >
-                  Confirm {modalOperation === 'create' ? 'Generation' : 'Changes'}
+                  {isSaving ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                      Syncing...
+                    </>
+                  ) : (
+                    `Confirm ${modalOperation === 'create' ? 'Generation' : 'Changes'}`
+                  )}
                 </button>
               </form>
             </motion.div>

@@ -5,7 +5,8 @@ import {
     getDocs, 
     query, 
     where, 
-    deleteDoc 
+    deleteDoc,
+    getDocsFromCache 
   } from "firebase/firestore";
   import { db } from "./firebase";
   import { Club } from "./types";
@@ -27,7 +28,6 @@ import {
 
       // 1. Try Cache First for INSTANT loading speed
       try {
-        const { getDocsFromCache } = await import("firebase/firestore");
         const cacheSnapshots = await Promise.all(queries.map(q => getDocsFromCache(q)));
         cacheSnapshots.forEach(snapshot => {
           snapshot.docs.forEach(d => mappedClubs.set(d.id, d.data() as Club));
@@ -43,19 +43,12 @@ import {
       }
 
       // 2. If Cache was empty (first load), fetch from server with a safety timeout (8s)
-      const fetchPromise = (async () => {
-        const snapshots = await Promise.all(queries.map(q => getDocs(q)));
-        snapshots.forEach(snapshot => {
-          snapshot.docs.forEach(d => mappedClubs.set(d.id, d.data() as Club));
-        });
-        return Array.from(mappedClubs.values());
-      })();
-
-      const timeoutPromise = new Promise<Club[]>((_, reject) => 
-        setTimeout(() => reject(new Error("Database fetch timed out")), 8000)
-      );
-
-      return await Promise.race([fetchPromise, timeoutPromise]);
+      // 2. If Cache was empty (first load), fetch from server
+      const snapshots = await Promise.all(queries.map(q => getDocs(q)));
+      snapshots.forEach(snapshot => {
+        snapshot.docs.forEach(d => mappedClubs.set(d.id, d.data() as Club));
+      });
+      return Array.from(mappedClubs.values());
     } catch (error) {
       console.error("Error fetching clubs from Firestore:", error);
       return [];
