@@ -5,7 +5,7 @@ import {
     signInWithPopup, 
     signOut 
 } from "firebase/auth";
-import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from "firebase/firestore";
+import { getFirestore, initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -24,9 +24,26 @@ const app = (getApps().length > 0)
     : (isConfigured ? initializeApp(firebaseConfig) : null);
 
 const auth = app ? getAuth(app) : null;
-const db = app ? initializeFirestore(app, {
-  localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() })
-}) : null;
+
+// Only enable IndexedDB persistence in the browser environment to avoid SSR crashes
+let db = null;
+if (app) {
+  if (typeof window !== "undefined") {
+    try {
+      db = initializeFirestore(app, {
+        localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() })
+      });
+    } catch (e) {
+      console.warn("Failed to set up IndexedDB persistence", e);
+      db = getFirestore(app);
+    }
+  } else {
+    // Server-side rendering fallback
+    const { getFirestore } = require("firebase/firestore");
+    db = getFirestore(app);
+  }
+}
+
 const googleProvider = new GoogleAuthProvider();
 
 export const signInWithGoogle = async () => {
