@@ -6,7 +6,7 @@ import { motion, useMotionValue, useTransform } from "framer-motion";
 import { MemberRole } from "@/lib/types";
 import { useRef } from "react";
 
-export type NavSection = 'explore-clubs' | 'explore-events' | 'my-clubs' | 'my-team' | 'membership' | 'trending' | 'social-tracker' | 'sponsorship';
+export type NavSection = 'explore-clubs' | 'explore-events' | 'my-clubs' | 'my-team' | 'membership' | 'ideation' | 'social-tracker' | 'sponsorship';
 
 interface AppSidebarProps {
     activeSection: NavSection;
@@ -21,7 +21,7 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
         { id: 'explore-events' as NavSection, label: 'Explore Events', icon: Trophy },
         { id: 'my-clubs' as NavSection, label: 'My Clubs', icon: Folder },
         { id: 'membership' as NavSection, label: 'Membership and Recruitment', icon: Users, restricted: true },
-        { id: 'trending' as NavSection, label: 'Trending Event Ideas', icon: Zap },
+        { id: 'ideation' as NavSection, label: 'Event Ideation', icon: Zap },
         { id: 'social-tracker' as NavSection, label: 'Social Tracker', icon: ChartBar },
         { id: 'sponsorship' as NavSection, label: 'Funding & Sponsorship', icon: Banknote, restricted: true },
     ].filter(section => {

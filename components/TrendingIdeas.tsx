@@ -24,6 +24,7 @@ interface TrendingIdea {
 interface AdoptConfig {
     subType: string;
     tags: string;
+    description?: string;
 }
 
 interface TrendingIdeasProps {
@@ -36,6 +37,9 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
     const [cache, setCache] = useState<Record<string, TrendingIdea[]>>({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    const [adoptingIdea, setAdoptingIdea] = useState<TrendingIdea | null>(null);
+    const [customInput, setCustomInput] = useState("");
 
     const fetchIdeas = React.useCallback(async (category: string) => {
         if (cache[category]) {
@@ -209,10 +213,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                                     </div>
 
                                     <button 
-                                        onClick={() => onAdopt?.(idea.title, { 
-                                            subType: idea.tags[0] || 'Workshop',
-                                            tags: idea.tags.join(', ')
-                                        })}
+                                        onClick={() => setAdoptingIdea(idea)}
                                         className="w-full mt-4 py-4 bg-white/5 border border-white/5 rounded-2xl text-[10px] font-black uppercase tracking-widest text-neutral-500 group-hover:bg-gold-500 group-hover:text-black group-hover:border-transparent transition-all flex items-center justify-center gap-2"
                                     >
                                         Adopt Blueprint <ChevronRight className="w-4 h-4" />
@@ -221,6 +222,62 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                             </motion.div>
                         ))}
                     </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Adopt Confirmation Modal */}
+            <AnimatePresence>
+                {adoptingIdea && (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm">
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            className="w-full max-w-lg bg-[#0a0a0a] border border-white/10 p-8 rounded-[3rem] shadow-2xl relative overflow-hidden"
+                        >
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-gold-500/10 blur-[100px] rounded-full point-events-none" />
+                            
+                            <h3 className="text-xl font-black text-white uppercase tracking-tighter mb-2 leading-tight">
+                                Customize Blueprint
+                            </h3>
+                            <p className="text-neutral-400 text-xs font-bold leading-relaxed mb-6">
+                                Adopting: <span className="text-signature-gradient">{adoptingIdea.title}</span>. Add any specific custom ideas or opinions below before applying it to your club!
+                            </p>
+
+                            <textarea
+                                value={customInput}
+                                onChange={(e) => setCustomInput(e.target.value)}
+                                placeholder="I want this event to focus heavily on AI, make sure we have a speaker from XYZ..."
+                                className="w-full h-32 px-5 py-4 bg-black/40 border border-white/10 rounded-2xl text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-gold-500/50 mb-6 font-medium leading-relaxed resize-none"
+                            />
+
+                            <div className="flex gap-4">
+                                <button
+                                    onClick={() => {
+                                        setAdoptingIdea(null);
+                                        setCustomInput("");
+                                    }}
+                                    className="flex-1 py-4 bg-white/5 border border-white/10 rounded-full text-xs font-black uppercase tracking-widest text-neutral-400 hover:bg-white/10 transition-colors"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        onAdopt?.(adoptingIdea.title, { 
+                                            subType: adoptingIdea.tags[0] || 'Workshop',
+                                            tags: adoptingIdea.tags.join(', '),
+                                            description: `[Base Blueprint: ${adoptingIdea.summary}] ${customInput ? '\\n\\nUser Notes: ' + customInput : ''}`
+                                        });
+                                        setAdoptingIdea(null);
+                                        setCustomInput("");
+                                    }}
+                                    className="flex-1 py-4 bg-gold-500 text-black rounded-full text-xs font-black uppercase tracking-widest hover:bg-gold-400 transition-colors shadow-gold-glow"
+                                >
+                                    Adopt Idea
+                                </button>
+                            </div>
+                        </motion.div>
+                    </div>
                 )}
             </AnimatePresence>
         </motion.div>

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import TrendingIdeas from "@/components/TrendingIdeas";
+import EventIdeation from "@/components/EventIdeation";
 import SocialTracker from "@/components/SocialTracker";
 import SponsorshipManager from "@/components/SponsorshipManager";
 import {
@@ -186,7 +186,7 @@ export default function App() {
     }
   };
 
-  const handleAdoptIdea = async (title: string, ideaConfig: { subType: string, tags: string }) => {
+  const handleAdoptIdea = async (title: string, ideaConfig: { subType: string, tags: string, description?: string }) => {
     const targetClubId = activeClubId || clubs[0]?.id;
     
     if (!targetClubId || !user) {
@@ -200,7 +200,7 @@ export default function App() {
       name: title,
       config: {
         subType: ideaConfig.subType,
-        description: "",
+        description: ideaConfig.description || "",
         date: "",
         time: "",
         venue: "",
@@ -666,8 +666,8 @@ export default function App() {
             />
           </div>
 
-          {activeNav === 'trending' && (
-            <TrendingIdeas onAdopt={handleAdoptIdea} />
+          {activeNav === 'ideation' && (
+            <EventIdeation clubs={clubs} onAdopt={handleAdoptIdea} />
           )}
         </main>
       </div>
