@@ -5,7 +5,7 @@ import {
     signInWithPopup, 
     signOut 
 } from "firebase/auth";
-import { getFirestore, initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from "firebase/firestore";
+import { getFirestore, initializeFirestore, persistentLocalCache, persistentMultipleTabManager, Firestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -26,7 +26,7 @@ const app = (getApps().length > 0)
 const auth = app ? getAuth(app) : null;
 
 // Only enable IndexedDB persistence in the browser environment to avoid SSR crashes
-let db = null;
+let db: Firestore | null = null;
 if (app) {
   if (typeof window !== "undefined") {
     try {
