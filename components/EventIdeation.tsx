@@ -9,6 +9,7 @@ import { Club } from "@/lib/types";
 interface AdoptConfig {
     subType: string;
     tags: string;
+    description?: string;
 }
 
 interface EventIdeationProps {
