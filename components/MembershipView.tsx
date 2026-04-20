@@ -13,7 +13,7 @@ interface MembershipViewProps {
 
 export default function MembershipView({ clubs, setClubs }: MembershipViewProps) {
   const [selectedClubId, setSelectedClubId] = useState<string | null>(clubs[0]?.id || null);
-  const [activeTab, setActiveTab] = useState<'junior-core' | 'recruitment-pool' | 'new-recruit'>('junior-core');
+  const [activeTab, setActiveTab] = useState<'recruitment-pool' | 'new-recruit'>('recruitment-pool');
 
   // Form State
   const [newName, setNewName] = useState("");
@@ -118,12 +118,6 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
       {/* Tabs */}
       <div className="flex gap-4 border-b border-white/10">
         <button
-          onClick={() => setActiveTab('junior-core')}
-          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'junior-core' ? 'text-signature-gradient border-gold-500' : 'text-neutral-500 border-transparent hover:text-neutral-300'}`}
-        >
-          Junior Core Team
-        </button>
-        <button
           onClick={() => setActiveTab('recruitment-pool')}
           className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'recruitment-pool' ? 'text-signature-gradient border-gold-500' : 'text-neutral-500 border-transparent hover:text-neutral-300'}`}
         >
@@ -139,7 +133,7 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
 
       {/* Content */}
       <div className="min-h-[500px]">
-        {activeTab === 'junior-core' && (
+        {activeTab === 'recruitment-pool' && (
           <div className="bg-neutral-900/40 border border-white/5 rounded-[2rem] overflow-hidden">
             <table className="w-full text-left text-sm">
               <thead className="bg-black/40 text-[10px] font-black uppercase tracking-widest text-signature-gradient border-b border-white/5">
@@ -152,15 +146,15 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
-                {members.filter((m: ClubMember) => m.role === 'Junior Core').length === 0 ? (
+                {members.filter((m: ClubMember) => m.role === 'General Member').length === 0 ? (
                   <tr>
                     <td colSpan={5} className="py-20 text-center text-neutral-500 uppercase tracking-widest font-bold text-[10px]">
-                      No Junior Core members recruited yet.
+                      No members in roster. Recruit first.
                     </td>
                   </tr>
                 ) : (
                   members
-                    .filter((m: ClubMember) => m.role === 'Junior Core')
+                    .filter((m: ClubMember) => m.role === 'General Member')
                     .map((member: ClubMember) => (
                     <tr key={member.id} className="hover:bg-white/[0.02] transition-colors group">
                       <td className="px-8 py-6">
@@ -168,11 +162,7 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
                         <p className="text-[10px] text-neutral-500 uppercase tracking-wider">{member.email}</p>
                       </td>
                       <td className="px-8 py-6">
-                        <span className={`inline-flex px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
-                          member.role === 'Senior Core' ? 'bg-gold-500/20 text-signature-gradient border border-gold-500/30' :
-                          member.role === 'Junior Core' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
-                          'bg-white/5 text-neutral-400 border border-white/10'
-                        }`}>
+                        <span className="inline-flex px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest bg-white/5 text-neutral-400 border border-white/10">
                           {member.role}
                         </span>
                       </td>
@@ -189,14 +179,12 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
                       </td>
                       <td className="px-8 py-6 text-right">
                         <div className="flex items-center justify-end gap-3 opacity-50 group-hover:opacity-100 transition-opacity">
-                          {member.role !== 'Senior Core' && (
-                            <button
-                              onClick={() => handlePromote(member.id, member.role)}
-                              className="px-4 py-2 bg-white/5 hover:bg-gold-500/20 text-white hover:brightness-110 rounded-lg text-[9px] font-bold uppercase tracking-widest border border-transparent hover:border-gold-500/30 transition-all"
-                            >
-                              Promote to {member.role === 'General Member' ? 'Junior Core' : 'Senior Core'}
-                            </button>
-                          )}
+                          <button
+                            onClick={() => handlePromote(member.id, 'General Member')}
+                            className="px-4 py-2 bg-white/5 hover:bg-gold-500/20 text-white hover:brightness-110 rounded-lg text-[9px] font-bold uppercase tracking-widest border border-transparent hover:border-gold-500/30 transition-all"
+                          >
+                            Promote to Junior Core
+                          </button>
                           <button
                             onClick={() => handleRemove(member.id)}
                             className="p-2 text-neutral-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
@@ -214,46 +202,6 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
           </div>
         )}
 
-        {activeTab === 'recruitment-pool' && (
-          <div className="bg-neutral-900/40 border border-white/5 rounded-[2rem] overflow-hidden">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-black/40 text-[10px] font-black uppercase tracking-widest text-neutral-500/70 border-b border-white/5">
-                <tr>
-                  <th className="px-8 py-5">General Member</th>
-                  <th className="px-8 py-5 text-right">Selection for Core</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                {members.filter((m: ClubMember) => m.role === 'General Member').length === 0 ? (
-                  <tr>
-                    <td colSpan={2} className="py-20 text-center text-neutral-500 uppercase tracking-widest font-bold text-[10px]">
-                      No members available for promotion. Recruit first.
-                    </td>
-                  </tr>
-                ) : (
-                  members
-                    .filter((m: ClubMember) => m.role === 'General Member')
-                    .map((member: ClubMember) => (
-                    <tr key={member.id} className="hover:bg-white/[0.02] transition-colors group">
-                      <td className="px-8 py-6">
-                        <p className="font-bold text-white mb-1">{member.name}</p>
-                        <p className="text-[10px] text-neutral-500 uppercase tracking-wider">{member.email}</p>
-                      </td>
-                      <td className="px-8 py-6 text-right">
-                        <button
-                          onClick={() => handlePromote(member.id, 'General Member')}
-                          className="px-6 py-2 bg-gold-500 text-black rounded-lg text-[9px] font-black uppercase tracking-widest hover:brightness-110 transition-all"
-                        >
-                          Select for Junior Core
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        )}
 
         {activeTab === 'new-recruit' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
