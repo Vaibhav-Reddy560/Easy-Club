@@ -32,7 +32,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                         <Zap className="w-8 h-8 text-gold-500" />
                     </div>
                     <div>
-                        <h2 className="text-5xl font-black tracking-tighter text-white uppercase italic">Easy Club</h2>
+                        <h2 className="text-5xl font-normal tracking-tighter text-signature-gradient font-airstream leading-none">Easy Club</h2>
                         <p className="text-signature-gradient font-black text-xs uppercase tracking-[0.3em] mt-1 ml-1 leading-none">The Ultimate Operating System for Organizations</p>
                     </div>
                 </div>
@@ -96,7 +96,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                         <span className="px-3 py-1 bg-white/5 rounded-full">V 1.0.4 PRODUCTION</span>
                         <span className="px-3 py-1 bg-white/5 rounded-full">System: Stable</span>
                     </div>
-                    <span className="font-bold opacity-30">© 2026 EASY CLUB INTEL</span>
+                    <span className="font-airstream text-lg opacity-30 mt-1">© 2026 EASY CLUB INTEL</span>
                 </div>
             </div>
         </motion.div>

@@ -38,7 +38,7 @@ import LoginView from "@/components/LoginView";
 import { Club, ClubEvent, EventConfig, MemberRole, ActivityLogEvent, EventStatus, PostEventData } from "@/lib/types";
 import { useAuth } from "@/lib/auth";
 import { signInWithGoogle, logout } from "@/lib/firebase";
-import { getUserClubs, saveClub, deleteClubFromDb } from "@/lib/db";
+import { getUserClubs, saveClub, deleteClubFromDb, subscribeUserClubs } from "@/lib/db";
 
 // --- MAIN APPLICATION ---
 
@@ -62,6 +62,8 @@ export default function App() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  const lastSyncedUid = useRef<string | null>(null);
+
 
   // Lifecycle Modals State
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
@@ -71,15 +73,13 @@ export default function App() {
   const activeClub = clubs.find(c => c.id === activeClubId);
   const activeEvent = activeClub?.events?.find((e: ClubEvent) => e.id === activeEventId);
 
-  // Load data from Firebase on mount
+  // Optimized loading and syncing logic
   useEffect(() => {
     let isMounted = true;
     
     // Safety timeout to prevent infinite "Syncing Hub" hang
     const safetyTimeout = setTimeout(() => {
-      if (isMounted) {
-        setLoading(false);
-      }
+      if (isMounted) setLoading(false);
     }, 10000);
 
     if (authLoading) return () => { 
@@ -88,23 +88,30 @@ export default function App() {
     };
     
     if (user) {
-      void getUserClubs(user.uid, user.email).then(fetchedClubs => {
+      // Only show full-screen loader if it's a completely new user UID
+      if (lastSyncedUid.current !== user.uid) {
+        setLoading(true);
+      }
+      
+      const unsubscribe = subscribeUserClubs(user.uid, user.email, (fetchedClubs) => {
         if (isMounted) {
-            setClubs(fetchedClubs);
-            setLoading(false);
-            clearTimeout(safetyTimeout);
-        }
-      }).catch(err => {
-        console.error("Data load failed:", err);
-        if (isMounted) {
+          setClubs(fetchedClubs);
           setLoading(false);
+          lastSyncedUid.current = user.uid;
           clearTimeout(safetyTimeout);
         }
       });
+      
+      return () => {
+        isMounted = false;
+        unsubscribe();
+        clearTimeout(safetyTimeout);
+      };
     } else {
       if (isMounted) {
           setClubs([]);
           setLoading(false);
+          lastSyncedUid.current = null;
           clearTimeout(safetyTimeout);
       }
     }

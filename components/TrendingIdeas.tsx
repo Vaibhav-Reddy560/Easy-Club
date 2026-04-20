@@ -85,13 +85,15 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
             <header className="border-b border-white/5 pb-8">
                 <div className="flex justify-between items-end">
                     <div>
-                        <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter flex items-center gap-3">
-                            Trending Ideas <TrendingUp className="w-8 h-8 text-gold-500" />
+                        <h2 className="text-4xl font-astronomus uppercase tracking-tighter flex items-center gap-3 whitespace-nowrap">
+                            <span className="text-signature-gradient">Trending Ideas</span> 
+                            <TrendingUp className="w-8 h-8 text-gold-500 flex-shrink-0" />
                         </h2>
                         <p className="text-neutral-500 text-sm mt-1 uppercase font-bold tracking-widest">AI-Curated Event Blueprints & Market Analysis</p>
                     </div>
-                    <div className="hidden md:flex items-center gap-2 text-[10px] font-bold text-signature-gradient uppercase tracking-tighter bg-gold-500/5 px-4 py-2 rounded-full border border-gold-500/10">
-                        <Sparkles className="w-3 h-3 text-gold-500" /> Real-time Trend Extraction
+                    <div className="hidden md:flex items-center gap-2 text-[10px] font-bold uppercase tracking-tighter bg-gold-500/5 px-4 py-2 rounded-full border border-gold-500/10">
+                        <Sparkles className="w-3 h-3 text-gold-500 flex-shrink-0" /> 
+                        <span className="text-signature-gradient">Real-time Trend Extraction</span>
                     </div>
                 </div>
             </header>
@@ -184,7 +186,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                                         </div>
                                         <div className="space-y-1 text-right">
                                             <p className="text-[8px] text-neutral-500 font-black uppercase tracking-widest">Est. Reach</p>
-                                            <p className="text-xs font-bold text-white">{idea.reach}</p>
+                                            <p className="text-xs font-bold text-white font-astronomus tracking-tighter" style={{ fontFamily: 'var(--font-astronomus), sans-serif !important' }}>{idea.reach}</p>
                                         </div>
                                     </div>
 

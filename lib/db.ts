@@ -6,13 +6,49 @@ import {
     query, 
     where, 
     deleteDoc,
-    getDocsFromCache 
+    onSnapshot,
+    Unsubscribe,
+    or
   } from "firebase/firestore";
   import { db } from "./firebase";
   import { Club } from "./types";
   
   const CLUBS_COLLECTION = "clubs";
   
+  /**
+   * Subscribes to real-time updates for clubs where the user is an owner or member.
+   * Merges results from both queries and returns a combined unregister function.
+   */
+  /**
+   * Subscribes to real-time updates for clubs where the user is an owner or member.
+   * Uses a single consolidated query for maximum performance.
+   */
+  export function subscribeUserClubs(
+    userId: string, 
+    userEmail: string | null, 
+    onUpdate: (clubs: Club[]) => void
+  ): Unsubscribe {
+    if (!db) return () => {};
+
+    // Consolidate owner and member checks into a single query
+    const clubsQuery = userEmail 
+      ? query(
+          collection(db, CLUBS_COLLECTION), 
+          or(
+            where("ownerId", "==", userId),
+            where("memberEmails", "array-contains", userEmail)
+          )
+        )
+      : query(collection(db, CLUBS_COLLECTION), where("ownerId", "==", userId));
+
+    return onSnapshot(clubsQuery, (snapshot) => {
+      const fetchedClubs = snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Club));
+      onUpdate(fetchedClubs);
+    }, (error) => {
+      console.error("Clubs subscription error:", error);
+    });
+  }
+
   export async function getUserClubs(userId: string, userEmail: string | null): Promise<Club[]> {
     if (!db) return [];
   
