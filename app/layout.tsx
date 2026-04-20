@@ -6,13 +6,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 const airstream = localFont({
-  src: [
-    {
-      path: './fonts/airstream.ttf',
-      weight: '400',
-      style: 'normal',
-    },
-  ],
+  src: "./fonts/airstream.ttf",
   variable: "--font-airstream",
   display: "swap",
 });
