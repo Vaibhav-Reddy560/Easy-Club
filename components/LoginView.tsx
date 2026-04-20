@@ -38,7 +38,7 @@ export default function LoginView({ onSignIn }: LoginViewProps) {
               >
                 <div className="relative px-6 py-2">
                   <div className="absolute inset-0 bg-gold-500 blur-3xl opacity-10 animate-pulse" />
-                  <h1 className="relative text-7xl font-normal text-signature-gradient tracking-tighter font-airstream leading-none">
+                  <h1 className="relative text-7xl font-normal text-signature-gradient tracking-wide font-airstream leading-none">
                     Easy Club
                   </h1>
                 </div>

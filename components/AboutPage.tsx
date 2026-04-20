@@ -32,7 +32,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                         <Zap className="w-8 h-8 text-gold-500" />
                     </div>
                     <div>
-                        <h2 className="text-5xl font-normal tracking-tighter text-signature-gradient font-airstream leading-none">Easy Club</h2>
+                        <h2 className="text-5xl font-normal tracking-wide text-signature-gradient font-airstream leading-none">Easy Club</h2>
                         <p className="text-signature-gradient font-black text-xs uppercase tracking-[0.3em] mt-1 ml-1 leading-none">The Ultimate Operating System for Organizations</p>
                     </div>
                 </div>
