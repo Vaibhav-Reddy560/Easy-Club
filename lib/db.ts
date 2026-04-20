@@ -13,9 +13,10 @@ import {
     getDocsFromServer
   } from "firebase/firestore";
   import { db } from "./firebase";
-  import { Club } from "./types";
+  import { Club, ScrapedClub } from "./types";
   
   const CLUBS_COLLECTION = "clubs";
+  const SAVED_CLUBS_COLLECTION = "saved_explore_clubs";
   
   /**
    * Subscribes to real-time updates for clubs where the user is an owner or member.
@@ -123,6 +124,58 @@ import {
       return true;
     } catch (error) {
       console.error("Error deleting club:", error);
+      return false;
+    }
+  }
+
+  /**
+   * Subscribes to clubs that the user has "saved" from the Explore page.
+   */
+  export function subscribeSavedExploreClubs(
+    userId: string, 
+    onUpdate: (clubs: ScrapedClub[]) => void
+  ): Unsubscribe {
+    if (!db) return () => {};
+    const q = query(collection(db, SAVED_CLUBS_COLLECTION), where("userId", "==", userId));
+    return onSnapshot(q, (snapshot) => {
+      const clubs = snapshot.docs.map(d => d.data().club as ScrapedClub);
+      onUpdate(clubs);
+    }, (error) => {
+      console.error("Saved clubs subscription error:", error);
+    });
+  }
+
+  /**
+   * Saves a club from the Explore page to the user's permanent account.
+   */
+  export async function saveExploreClub(userId: string, club: ScrapedClub): Promise<boolean> {
+    if (!db) return false;
+    try {
+      // Create a unique but deterministic ID for the saved club per user
+      const docId = `${userId}_${club.name}_${club.college}`.replace(/[#/]/g, '_');
+      await setDoc(doc(db, SAVED_CLUBS_COLLECTION, docId), {
+        userId,
+        club,
+        savedAt: new Date().toISOString()
+      });
+      return true;
+    } catch (error) {
+      console.error("Error saving explore club:", error);
+      return false;
+    }
+  }
+
+  /**
+   * Removes a previously saved explore club.
+   */
+  export async function removeExploreClub(userId: string, clubName: string, college: string): Promise<boolean> {
+    if (!db) return false;
+    try {
+      const docId = `${userId}_${clubName}_${college}`.replace(/[#/]/g, '_');
+      await deleteDoc(doc(db, SAVED_CLUBS_COLLECTION, docId));
+      return true;
+    } catch (error) {
+      console.error("Error removing explore club:", error);
       return false;
     }
   }

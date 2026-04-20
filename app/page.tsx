@@ -62,7 +62,8 @@ export default function App() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isSaving, setIsSaving] = useState(false);
-  const lastSyncedUid = useRef<string | null>(null);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const lastSyncedUid = useRef<string | null>(typeof window !== 'undefined' ? localStorage.getItem('last_synced_uid') : null);
 
 
   // Lifecycle Modals State
@@ -98,6 +99,7 @@ export default function App() {
           setClubs(fetchedClubs);
           setLoading(false);
           lastSyncedUid.current = user.uid;
+          localStorage.setItem('last_synced_uid', user.uid);
           clearTimeout(safetyTimeout);
         }
       });
@@ -112,6 +114,7 @@ export default function App() {
           setClubs([]);
           setLoading(false);
           lastSyncedUid.current = null;
+          localStorage.removeItem('last_synced_uid');
           clearTimeout(safetyTimeout);
       }
     }
@@ -137,8 +140,17 @@ export default function App() {
     }
   }, [user, activeClub]);
 
-  // Save in the handler functions directly
-  // We remove the auto-save useEffect to prevent aggressive writes on every state change.
+  // Protect against accidental navigation during save
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (isSaving || hasUnsavedChanges) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [isSaving, hasUnsavedChanges]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -152,22 +164,29 @@ export default function App() {
     if (!user) return;
     
     setIsSaving(true);
+    setHasUnsavedChanges(true); // Mark as dirty
     try {
       if (modalType === 'club') {
         const newClub: Club = {
-          id: Date.now().toString(),
+          id: `club_${Date.now()}`,
           ownerId: user.uid,
           name: inputValue,
           events: []
         };
-        setClubs([...clubs, newClub]);
-        setIsModalOpen(false); // Close UI instantly
+        // Optimistic UI update
+        setClubs(prev => [...prev, newClub]);
+        setIsModalOpen(false); 
         setInputValue("");
+        
         const success = await saveClub(newClub as Club & { ownerId: string });
-        if (!success) throw new Error("Club save failed");
+        if (!success) {
+          // Revert if failed
+          setClubs(prev => prev.filter(c => c.id !== newClub.id));
+          alert("Failed to establish club. Reverting changes.");
+        }
       } else if (activeClubId) {
         const newEvent: ClubEvent = {
-          id: Date.now().toString(),
+          id: `event_${Date.now()}`,
           name: inputValue,
           config: {
             city: "Bengaluru",
@@ -176,21 +195,27 @@ export default function App() {
             isCollegeEvent: true
           }
         };
-        const updatedClubs = clubs.map((c: Club) =>
-          c.id === activeClubId ? { ...c, events: [...(c.events || []), newEvent] } : c
-        );
-        setClubs(updatedClubs);
-        setIsModalOpen(false); // Close UI instantly
+        
+        let targetClub: Club | undefined;
+        setClubs(prev => prev.map((c: Club) => {
+          if (c.id === activeClubId) {
+            targetClub = { ...c, events: [...(c.events || []), newEvent] };
+            return targetClub;
+          }
+          return c;
+        }));
+        
+        setIsModalOpen(false); 
         setInputValue("");
-        const activeC = updatedClubs.find(c => c.id === activeClubId);
-        if (activeC) {
-          const success = await saveClub(activeC as Club & { ownerId: string });
-          if (!success) throw new Error("Event save failed");
+        
+        if (targetClub) {
+          const success = await saveClub(targetClub as Club & { ownerId: string });
+          if (!success) alert("Failed to add event. Work might not be saved.");
         }
       }
+      setHasUnsavedChanges(false);
     } catch (err) {
       console.error("Save error:", err);
-      alert("Failed to save. Please check your connection.");
     } finally {
       setIsSaving(false);
     }

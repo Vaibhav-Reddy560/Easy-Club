@@ -24,6 +24,14 @@ service cloud.firestore {
       }
     }
 
+    // Rules for saved explore clubs
+    match /saved_explore_clubs/{docId} {
+      allow read, delete: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      allow update: if request.auth != null && resource.data.userId == request.auth.uid && request.resource.data.userId == request.auth.uid;
+    }
+
+
     // Default deny
     match /{document=**} {
       allow read, write: if false;

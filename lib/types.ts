@@ -137,3 +137,19 @@ export interface GenerationState {
   error: string | null;
   result: unknown;
 }
+
+export interface ScrapedClub {
+    name: string;
+    description: string;
+    location: string;
+    college: string;
+    website: string;
+    social?: {
+        twitter?: string;
+        instagram?: string;
+        linkedin?: string;
+        facebook?: string;
+        youtube?: string;
+    };
+    imageUrl: string;
+}

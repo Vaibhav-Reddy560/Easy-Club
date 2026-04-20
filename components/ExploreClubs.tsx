@@ -3,8 +3,9 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Search, MapPin, Instagram, Linkedin, Twitter, Facebook, ExternalLink, Loader2, Sparkles, Globe, Youtube, Bookmark, BookmarkCheck } from "lucide-react";
 import { useAuth } from "@/lib/auth";
+import { saveExploreClub, removeExploreClub, subscribeSavedExploreClubs } from "@/lib/db";
+import { ScrapedClub } from "@/lib/types";
 
 const CLUB_TYPES = [
     "Bio", "Math", "Physics", "Chemistry", "Racing", "Dance", "Singing",
@@ -13,47 +14,7 @@ const CLUB_TYPES = [
     "Literary", "Comedy", "Electronics", "Robotics", "Cultural", "Business"
 ];
 
-interface ScrapedClub {
-    name: string;
-    description: string;
-    location: string;
-    college: string;
-    website: string;
-    social?: {
-        twitter?: string;
-        instagram?: string;
-        linkedin?: string;
-        facebook?: string;
-        youtube?: string;
-    };
-    imageUrl: string;
-}
 
-const SAVED_CLUBS_KEY = "easyclub_saved_clubs";
-
-function getSavedClubs(userId: string | null): ScrapedClub[] {
-    if (typeof window === "undefined" || !userId) return [];
-    try {
-        const saved = localStorage.getItem(`${SAVED_CLUBS_KEY}_${userId}`);
-        return saved ? JSON.parse(saved) : [];
-    } catch { return []; }
-}
-
-function saveClubToStorage(club: ScrapedClub, userId: string | null) {
-    if (!userId) return;
-    const saved = getSavedClubs(userId);
-    // Avoid duplicates by name + college
-    if (!saved.some(c => c.name === club.name && c.college === club.college)) {
-        saved.push(club);
-        localStorage.setItem(`${SAVED_CLUBS_KEY}_${userId}`, JSON.stringify(saved));
-    }
-}
-
-function removeClubFromStorage(club: ScrapedClub, userId: string | null) {
-    if (!userId) return;
-    const saved = getSavedClubs(userId).filter(c => !(c.name === club.name && c.college === club.college));
-    localStorage.setItem(`${SAVED_CLUBS_KEY}_${userId}`, JSON.stringify(saved));
-}
 
 
 
@@ -68,30 +29,54 @@ export default function ExploreClubs() {
     // const isClubSaved = (id: string) => savedClubs.some(c => c.id === id);
     const [error, setError] = useState<string | null>(null);
     const [isMock, setIsMock] = useState(false);
+    const [savedClubs, setSavedClubs] = useState<ScrapedClub[]>([]);
     const [savedClubKeys, setSavedClubKeys] = useState<Set<string>>(new Set());
     const [showSaved, setShowSaved] = useState(false);
     const [saveToast, setSaveToast] = useState<string | null>(null);
 
-    // Load saved state on mount and when user changes
+    // Sync saved clubs with Firestore
     useEffect(() => {
-        const saved = getSavedClubs(userId);
-        setSavedClubKeys(new Set(saved.map(c => `${c.name}__${c.college}`)));
+        if (!userId) {
+            setSavedClubs([]);
+            setSavedClubKeys(new Set());
+            return;
+        }
+
+        // Migrate local storage if exists (one-time)
+        const LOCAL_KEY = `easyclub_saved_clubs_${userId}`;
+        const localData = localStorage.getItem(LOCAL_KEY);
+        if (localData) {
+            try {
+                const clubs: ScrapedClub[] = JSON.parse(localData);
+                clubs.forEach(c => saveExploreClub(userId, c));
+                localStorage.removeItem(LOCAL_KEY);
+            } catch (e) {
+                console.error("Migration failed:", e);
+            }
+        }
+
+        const unsubscribe = subscribeSavedExploreClubs(userId, (clubs) => {
+            setSavedClubs(clubs);
+            setSavedClubKeys(new Set(clubs.map(c => `${c.name}__${c.college}`)));
+        });
+
+        return () => unsubscribe();
     }, [userId]);
 
-    const toggleSaveClub = (club: ScrapedClub) => {
+    const toggleSaveClub = async (club: ScrapedClub) => {
+        if (!userId) {
+            setSaveToast("Please sign in to save clubs");
+            setTimeout(() => setSaveToast(null), 2500);
+            return;
+        }
+
         const key = `${club.name}__${club.college}`;
         if (savedClubKeys.has(key)) {
-            removeClubFromStorage(club, userId);
-            setSavedClubKeys(prev => {
-                const next = new Set(prev);
-                next.delete(key);
-                return next;
-            });
-            setSaveToast(`Removed "${club.name}" from saved`);
+            const success = await removeExploreClub(userId, club.name, club.college);
+            if (success) setSaveToast(`Removed "${club.name}" from saved`);
         } else {
-            saveClubToStorage(club, userId);
-            setSavedClubKeys(prev => new Set(prev).add(key));
-            setSaveToast(`Saved "${club.name}"`);
+            const success = await saveExploreClub(userId, club);
+            if (success) setSaveToast(`Saved "${club.name}"`);
         }
         setTimeout(() => setSaveToast(null), 2500);
     };
@@ -206,7 +191,7 @@ export default function ExploreClubs() {
 
 
 
-    const displayedClubs = showSaved ? getSavedClubs(userId) : scrapedClubs;
+    const displayedClubs = showSaved ? savedClubs : scrapedClubs;
 
     return (
         <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -228,7 +213,7 @@ export default function ExploreClubs() {
                         }`}
                     >
                         <BookmarkCheck className="w-3.5 h-3.5" />
-                        Saved ({getSavedClubs(userId).length})
+                        Saved ({savedClubs.length})
                     </button>
                     <div className="text-right">
                         <p className="text-[10px] font-black text-signature-gradient uppercase tracking-widest leading-none">Powered by Web Search</p>
@@ -349,7 +334,7 @@ export default function ExploreClubs() {
                         <h3 className="text-lg font-black uppercase tracking-widest text-white">Saved Clubs</h3>
                     </div>
                     <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">
-                        {getSavedClubs(userId).length} {getSavedClubs(userId).length === 1 ? "club" : "clubs"} saved
+                        {savedClubs.length} {savedClubs.length === 1 ? "club" : "clubs"} saved
                     </span>
                 </div>
             )}
