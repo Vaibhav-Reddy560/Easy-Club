@@ -1,3 +1,37 @@
+/* ── Bulletproof @font-face declarations ── */
+/* These reference /public/fonts/ which Vercel serves as static assets */
+@font-face {
+  font-family: 'Airstream';
+  src: url('/fonts/airstream.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Astronomus';
+  src: url('/fonts/astronomus.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Dymaxion';
+  src: url('/fonts/dymaxion.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SometypeMono';
+  src: url('/fonts/sometype-mono.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

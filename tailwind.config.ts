@@ -9,10 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        airstream: ["var(--font-airstream)", "serif"],
-        dymaxion: ["var(--font-dymaxion)", "cursive"],
-        sometype: ["var(--font-sometype)", "monospace"],
-        astronomus: ["var(--font-astronomus)", "sans-serif"],
+        airstream: ["'Airstream'", "var(--font-airstream)", "serif"],
+        dymaxion: ["'Dymaxion'", "var(--font-dymaxion)", "cursive"],
+        sometype: ["'SometypeMono'", "var(--font-sometype)", "monospace"],
+        astronomus: ["'Astronomus'", "var(--font-astronomus)", "sans-serif"],
       },
       colors: {
         background: "#050505", // macOS Style Deep Black
