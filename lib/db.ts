@@ -8,7 +8,9 @@ import {
     deleteDoc,
     onSnapshot,
     Unsubscribe,
-    or
+    or,
+    getDocsFromCache,
+    getDocsFromServer
   } from "firebase/firestore";
   import { db } from "./firebase";
   import { Club } from "./types";
