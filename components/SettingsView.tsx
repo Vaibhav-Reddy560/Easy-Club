@@ -109,7 +109,7 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
             <Settings className="w-6 h-6 text-gold-500 animate-[spin_8s_linear_infinite]" />
           </div>
           <div>
-            <h2 className="text-4xl font-airstream text-signature-gradient uppercase tracking-tighter">System <span className="text-neutral-600 font-normal ml-2">/ Control Hub</span></h2>
+            <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">System <span className="text-neutral-600 font-normal ml-2">/ Control Hub</span></h2>
             <div className="flex items-center gap-2 mt-1">
               <ShieldCheck className="w-3.5 h-3.5 text-green-500" />
               <span className="text-[9px] font-black uppercase tracking-widest text-neutral-500">Global Administration Protocol Active</span>

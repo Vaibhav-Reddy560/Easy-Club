@@ -212,7 +212,7 @@ export default function ExploreClubs() {
         <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <header className="border-b border-white/5 pb-8 flex justify-between items-end">
                 <div>
-                    <h2 className="text-4xl font-airstream text-signature-gradient uppercase tracking-tighter">Explore Clubs</h2>
+                    <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Explore Clubs</h2>
                     <p className="text-neutral-500 text-sm mt-1 uppercase font-bold tracking-[0.2em] ml-1">Universal Organization Discovery</p>
                 </div>
                 <div className="flex gap-4 items-end">

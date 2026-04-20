@@ -155,7 +155,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
                     </div>
 
                     <div>
-                        <h2 className="text-3xl font-airstream text-signature-gradient uppercase tracking-tighter mb-3">
+                        <h2 className="text-3xl font-astronomus text-signature-gradient uppercase tracking-tighter mb-3">
                             Event Architect Hub
                         </h2>
                         <p className="text-neutral-400 text-sm font-medium max-w-sm mx-auto leading-relaxed">

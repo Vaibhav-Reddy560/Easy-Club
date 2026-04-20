@@ -85,7 +85,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
             <header className="border-b border-white/5 pb-8">
                 <div className="flex justify-between items-end">
                     <div>
-                        <h2 className="text-4xl font-airstream text-signature-gradient uppercase tracking-tighter flex items-center gap-3 whitespace-nowrap">
+                        <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter flex items-center gap-3 whitespace-nowrap">
                             Trending Ideas
                             <TrendingUp className="w-8 h-8 text-gold-500 flex-shrink-0" />
                         </h2>

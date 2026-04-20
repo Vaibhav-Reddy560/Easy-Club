@@ -27,7 +27,7 @@ export default function Questionnaire({ activeEvent, activeEventId, updateConfig
       <div className="w-full max-w-5xl bg-neutral-900/40 border border-white/5 rounded-[3rem] p-8 md:p-12 shadow-2xl space-y-12">
         <header className="border-b border-white/5 pb-8 flex justify-between items-end">
           <div>
-            <h2 className="text-3xl font-airstream text-signature-gradient tracking-tight">Event Name: {activeEvent?.name}</h2>
+            <h2 className="text-3xl font-astronomus text-signature-gradient tracking-tight">Event Name: {activeEvent?.name}</h2>
             <p className="text-signature-gradient font-medium">Define the core blueprint...</p>
           </div>
           <span className="text-[9px] text-neutral-600 font-mono border border-neutral-800 px-3 py-1 rounded-full uppercase">

@@ -93,7 +93,7 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
       {/* Header & Selector */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h2 className="text-4xl font-airstream text-signature-gradient uppercase tracking-tighter">Membership and Recruitment</h2>
+          <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Membership and Recruitment</h2>
           <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-[0.2em] mt-2">
             Selective Onboarding and Core Team Management
           </p>

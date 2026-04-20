@@ -181,7 +181,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
         >
             <header className="border-b border-white/5 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
-                    <h2 className="text-4xl font-airstream text-signature-gradient uppercase tracking-tighter">
+                    <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">
                     Funding Forge
                 </h2>    <p className="text-neutral-500 text-sm mt-1 uppercase font-bold tracking-widest">Sponsorship Pipeline & Financial Resource Manager</p>
                 </div>

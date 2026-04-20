@@ -71,7 +71,7 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
 
       <div className="space-y-8">
         <header className="border-b border-white/5 pb-8">
-          <h2 className="text-4xl font-airstream text-signature-gradient uppercase tracking-tighter">Account <span className="text-neutral-600 font-normal ml-2">/ Preferences</span></h2>
+          <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Account <span className="text-neutral-600 font-normal ml-2">/ Preferences</span></h2>
           <p className="text-neutral-500 text-sm mt-2 max-w-lg font-medium">
             Manage your digital identity and hub security settings. 
           </p>
