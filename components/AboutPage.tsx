@@ -43,7 +43,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                             <span className="w-8 h-px bg-gold-500/30" /> The Vision
                         </h3>
                         <p className="text-lg text-neutral-300 leading-relaxed font-medium pl-11">
-                            Easy Club is a unified intelligence workspace designed to empower student organizations. It eliminates the manual friction of event management by automating content generation, streamlining design workflows, and facilitating expert outreach—all in one high-performance dashboard.
+                            <span className="text-signature-gradient font-airstream">Easy Club</span> is a unified intelligence workspace designed to empower student organizations. It eliminates the manual friction of event management by automating content generation, streamlining design workflows, and facilitating expert outreach—all in one high-performance dashboard.
                         </p>
                     </section>
 
@@ -96,7 +96,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                         <span className="px-3 py-1 bg-white/5 rounded-full">V 1.0.4 PRODUCTION</span>
                         <span className="px-3 py-1 bg-white/5 rounded-full">System: Stable</span>
                     </div>
-                    <span className="font-airstream text-lg opacity-30 mt-1">© 2026 EASY CLUB INTEL</span>
+                    <span className="font-airstream text-lg mt-1 text-signature-gradient">© 2026 EASY CLUB INTEL</span>
                 </div>
             </div>
         </motion.div>

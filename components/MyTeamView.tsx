@@ -151,7 +151,7 @@ export default function MyTeamView({ clubs, setClubs }: MyTeamViewProps) {
             {/* Header */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
-                    <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">My Team Hub</h2>
+                    <h2 className="text-4xl font-airstream text-signature-gradient uppercase tracking-tighter">Team Core</h2>
                     <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-[0.2em] mt-2">
                         Collaboration, Permissions & Global Activity Tracking
                     </p>

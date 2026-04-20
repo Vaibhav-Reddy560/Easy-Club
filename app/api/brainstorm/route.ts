@@ -2,22 +2,28 @@ import { NextResponse } from "next/server";
 import { callGeminiSafe, callGeminiJSON } from "@/lib/gemini";
 import { searchSerper } from "@/lib/discovery";
 
+/**
+ * Event Brainstorming API v2.0 - "Architect" Upgrade
+ * Features: Thought tracing, smart search triggers, and structured blueprint logic.
+ */
+
 export async function POST(req: Request) {
     try {
         const body = await req.json();
         const { action, clubName, category, messages } = body;
-
         const serperKey = process.env.SERPER_API_KEY;
 
         if (action === "start") {
-            // Initiate brainstorm
             let researchData = "General market knowledge.";
+            let status = "Analyzing Basic Trends";
+
             if (serperKey) {
                 try {
-                    const results = await searchSerper(`innovative ${category} club events trends 2024`, serperKey, 3);
+                    const results = await searchSerper(`innovative student ${category} club events trends ${new Date().getFullYear()}`, serperKey, 5);
                     const flatResults = results.filter(r => r && r.title);
                     if (flatResults.length > 0) {
-                        researchData = flatResults.map(r => `Source: ${r.title} - ${r.snippet}`).join("\\n");
+                        researchData = flatResults.map(r => `Source: ${r.title} - ${r.snippet}`).join("\n");
+                        status = "Synthesizing Live Market Data";
                     }
                 } catch (e) {
                     console.error("Serper Research Error in Brainstorm:", e);
@@ -25,98 +31,114 @@ export async function POST(req: Request) {
             }
 
             const prompt = `
-            You are a creative Event Ideation AI guiding a student.
-            They are part of "${clubName}" and want to brainstorm an event in the field of "${category}".
+            You are an expert Event Architect for student organizations.
+            Organization: "${clubName}"
+            Core Field: "${category}"
 
-            Recent internet trends:
+            LIVE MARKET CONTEXT:
             ${researchData}
 
-            Reply casually, welcoming them. Suggest 3 high-level creative directions or sub-categories they could explore based on the trends, and ask them what interests them most or if they have their own angle.
-            Keep it strictly under 4 sentences. Be encouraging and highly punchy.
+            TASK:
+            Initiate a high-performance brainstorming session. 
+            Welcoming them, then suggest 3 specific, non-generic event archetypes (one safe, one innovative, one high-impact) based on the trends.
+            Ask which direction they want to "Architect" first.
+            
+            TONE:
+            Punchy, elite, and professional. Use formatting like bold text for key terms.
+            Keep it strictly under 5 sentences.
             `;
 
             const reply = await callGeminiSafe(prompt);
-            return NextResponse.json({ reply: reply || "Let's brainstorm! What kind of event are you aiming for?" });
+            return NextResponse.json({ 
+                reply: reply || "Welcome to the Architect Hub. Let's build something iconic. What's our first angle?",
+                status
+            });
         }
 
         if (action === "chat") {
             if (!messages || !Array.isArray(messages)) return NextResponse.json({ error: "Invalid messages array" }, { status: 400 });
 
-            // Check if the user is asking to search the web
             const latestMessage = messages[messages.length - 1]?.content.toLowerCase() || "";
             let internetContext = "";
+            let status = "Processing Logic";
             
-            if (latestMessage.includes("search") || latestMessage.includes("trend") || latestMessage.includes("look up") || latestMessage.includes("online")) {
-                if (serperKey) {
-                    try {
-                        const searchTerms = latestMessage.replace(/(search|look up|find me)/g, "").trim();
-                        const results = await searchSerper(`${searchTerms} student club events`, serperKey, 3);
-                        internetContext = results.map(r => r.title + " - " + r.snippet).join("\\n");
-                    } catch (e) {}
-                }
+            // Smart trigger: if user mentions a city, a specific competitor, or asks for "real examples"
+            const needsSearch = /(search|trend|online|look up|in\b|venue|example|competition|at\b|near\b)/.test(latestMessage);
+
+            if (needsSearch && serperKey) {
+                try {
+                    status = "Executing Deep Discovery Scan";
+                    const searchTerms = latestMessage.replace(/(search|look up|find me)/g, "").trim();
+                    const results = await searchSerper(`${searchTerms} best student events examples`, serperKey, 4);
+                    internetContext = results.map(r => r.title + " - " + r.snippet).join("\n");
+                } catch (e) {}
             }
 
-            const chatHistory = messages.map(m => `[${m.role.toUpperCase()}]: ${m.content}`).join("\\n\\n");
+            const chatHistory = messages.map(m => `[${m.role.toUpperCase()}]: ${m.content}`).join("\n\n");
             
             const prompt = `
-            You are an Event Ideation AI for a student club.
+            You are the Lead Event Architect.
             
-            ${internetContext ? `User requested a search. Here are the live results: \\n${internetContext}` : ''}
+            ${internetContext ? `BACKGROUND RESEARCH FOUND:\n${internetContext}` : ''}
 
-            CONVERSATION HISTORY:
+            CONVERSATION CONTEXT:
             ${chatHistory}
 
+            ARCHITECT'S CHECKLIST (INTERNAL):
+            - Theme & Vibe
+            - Technical/Social Logic
+            - Scalability
+            - Success Metrics
+
             TASK:
-            Respond to the user's latest message. Formulate your reply to keep the brainstorming going, or refine an idea they like.
-            Keep it brief, practical, and highly creative. DO NOT generate the final blueprint JSON format yet, just converse naturally.
-            If they ask for technical feasibility, give a quick analysis.
+            Respond to the user. Keep the momentum. If they suggest an idea, refine it with "Architectural Detail" (e.g., adding a specific twist or scaling suggestion).
+            Be brief, practical, and highly creative.
             `;
 
             const reply = await callGeminiSafe(prompt);
-            return NextResponse.json({ reply: reply || "I'm having a bit of trouble right now, can you repeat that?" });
+            
+            // Determine a context-aware status for the UI
+            const nextStatus = latestMessage.includes("how") ? "Calculating Logistics" : 
+                               latestMessage.includes("where") ? "Mapping Venues" : 
+                               "Refining Architecture";
+
+            return NextResponse.json({ 
+                reply: reply || "I'm analyzing the blueprint... let's keep going.",
+                status: status === "Processing Logic" ? nextStatus : status
+            });
         }
 
         if (action === "finalize") {
             if (!messages || !Array.isArray(messages)) return NextResponse.json({ error: "Invalid messages array" }, { status: 400 });
 
-            const chatHistory = messages.map(m => `[${m.role.toUpperCase()}]: ${m.content}`).join("\\n\\n");
+            const chatHistory = messages.map(m => `[${m.role.toUpperCase()}]: ${m.content}`).join("\n\n");
             
             const prompt = `
-            You are an expert Event Architect. Review the following brainstorming conversation and extract the final agreed-upon or best implied event idea and format it into a structured JSON blueprint.
+            You are the Final Review Architect. Convert the following session into a production-ready Event Blueprint.
 
             CONVERSATION HISTORY:
             ${chatHistory}
 
-            STRICT JSON FORMAT REQUIRED:
+            Return a VALID JSON object exactly in this format:
             {
-                "title": "Punchy, creative unique name",
+                "title": "Punchy creative name",
                 "tags": ["Primary Category", "Secondary tag"],
-                "description": "A detailed 3-4 sentence comprehensive description of the event, what happens, and what the value proposition is based on the conversation."
+                "description": "A comprehensive 3-5 sentence description detailing the twist, the value, and the core experience."
             }
             `;
 
-            const rawJson = await callGeminiSafe(prompt);
+            const parsed = await callGeminiJSON<{ title: string, tags: string[], description: string }>(prompt);
             
-            if (!rawJson) return NextResponse.json({ error: "Failed to generate JSON" }, { status: 500 });
-
-            try {
-                // Try treating the output as raw string to find the JSON
-                const start = rawJson.indexOf('{');
-                const end = rawJson.lastIndexOf('}');
-                if (start !== -1 && end !== -1) {
-                    const jsonStr = rawJson.slice(start, end + 1);
-                    const parsed = JSON.parse(jsonStr);
-                    return NextResponse.json(parsed);
-                }
-                throw new Error("No JSON block found");
-            } catch (e) {
-                // If it fails to parse perfectly, fallback to JSON structure
-                return NextResponse.json({
-                    title: "Brainstormed Event",
-                    tags: ["Custom Event"],
-                    description: rawJson.trim()
-                });
+            if (parsed) {
+                return NextResponse.json(parsed);
             }
+
+            // Fallback if structured generation fails
+            return NextResponse.json({
+                title: "Architected Prototype",
+                tags: [category, "Draft"],
+                description: "Failed to parse final blueprint. Please review the chat history for core details."
+            });
         }
 
         return NextResponse.json({ error: "Invalid action" }, { status: 400 });

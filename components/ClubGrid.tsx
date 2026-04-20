@@ -223,7 +223,7 @@ export default function ClubGrid({ items, onItemClick, onRename, onDelete, onAdd
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <header className="mb-14 flex justify-between items-end border-b border-white/5 pb-8">
         <div>
-          <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">{title}</h2>
+          <h2 className="text-4xl font-airstream text-signature-gradient uppercase tracking-tighter">{title}</h2>
           <p className="text-neutral-500 text-sm mt-1 font-medium tracking-[0.2em] uppercase">{subtitle}</p>
         </div>
       </header>
