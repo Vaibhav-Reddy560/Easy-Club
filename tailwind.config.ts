@@ -28,7 +28,7 @@ const config: Config = {
         "gold-gradient": "linear-gradient(135deg, #FBBF24 0%, #D97706 100%)",
         "gold-text": "linear-gradient(to bottom, #FEF9C3 0%, #FBBF24 50%, #D97706 100%)",
         "mac-folder": "linear-gradient(180deg, #FBBF24 0%, #F59E0B 100%)",
-        "signature-gradient": "linear-gradient(90deg, #FEF9C3 0%, #FBBF24 35%, #F59E0B 70%, #B45309 100%)",
+        "signature-gradient": "linear-gradient(180deg, #FEF9C3 0%, #FBBF24 35%, #F59E0B 70%, #B45309 100%)",
       },
       boxShadow: {
         "gold-glow": "0 0 15px 0 rgba(245, 158, 11, 0.5)",

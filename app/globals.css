@@ -54,7 +54,7 @@ body {
 
 @layer utilities {
   .text-signature-gradient {
-    background: linear-gradient(90deg, #FEF9C3 0%, #FBBF24 35%, #F59E0B 70%, #B45309 100%);
+    background: linear-gradient(180deg, #FEF9C3 0%, #FBBF24 35%, #F59E0B 70%, #B45309 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
