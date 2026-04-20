@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { Search, MapPin, Instagram, Linkedin, Twitter, Facebook, ExternalLink, Loader2, Sparkles, Globe, Youtube, Bookmark, BookmarkCheck } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { saveExploreClub, removeExploreClub, subscribeSavedExploreClubs } from "@/lib/db";
 import { ScrapedClub } from "@/lib/types";
