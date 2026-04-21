@@ -6,84 +6,93 @@
   padding: 4rem;
   gap: 2rem;
   width: 100%;
+  background: transparent;
 }
 
 .loader {
     position: relative;
-    width: 220px;
-    height: 220px;
-    background: radial-gradient(circle, #18181b 0%, #09090b 70%); /* Zinc 900 to 950 */
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle, #101014 0%, #050505 80%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    box-shadow: 0 0 60px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(212, 175, 55, 0.05);
+    border: 1px solid rgba(255, 180, 5, 0.15);
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.9), inset 0 0 50px rgba(0, 0, 0, 0.8);
 }
 
 /* Three concentric rings */
 .ring {
     position: absolute;
     border-radius: 50%;
-    border: 1px solid rgba(212, 175, 55, 0.15);
-    box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.05);
+    border: 1px solid rgba(255, 180, 5, 0.1);
+    box-shadow: inset 0 0 20px rgba(255, 180, 5, 0.03);
 }
 
-.ring:nth-child(1) {
-    inset: 10px;
-}
-
-.ring:nth-child(2) {
-    inset: 50px;
-}
-
-.ring:nth-child(3) {
-    inset: 90px;
-}
+.ring:nth-child(1) { inset: 5px; }
+.ring:nth-child(2) { inset: 45px; opacity: 0.8; }
+.ring:nth-child(3) { inset: 85px; opacity: 0.6; }
 
 .sweep {
     position: absolute;
     width: 100%;
     height: 100%;
-    /* Wider, softer atmospheric tail */
+    /* Single atmospheric tail fading from transparent to gold */
     background: conic-gradient(
         from 0deg,
-        transparent 0deg,
-        transparent 160deg,
-        rgba(212, 175, 55, 0.05) 240deg,
-        rgba(212, 175, 55, 0.4) 355deg,
+        rgba(255, 180, 5, 0.4) 0deg,
+        transparent 90deg,
         transparent 360deg
     );
-    animation: rotate 3s linear infinite;
+    animation: rotate-reverse 4s linear infinite; /* Counter-clockwise or clockwise? Reference looks like clockwise. */
     z-index: 5;
-    filter: blur(4px);
 }
 
+/* Adjusting to clockwise as per typical radar and reference */
+@keyframes rotate-clockwise {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.sweep {
+    animation: rotate-clockwise 3s linear infinite;
+    background: conic-gradient(
+        from 0deg,
+        transparent 210deg,
+        rgba(255, 180, 5, 0.05) 280deg,
+        rgba(255, 180, 5, 0.5) 360deg
+    );
+    filter: blur(2px);
+}
+
+/* The single sharp leading line */
 .sweep::after {
     content: "";
     position: absolute;
     top: 50%;
     left: 50%;
     width: 50%;
-    height: 2px;
-    background: linear-gradient(90deg, #FFB405, transparent);
+    height: 1.5px;
+    background: #FFB405;
     transform-origin: left;
-    transform: rotate(-5deg); 
-    filter: blur(0.5px);
-    box-shadow: 0 0 20px rgba(255, 180, 5, 0.8);
+    transform: translateY(-50%) rotate(0deg); /* Exactly at the start of the gradient */
+    box-shadow: 0 0 15px #FFB405, 0 0 30px rgba(255, 180, 5, 0.4);
+    filter: blur(0px); /* Keep the line sharp */
+    z-index: 10;
 }
 
 /* Central Hub */
 .loader::before {
     content: "";
     position: absolute;
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     background: #FFB405;
     border-radius: 50%;
-    z-index: 20;
-    box-shadow: 0 0 15px #FFB405;
+    z-index: 30;
+    box-shadow: 0 0 20px #FFB405, 0 0 40px rgba(255, 180, 5, 0.5);
 }
 
 .dot {
@@ -92,45 +101,59 @@
     height: 6px;
     background: #FFB405;
     border-radius: 50%;
-    filter: drop-shadow(0 0 12px #FFB405);
+    box-shadow: 
+        0 0 10px #FFB405, 
+        0 0 20px rgba(255, 180, 5, 0.8),
+        0 0 40px rgba(255, 180, 5, 0.4);
     opacity: 0;
-    animation: blink 3s linear infinite;
-    z-index: 10;
+    animation: blink-glow 3s linear infinite;
+    z-index: 20;
 }
 
-#dot-1 { top: 32%; left: 45%; animation-delay: 0.8s; }
-#dot-2 { top: 58%; left: 68%; animation-delay: 1.5s; }
-#dot-3 { top: 25%; left: 78%; animation-delay: 2.1s; }
-#dot-4 { top: 75%; left: 35%; animation-delay: 2.6s; }
-#dot-5 { top: 48%; left: 25%; animation-delay: 0.3s; }
+/* Pulsing ripple effect for dots */
+.dot::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border: 1px solid rgba(255, 180, 5, 0.5);
+    border-radius: 50%;
+    animation: ripple 1.5s ease-out infinite;
+    opacity: 0;
+}
+
+@keyframes ripple {
+    0% { transform: scale(0.8); opacity: 0.8; }
+    100% { transform: scale(2.5); opacity: 0; }
+}
+
+@keyframes blink-glow {
+    0% { opacity: 0; transform: scale(0.4); }
+    10% { opacity: 1; transform: scale(1.2); }
+    20% { opacity: 0.6; transform: scale(1); }
+    40% { opacity: 0; transform: scale(1.1); }
+    100% { opacity: 0; }
+}
+
+#dot-1 { top: 30%; left: 42%; animation-delay: 1.2s; }
+#dot-2 { top: 62%; left: 70%; animation-delay: 2.2s; }
+#dot-3 { top: 22%; left: 82%; animation-delay: 3.1s; }
+#dot-4 { top: 78%; left: 32%; animation-delay: 3.8s; }
+#dot-5 { top: 50%; left: 22%; animation-delay: 0.5s; }
 
 .statusText {
     font-family: 'Astronomus', sans-serif;
-    background: linear-gradient(180deg, #FFB405 0%, #D4AF37 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 11px;
+    color: #FFB405;
+    text-shadow: 0 0 15px rgba(255, 180, 5, 0.4);
+    font-size: 10px;
     font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 0.5em;
-    animation: pulse 2s ease-in-out infinite;
+    letter-spacing: 0.6em;
+    animation: pulse-glow 2s ease-in-out infinite;
     text-align: center;
-    max-width: 400px;
+    margin-top: 10px;
 }
 
-@keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes blink {
-    0% { opacity: 0; transform: scale(0.5); }
-    10% { opacity: 1; transform: scale(1.4); }
-    30% { opacity: 0.4; transform: scale(1); }
-    100% { opacity: 0; transform: scale(0.8); }
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 0.5; filter: blur(0.5px); }
-    50% { opacity: 1; filter: blur(0); }
+@keyframes pulse-glow {
+    0%, 100% { opacity: 0.4; filter: contrast(1.2); }
+    50% { opacity: 1; filter: contrast(1.5); }
 }
