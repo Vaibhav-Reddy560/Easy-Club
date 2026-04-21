@@ -47,7 +47,7 @@ export default function LoginView({ onSignIn }: LoginViewProps) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
-                className="text-neutral-500 text-[10px] font-black uppercase tracking-[0.3em]"
+                 className="text-zinc-300 text-[10px] font-black uppercase tracking-[0.3em]"
               >
                 Nationwide Networking Hub
               </motion.p>
@@ -60,7 +60,7 @@ export default function LoginView({ onSignIn }: LoginViewProps) {
               transition={{ delay: 0.6 }}
               className="text-center"
             >
-              <p className="text-neutral-400 text-sm font-medium leading-relaxed max-w-[280px] mx-auto">
+              <p className="text-zinc-200 text-sm font-medium leading-relaxed max-w-[280px] mx-auto">
                 Professional club management and nationwide networking, made easy.
               </p>
             </motion.div>
@@ -86,7 +86,7 @@ export default function LoginView({ onSignIn }: LoginViewProps) {
               
               <div className="flex flex-col items-center gap-4">
                 <div className="h-[1px] w-12 bg-white/5" />
-                <p className="text-[9px] text-neutral-600 font-bold uppercase tracking-[0.2em] flex items-center gap-2">
+                <p className="text-[9px] text-zinc-200 font-bold uppercase tracking-[0.2em] flex items-center gap-2">
                   <span className="w-1 h-1 rounded-full bg-gold-500 animate-pulse" />
                   Authorized Access Secure Connection
                 </p>
@@ -102,7 +102,7 @@ export default function LoginView({ onSignIn }: LoginViewProps) {
           transition={{ delay: 1 }}
           className="mt-12 text-center"
         >
-          <p className="text-[8px] text-neutral-700 font-bold uppercase tracking-widest leading-loose">
+          <p className="text-[8px] text-zinc-200 font-bold uppercase tracking-widest leading-loose">
             Enterprise Grade Encryption<br />
             Powered by Gemini 3.1 Flash-Lite & Firebase Hub
           </p>

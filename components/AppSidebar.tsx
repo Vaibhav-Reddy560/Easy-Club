@@ -62,7 +62,7 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
                             onClick={() => onSectionChange(section.id)}
                             className={`w-full flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 group relative ${isActive
                                 ? 'bg-gold-500/10 border border-gold-500/20 shadow-lg shadow-gold-500/5'
-                                : 'text-neutral-500 hover:text-neutral-300 hover:bg-white/5 border border-transparent'
+                                : 'text-white hover:bg-white/5 border border-transparent'
                                 }`}
                         >
                             {isActive && (
@@ -71,7 +71,7 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
                                     className="absolute left-0 w-1 h-6 bg-gold-500 rounded-full"
                                 />
                             )}
-                            <Icon className={`w-5 h-5 transition-transform duration-300 group-hover:scale-110 ${isActive ? 'text-gold-400' : 'text-neutral-500'}`} />
+                            <Icon className={`w-5 h-5 transition-transform duration-300 group-hover:scale-110 ${isActive ? 'text-gold-400' : 'text-white/60'}`} />
                             <span className={`text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-transform ${isActive ? 'translate-x-1 text-signature-gradient' : ''}`}>
                                 {section.label}
                             </span>

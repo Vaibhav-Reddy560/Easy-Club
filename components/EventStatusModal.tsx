@@ -114,14 +114,14 @@ export default function EventStatusModal({ isOpen, event, onClose, onStatusChang
           exit={{ scale: 0.9, opacity: 0 }}
           className="relative w-full max-w-lg bg-[#0a0a0a] border border-white/10 rounded-[2.5rem] p-10 shadow-3xl"
         >
-          <button onClick={handleClose} className="absolute top-8 right-8 text-neutral-500 hover:text-white transition-colors">
+          <button onClick={handleClose} className="absolute top-8 right-8 text-white transition-colors">
             <X className="w-5 h-5" />
           </button>
 
           {/* Header */}
           <div className="mb-8">
             <h3 className="text-2xl font-bold text-white tracking-tight">Update Event Status</h3>
-            <p className="text-neutral-500 text-[10px] uppercase font-bold tracking-widest mt-1">{event.name}</p>
+            <p className="text-zinc-300 text-[10px] uppercase font-bold tracking-widest mt-1">{event.name}</p>
           </div>
 
           <AnimatePresence mode="wait">
@@ -137,7 +137,7 @@ export default function EventStatusModal({ isOpen, event, onClose, onStatusChang
                   </div>
                   <div className="text-left">
                     <p className="text-sm font-bold text-white group-hover:text-green-400 transition-colors">Completed</p>
-                    <p className="text-[10px] text-neutral-500 uppercase tracking-widest">Fill post-event data & generate report</p>
+                    <p className="text-[10px] text-zinc-300 uppercase tracking-widest">Fill post-event data & generate report</p>
                   </div>
                 </button>
 
@@ -150,7 +150,7 @@ export default function EventStatusModal({ isOpen, event, onClose, onStatusChang
                   </div>
                   <div className="text-left">
                     <p className="text-sm font-bold text-white group-hover:text-yellow-400 transition-colors">Postponed</p>
-                    <p className="text-[10px] text-neutral-500 uppercase tracking-widest">Set a new date for the event</p>
+                    <p className="text-[10px] text-zinc-300 uppercase tracking-widest">Set a new date for the event</p>
                   </div>
                 </button>
 
@@ -163,7 +163,7 @@ export default function EventStatusModal({ isOpen, event, onClose, onStatusChang
                   </div>
                   <div className="text-left">
                     <p className="text-sm font-bold text-white group-hover:text-red-400 transition-colors">Cancelled</p>
-                    <p className="text-[10px] text-neutral-500 uppercase tracking-widest">Archive and grey out the event</p>
+                    <p className="text-[10px] text-zinc-300 uppercase tracking-widest">Archive and grey out the event</p>
                   </div>
                 </button>
               </motion.div>
@@ -174,40 +174,40 @@ export default function EventStatusModal({ isOpen, event, onClose, onStatusChang
               <motion.div key="completed" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-5 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-[9px] text-neutral-500 font-bold uppercase tracking-widest block mb-2">Total Registrations</label>
+                    <label className="text-[9px] text-zinc-300 font-bold uppercase tracking-widest block mb-2">Total Registrations</label>
                     <input type="number" value={totalRegistrations} onChange={e => setTotalRegistrations(e.target.value)} placeholder="0" className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50" />
                   </div>
                   <div>
-                    <label className="text-[9px] text-neutral-500 font-bold uppercase tracking-widest block mb-2">Total Attendees</label>
+                    <label className="text-[9px] text-zinc-300 font-bold uppercase tracking-widest block mb-2">Total Attendees</label>
                     <input type="number" value={totalAttendees} onChange={e => setTotalAttendees(e.target.value)} placeholder="0" className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-[9px] text-neutral-500 font-bold uppercase tracking-widest block mb-2">Club Member Attendees</label>
+                  <label className="text-[9px] text-zinc-300 font-bold uppercase tracking-widest block mb-2">Club Member Attendees</label>
                   <input type="number" value={clubMembers} onChange={e => setClubMembers(e.target.value)} placeholder="0" className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50" />
                   {totalAttendees && clubMembers && (
-                    <p className="text-[9px] text-neutral-600 mt-1">Non-club: {Math.max(0, (parseInt(totalAttendees) || 0) - (parseInt(clubMembers) || 0))}</p>
+                    <p className="text-[9px] text-zinc-200 mt-1">Non-club: {Math.max(0, (parseInt(totalAttendees) || 0) - (parseInt(clubMembers) || 0))}</p>
                   )}
                 </div>
 
                 <div>
-                  <label className="text-[9px] text-neutral-500 font-bold uppercase tracking-widest block mb-2">Participant Engagement</label>
+                  <label className="text-[9px] text-zinc-300 font-bold uppercase tracking-widest block mb-2">Participant Engagement</label>
                   <textarea value={engagement} onChange={e => setEngagement(e.target.value)} placeholder="How did participants engage? (Q&A, networking, hands-on activities...)" rows={3} className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50 resize-none" />
                 </div>
 
                 <div>
-                  <label className="text-[9px] text-neutral-500 font-bold uppercase tracking-widest block mb-2">Benefits Gained</label>
+                  <label className="text-[9px] text-zinc-300 font-bold uppercase tracking-widest block mb-2">Benefits Gained</label>
                   <textarea value={benefits} onChange={e => setBenefits(e.target.value)} placeholder="What did participants take away? (skills, connections, certifications...)" rows={3} className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50 resize-none" />
                 </div>
 
                 <div>
-                  <label className="text-[9px] text-neutral-500 font-bold uppercase tracking-widest block mb-2">Day Conduct Summary</label>
+                  <label className="text-[9px] text-zinc-300 font-bold uppercase tracking-widest block mb-2">Day Conduct Summary</label>
                   <textarea value={conductSummary} onChange={e => setConductSummary(e.target.value)} placeholder="How was the event conducted on the day? Any highlights or issues?" rows={3} className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50 resize-none" />
                 </div>
 
                 <div className="flex gap-3 pt-2">
-                  <button onClick={() => setStep('choose')} className="flex-1 py-3 bg-white/5 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-widest text-neutral-400 hover:bg-white/10 transition-all">
+                  <button onClick={() => setStep('choose')} className="flex-1 py-3 bg-white/5 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-widest text-zinc-200 hover:bg-white/10 transition-all">
                     Back
                   </button>
                   <button
@@ -225,11 +225,11 @@ export default function EventStatusModal({ isOpen, event, onClose, onStatusChang
             {step === 'postponed-form' && (
               <motion.div key="postponed" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-5">
                 <div>
-                  <label className="text-[9px] text-neutral-500 font-bold uppercase tracking-widest block mb-2">Postponed To</label>
+                  <label className="text-[9px] text-zinc-300 font-bold uppercase tracking-widest block mb-2">Postponed To</label>
                   <input type="date" value={postponedDate} onChange={e => setPostponedDate(e.target.value)} className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50 [color-scheme:dark]" />
                 </div>
                 <div className="flex gap-3">
-                  <button onClick={() => setStep('choose')} className="flex-1 py-3 bg-white/5 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-widest text-neutral-400 hover:bg-white/10 transition-all">
+                  <button onClick={() => setStep('choose')} className="flex-1 py-3 bg-white/5 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-widest text-zinc-200 hover:bg-white/10 transition-all">
                     Back
                   </button>
                   <button onClick={handlePostponed} disabled={!postponedDate} className="flex-1 py-3 bg-yellow-500 text-black rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-yellow-400 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
@@ -245,10 +245,10 @@ export default function EventStatusModal({ isOpen, event, onClose, onStatusChang
                 <div className="p-6 bg-red-500/5 border border-red-500/20 rounded-2xl text-center space-y-2">
                   <XCircle className="w-10 h-10 text-red-500/60 mx-auto" />
                   <p className="text-sm text-white font-bold">Cancel this event?</p>
-                  <p className="text-[10px] text-neutral-500">The folder will be greyed out. You can revive it anytime.</p>
+                  <p className="text-[10px] text-zinc-300">The folder will be greyed out. You can revive it anytime.</p>
                 </div>
                 <div className="flex gap-3">
-                  <button onClick={() => setStep('choose')} className="flex-1 py-3 bg-white/5 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-widest text-neutral-400 hover:bg-white/10 transition-all">
+                  <button onClick={() => setStep('choose')} className="flex-1 py-3 bg-white/5 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-widest text-zinc-200 hover:bg-white/10 transition-all">
                     Back
                   </button>
                   <button onClick={handleCancelled} className="flex-1 py-3 bg-red-500 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-red-400 transition-all">
@@ -265,7 +265,7 @@ export default function EventStatusModal({ isOpen, event, onClose, onStatusChang
                   <Loader2 className="w-8 h-8 text-gold-500 animate-spin" />
                 </div>
                 <p className="text-sm font-bold text-white">Generating Event Report</p>
-                <p className="text-[10px] text-neutral-500 uppercase tracking-widest">AI is analyzing your event data...</p>
+                <p className="text-[10px] text-zinc-200 uppercase tracking-widest">AI is analyzing your event data...</p>
               </motion.div>
             )}
           </AnimatePresence>

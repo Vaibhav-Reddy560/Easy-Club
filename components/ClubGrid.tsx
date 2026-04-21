@@ -69,7 +69,7 @@ function getCountdown(dateStr?: string): string | null {
 function getStatusColor(status?: EventStatus): string {
   switch (status) {
     case 'completed': return 'text-green-400';
-    case 'cancelled': return 'text-neutral-600';
+    case 'cancelled': return 'text-zinc-200';
     case 'postponed': return 'text-yellow-400';
     default: return 'text-gold-500/60';
   }
@@ -122,16 +122,16 @@ const GoldFolder = ({
           onClick={isCancelled ? undefined : onClick}
           className={`relative w-20 h-16 ${isCancelled ? 'cursor-default' : 'cursor-pointer'} transform transition-transform group-hover:scale-105`}
         >
-          <div className={`absolute -top-1 left-1 w-10 h-4 ${isCancelled ? 'bg-neutral-700' : 'bg-gold-600'} rounded-t-lg -z-10 shadow-sm transition-colors`} />
-          <div className={`absolute inset-0 ${isCancelled ? 'bg-neutral-700' : 'bg-gold-600'} rounded-lg shadow-lg border ${isCancelled ? 'border-neutral-600' : 'border-gold-500/20'} transition-colors`} />
-          <div className={`absolute inset-0 top-2.5 ${isCancelled ? 'bg-gradient-to-b from-neutral-600 to-neutral-700' : 'bg-mac-folder'} rounded-md shadow-2xl border-t ${isCancelled ? 'border-neutral-500/40' : 'border-gold-100/40'} flex items-center justify-center overflow-hidden`}>
-            <FolderClosed className={`w-7 h-7 ${isCancelled ? 'text-neutral-500/40' : 'text-gold-100/40'}`} />
+          <div className={`absolute -top-1 left-1 w-10 h-4 ${isCancelled ? 'bg-zinc-700' : 'bg-gold-600'} rounded-t-lg -z-10 shadow-sm transition-colors`} />
+          <div className={`absolute inset-0 ${isCancelled ? 'bg-zinc-700' : 'bg-gold-600'} rounded-lg shadow-lg border ${isCancelled ? 'border-zinc-600' : 'border-gold-500/20'} transition-colors`} />
+          <div className={`absolute inset-0 top-2.5 ${isCancelled ? 'bg-gradient-to-b from-zinc-600 to-zinc-700' : 'bg-mac-folder'} rounded-md shadow-2xl border-t ${isCancelled ? 'border-zinc-500/40' : 'border-gold-100/40'} flex items-center justify-center overflow-hidden`}>
+            <FolderClosed className={`w-7 h-7 ${isCancelled ? 'text-zinc-300/40' : 'text-gold-100/40'}`} />
           </div>
         </div>
 
         {/* Name & countdown */}
         <div className="flex flex-col items-center gap-0.5 w-full">
-          <span className={`text-[11px] font-semibold ${isCancelled ? 'text-neutral-600 line-through' : 'text-neutral-400 group-hover:text-signature-gradient'} transition-colors text-center truncate w-full px-1 font-sans`}>
+          <span className={`text-[11px] font-semibold ${isCancelled ? 'text-zinc-200 line-through' : 'text-zinc-200 group-hover:text-signature-gradient'} transition-colors text-center truncate w-full px-1 font-sans`}>
             {name}
           </span>
 
@@ -144,7 +144,7 @@ const GoldFolder = ({
                 </span>
               )}
               {isCancelled && (
-                <span className="text-[8px] text-neutral-600 font-bold uppercase tracking-wider">Cancelled</span>
+                <span className="text-[8px] text-zinc-200 font-bold uppercase tracking-wider">Cancelled</span>
               )}
               {countdown && !isCancelled && status !== 'completed' && (
                 <span className={`text-[8px] font-bold uppercase tracking-wider ${countdown === 'Past' ? 'text-red-400/60' : countdown === 'Today!' ? 'text-green-400 animate-pulse' : getStatusColor(status)}`}>
@@ -197,14 +197,14 @@ const GoldFolder = ({
               <>
                 <button
                   onClick={(e) => { e.stopPropagation(); onRename(); }}
-                  className="p-1 rounded-md hover:bg-white/10 text-neutral-500 hover:text-blue-400 transition-colors"
+                  className="p-1 rounded-md hover:bg-white/10 text-zinc-300 hover:text-blue-400 transition-colors"
                   title="Rename"
                 >
                   <Pencil className="w-3 h-3" />
                 </button>
                 <button
                   onClick={(e) => { e.stopPropagation(); onDelete(); }}
-                  className="p-1 rounded-md hover:bg-white/10 text-neutral-500 hover:text-red-400 transition-colors"
+                  className="p-1 rounded-md hover:bg-white/10 text-zinc-300 hover:text-red-400 transition-colors"
                   title="Delete"
                 >
                   <Trash2 className="w-3 h-3" />
@@ -224,7 +224,7 @@ export default function ClubGrid({ items, onItemClick, onRename, onDelete, onAdd
       <header className="mb-14 flex justify-between items-end border-b border-white/5 pb-8">
         <div>
           <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">{title}</h2>
-          <p className="text-neutral-500 text-sm mt-1 font-medium tracking-[0.2em] uppercase">{subtitle}</p>
+          <p className="text-zinc-300 text-sm mt-1 font-medium tracking-[0.2em] uppercase">{subtitle}</p>
         </div>
       </header>
       <motion.div 
@@ -237,10 +237,10 @@ export default function ClubGrid({ items, onItemClick, onRename, onDelete, onAdd
           <motion.div variants={itemVariants} onClick={onAddClick} className="group flex flex-col items-center gap-3 p-4 w-full cursor-pointer">
             <div className="relative overflow-hidden w-20 h-16 rounded-xl glass-card flex items-center justify-center group-hover:border-gold-500/60 transition-all duration-500">
               <div className="relative z-10">
-                <Plus className="w-7 h-7 text-neutral-500 group-hover:text-gold-400 group-hover:rotate-90 transition-transform" />
+                <Plus className="w-7 h-7 text-zinc-300 group-hover:text-gold-400 group-hover:rotate-90 transition-transform" />
               </div>
             </div>
-            <span className="text-[11px] font-bold text-neutral-500 group-hover:text-signature-gradient uppercase tracking-widest">{addLabel}</span>
+            <span className="text-[11px] font-bold text-zinc-300 group-hover:text-signature-gradient uppercase tracking-widest">{addLabel}</span>
           </motion.div>
         </Magnetic>
         {items.map((item) => (

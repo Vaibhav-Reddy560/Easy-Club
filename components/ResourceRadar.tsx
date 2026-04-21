@@ -60,36 +60,36 @@ export default function ResourceRadar() {
                         </div>
                         <h1 className="text-3xl font-black uppercase tracking-tighter text-white">Resource <span className="text-signature-gradient">Radar</span></h1>
                     </div>
-                    <p className="text-sm text-neutral-500 font-medium max-w-lg">
+                    <p className="text-sm text-zinc-200 font-medium max-w-lg">
                         Elite professional discovery. Find mentors, speakers, and industry experts for your club sessions.
                     </p>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
                     <div className="relative group">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500 group-hover:text-gold-500 transition-colors" />
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-300 group-hover:text-gold-500 transition-colors" />
                         <input
                             type="text"
                             value={domain}
                             onChange={(e) => setDomain(e.target.value)}
                             placeholder="Expert Domain (e.g. AI, Music, Design)"
-                            className="w-full sm:w-64 pl-12 pr-6 py-4 glass-card rounded-2xl text-sm font-bold text-white focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20 outline-none transition-all placeholder:text-neutral-700"
+                            className="w-full sm:w-64 pl-12 pr-6 py-4 glass-card rounded-2xl text-sm font-bold text-white focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20 outline-none transition-all placeholder:text-zinc-200"
                         />
                     </div>
                     <div className="relative group">
-                        <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500 group-hover:text-gold-500 transition-colors" />
+                        <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-300 group-hover:text-gold-500 transition-colors" />
                         <input
                             type="text"
                             value={location}
                             onChange={(e) => setLocation(e.target.value)}
                             placeholder="City"
-                            className="w-full sm:w-48 pl-12 pr-6 py-4 glass-card rounded-2xl text-sm font-bold text-white focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20 outline-none transition-all placeholder:text-neutral-700"
+                            className="w-full sm:w-48 pl-12 pr-6 py-4 glass-card rounded-2xl text-sm font-bold text-white focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20 outline-none transition-all placeholder:text-zinc-200"
                         />
                     </div>
                     <button
                         onClick={handleSearch}
                         disabled={loading}
-                        className="px-8 py-4 bg-gold-500 hover:bg-gold-600 disabled:bg-neutral-800 disabled:text-neutral-600 text-black font-black uppercase tracking-widest text-[11px] rounded-2xl transition-all shadow-lg shadow-gold-500/10 flex items-center justify-center gap-2"
+                        className="px-8 py-4 bg-gold-500 hover:bg-gold-600 disabled:bg-zinc-800 disabled:text-zinc-200 text-black font-black uppercase tracking-widest text-[11px] rounded-2xl transition-all shadow-lg shadow-gold-500/10 flex items-center justify-center gap-2"
                     >
                         {loading ? <PremiumLoader size="sm" dotCount={3} /> : <Sparkles className="w-4 h-4" />}
                         Scan Talent
@@ -112,8 +112,8 @@ export default function ResourceRadar() {
                             <Users className="w-10 h-10 text-gold-500/40 relative z-10" />
                         </div>
                         <div className="space-y-1">
-                            <h3 className="text-xl font-bold bg-gradient-to-r from-white to-neutral-500 bg-clip-text text-transparent uppercase tracking-[0.2em]">Mining Intelligence...</h3>
-                            <p className="text-[10px] text-neutral-600 uppercase font-black tracking-widest">Scanning professional networks and university records</p>
+                            <h3 className="text-xl font-bold bg-gradient-to-r from-white to-zinc-500 bg-clip-text text-transparent uppercase tracking-[0.2em]">Mining Intelligence...</h3>
+                            <p className="text-[10px] text-zinc-300 uppercase font-black tracking-widest">Scanning professional networks and university records</p>
                         </div>
                     </motion.div>
                 ) : error ? (
@@ -124,7 +124,7 @@ export default function ResourceRadar() {
                     >
                         <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-8 max-w-md mx-auto">
                             <p className="text-red-400 font-bold mb-2">Search Error</p>
-                            <p className="text-sm text-neutral-500">{error}</p>
+                            <p className="text-sm text-zinc-200">{error}</p>
                             <button 
                                 onClick={handleSearch}
                                 className="mt-6 text-[10px] font-black uppercase tracking-widest text-signature-gradient hover:brightness-110 transition-colors"
@@ -151,7 +151,7 @@ export default function ResourceRadar() {
                                     <BorderBeam duration={10} size={250} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                                     {/* Platform Label */}
                                 <div className="absolute top-6 right-6 z-20 flex items-center gap-2">
-                                    <div className="px-3 py-1 bg-black/80 backdrop-blur-md rounded-full border border-white/10 flex items-center gap-2 text-[8px] font-black uppercase tracking-widest text-neutral-400">
+                                    <div className="px-3 py-1 bg-black/80 backdrop-blur-md rounded-full border border-white/10 flex items-center gap-2 text-[8px] font-black uppercase tracking-widest text-zinc-200">
                                         {person.website.includes("linkedin") ? <Linkedin className="w-2.5 h-2.5" /> : 
                                          person.website.includes("twitter") || person.website.includes("x.com") ? <Twitter className="w-2.5 h-2.5" /> :
                                          person.website.includes("github") ? <Github className="w-2.5 h-2.5" /> : <Globe className="w-2.5 h-2.5" />}
@@ -186,14 +186,14 @@ export default function ResourceRadar() {
 
                                     <div className="relative">
                                         <div className="absolute -left-2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-gold-500/20 to-transparent" />
-                                        <p className="text-[11px] text-neutral-500 font-medium leading-[1.8] pl-2 italic">
+                                        <p className="text-[11px] text-zinc-300 font-medium leading-[1.8] pl-2 italic">
                                             &quot;{person.reason}&quot;
                                         </p>
                                     </div>
 
                                     <div className="flex flex-wrap gap-2 pt-2">
                                         {person.tags?.map((tag, i) => (
-                                            <span key={i} className="px-2 py-0.5 bg-neutral-900 rounded text-[7px] font-black uppercase tracking-widest text-neutral-500">
+                                            <span key={i} className="px-2 py-0.5 bg-zinc-900 rounded text-[7px] font-black uppercase tracking-widest text-zinc-200">
                                                 {tag}
                                             </span>
                                         ))}
@@ -222,7 +222,7 @@ export default function ResourceRadar() {
                         <div className="w-20 h-20 bg-white/[0.02] rounded-full flex items-center justify-center mx-auto border border-white/5 mb-8">
                             <Trophy className="w-8 h-8 text-white/10" />
                         </div>
-                        <h3 className="text-sm font-black text-neutral-600 uppercase tracking-[0.3em]">Awaiting Discovery Scan</h3>
+                        <h3 className="text-sm font-black text-zinc-300 uppercase tracking-[0.3em]">Awaiting Discovery Scan</h3>
                     </motion.div>
                 )}
             </AnimatePresence>

@@ -41,21 +41,21 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
             onClick={onAboutClick}
             className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-gold-500/50 hover:bg-gold-500/5 transition-all group"
           >
-            <Info className="w-4 h-4 text-neutral-400 group-hover:text-gold-400 transition-colors" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 group-hover:text-signature-gradient transition-colors">About the App</span>
+            <Info className="w-4 h-4 text-white group-hover:text-gold-400 transition-colors" />
+            <span className="text-[10px] font-bold uppercase tracking-widest text-white group-hover:text-signature-gradient transition-colors">About the App</span>
           </button>
 
           <button
             onClick={onSettingsClick}
             className="p-2 rounded-xl hover:bg-white/5 transition-colors group"
           >
-            <Settings className="w-5 h-5 text-neutral-500 group-hover:text-gold-400 transition-colors" />
+            <Settings className="w-5 h-5 text-white group-hover:text-gold-400 transition-colors" />
           </button>
 
           <div className="relative">
             <button
               onClick={() => setIsProfileOpen(!isProfileOpen)}
-              className="w-10 h-10 rounded-full border border-gold-500/40 bg-neutral-900 flex items-center justify-center overflow-hidden hover:border-gold-500 transition-colors group"
+              className="w-10 h-10 rounded-full border border-gold-500/40 bg-zinc-900 flex items-center justify-center overflow-hidden hover:border-gold-500 transition-colors group"
               title="Profile"
             >
               {user?.user_metadata?.avatar_url ? (
@@ -73,7 +73,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
             </button>
 
             {isProfileOpen && (
-              <div className="absolute right-0 mt-3 w-72 bg-neutral-900/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] animate-in fade-in slide-in-from-top-2 duration-300 z-[60]">
+              <div className="absolute right-0 mt-3 w-72 bg-zinc-900/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] animate-in fade-in slide-in-from-top-2 duration-300 z-[60]">
                 <div className="flex items-center gap-4 mb-5 pb-5 border-b border-white/5">
                   <div className="w-12 h-12 rounded-full bg-gold-500/10 flex items-center justify-center text-signature-gradient font-black overflow-hidden border border-gold-500/20 shadow-inner">
                     {user?.user_metadata?.avatar_url ? (
@@ -96,7 +96,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
                     </p>
                     <div className="flex items-center gap-1.5 mt-0.5">
                       <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                      <span className="text-[10px] text-neutral-400 font-medium uppercase tracking-wider">Verified Account</span>
+                      <span className="text-[10px] text-zinc-100 font-medium uppercase tracking-wider">Verified Account</span>
                     </div>
                   </div>
                 </div>
@@ -104,14 +104,14 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
                 <div className="space-y-1.5">
                   <button 
                     onClick={() => { setIsProfileOpen(false); onAccountClick(); }}
-                    className="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 text-[11px] font-semibold text-neutral-400 hover:text-white transition-all flex items-center justify-between group"
+                    className="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 text-[11px] font-semibold text-white hover:text-white transition-all flex items-center justify-between group"
                   >
                     <span>Account Preferences</span>
                     <div className="w-1 h-1 rounded-full bg-gold-500/50 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </button>
                   <button 
                     onClick={() => { setIsProfileOpen(false); onAnalyticsClick(); }}
-                    className="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 text-[11px] font-semibold text-neutral-400 hover:text-white transition-all flex items-center justify-between group"
+                    className="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 text-[11px] font-semibold text-white hover:text-white transition-all flex items-center justify-between group"
                   >
                     <span>Usage Analytics</span>
                     <div className="w-1 h-1 rounded-full bg-gold-500/50 opacity-0 group-hover:opacity-100 transition-opacity" />

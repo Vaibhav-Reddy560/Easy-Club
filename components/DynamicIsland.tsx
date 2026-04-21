@@ -42,8 +42,8 @@ export default function DynamicIsland() {
         }}
       >
         <div className="w-full h-full flex items-center justify-center gap-2 opacity-30">
-          <div className="w-1.5 h-1.5 rounded-full bg-neutral-500" />
-          <div className="w-1.5 h-1.5 rounded-full bg-neutral-600" />
+          <div className="w-1.5 h-1.5 rounded-full bg-zinc-500" />
+          <div className="w-1.5 h-1.5 rounded-full bg-zinc-600" />
         </div>
       </motion.div>
     );
@@ -123,7 +123,7 @@ export default function DynamicIsland() {
               </div>
               <motion.span 
                 layout="position"
-                className={`text-[11px] font-bold tracking-widest uppercase transition-colors whitespace-nowrap overflow-hidden text-ellipsis max-w-[150px] ${isExpanded ? "text-neutral-300" : config.textColor}`}
+                className={`text-[11px] font-bold tracking-widest uppercase transition-colors whitespace-nowrap overflow-hidden text-ellipsis max-w-[150px] ${isExpanded ? "text-zinc-300" : config.textColor}`}
               >
                 {activeTask.name}
               </motion.span>
@@ -149,7 +149,7 @@ export default function DynamicIsland() {
             
             {/* Multiple Tasks Indicator */}
             {!isExpanded && hasMultipleTasks && (
-              <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-[9px] font-bold text-neutral-400 ml-2">
+              <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-[9px] font-bold text-zinc-200 ml-2">
                 +{tasks.length - 1}
               </div>
             )}
@@ -168,10 +168,10 @@ export default function DynamicIsland() {
                 {tasks.map((task) => (
                   <div key={task.id} className="pt-3 border-t border-white/5 first:border-0 first:pt-0">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-[10px] text-neutral-400 uppercase font-bold tracking-wider">{task.name}</span>
+                      <span className="text-[10px] text-zinc-200 uppercase font-bold tracking-wider">{task.name}</span>
                       <span className="text-[10px] text-white font-mono">{Math.round(task.progress)}%</span>
                     </div>
-                    <div className="w-full h-1.5 bg-neutral-900 rounded-full overflow-hidden">
+                    <div className="w-full h-1.5 bg-zinc-900 rounded-full overflow-hidden">
                       <motion.div 
                         className={`h-full ${task.status === 'success' ? 'bg-green-500' : task.status === 'error' ? 'bg-red-500' : 'bg-gold-gradient'}`}
                         initial={{ width: 0 }}

@@ -142,7 +142,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
                 animate={{ opacity: 1, y: 0 }}
                 className="max-w-2xl mx-auto py-12 px-4"
             >
-                <div className="p-10 bg-neutral-900/40 border border-white/5 rounded-[3rem] text-center space-y-8 relative overflow-hidden backdrop-blur-xl">
+                <div className="p-10 bg-zinc-900/40 border border-white/5 rounded-[3rem] text-center space-y-8 relative overflow-hidden backdrop-blur-xl">
                     <div className="absolute -top-32 -left-32 w-64 h-64 bg-gold-500/10 blur-[120px] rounded-full pointer-events-none" />
                     <div className="absolute -bottom-32 -right-32 w-64 h-64 bg-gold-500/5 blur-[120px] rounded-full pointer-events-none" />
                     
@@ -159,7 +159,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
                         <h2 className="text-3xl font-astronomus text-signature-gradient uppercase tracking-tighter mb-3">
                             Event Architect Hub
                         </h2>
-                        <p className="text-neutral-400 text-sm font-medium max-w-sm mx-auto leading-relaxed">
+                        <p className="text-white text-sm font-medium max-w-sm mx-auto leading-relaxed">
                             Initialize a high-performance session to build your next flagship event.
                         </p>
                     </div>
@@ -167,7 +167,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
                     <div className="space-y-6 text-left">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black uppercase tracking-widest text-neutral-500 ml-2">Target Club</label>
+                                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-100 ml-2">Target Club</label>
                                 <select 
                                     value={selectedClubId} 
                                     onChange={(e) => setSelectedClubId(e.target.value)}
@@ -181,7 +181,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black uppercase tracking-widest text-neutral-500 ml-2">Primary Field</label>
+                                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-100 ml-2">Primary Field</label>
                                 <select 
                                     value={selectedCategory} 
                                     onChange={(e) => setSelectedCategory(e.target.value)}
@@ -249,7 +249,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
                         className={`px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2 group disabled:opacity-40
                             ${messages.length >= 3 
                                 ? 'bg-gold-500 text-black shadow-gold-glow hover:scale-105' 
-                                : 'bg-white/5 text-neutral-400 border border-white/10 hover:bg-white/10'
+                                : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
                             }`}
                     >
                         {finalizing ? (
@@ -274,7 +274,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
                             <div className={`relative max-w-[85%] rounded-[2rem] p-5 text-sm leading-relaxed shadow-xl ${
                                 m.role === 'user' 
                                     ? 'bg-gold-500/10 border border-gold-500/30 text-gold-50 rounded-tr-sm backdrop-blur-sm' 
-                                    : 'bg-neutral-800/40 border border-white/10 text-neutral-200 rounded-tl-sm backdrop-blur-md'
+                                    : 'bg-zinc-800/40 border border-white/10 text-white rounded-tl-sm backdrop-blur-md'
                             }`}>
                                 <div className="absolute top-0 right-0 p-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <Sparkles className="w-3 h-3 text-gold-500" />
@@ -296,7 +296,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
                             animate={{ opacity: 1, scale: 1 }}
                             className="flex justify-start"
                         >
-                            <div className="bg-neutral-800/40 border border-white/5 rounded-[1.5rem] rounded-tl-sm p-5 flex flex-col gap-3 min-w-[200px] shadow-lg backdrop-blur-sm">
+                            <div className="bg-zinc-800/40 border border-white/5 rounded-[1.5rem] rounded-tl-sm p-5 flex flex-col gap-3 min-w-[200px] shadow-lg backdrop-blur-sm">
                                 <div className="flex items-center gap-4">
                                     <div className="flex gap-1.5">
                                         <PremiumLoader size="sm" dotCount={3} />
@@ -309,7 +309,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
                                     <motion.div 
                                         initial={{ opacity: 0, x: -10 }}
                                         animate={{ opacity: 1, x: 0 }}
-                                        className="flex items-center gap-2 text-neutral-500 text-[11px] font-medium italic border-t border-white/5 pt-2"
+                                        className="flex items-center gap-2 text-white text-[11px] font-medium italic border-t border-white/5 pt-2"
                                     >
                                         <Search className="w-3 h-3 text-gold-500/40" /> {currentStatus}
                                     </motion.div>
@@ -334,7 +334,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         placeholder="E.g. Build a blueprint for an outdoor racing hackathon..."
-                        className="flex-1 bg-neutral-900/60 border border-white/10 rounded-full px-8 py-5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-gold-500/50 transition-all backdrop-blur-md pr-16 shadow-inner"
+                        className="flex-1 bg-zinc-900/60 border border-white/10 rounded-full px-8 py-5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-gold-500/50 transition-all backdrop-blur-md pr-16 shadow-inner"
                         disabled={loading || finalizing}
                     />
                     <button
@@ -349,7 +349,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
                         )}
                     </button>
                     
-                    <div className="absolute -bottom-6 left-8 flex items-center gap-2 text-[9px] text-neutral-600 font-bold uppercase tracking-widest">
+                    <div className="absolute -bottom-6 left-8 flex items-center gap-2 text-[9px] text-white font-bold uppercase tracking-widest">
                         <span className="w-1 h-1 bg-gold-500/40 rounded-full" />
                         Enter to Send
                         <span className="w-1 h-1 bg-gold-500/40 rounded-full ml-1" />

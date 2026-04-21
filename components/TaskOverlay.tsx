@@ -22,7 +22,7 @@ function TaskCard({ task, onClear }: { task: BackgroundTask; onClear: () => void
                 backdrop-blur-xl overflow-hidden min-w-[280px] max-w-[360px]
                 ${isSuccess ? "bg-green-950/80 border-green-500/20" : ""}
                 ${isError ? "bg-red-950/80 border-red-500/20" : ""}
-                ${isRunning ? "bg-neutral-900/90 border-white/10" : ""}
+                ${isRunning ? "bg-zinc-900/90 border-white/10" : ""}
             `}
         >
             {/* Shimmer sweep for running state */}
@@ -47,7 +47,7 @@ function TaskCard({ task, onClear }: { task: BackgroundTask; onClear: () => void
                     {task.name}
                 </p>
                 <p className={`text-[9px] font-bold uppercase tracking-wider mt-0.5 ${
-                    isSuccess ? "text-green-500" : isError ? "text-red-500" : "text-neutral-500"
+                    isSuccess ? "text-green-500" : isError ? "text-red-500" : "text-zinc-300"
                 }`}>
                     {isRunning ? "Processing..." : isSuccess ? "Complete" : "Failed"}
                 </p>
@@ -69,7 +69,7 @@ function TaskCard({ task, onClear }: { task: BackgroundTask; onClear: () => void
             {!isRunning && (
                 <button
                     onClick={onClear}
-                    className="shrink-0 p-1 text-neutral-600 hover:text-white transition-colors relative z-10"
+                    className="shrink-0 p-1 text-zinc-200 hover:text-white transition-colors relative z-10"
                 >
                     <X className="w-3.5 h-3.5" />
                 </button>

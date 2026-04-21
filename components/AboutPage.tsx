@@ -24,7 +24,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                 <span className="text-sm uppercase tracking-widest">Return to Dashboard</span>
             </button>
 
-            <div className="relative bg-neutral-900/40 border border-white/5 rounded-[4rem] p-16 shadow-2xl overflow-hidden">
+            <div className="relative bg-zinc-900/40 border border-white/5 rounded-[4rem] p-16 shadow-2xl overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1.5 bg-gold-gradient" />
 
                 <div className="flex items-center gap-6 mb-12">
@@ -42,7 +42,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                         <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-signature-gradient flex items-center gap-3">
                             <span className="w-8 h-px bg-gold-500/30" /> The Vision
                         </h3>
-                        <p className="text-lg text-neutral-300 leading-relaxed font-medium pl-11">
+                        <p className="text-lg text-zinc-300 leading-relaxed font-medium pl-11">
                             <span className="text-signature-gradient font-airstream">Easy Club</span> is a unified intelligence workspace designed to empower student organizations. It eliminates the manual friction of event management by automating content generation, streamlining design workflows, and facilitating expert outreach—all in one high-performance dashboard.
                         </p>
                     </section>
@@ -61,7 +61,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                                     "Design-Ready Domain Segregation",
                                     "Automated Expert Sourcing Workflows"
                                 ].map((item, i) => (
-                                    <li key={i} className="flex items-start gap-4 text-xs text-neutral-400 font-bold group">
+                                    <li key={i} className="flex items-start gap-4 text-xs text-zinc-200 font-bold group">
                                         <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500 group-hover:scale-125 transition-transform" />
                                         {item}
                                     </li>
@@ -81,7 +81,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                                     "Club Membership Billing",
                                     "Hardware Resource Management"
                                 ].map((item, i) => (
-                                    <li key={i} className="flex items-start gap-4 text-xs text-neutral-600 font-bold opacity-80 group">
+                                    <li key={i} className="flex items-start gap-4 text-xs text-zinc-200 font-bold opacity-80 group">
                                         <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-800 group-hover:scale-125 transition-transform" />
                                         {item}
                                     </li>
@@ -91,7 +91,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                     </div>
                 </div>
 
-                <div className="mt-20 pt-10 border-t border-white/5 flex justify-between items-center text-[10px] font-mono text-neutral-700 tracking-tighter uppercase">
+                <div className="mt-20 pt-10 border-t border-white/5 flex justify-between items-center text-[10px] font-mono text-zinc-200 tracking-tighter uppercase">
                     <div className="flex gap-4">
                         <span className="px-3 py-1 bg-white/5 rounded-full">V 1.0.4 PRODUCTION</span>
                         <span className="px-3 py-1 bg-white/5 rounded-full">System: Stable</span>

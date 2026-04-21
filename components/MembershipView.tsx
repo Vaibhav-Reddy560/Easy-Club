@@ -80,9 +80,9 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
   if (!clubs || clubs.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-32 text-center">
-        <Users className="w-16 h-16 text-neutral-800 mb-6" />
+        <Users className="w-16 h-16 text-white mb-6" />
         <h3 className="text-2xl font-bold text-white mb-2 uppercase tracking-widest">No Clubs Established</h3>
-        <p className="text-neutral-500 text-sm">Create a club in &quot;My Clubs&quot; before tracking members.</p>
+        <p className="text-white text-sm">Create a club in &quot;My Clubs&quot; before tracking members.</p>
       </div>
     );
   }
@@ -93,7 +93,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
           <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Membership and Recruitment</h2>
-          <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-[0.2em] mt-2">
+          <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-[0.2em] mt-2">
             Selective Onboarding and Core Team Management
           </p>
         </div>
@@ -102,13 +102,13 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
           <select
             value={selectedClubId || ""}
             onChange={(e) => setSelectedClubId(e.target.value)}
-            className="w-full appearance-none bg-neutral-900 border border-white/10 rounded-2xl py-4 pl-6 pr-12 text-sm font-bold text-white uppercase tracking-widest outline-none hover:border-gold-500/50 transition-colors focus:border-gold-500"
+            className="w-full appearance-none bg-zinc-900 border border-white/10 rounded-2xl py-4 pl-6 pr-12 text-sm font-bold text-white uppercase tracking-widest outline-none hover:border-gold-500/50 transition-colors focus:border-gold-500"
           >
             {clubs.map((club) => (
               <option key={club.id} value={club.id}>{club.name}</option>
             ))}
           </select>
-          <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500 pointer-events-none group-hover:text-gold-500 transition-colors" />
+          <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-white pointer-events-none group-hover:text-gold-500 transition-colors" />
         </div>
       </div>
 
@@ -118,13 +118,13 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
       <div className="flex gap-4 border-b border-white/10">
         <button
           onClick={() => setActiveTab('recruitment-pool')}
-          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'recruitment-pool' ? 'text-signature-gradient border-gold-500' : 'text-neutral-500 border-transparent hover:text-neutral-300'}`}
+          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'recruitment-pool' ? 'text-signature-gradient border-gold-500' : 'text-white border-transparent hover:text-white'}`}
         >
           General Roster
         </button>
         <button
           onClick={() => setActiveTab('new-recruit')}
-          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'new-recruit' ? 'text-signature-gradient border-gold-500' : 'text-neutral-500 border-transparent hover:text-neutral-300'}`}
+          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'new-recruit' ? 'text-signature-gradient border-gold-500' : 'text-white border-transparent hover:text-white'}`}
         >
           New Recruitment
         </button>
@@ -133,7 +133,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
       {/* Content */}
       <div className="min-h-[500px]">
         {activeTab === 'recruitment-pool' && (
-          <div className="bg-neutral-900/40 border border-white/5 rounded-[2rem] overflow-hidden">
+          <div className="bg-zinc-900/40 border border-white/5 rounded-[2rem] overflow-hidden">
             <table className="w-full text-left text-sm">
               <thead className="bg-black/40 text-[10px] font-black uppercase tracking-widest text-signature-gradient border-b border-white/5">
                 <tr>
@@ -147,7 +147,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
               <tbody className="divide-y divide-white/5">
                 {members.filter((m: ClubMember) => m.role === 'General Member').length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="py-20 text-center text-neutral-500 uppercase tracking-widest font-bold text-[10px]">
+                    <td colSpan={5} className="py-20 text-center text-white uppercase tracking-widest font-bold text-[10px]">
                       No members in roster. Recruit first.
                     </td>
                   </tr>
@@ -158,22 +158,22 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                     <tr key={member.id} className="hover:bg-white/[0.02] transition-colors group">
                       <td className="px-8 py-6">
                         <p className="font-bold text-white mb-1">{member.name}</p>
-                        <p className="text-[10px] text-neutral-500 uppercase tracking-wider">{member.email}</p>
+                        <p className="text-[10px] text-zinc-100 uppercase tracking-wider">{member.email}</p>
                       </td>
                       <td className="px-8 py-6">
-                        <span className="inline-flex px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest bg-white/5 text-neutral-400 border border-white/10">
+                        <span className="inline-flex px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest bg-white/5 text-white border border-white/10">
                           {member.role}
                         </span>
                       </td>
                       <td className="px-8 py-6">
                         <div className="flex items-center gap-2">
                           <Check className="w-3 h-3 text-green-500" />
-                          <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">
+                          <span className="text-[10px] font-bold text-white uppercase tracking-widest">
                             {member.basis}
                           </span>
                         </div>
                       </td>
-                      <td className="px-8 py-6 text-[11px] text-neutral-400 font-mono">
+                      <td className="px-8 py-6 text-[11px] text-zinc-100 font-mono">
                         {member.joinDate}
                       </td>
                       <td className="px-8 py-6 text-right">
@@ -186,7 +186,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                           </button>
                           <button
                             onClick={() => handleRemove(member.id)}
-                            className="p-2 text-neutral-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
+                            className="p-2 text-white hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
                             title="Remove Member"
                           >
                             <X className="w-4 h-4" />
@@ -204,15 +204,15 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
 
         {activeTab === 'new-recruit' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <form onSubmit={handleRecruitMember} className="bg-neutral-900/60 border border-white/5 rounded-[2.5rem] p-10 space-y-8">
+            <form onSubmit={handleRecruitMember} className="bg-zinc-900/60 border border-white/5 rounded-[2.5rem] p-10 space-y-8">
               <div>
                 <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2"><UserPlus className="w-5 h-5 text-gold-500" /> Admit New Member</h3>
-                <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-widest">Verify and onboard candidates</p>
+                <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-widest">Verify and onboard candidates</p>
               </div>
 
               <div className="space-y-5">
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-2">Full Name</label>
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Full Name</label>
                   <input
                     type="text"
                     required
@@ -222,7 +222,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-2">Email Address</label>
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Email Address</label>
                   <input
                     type="email"
                     required
@@ -233,19 +233,19 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                 </div>
                 
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-2">Verification Basis</label>
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Verification Basis</label>
                   <div className="grid grid-cols-2 gap-4">
                     <button
                       type="button"
                       onClick={() => setNewBasis('Fee Paid')}
-                      className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${newBasis === 'Fee Paid' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black/40 border-white/10 text-neutral-500 hover:border-white/30'}`}
+                      className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${newBasis === 'Fee Paid' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black/40 border-white/10 text-white hover:border-white/30'}`}
                     >
                       Fee Paid
                     </button>
                     <button
                       type="button"
                       onClick={() => setNewBasis('Test Passed')}
-                      className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${newBasis === 'Test Passed' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black/40 border-white/10 text-neutral-500 hover:border-white/30'}`}
+                      className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${newBasis === 'Test Passed' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black/40 border-white/10 text-white hover:border-white/30'}`}
                     >
                       Test Passed
                     </button>
@@ -254,7 +254,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
 
                 {newBasis === 'Test Passed' && (
                   <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
-                    <label className="block text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-2">Exercise/Test Details</label>
+                    <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Exercise/Test Details</label>
                     <textarea
                       required
                       value={newTestDetails}
@@ -274,15 +274,15 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
             </form>
 
             {/* Core Promotion Info panel */}
-            <div className="bg-neutral-900/40 border border-white/5 border-dashed rounded-[2.5rem] p-10 flex flex-col justify-center items-center text-center">
-              <Shield className="w-16 h-16 text-neutral-700 mb-6" />
+            <div className="bg-zinc-900/40 border border-white/5 border-dashed rounded-[2.5rem] p-10 flex flex-col justify-center items-center text-center">
+              <Shield className="w-16 h-16 text-white mb-6" />
               <h4 className="text-xl font-bold text-white mb-4">Core Team Hierarchy</h4>
-              <p className="text-sm text-neutral-500 leading-relaxed max-w-sm mb-8">
+              <p className="text-sm text-zinc-100 leading-relaxed max-w-sm mb-8">
                 The Club Core is composed of driven individuals who manage the club. Recruit members first, then promote exceptional candidates to the <strong className="text-signature-gradient font-bold">Core Team</strong> from the Member Directory to grant management access.
               </p>
               <button 
                 onClick={() => setActiveTab('recruitment-pool')}
-                className="px-6 py-3 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest text-neutral-400 hover:text-white hover:bg-white/5 transition-all"
+                className="px-6 py-3 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest text-white hover:text-white hover:bg-white/5 transition-all"
               >
                 Go to Recruitment Pool
               </button>

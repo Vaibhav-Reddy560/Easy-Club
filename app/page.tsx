@@ -672,7 +672,7 @@ export default function App() {
 
                   <div className="mb-12 border-b border-white/5 pb-8">
                     <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">
-                      {activeEvent?.name} <span className="text-neutral-600 font-normal ml-3 font-sans">/ Workspace</span>
+                      {activeEvent?.name} <span className="text-zinc-400 font-normal ml-3 font-sans">/ Workspace</span>
                     </h2>
                   </div>
 
@@ -689,9 +689,9 @@ export default function App() {
                       >
                         {activeDomain === d.id && <BorderBeam duration={8} size={300} />}
                         <div className="relative z-10">
-                          <d.icon className={`w-8 h-8 mb-4 transition-colors ${activeDomain === d.id ? 'text-gold-400' : 'text-neutral-500'}`} />
+                          <d.icon className={`w-8 h-8 mb-4 transition-colors ${activeDomain === d.id ? 'text-gold-400' : 'text-zinc-100'}`} />
                           <h3 className="text-2xl font-normal font-astronomus leading-tight text-white/90">{d.id}</h3>
-                          <p className={`text-[10px] font-bold uppercase mt-1 tracking-widest ${activeDomain === d.id ? 'text-signature-gradient' : 'text-neutral-500'}`}>{d.desc}</p>
+                          <p className={`text-[10px] font-bold uppercase mt-1 tracking-widest ${activeDomain === d.id ? 'text-signature-gradient' : 'text-zinc-100'}`}>{d.desc}</p>
                         </div>
                       </div>
                     ))}
@@ -778,14 +778,14 @@ export default function App() {
             >
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="absolute top-8 right-8 text-neutral-500 hover:text-white"
+                className="absolute top-8 right-8 text-white hover:text-gold-400 transition-colors"
               >
                 <ChevronLeft className="w-6 h-6 rotate-180" />
               </button>
               <h3 className="text-2xl font-bold text-white mb-2">
                 {modalOperation === 'create' ? (modalType === 'club' ? 'Establish Club' : 'Create Event') : `Rename ${modalType === 'club' ? 'Club' : 'Event'}`}
               </h3>
-              <p className="text-neutral-500 text-xs mb-8">
+              <p className="text-zinc-100 text-xs mb-8">
                 {modalOperation === 'create'
                   ? (modalType === 'club' ? 'Create a master folder for your organization.' : 'Start a new project folder under this club.')
                   : `Change the name of your ${modalType}.`}
@@ -833,14 +833,14 @@ export default function App() {
                 <Trash2 className="w-8 h-8 text-red-500" />
               </div>
               <h3 className="text-2xl font-bold text-white mb-2">Delete {modalType === 'club' ? 'Club' : 'Event'}?</h3>
-              <p className="text-neutral-500 text-xs mb-8 leading-relaxed">
+              <p className="text-zinc-100 text-xs mb-8 leading-relaxed">
                 You are about to delete <span className="text-white font-bold">{inputValue}</span>.
                 This action is permanent and all associated files will be lost.
               </p>
               <div className="flex gap-4">
                 <button
                   onClick={() => setIsDeleteModalOpen(false)}
-                  className="flex-1 px-6 py-4 rounded-xl border border-white/10 text-[10px] font-bold uppercase tracking-widest hover:bg-white/5 transition-all text-neutral-400"
+                  className="flex-1 px-6 py-4 rounded-xl border border-white/10 text-[10px] font-bold uppercase tracking-widest hover:bg-white/5 transition-all text-white"
                 >
                   Cancel
                 </button>

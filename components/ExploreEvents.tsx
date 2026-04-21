@@ -108,21 +108,21 @@ export default function ExploreEvents() {
             <header className="border-b border-white/5 pb-8 flex justify-between items-end">
                 <div>
                     <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Explore Events</h2>
-                    <p className="text-neutral-500 text-sm mt-1 uppercase font-bold tracking-[0.2em] ml-1">National Activity Stream</p>
+                    <p className="text-zinc-100 text-sm mt-1 uppercase font-bold tracking-[0.2em] ml-1">National Activity Stream</p>
                 </div>
                 <div className="flex gap-4">
                     <div className="text-right">
                         <p className="text-[10px] font-black text-signature-gradient uppercase tracking-widest leading-none">Direct Feed Mode</p>
-                        <p className="text-[9px] text-neutral-600 mt-1">Live search aggregation</p>
+                        <p className="text-[9px] text-white mt-1">Live search aggregation</p>
                     </div>
                 </div>
             </header>
 
             {/* FILTERS */}
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 bg-neutral-900/40 p-8 rounded-[2.5rem] border border-white/5 shadow-2xl relative overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 bg-zinc-900/40 p-8 rounded-[2.5rem] border border-white/5 shadow-2xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gold-500/5 blur-3xl rounded-full -mr-16 -mt-16" />
                 <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-neutral-500 ml-2">Category</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-white ml-2">Category</label>
                     <select
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
@@ -133,13 +133,13 @@ export default function ExploreEvents() {
                 </div>
 
                 <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-neutral-500 ml-2">Type</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-white ml-2">Type</label>
                     <div className="flex p-1 bg-black border border-white/10 rounded-2xl h-[46px]">
                         {EVENT_TYPES.map((t) => (
                             <button
                                 key={t}
                                 onClick={() => setType(t)}
-                                className={`flex-1 rounded-xl text-[9px] font-black uppercase tracking-tighter transition-all ${type === t ? "bg-gold-500 text-black shadow-lg" : "text-neutral-500 hover:text-white"}`}
+                                className={`flex-1 rounded-xl text-[9px] font-black uppercase tracking-tighter transition-all ${type === t ? "bg-gold-500 text-black shadow-lg" : "text-white"}`}
                             >
                                 {t}
                             </button>
@@ -148,9 +148,9 @@ export default function ExploreEvents() {
                 </div>
 
                 <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-neutral-500 ml-2">Region</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-white ml-2">Region</label>
                     <div className="relative h-[46px]">
-                        <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-600" />
+                        <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white" />
                         <input
                             type="text"
                             value={location}
@@ -178,15 +178,15 @@ export default function ExploreEvents() {
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="flex flex-col items-center gap-4 p-8 bg-neutral-900 border border-white/5 rounded-[2.5rem] shadow-2xl"
+                        className="flex flex-col items-center gap-4 p-8 bg-zinc-900 border border-white/5 rounded-[2.5rem] shadow-2xl"
                     >
                         <div className="flex items-center gap-3">
                             <Sparkles className="w-5 h-5 text-gold-500 opacity-40" />
-                            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-neutral-500">
+                            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-zinc-100">
                                 Simulated Results
                             </span>
                         </div>
-                        <p className="text-[10px] text-neutral-600 uppercase tracking-widest text-center max-w-md leading-relaxed">
+                        <p className="text-[10px] text-zinc-100 uppercase tracking-widest text-center max-w-md leading-relaxed">
                             Diagnostics: <span className="text-white/40 font-black">{error}</span>.
                             Displaying high-fidelity simulations for reference.
                         </p>
@@ -213,7 +213,7 @@ export default function ExploreEvents() {
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.9 }}
-                            className="bg-neutral-900/30 border border-white/5 rounded-[3rem] overflow-hidden group hover:border-gold-500/30 transition-all shadow-2xl flex flex-col relative"
+                            className="bg-zinc-900/30 border border-white/5 rounded-[3rem] overflow-hidden group hover:border-gold-500/30 transition-all shadow-2xl flex flex-col relative"
                         >
                             <div className="absolute top-6 right-6 z-10">
                                 <div className="bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-[9px] font-black text-signature-gradient uppercase tracking-widest">
@@ -237,7 +237,7 @@ export default function ExploreEvents() {
                                 <div className="space-y-1">
                                     <h3 className="text-xl font-bold text-white tracking-tight leading-tight group-hover:text-signature-gradient transition-colors uppercase italic">{event.name}</h3>
                                     <div className="flex flex-col gap-1">
-                                        <div className="flex items-center gap-2 text-[10px] font-black text-neutral-400 uppercase tracking-widest leading-none">
+                                        <div className="flex items-center gap-2 text-[10px] font-black text-zinc-100 uppercase tracking-widest leading-none">
                                             <Trophy className="w-3 h-3 text-gold-500" />
                                             <span>{event.clubName}</span>
                                         </div>
@@ -249,20 +249,20 @@ export default function ExploreEvents() {
                                     </div>
                                 </div>
 
-                                <p className="text-xs text-neutral-500 leading-relaxed line-clamp-2">
+                                <p className="text-xs text-zinc-100 leading-relaxed line-clamp-2">
                                     {event.description}
                                 </p>
 
                                 <div className="flex flex-wrap gap-2 py-2">
                                     {event.tags?.map(tag => (
-                                        <span key={tag} className="px-2 py-1 bg-white/5 rounded-md text-[8px] font-black text-neutral-500 uppercase tracking-tighter border border-white/5 whitespace-nowrap">
+                                        <span key={tag} className="px-2 py-1 bg-white/5 rounded-md text-[8px] font-black text-white uppercase tracking-tighter border border-white/5 whitespace-nowrap">
                                             #{tag}
                                         </span>
                                     ))}
                                 </div>
 
                                 <div className="pt-4 mt-auto border-t border-white/5 flex items-center justify-between">
-                                    <div className="flex items-center gap-2 text-neutral-500">
+                                    <div className="flex items-center gap-2 text-white">
                                         <MapPin className="w-3 h-3" />
                                         <span className="text-[9px] font-bold uppercase">{event.location}</span>
                                     </div>
@@ -290,7 +290,7 @@ export default function ExploreEvents() {
                         <div className="space-y-4">
                             <div className="space-y-1">
                                 <h3 className="text-xl font-bold text-red-400 uppercase tracking-widest italic">Sync Interrupted</h3>
-                                <p className="text-xs text-neutral-600 max-w-xs mx-auto uppercase tracking-tighter leading-relaxed">{error}</p>
+                                <p className="text-xs text-zinc-100 max-w-xs mx-auto uppercase tracking-tighter leading-relaxed">{error}</p>
                             </div>
                             <button
                                 onClick={() => {
@@ -320,7 +320,7 @@ export default function ExploreEvents() {
                                         }
                                     ]);
                                 }}
-                                className="px-8 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 text-[10px] font-bold uppercase tracking-widest text-neutral-400 hover:text-white transition-all shadow-xl"
+                                className="px-8 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 text-[10px] font-bold uppercase tracking-widest text-white hover:text-white transition-all shadow-xl"
                             >
                                 Simulate with Local Stream
                             </button>
@@ -334,8 +334,8 @@ export default function ExploreEvents() {
                             <Calendar className="w-12 h-12 text-gold-500/20" />
                         </div>
                         <div className="space-y-1">
-                            <h3 className="text-lg font-bold text-neutral-400 uppercase tracking-widest italic font-sans">Awaiting Feed</h3>
-                            <p className="text-[10px] text-neutral-600 max-w-xs mx-auto uppercase tracking-tighter">Initialize the national sync to aggregate upcoming organization activities.</p>
+                            <h3 className="text-lg font-bold text-white uppercase tracking-widest italic font-sans">Awaiting Feed</h3>
+                            <p className="text-[10px] text-zinc-100 max-w-xs mx-auto uppercase tracking-tighter">Initialize the national sync to aggregate upcoming organization activities.</p>
                         </div>
                     </div>
                 )}

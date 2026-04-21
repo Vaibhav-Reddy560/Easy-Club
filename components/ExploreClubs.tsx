@@ -203,7 +203,7 @@ export default function ExploreClubs() {
             <header className="border-b border-white/5 pb-8 flex justify-between items-end">
                 <div>
                     <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Explore Clubs</h2>
-                    <p className="text-neutral-500 text-sm mt-1 uppercase font-bold tracking-[0.2em] ml-1">Universal Organization Discovery</p>
+                    <p className="text-white text-sm mt-1 uppercase font-bold tracking-[0.2em] ml-1">Universal Organization Discovery</p>
                 </div>
                 <div className="flex gap-4 items-end">
                     <button
@@ -214,7 +214,7 @@ export default function ExploreClubs() {
                         className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl border text-[10px] font-black uppercase tracking-widest transition-all ${
                             showSaved
                                 ? "bg-gold-500 text-black border-gold-500 shadow-lg shadow-gold-500/20"
-                                : "bg-white/5 text-neutral-400 border-white/10 hover:bg-white/10 hover:text-white"
+                                : "bg-white/5 text-white border-white/10 hover:bg-white/10 hover:text-white"
                         }`}
                     >
                         <BookmarkCheck className="w-3.5 h-3.5" />
@@ -222,18 +222,18 @@ export default function ExploreClubs() {
                     </button>
                     <div className="text-right">
                         <p className="text-[10px] font-black text-signature-gradient uppercase tracking-widest leading-none">Powered by Web Search</p>
-                        <p className="text-[9px] text-neutral-600 mt-1">Live search aggregation</p>
+                        <p className="text-[9px] text-white mt-1">Live search aggregation</p>
                     </div>
                 </div>
             </header>
 
             {/* FILTERS */}
             {!showSaved && (
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 bg-neutral-900/40 p-8 rounded-[2.5rem] border border-white/5 shadow-2xl relative overflow-hidden">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 bg-zinc-900/40 p-8 rounded-[2.5rem] border border-white/5 shadow-2xl relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-gold-500/5 blur-3xl rounded-full -mr-16 -mt-16" />
 
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-neutral-500 ml-2">Type of Club</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-white ml-2">Type of Club</label>
                         <select
                             value={type}
                             onChange={(e) => setType(e.target.value)}
@@ -244,13 +244,13 @@ export default function ExploreClubs() {
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-neutral-500 ml-2">Category</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-white ml-2">Category</label>
                         <div className="flex p-1 bg-black border border-white/10 rounded-2xl h-[46px]">
                             {(["College", "Non-College"] as const).map((cat) => (
                                 <button
                                     key={cat}
                                     onClick={() => setCategory(cat)}
-                                    className={`flex-1 rounded-xl text-[10px] font-black uppercase tracking-tighter transition-all ${category === cat ? "bg-gold-500 text-black shadow-lg" : "text-neutral-500 hover:text-white"}`}
+                                    className={`flex-1 rounded-xl text-[10px] font-black uppercase tracking-tighter transition-all ${category === cat ? "bg-gold-500 text-black shadow-lg" : "text-white hover:text-white"}`}
                                 >
                                     {cat}
                                 </button>
@@ -259,9 +259,9 @@ export default function ExploreClubs() {
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-neutral-500 ml-2">Location</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-white ml-2">Location</label>
                         <div className="relative h-[46px]">
-                            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-600" />
+                            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
                             <input
                                 type="text"
                                 value={location}
@@ -305,15 +305,15 @@ export default function ExploreClubs() {
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="flex flex-col items-center gap-4 p-8 bg-neutral-900 border border-white/5 rounded-[2.5rem] shadow-2xl"
+                        className="flex flex-col items-center gap-4 p-8 bg-zinc-900 border border-white/5 rounded-[2.5rem] shadow-2xl"
                     >
                         <div className="flex items-center gap-3">
                             <Sparkles className="w-5 h-5 text-gold-500 opacity-40" />
-                            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-neutral-500">
+                            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-white">
                                 Simulated Results
                             </span>
                         </div>
-                        <p className="text-[10px] text-neutral-600 uppercase tracking-widest text-center max-w-md leading-relaxed">
+                        <p className="text-[10px] text-white uppercase tracking-widest text-center max-w-md leading-relaxed">
                             Diagnostics: <span className="text-white/40 font-black">{error}</span>.
                             Displaying high-fidelity simulations for reference.
                         </p>
@@ -338,7 +338,7 @@ export default function ExploreClubs() {
                         <BookmarkCheck className="w-5 h-5 text-gold-500" />
                         <h3 className="text-lg font-black uppercase tracking-widest text-white">Saved Clubs</h3>
                     </div>
-                    <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">
+                    <span className="text-[10px] font-bold text-white uppercase tracking-widest">
                         {savedClubs.length} {savedClubs.length === 1 ? "club" : "clubs"} saved
                     </span>
                 </div>
@@ -357,9 +357,9 @@ export default function ExploreClubs() {
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
-                                className="bg-neutral-900/30 border border-white/5 rounded-[2.5rem] overflow-hidden group hover:border-gold-500/30 transition-all shadow-xl flex flex-col"
+                                className="bg-zinc-900/30 border border-white/5 rounded-[2.5rem] overflow-hidden group hover:border-gold-500/30 transition-all shadow-xl flex flex-col"
                             >
-                                <div className="h-48 relative overflow-hidden bg-neutral-800">
+                                <div className="h-48 relative overflow-hidden bg-zinc-800">
                                     <div className="absolute top-4 left-4 z-10 flex gap-2">
                                         <div className="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 flex items-center gap-1.5 shadow-lg">
                                             <Globe className="w-3.5 h-3.5 text-blue-400" />
@@ -400,13 +400,13 @@ export default function ExploreClubs() {
                                 <div className="p-8 space-y-4 flex-1 flex flex-col">
                                     <div className="space-y-1">
                                         <h3 className="text-xl font-bold text-white tracking-tight leading-tight group-hover:text-signature-gradient transition-colors">{club.name}</h3>
-                                        <div className="flex items-center gap-1.5 text-neutral-500">
+                                        <div className="flex items-center gap-1.5 text-white">
                                             <MapPin className="w-3 h-3 text-gold-500/50" />
                                             <span className="text-[10px] font-bold uppercase tracking-wider">{club.location}</span>
                                         </div>
                                     </div>
 
-                                    <p className="text-xs text-neutral-500 leading-relaxed line-clamp-3">
+                                    <p className="text-xs text-zinc-100 leading-relaxed line-clamp-3">
                                         {club.description}
                                     </p>
 
@@ -414,27 +414,27 @@ export default function ExploreClubs() {
                                         {/* LEFT: Social media icons */}
                                         <div className="flex gap-3">
                                             {club.social?.instagram && club.social.instagram.trim() !== "" && (
-                                                <a href={club.social.instagram} target="_blank" rel="noreferrer" className="text-neutral-500 hover:text-pink-500 transition-all hover:scale-110" title="Instagram">
+                                                <a href={club.social.instagram} target="_blank" rel="noreferrer" className="text-white/40 hover:text-pink-500 transition-all hover:scale-110" title="Instagram">
                                                     <Instagram className="w-4 h-4" />
                                                 </a>
                                             )}
                                             {club.social?.linkedin && club.social.linkedin.trim() !== "" && (
-                                                <a href={club.social.linkedin} target="_blank" rel="noreferrer" className="text-neutral-500 hover:text-blue-400 transition-all hover:scale-110" title="LinkedIn">
+                                                <a href={club.social.linkedin} target="_blank" rel="noreferrer" className="text-white/40 hover:text-blue-400 transition-all hover:scale-110" title="LinkedIn">
                                                     <Linkedin className="w-4 h-4" />
                                                 </a>
                                             )}
                                             {club.social?.twitter && club.social.twitter.trim() !== "" && (
-                                                <a href={club.social.twitter} target="_blank" rel="noreferrer" className="text-neutral-500 hover:text-sky-400 transition-all hover:scale-110" title="Twitter / X">
+                                                <a href={club.social.twitter} target="_blank" rel="noreferrer" className="text-white/40 hover:text-sky-400 transition-all hover:scale-110" title="Twitter / X">
                                                     <Twitter className="w-4 h-4" />
                                                 </a>
                                             )}
                                             {club.social?.facebook && club.social.facebook.trim() !== "" && (
-                                                <a href={club.social.facebook} target="_blank" rel="noreferrer" className="text-neutral-500 hover:text-blue-500 transition-all hover:scale-110" title="Facebook">
+                                                <a href={club.social.facebook} target="_blank" rel="noreferrer" className="text-white/40 hover:text-blue-500 transition-all hover:scale-110" title="Facebook">
                                                     <Facebook className="w-4 h-4" />
                                                 </a>
                                             )}
                                             {club.social?.youtube && club.social.youtube.trim() !== "" && (
-                                                <a href={club.social.youtube} target="_blank" rel="noreferrer" className="text-neutral-500 hover:text-red-500 transition-all hover:scale-110" title="YouTube">
+                                                <a href={club.social.youtube} target="_blank" rel="noreferrer" className="text-white/40 hover:text-red-500 transition-all hover:scale-110" title="YouTube">
                                                     <Youtube className="w-4 h-4" />
                                                 </a>
                                             )}
@@ -465,14 +465,14 @@ export default function ExploreClubs() {
                         <div className="space-y-4">
                             <div className="space-y-1">
                                 <h3 className="text-lg font-bold text-red-400 uppercase tracking-widest">Search Interrupted</h3>
-                                <p className="text-xs text-neutral-600 max-w-xs mx-auto uppercase tracking-tighter">{error}</p>
+                                <p className="text-xs text-white max-w-xs mx-auto uppercase tracking-tighter">{error}</p>
                             </div>
                             <button
                                 onClick={() => {
                                     setError(null);
                                     handleSearch();
                                 }}
-                                className="px-6 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-[10px] font-bold uppercase tracking-widest text-neutral-400 hover:text-white transition-all"
+                                className="px-6 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-[10px] font-bold uppercase tracking-widest text-white hover:text-white transition-all"
                             >
                                 Retry Search
                             </button>
@@ -486,8 +486,8 @@ export default function ExploreClubs() {
                             <Bookmark className="w-10 h-10 text-gold-500/20" />
                         </div>
                         <div className="space-y-1">
-                            <h3 className="text-lg font-bold text-neutral-400 uppercase tracking-widest">No Saved Clubs</h3>
-                            <p className="text-xs text-neutral-600 max-w-xs mx-auto uppercase tracking-tighter">Click the bookmark icon on any club card to save it for later.</p>
+                            <h3 className="text-lg font-bold text-white uppercase tracking-widest">No Saved Clubs</h3>
+                            <p className="text-xs text-white max-w-xs mx-auto uppercase tracking-tighter">Click the bookmark icon on any club card to save it for later.</p>
                         </div>
                     </div>
                 )}
@@ -498,8 +498,8 @@ export default function ExploreClubs() {
                             <Sparkles className="w-10 h-10 text-gold-500/20" />
                         </div>
                         <div className="space-y-1">
-                            <h3 className="text-lg font-bold text-neutral-400 uppercase tracking-widest">Ready for Exploration</h3>
-                            <p className="text-xs text-neutral-600 max-w-xs mx-auto uppercase tracking-tighter">Enter your criteria and launch the discovery sequence to find clubs nationwide.</p>
+                            <h3 className="text-lg font-bold text-white uppercase tracking-widest">Ready for Exploration</h3>
+                            <p className="text-xs text-white max-w-xs mx-auto uppercase tracking-tighter">Enter your criteria and launch the discovery sequence to find clubs nationwide.</p>
                         </div>
                     </div>
                 )}

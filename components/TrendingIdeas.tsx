@@ -90,7 +90,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                             <span className="text-signature-gradient">Trending Ideas</span>
                             <TrendingUp className="w-8 h-8 text-gold-500 flex-shrink-0" />
                         </h2>
-                        <p className="text-neutral-500 text-sm mt-1 uppercase font-bold tracking-widest">AI-Curated Event Blueprints & Market Analysis</p>
+                        <p className="text-white text-sm mt-1 uppercase font-bold tracking-widest">AI-Curated Event Blueprints & Market Analysis</p>
                     </div>
                     <div className="hidden md:flex items-center gap-2 text-[10px] font-bold uppercase tracking-tighter bg-gold-500/5 px-4 py-2 rounded-full border border-gold-500/10">
                         <Sparkles className="w-3 h-3 text-gold-500 flex-shrink-0" /> 
@@ -107,7 +107,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                         onClick={() => setSelectedCategory(cat)}
                         className={`px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${selectedCategory === cat
                             ? "bg-gold-500 text-black shadow-gold-glow"
-                            : "bg-neutral-900/40 text-neutral-500 border border-white/5 hover:border-gold-500/30 hover:text-white"
+                            : "bg-zinc-900/40 text-white border border-white/5 hover:border-gold-500/30 hover:text-white"
                             }`}
                     >
                         {cat}
@@ -125,7 +125,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                         className="flex flex-col items-center justify-center py-32 space-y-4"
                     >
                         <PremiumLoader size="lg" />
-                        <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-[0.3em] animate-pulse">Scanning Global Campus Trends...</p>
+                        <p className="text-[10px] text-white font-bold uppercase tracking-[0.3em] animate-pulse">Scanning Global Campus Trends...</p>
                     </motion.div>
                 ) : error ? (
                     <motion.div
@@ -155,7 +155,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: i * 0.1 }}
-                                className="group relative p-10 bg-neutral-900/40 border border-white/5 rounded-[3rem] hover:border-gold-500/40 transition-all duration-500 overflow-hidden"
+                                className="group relative p-10 bg-zinc-900/40 border border-white/5 rounded-[3rem] hover:border-gold-500/40 transition-all duration-500 overflow-hidden"
                             >
                                 {/* Decorative elements */}
                                 <div className="absolute -top-24 -right-24 w-48 h-48 bg-gold-500/5 blur-[100px] rounded-full group-hover:bg-gold-500/10 transition-all" />
@@ -180,18 +180,18 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
 
                                     <div className="grid grid-cols-2 gap-4 py-4 border-y border-white/5">
                                         <div className="space-y-1">
-                                            <p className="text-[8px] text-neutral-500 font-black uppercase tracking-widest">Complexity</p>
+                                            <p className="text-[8px] text-white font-black uppercase tracking-widest">Complexity</p>
                                             <p className={`text-xs font-bold ${idea.complexity === 'High' ? 'text-red-400' : idea.complexity === 'Medium' ? 'text-signature-gradient' : 'text-green-400'}`}>
                                                 {idea.complexity}
                                             </p>
                                         </div>
                                         <div className="space-y-1 text-right">
-                                            <p className="text-[8px] text-neutral-500 font-black uppercase tracking-widest">Est. Reach</p>
+                                            <p className="text-[8px] text-white font-black uppercase tracking-widest">Est. Reach</p>
                                             <p className="text-xs font-bold text-white font-astronomus tracking-tighter" style={{ fontFamily: 'var(--font-astronomus), sans-serif !important' }}>{idea.reach}</p>
                                         </div>
                                     </div>
 
-                                    <p className="text-sm text-neutral-400 leading-relaxed font-medium line-clamp-2">
+                                    <p className="text-sm text-zinc-100 leading-relaxed font-medium line-clamp-2">
                                         {idea.summary}
                                     </p>
 
@@ -200,7 +200,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                                             <div className="flex items-center gap-2 text-[9px] font-black text-signature-gradient uppercase tracking-widest">
                                                 <Target className="w-3 h-3" /> Market Reference
                                             </div>
-                                            <div className="p-4 bg-black/60 border border-white/10 rounded-2xl text-[11px] text-neutral-300 italic leading-relaxed">
+                                            <div className="p-4 bg-black/60 border border-white/10 rounded-2xl text-[11px] text-zinc-100 italic leading-relaxed">
                                                 &quot;{idea.references}&quot;
                                             </div>
                                         </div>
@@ -209,7 +209,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                                             <div className="flex items-center gap-2 text-[9px] font-black text-blue-400 uppercase tracking-widest">
                                                 <Info className="w-3 h-3" /> Why It&apos;s Trending
                                             </div>
-                                            <p className="text-[11px] text-neutral-500 font-bold leading-relaxed">
+                                            <p className="text-[11px] text-white font-bold leading-relaxed">
                                                 {idea.whyTrending}
                                             </p>
                                         </div>
@@ -217,7 +217,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
 
                                     <button 
                                         onClick={() => setAdoptingIdea(idea)}
-                                        className="w-full mt-4 py-4 bg-white/5 border border-white/5 rounded-2xl text-[10px] font-black uppercase tracking-widest text-neutral-500 group-hover:bg-gold-500 group-hover:text-black group-hover:border-transparent transition-all flex items-center justify-center gap-2"
+                                        className="w-full mt-4 py-4 bg-white/5 border border-white/5 rounded-2xl text-[10px] font-black uppercase tracking-widest text-white group-hover:bg-gold-500 group-hover:text-black group-hover:border-transparent transition-all flex items-center justify-center gap-2"
                                     >
                                         Adopt Blueprint <ChevronRight className="w-4 h-4" />
                                     </button>
@@ -243,7 +243,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                             <h3 className="text-xl font-black text-white uppercase tracking-tighter mb-2 leading-tight">
                                 Customize Blueprint
                             </h3>
-                            <p className="text-neutral-400 text-xs font-bold leading-relaxed mb-6">
+                            <p className="text-white text-xs font-bold leading-relaxed mb-6">
                                 Adopting: <span className="text-signature-gradient">{adoptingIdea.title}</span>. Add any specific custom ideas or opinions below before applying it to your club!
                             </p>
 
@@ -251,7 +251,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                                 value={customInput}
                                 onChange={(e) => setCustomInput(e.target.value)}
                                 placeholder="I want this event to focus heavily on AI, make sure we have a speaker from XYZ..."
-                                className="w-full h-32 px-5 py-4 bg-black/40 border border-white/10 rounded-2xl text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-gold-500/50 mb-6 font-medium leading-relaxed resize-none"
+                                className="w-full h-32 px-5 py-4 bg-black/40 border border-white/10 rounded-2xl text-sm text-white placeholder-zinc-400 focus:outline-none focus:border-gold-500/50 mb-6 font-medium leading-relaxed resize-none"
                             />
 
                             <div className="flex gap-4">
@@ -260,7 +260,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                                         setAdoptingIdea(null);
                                         setCustomInput("");
                                     }}
-                                    className="flex-1 py-4 bg-white/5 border border-white/10 rounded-full text-xs font-black uppercase tracking-widest text-neutral-400 hover:bg-white/10 transition-colors"
+                                    className="flex-1 py-4 bg-white/5 border border-white/10 rounded-full text-xs font-black uppercase tracking-widest text-white hover:bg-white/10 transition-colors"
                                 >
                                     Cancel
                                 </button>

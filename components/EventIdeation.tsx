@@ -29,7 +29,7 @@ export default function EventIdeation({ clubs, onAdopt }: EventIdeationProps) {
                     className={`px-6 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all ${
                         activeTab === 'trending'
                             ? "bg-gold-500 text-black shadow-gold-glow"
-                            : "bg-neutral-900/40 text-neutral-500 border border-white/5 hover:border-gold-500/30 hover:text-white"
+                            : "bg-zinc-900/40 text-white border border-white/5 hover:border-gold-500/30 hover:text-white"
                     }`}
                 >
                     Trending Blueprints
@@ -39,7 +39,7 @@ export default function EventIdeation({ clubs, onAdopt }: EventIdeationProps) {
                     className={`px-6 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all ${
                         activeTab === 'brainstorm'
                             ? "bg-gold-500 text-black shadow-gold-glow"
-                            : "bg-neutral-900/40 text-neutral-500 border border-white/5 hover:border-gold-500/30 hover:text-white"
+                            : "bg-zinc-900/40 text-white border border-white/5 hover:border-gold-500/30 hover:text-white"
                     }`}
                 >
                     AI Brainstorming

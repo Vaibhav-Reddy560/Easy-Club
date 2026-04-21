@@ -71,8 +71,8 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
 
       <div className="space-y-8">
         <header className="border-b border-white/5 pb-8">
-          <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Account <span className="text-neutral-600 font-normal ml-2">/ Preferences</span></h2>
-          <p className="text-neutral-500 text-sm mt-2 max-w-lg font-medium">
+          <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Account <span className="text-white font-normal ml-2">/ Preferences</span></h2>
+          <p className="text-zinc-100 text-sm mt-2 max-w-lg font-medium">
             Manage your digital identity and hub security settings. 
           </p>
         </header>
@@ -109,26 +109,26 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
                   <h3 className="text-2xl font-bold text-white tracking-tight">{user?.displayName || "Club Member"}</h3>
                   <div className="flex items-center gap-2 mt-1">
                     <CircleCheckBig className="w-4 h-4 text-green-500" />
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-500">Verified System User</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-100">Verified System User</span>
                   </div>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-2xl bg-black/40 border border-white/5">
-                  <p className="text-[9px] font-bold text-neutral-500 uppercase tracking-widest mb-1">Primary Email</p>
+                  <p className="text-[9px] font-bold text-white uppercase tracking-widest mb-1">Primary Email</p>
                   <p className="text-sm text-white font-medium truncate">{user?.email}</p>
                 </div>
                 <div className="p-4 rounded-2xl bg-black/40 border border-white/5">
-                  <p className="text-[9px] font-bold text-neutral-500 uppercase tracking-widest mb-1">Authorization Method</p>
+                  <p className="text-[9px] font-bold text-white uppercase tracking-widest mb-1">Authorization Method</p>
                   <div className="flex items-center gap-2">
                     <Image src="https://www.google.com/favicon.ico" width={12} height={12} alt="Google" className="w-3 h-3" unoptimized />
                     <p className="text-sm text-white font-medium">Google SSO</p>
                   </div>
                 </div>
                 <div className="p-4 rounded-2xl bg-black/40 border border-white/5 sm:col-span-2">
-                  <p className="text-[9px] font-bold text-neutral-500 uppercase tracking-widest mb-1">Unique Identifier (UID)</p>
-                  <p className="text-[10px] text-neutral-500 font-mono tracking-tighter truncate">{user?.uid}</p>
+                  <p className="text-[9px] font-bold text-white uppercase tracking-widest mb-1">Unique Identifier (UID)</p>
+                  <p className="text-[10px] text-zinc-100 font-mono tracking-tighter truncate">{user?.uid}</p>
                 </div>
               </div>
             </div>
@@ -148,11 +148,11 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
                   <div key={i} className="flex items-center justify-between p-4 rounded-2xl hover:bg-white/5 transition-all cursor-pointer group">
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-gold-500/10 transition-colors">
-                        <item.icon className="w-5 h-5 text-neutral-500 group-hover:text-gold-500 transition-colors" />
+                        <item.icon className="w-5 h-5 text-white group-hover:text-gold-500 transition-colors" />
                       </div>
                       <div>
                         <p className="text-[11px] font-bold text-white group-hover:text-signature-gradient transition-colors">{item.label}</p>
-                        <p className="text-[9px] text-neutral-600 font-medium">{item.sub}</p>
+                        <p className="text-[9px] text-zinc-100 font-medium">{item.sub}</p>
                       </div>
                     </div>
                     <span className="text-[9px] font-black uppercase tracking-widest text-green-500/50">{item.status}</span>
@@ -181,16 +181,16 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
                   <button key={i} className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gold-500/10 transition-all text-left group">
                     <div className="flex items-center gap-3">
                       <item.icon className="w-4 h-4 text-gold-500/70" />
-                      <span className="text-[10px] font-bold text-neutral-300 group-hover:text-white uppercase tracking-widest">{item.label}</span>
+                      <span className="text-[10px] font-bold text-white group-hover:text-white uppercase tracking-widest">{item.label}</span>
                     </div>
-                    <ExternalLink className="w-3 h-3 text-neutral-600 group-hover:text-gold-500" />
+                    <ExternalLink className="w-3 h-3 text-white group-hover:text-gold-500" />
                   </button>
                 ))}
               </div>
             </div>
 
-            <div className="bg-neutral-900/40 border border-white/5 rounded-[2.5rem] p-8">
-              <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest leading-relaxed">
+            <div className="bg-zinc-900/40 border border-white/5 rounded-[2.5rem] p-8">
+              <p className="text-[10px] font-bold text-zinc-100 uppercase tracking-widest leading-relaxed">
                 Your data is stored securely in Firebase and localized for peak performance. You can extract your complete organization history as a JSON file.
               </p>
               <button 

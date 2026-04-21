@@ -159,12 +159,12 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
     if (clubs.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center py-32 space-y-6 text-center">
-                <div className="w-20 h-20 bg-neutral-900 border border-white/5 rounded-full flex items-center justify-center animate-pulse">
-                    <Banknote className="w-10 h-10 text-neutral-700" />
+                <div className="w-20 h-20 bg-zinc-900 border border-white/10 rounded-full flex items-center justify-center animate-pulse">
+                    <Banknote className="w-10 h-10 text-white/50" />
                 </div>
                 <div className="space-y-2">
                     <h3 className="text-xl font-bold text-white">No Organizations for Funding</h3>
-                    <p className="text-neutral-500 text-sm max-w-xs mx-auto font-medium">Create a club to unlock the Sponsorship Pipeline Engine.</p>
+                    <p className="text-white text-sm max-w-xs mx-auto font-medium">Create a club to unlock the Sponsorship Pipeline Engine.</p>
                 </div>
             </div>
         );
@@ -180,17 +180,17 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                 <div>
                     <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">
                     Funding Forge
-                </h2>    <p className="text-neutral-500 text-sm mt-1 uppercase font-bold tracking-widest">Sponsorship Pipeline & Financial Resource Manager</p>
+                </h2>    <p className="text-white text-sm mt-1 uppercase font-bold tracking-widest">Sponsorship Pipeline & Financial Resource Manager</p>
                 </div>
 
-                <div className="flex gap-2 p-1 bg-neutral-900/60 rounded-2xl border border-white/5">
+                <div className="flex gap-2 p-1 bg-zinc-900/60 rounded-2xl border border-white/5">
                     {clubs.map((c) => (
                         <button
                             key={c.id}
                             onClick={() => setSelectedClubId(c.id)}
                             className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all ${selectedClubId === c.id
                                 ? "bg-gold-500 text-black shadow-gold-glow"
-                                : "text-neutral-500 hover:text-white"
+                                : "text-white"
                                 }`}
                         >
                             {c.name}
@@ -207,11 +207,11 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                     { label: "Active Partners", val: String(activePartners), sub: "Closed partnerships", icon: Building2, color: "text-purple-400" },
                     { label: "Total Leads", val: String(sponsors.length), sub: "Across all stages", icon: Target, color: "text-blue-400" },
                 ].map((stat, i) => (
-                    <div key={i} className="p-8 bg-neutral-900/40 border border-white/5 rounded-[2rem] group hover:border-gold-500/20 transition-all">
+                    <div key={i} className="p-8 bg-zinc-900/40 border border-white/5 rounded-[2rem] group hover:border-gold-500/20 transition-all">
                         <stat.icon className={`w-5 h-5 mb-4 ${stat.color}`} />
-                        <p className="text-[10px] text-neutral-500 font-black uppercase tracking-widest mb-1">{stat.label}</p>
+                        <p className="text-[10px] text-white font-black uppercase tracking-widest mb-1">{stat.label}</p>
                         <p className="text-3xl font-black text-white mb-2">{stat.val}</p>
-                        <p className="text-[9px] text-neutral-600 font-bold uppercase tracking-tight">{stat.sub}</p>
+                        <p className="text-[9px] text-white font-bold uppercase tracking-tight">{stat.sub}</p>
                     </div>
                 ))}
             </div>
@@ -237,11 +237,11 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                             <div key={p.stage} className="p-6 bg-black/40 border border-white/5 rounded-3xl space-y-3 hover:border-white/10 transition-all">
                                 <div className="flex items-center gap-2">
                                     <div className={`w-1.5 h-1.5 rounded-full ${STAGE_DOT[p.stage]}`} />
-                                    <span className="text-[10px] font-black uppercase text-neutral-500 tracking-tighter">{p.stage}</span>
+                                    <span className="text-[10px] font-black uppercase text-white tracking-tighter">{p.stage}</span>
                                 </div>
                                 <div>
                                     <p className="text-xl font-bold text-white">{p.count}</p>
-                                    <p className="text-[9px] text-neutral-600 font-bold uppercase">{formatINR(p.value)}</p>
+                                    <p className="text-[9px] text-white font-bold uppercase">{formatINR(p.value)}</p>
                                 </div>
                             </div>
                         ))}
@@ -251,13 +251,13 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                     <div className="bg-black/40 border border-white/5 rounded-[2.5rem] overflow-hidden">
                         {sponsors.length === 0 ? (
                             <div className="py-20 flex flex-col items-center justify-center text-center space-y-4">
-                                <Briefcase className="w-10 h-10 text-neutral-700" />
-                                <p className="text-[11px] font-bold text-neutral-500 uppercase tracking-widest">No leads yet</p>
-                                <p className="text-[9px] text-neutral-700 max-w-xs">Click &ldquo;Add Lead&rdquo; above to log your first sponsorship deal.</p>
+                                <Briefcase className="w-10 h-10 text-white/40" />
+                                <p className="text-[11px] font-bold text-white uppercase tracking-widest">No leads yet</p>
+                                <p className="text-[9px] text-zinc-100 max-w-xs">Click &ldquo;Add Lead&rdquo; above to log your first sponsorship deal.</p>
                             </div>
                         ) : (
                             <table className="w-full text-left">
-                                <thead className="bg-white/5 text-neutral-500 text-[10px] font-black uppercase tracking-widest">
+                                <thead className="bg-white/5 text-white text-[10px] font-black uppercase tracking-widest">
                                     <tr>
                                         <th className="px-8 py-4">Company</th>
                                         <th className="px-8 py-4">Category</th>
@@ -271,17 +271,17 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                         <tr key={deal.id} className="hover:bg-white/5 transition-all group">
                                             <td className="px-8 py-6 font-bold text-sm">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 rounded-lg bg-neutral-900 border border-white/10 flex items-center justify-center">
-                                                        <Building2 className="w-4 h-4 text-neutral-500" />
+                                                    <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center">
+                                                        <Building2 className="w-4 h-4 text-white/50" />
                                                     </div>
                                                     <div>
                                                         <p>{deal.company}</p>
-                                                        {deal.notes && <p className="text-[9px] text-neutral-600 font-normal line-clamp-1">{deal.notes}</p>}
+                                                        {deal.notes && <p className="text-[9px] text-zinc-100 font-normal line-clamp-1">{deal.notes}</p>}
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="px-8 py-6">
-                                                <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-tight">{deal.category}</span>
+                                                <span className="text-[10px] font-bold text-white uppercase tracking-tight">{deal.category}</span>
                                             </td>
                                             <td className="px-8 py-6 font-bold text-white">{formatINR(deal.value)}</td>
                                             <td className="px-8 py-6">
@@ -295,7 +295,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                                         <button
                                                             onClick={() => handleAdvanceStage(deal.id)}
                                                             title={`Advance to ${STAGES[STAGES.indexOf(deal.stage) + 1]}`}
-                                                            className="p-2 text-neutral-500 hover:text-gold-500 transition-colors rounded-lg hover:bg-white/5"
+                                                            className="p-2 text-white hover:text-gold-500 transition-colors rounded-lg hover:bg-white/5"
                                                         >
                                                             <ChevronRight className="w-4 h-4" />
                                                         </button>
@@ -303,7 +303,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                                     <button
                                                         onClick={() => handleDeleteLead(deal.id)}
                                                         title="Remove lead"
-                                                        className="p-2 text-neutral-600 hover:text-red-500 transition-colors rounded-lg hover:bg-red-500/5"
+                                                        className="p-2 text-white/60 hover:text-red-500 transition-colors rounded-lg hover:bg-red-500/5"
                                                     >
                                                         <Trash2 className="w-4 h-4" />
                                                     </button>
@@ -330,7 +330,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                 <p className="text-[10px] text-signature-gradient font-black uppercase tracking-widest">AI Generated</p>
                             </div>
                         </div>
-                        <p className="text-[11px] text-neutral-400 font-medium leading-relaxed">
+                        <p className="text-[11px] text-white font-medium leading-relaxed">
                             Your club&apos;s value proposition is dynamically generated from your real sponsor pipeline and event history.
                         </p>
                         <button
@@ -349,13 +349,13 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                     </div>
 
                     {/* Smart Suggestions — derived from real pipeline data */}
-                    <div className="p-8 bg-neutral-900/40 border border-white/5 rounded-[3rem] space-y-6">
+                    <div className="p-8 bg-zinc-900/40 border border-white/5 rounded-[3rem] space-y-6">
                         <h5 className="font-bold text-white flex items-center gap-2">
                             <Sparkles className="w-5 h-5 text-gold-500" /> Smart Insights
                         </h5>
                         <div className="space-y-4">
                             {sponsors.length === 0 && (
-                                <p className="text-[10px] text-neutral-600 font-medium">Add your first lead to unlock intelligent pipeline insights.</p>
+                                <p className="text-[10px] text-white font-medium">Add your first lead to unlock intelligent pipeline insights.</p>
                             )}
                             {sponsors.filter(s => s.stage === 'Prospecting').length > 0 && (
                                 <div className="flex gap-4 p-4 rounded-2xl bg-black/40 border border-white/5 border-blue-500/10 transition-all">
@@ -364,7 +364,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                     </div>
                                     <div>
                                         <p className="text-[11px] font-bold text-white">{sponsors.filter(s => s.stage === 'Prospecting').length} leads need first contact</p>
-                                        <p className="text-[9px] text-neutral-600 mt-1 font-medium">Move them to &ldquo;Contacted&rdquo; after your outreach.</p>
+                                        <p className="text-[9px] text-white mt-1 font-medium">Move them to &ldquo;Contacted&rdquo; after your outreach.</p>
                                     </div>
                                 </div>
                             )}
@@ -375,7 +375,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                     </div>
                                     <div>
                                         <p className="text-[11px] font-bold text-white">{formatINR(sponsors.filter(s => s.stage === 'Negotiating').reduce((a, s) => a + s.value, 0))} in active negotiation</p>
-                                        <p className="text-[9px] text-neutral-600 mt-1 font-medium">Close these deals to hit your revenue targets.</p>
+                                        <p className="text-[9px] text-white mt-1 font-medium">Close these deals to hit your revenue targets.</p>
                                     </div>
                                 </div>
                             )}
@@ -386,7 +386,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                     </div>
                                     <div>
                                         <p className="text-[11px] font-bold text-white">{formatINR(totalRevenue)} successfully secured</p>
-                                        <p className="text-[9px] text-neutral-600 mt-1 font-medium">Great work! Download your pitch deck to attract more.</p>
+                                        <p className="text-[9px] text-white mt-1 font-medium">Great work! Download your pitch deck to attract more.</p>
                                     </div>
                                 </div>
                             )}
@@ -408,16 +408,16 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                             <div className="flex items-center justify-between">
                                 <div>
                                     <h3 className="text-2xl font-bold text-white">Add Sponsor Lead</h3>
-                                    <p className="text-neutral-500 text-xs mt-1">Log a new potential partnership for {currentClub?.name}</p>
+                                    <p className="text-white text-xs mt-1">Log a new potential partnership for {currentClub?.name}</p>
                                 </div>
-                                <button onClick={() => setIsAddingLead(false)} className="text-neutral-500 hover:text-white transition-colors">
+                                <button onClick={() => setIsAddingLead(false)} className="text-white transition-colors">
                                     <X className="w-5 h-5" />
                                 </button>
                             </div>
 
                             <div className="space-y-4">
                                 <div>
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-2 block">Company Name *</label>
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-white mb-2 block">Company Name *</label>
                                     <input
                                         type="text"
                                         value={newCompany}
@@ -429,7 +429,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-2 block">Category</label>
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-white mb-2 block">Category</label>
                                         <input
                                             type="text"
                                             value={newCategory}
@@ -439,7 +439,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                         />
                                     </div>
                                     <div>
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-2 block">Deal Value (₹) *</label>
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-white mb-2 block">Deal Value (₹) *</label>
                                         <input
                                             type="number"
                                             value={newValue}
@@ -450,13 +450,13 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-2 block">Stage</label>
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-white mb-2 block">Stage</label>
                                     <div className="flex gap-2 p-1 bg-black border border-white/10 rounded-2xl">
                                         {STAGES.map(s => (
                                             <button
                                                 key={s}
                                                 onClick={() => setNewStage(s)}
-                                                className={`flex-1 py-2 rounded-xl text-[9px] font-black uppercase tracking-tighter transition-all ${newStage === s ? 'bg-gold-500 text-black' : 'text-neutral-500 hover:text-white'}`}
+                                                className={`flex-1 py-2 rounded-xl text-[9px] font-black uppercase tracking-tighter transition-all ${newStage === s ? 'bg-gold-500 text-black' : 'text-white hover:text-white'}`}
                                             >
                                                 {s}
                                             </button>
@@ -464,7 +464,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-2 block">Notes (optional)</label>
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-white mb-2 block">Notes (optional)</label>
                                     <input
                                         type="text"
                                         value={newNotes}
@@ -478,7 +478,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                             <div className="flex gap-4 pt-2">
                                 <button
                                     onClick={() => setIsAddingLead(false)}
-                                    className="flex-1 py-4 border border-white/10 rounded-2xl text-[10px] font-bold uppercase tracking-widest text-neutral-400 hover:bg-white/5 transition-all"
+                                    className="flex-1 py-4 border border-white/10 rounded-2xl text-[10px] font-bold uppercase tracking-widest text-white hover:bg-white/5 transition-all"
                                 >
                                     Cancel
                                 </button>

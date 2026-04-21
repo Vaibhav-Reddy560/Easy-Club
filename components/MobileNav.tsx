@@ -34,9 +34,9 @@ export default function MobileNav({ activeSection, onSectionChange, userRole = '
                     <button
                         key={section.id}
                         onClick={() => onSectionChange(section.id)}
-                        className={`flex flex-col items-center gap-1.5 transition-all duration-300 ${isActive ? 'text-gold-400 scale-110' : 'text-neutral-500'}`}
+                        className={`flex flex-col items-center gap-1.5 transition-all duration-300 ${isActive ? 'text-gold-400 scale-110' : 'text-zinc-300'}`}
                     >
-                        <Icon className={`w-5 h-5 ${isActive ? 'text-gold-400' : 'text-neutral-500'}`} />
+                        <Icon className={`w-5 h-5 ${isActive ? 'text-gold-400' : 'text-zinc-300'}`} />
                         <span className={`text-[9px] font-bold uppercase tracking-tight ${isActive ? 'text-signature-gradient' : ''}`}>
                             {section.label}
                         </span>

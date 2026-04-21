@@ -43,8 +43,8 @@ export default function AnalyticsView({ clubsCount, eventsCount, onBack }: Analy
 
       <div className="space-y-12">
         <header className="border-b border-white/5 pb-8">
-          <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Usage <span className="text-neutral-600 font-normal ml-2">/ Analytics</span></h2>
-          <p className="text-neutral-500 text-sm mt-2 max-w-lg font-medium">
+          <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Usage <span className="text-white font-normal ml-2">/ Analytics</span></h2>
+          <p className="text-white text-sm mt-2 max-w-lg font-medium">
             Intelligence overview of your club establishes and event productions.
           </p>
         </header>
@@ -57,12 +57,12 @@ export default function AnalyticsView({ clubsCount, eventsCount, onBack }: Analy
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="bg-neutral-900/40 border border-white/5 rounded-[2rem] p-6 hover:border-white/10 transition-all group"
+              className="bg-zinc-900/40 border border-white/5 rounded-[2rem] p-6 hover:border-white/10 transition-all group"
             >
               <div className={`w-12 h-12 ${m.bg} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
                 <m.icon className={`w-6 h-6 ${m.color}`} />
               </div>
-              <p className="text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-1">{m.label}</p>
+              <p className="text-[10px] font-black uppercase tracking-widest text-white mb-1">{m.label}</p>
               <h4 className="text-xl text-white tracking-tighter" style={{ fontFamily: 'var(--font-astronomus) !important' }}>{m.value}</h4>
             </motion.div>
           ))}
@@ -70,11 +70,11 @@ export default function AnalyticsView({ clubsCount, eventsCount, onBack }: Analy
 
         {/* Secondary Charts Section (Mock) */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 bg-neutral-900/40 border border-white/5 rounded-[2.5rem] p-10 relative overflow-hidden">
+          <div className="lg:col-span-2 bg-zinc-900/40 border border-white/5 rounded-[2.5rem] p-10 relative overflow-hidden">
             <div className="flex items-center justify-between mb-10">
               <div>
                 <h4 className="text-xl font-bold text-white tracking-tight">Productivity Pulse</h4>
-                <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-widest mt-1">Real-time usage patterns</p>
+                <p className="text-[10px] text-white font-bold uppercase tracking-widest mt-1">Real-time usage patterns</p>
               </div>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
@@ -82,8 +82,8 @@ export default function AnalyticsView({ clubsCount, eventsCount, onBack }: Analy
                   <span className="text-[9px] font-bold text-white uppercase tracking-widest">Growth</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-neutral-700" />
-                  <span className="text-[9px] font-bold text-neutral-500 uppercase tracking-widest">Target</span>
+                  <div className="w-2 h-2 rounded-full bg-zinc-700" />
+                  <span className="text-[9px] font-bold text-white uppercase tracking-widest">Target</span>
                 </div>
               </div>
             </div>
@@ -106,12 +106,12 @@ export default function AnalyticsView({ clubsCount, eventsCount, onBack }: Analy
             
             <div className="flex justify-between mt-8 px-4">
               {['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'].map(m => (
-                <span key={m} className="text-[8px] font-black text-neutral-600 tracking-tighter">{m}</span>
+                <span key={m} className="text-[8px] font-black text-white tracking-tighter">{m}</span>
               ))}
             </div>
           </div>
 
-          <div className="bg-neutral-900/40 border border-white/5 rounded-[2.5rem] p-10 space-y-8">
+          <div className="bg-zinc-900/40 border border-white/5 rounded-[2.5rem] p-10 space-y-8">
             <h4 className="text-xl font-bold text-white tracking-tight">Hub Distribution</h4>
             
             <div className="space-y-6">
@@ -124,7 +124,7 @@ export default function AnalyticsView({ clubsCount, eventsCount, onBack }: Analy
                   <div className="flex justify-between items-center px-1">
                     <div className="flex items-center gap-2">
                        <item.icon className="w-3 h-3 text-gold-500/50" />
-                       <span className="text-[10px] uppercase font-bold text-neutral-400 tracking-widest">{item.label}</span>
+                       <span className="text-[10px] uppercase font-bold text-white tracking-widest">{item.label}</span>
                     </div>
                     <span className="text-[10px] font-bold text-white">{item.pct}%</span>
                   </div>
@@ -141,7 +141,7 @@ export default function AnalyticsView({ clubsCount, eventsCount, onBack }: Analy
             </div>
 
             <div className="pt-6 border-t border-white/5 text-center">
-              <p className="text-[10px] text-neutral-500 font-medium italic">
+              <p className="text-[10px] text-white font-medium italic">
                 &quot;Usage patterns indicate a high focus on Visual Identity establish flows.&quot;
               </p>
             </div>
