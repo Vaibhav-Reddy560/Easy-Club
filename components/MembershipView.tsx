@@ -182,7 +182,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                             onClick={() => handlePromote(member.id, 'General Member')}
                             className="px-4 py-2 bg-white/5 hover:bg-gold-500/20 text-white hover:brightness-110 rounded-lg text-[9px] font-bold uppercase tracking-widest border border-transparent hover:border-gold-500/30 transition-all"
                           >
-                            Promote to Junior Core
+                            Promote to Core Team
                           </button>
                           <button
                             onClick={() => handleRemove(member.id)}
@@ -278,7 +278,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
               <Shield className="w-16 h-16 text-neutral-700 mb-6" />
               <h4 className="text-xl font-bold text-white mb-4">Core Team Hierarchy</h4>
               <p className="text-sm text-neutral-500 leading-relaxed max-w-sm mb-8">
-                The Club Core is composed of driven individuals who manage the club. Recruit members first, then promote exceptional candidates to <strong className="text-blue-400 font-bold">Junior Core</strong> and <strong className="text-signature-gradient font-bold">Senior Core</strong> from the Member Directory.
+                The Club Core is composed of driven individuals who manage the club. Recruit members first, then promote exceptional candidates to the <strong className="text-signature-gradient font-bold">Core Team</strong> from the Member Directory to grant management access.
               </p>
               <button 
                 onClick={() => setActiveTab('recruitment-pool')}

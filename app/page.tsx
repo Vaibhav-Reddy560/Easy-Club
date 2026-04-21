@@ -11,7 +11,9 @@ import {
   Palette,
   FileText,
   Share2,
-  Pencil
+  Pencil,
+  Loader2,
+  CheckCircle2
 } from "lucide-react";
 
 // Import components from the components directory
@@ -389,6 +391,26 @@ export default function App() {
     }
   };
 
+  /**
+   * Centralized update handler for all modules.
+   * Uses functional updates to ensure data integrity during rapid changes.
+   */
+  const onUpdateClub = async (updatedClub: Club) => {
+    setIsSaving(true);
+    try {
+      // 1. Update local state using functional update to ensure we have the latest 'prev'
+      setClubs(prev => prev.map(c => c.id === updatedClub.id ? updatedClub : c));
+      
+      // 2. Persist to Firestore
+      const success = await saveClub(updatedClub as Club & { ownerId: string });
+      if (!success) {
+        console.error("[Persistence] Failed to sync club updates to cloud.");
+      }
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const handleNavChange = (section: NavSection) => {
     setActiveNav(section);
     // REMOVED: Reset internal view if switching back to My Clubs
@@ -734,17 +756,7 @@ export default function App() {
           <div className={`${activeNav === 'sponsorship' ? 'block' : 'hidden'}`}>
             <SponsorshipManager
               clubs={clubs}
-              onUpdateClub={async (updatedClub: Club) => {
-                setClubs(prevClubs => prevClubs.map(c => c.id === updatedClub.id ? updatedClub : c));
-                if (user && updatedClub.ownerId === user.uid) {
-                  setIsSaving(true);
-                  try {
-                    await saveClub(updatedClub as Club & { ownerId: string });
-                  } finally {
-                    setTimeout(() => setIsSaving(false), 500);
-                  }
-                }
-              }}
+              onUpdateClub={onUpdateClub}
             />
           </div>
 
@@ -831,33 +843,14 @@ export default function App() {
                 >
                   Cancel
                 </button>
-                <div className="flex items-center gap-6">
-              {/* Sync Indicator */}
-              <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-neutral-900 border border-white/5 rounded-full">
-                {(isSaving || isSyncing) ? (
-                  <>
-                    <Loader2 className="w-3 h-3 text-gold-500 animate-spin" />
-                    <span className="text-[9px] font-black uppercase tracking-widest text-neutral-400">
-                      {isSaving ? 'Cloud Backup...' : 'Syncing Hub...'}
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <CheckCircle2 className="w-3 h-3 text-green-500" />
-                    <span className="text-[9px] font-black uppercase tracking-widest text-neutral-500">
-                      Sync Secured
-                    </span>
-                  </>
-                )}
-              </div>
-              
-              <button 
-                onClick={() => setProfileOpen(!profileOpen)}
-                className="w-10 h-10 rounded-xl bg-gradient-to-br from-neutral-800 to-neutral-900 flex items-center justify-center text-signature-gradient font-black border border-white/5 hover:border-gold-500/20 transition-all shadow-xl"
-              >
-                {user.email?.[0].toUpperCase() || 'U'}
-              </button>
-            </div>
+                <button
+                  onClick={confirmDelete}
+                  disabled={isSaving}
+                  className="flex-1 bg-red-500/10 border border-red-500/20 text-red-500 font-bold py-4 rounded-xl uppercase tracking-widest hover:bg-red-500/20 transition-all flex items-center justify-center gap-2"
+                >
+                  {isSaving ? <Loader2 className="w-3 h-3 animate-spin"/> : <Trash2 className="w-3 h-3" />}
+                  Confirm Delete
+                </button>
               </div>
             </motion.div>
           </div>
