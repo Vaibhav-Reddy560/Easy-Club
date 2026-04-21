@@ -7,6 +7,7 @@ import { useGenerator } from "@/hooks/useGenerator";
 import { exportToDocx, exportToExcel } from "@/lib/export-utils";
 import { BorderBeam } from "@/components/animations/BorderBeam";
 import { useTasks } from "@/lib/TaskContext";
+import TypewriterLoader from "@/components/ui/TypewriterLoader";
 
 interface ContentWorkspaceProps {
   activeEvent: ClubEvent | undefined;
@@ -242,9 +243,9 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
                 </div>
               </div>
             ) : letterGen.status === 'generating' ? (
-              <div className="py-20 flex flex-col items-center justify-center space-y-4 animate-pulse">
-                <FileText className="w-8 h-8 text-gold-500/40" />
-                <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Drafting Professional Letter</p>
+              <div className="py-16 flex flex-col items-center justify-center space-y-6">
+                <TypewriterLoader />
+                <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest animate-pulse">Drafting Professional Letter</p>
               </div>
             ) : (
               <button 
