@@ -10,6 +10,7 @@ import { useGenerator } from "@/hooks/useGenerator";
 import { motion, AnimatePresence } from "framer-motion";
 import * as htmlToImage from "html-to-image";
 import { BorderBeam } from "@/components/animations/BorderBeam";
+import DesignLoader from "@/components/ui/DesignLoader";
 
 // ─── Types ───────────────────────────────────────────────────────────
 interface DesignWorkspaceProps {
@@ -518,6 +519,25 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
 
                     {/* Overlay gradient for readability */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40" />
+
+                    {/* Generation Loader Overlay */}
+                    <AnimatePresence>
+                      {imageGen.status === "generating" && (
+                        <motion.div 
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          className="absolute inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/20"
+                        >
+                          <div className="scale-75 sm:scale-100">
+                            <DesignLoader />
+                            <p className="text-[10px] text-white font-bold uppercase tracking-[0.3em] text-center mt-4 animate-pulse">
+                              Sketching Visuals...
+                            </p>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
 
                     {/* Editable content overlay */}
                     <div className="absolute inset-0 p-8 flex flex-col justify-between" style={{ fontFamily }}>
