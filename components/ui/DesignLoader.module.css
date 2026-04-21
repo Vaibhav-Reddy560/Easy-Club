@@ -26,35 +26,34 @@
   bottom: -6px;
   width: 18px;
   height: 110px;
-  border-radius: 20px 20px 50px 50px;
+  border-radius: 20px 20px 5px 5px;
   background-repeat: no-repeat;
   
-  /* The Pencil Body & Tip Design - More dimension */
+  /* The Pencil Body & Tip Design - Refined for realistic gold depth */
   background-image: 
-    /* Pencil Tip - Gold lead with extra glow */
-    linear-gradient(#FFE080 3px, #FFB405 6px, transparent 0),
-    /* Pencil Tip Shading - Light wood with more texture */
-    linear-gradient(45deg, rgba(212, 175, 55, 0.3) 49%, #FFF4B0 51%),
-    linear-gradient(315deg, rgba(212, 175, 55, 0.3) 49%, #FFF4B0 51%),
-    /* Pencil Body - Complex Multi-stop Gradient for metallic look */
-    linear-gradient(to right, #AE7102 0%, #FFB405 25%, #FFDF80 50%, #FFB405 75%, #AE7102 100%);
+    /* 1. Pencil Lead Tip - Deep Amber */
+    linear-gradient(#AE7102 5px, transparent 0),
+    /* 2. Wooden Cone Shading - Honey Wood tones */
+    linear-gradient(45deg, rgba(174, 113, 2, 0.2) 49%, #E8A800 51%),
+    linear-gradient(315deg, rgba(174, 113, 2, 0.2) 49%, #E8A800 51%),
+    /* 3. Pencil Body - Signature Gold with honey-gold center (not white) */
+    linear-gradient(to right, #AE7102 0%, #D4960A 20%, #FFB405 50%, #D4960A 80%, #AE7102 100%);
     
-  background-size: 3px 6px, 9px 9px, 9px 9px, 100% 98px;
-  background-position: center bottom, left 98px, right 98px, left top;
+  background-size: 4px 5px, 9px 12px, 9px 12px, 100% 93px;
+  background-position: center bottom, left bottom, right bottom, left top;
   transform: rotate(25deg);
   animation: 
     pencilRot 4s cubic-bezier(0.4, 0, 0.2, 1) infinite,
-    pencilShine 2s linear infinite;
+    pencilGlint 3s ease-in-out infinite;
   box-shadow: 
-    0 10px 25px rgba(0, 0, 0, 0.5),
-    0 0 15px rgba(255, 180, 5, 0.2);
+    0 8px 20px rgba(0, 0, 0, 0.4),
+    0 0 10px rgba(212, 150, 10, 0.15);
   z-index: 2;
 }
 
-@keyframes pencilShine {
-  0% { filter: brightness(1); }
-  50% { filter: brightness(1.2) contrast(1.1); }
-  100% { filter: brightness(1); }
+@keyframes pencilGlint {
+  0%, 100% { filter: contrast(1); }
+  50% { filter: contrast(1.08) brightness(1.05); }
 }
 
 @keyframes drawLine {
