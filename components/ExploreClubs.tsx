@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Search, MapPin, Instagram, Linkedin, Twitter, Facebook, ExternalLink, Loader2, Sparkles, Globe, Youtube, Bookmark, BookmarkCheck } from "lucide-react";
+import RadarDiscoveryLoader from "./ui/RadarDiscoveryLoader";
 import { useAuth } from "@/lib/auth";
 import { saveExploreClub, removeExploreClub, subscribeSavedExploreClubs } from "@/lib/db";
 import { ScrapedClub } from "@/lib/types";
@@ -346,8 +347,13 @@ export default function ExploreClubs() {
 
             {/* RESULTS */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {loading && (
+                    <div className="col-span-full py-12">
+                        <RadarDiscoveryLoader label="Scanning national database for organizations..." />
+                    </div>
+                )}
                 <AnimatePresence mode="popLayout">
-                    {displayedClubs.map((club, idx) => {
+                    {!loading && displayedClubs.map((club, idx) => {
                         const clubKey = `${club.name}__${club.college}`;
                         const isSaved = savedClubKeys.has(clubKey);
 

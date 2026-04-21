@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Search, MapPin, Calendar, Trophy, ExternalLink, Loader2, Sparkles } from "lucide-react";
+import RadarDiscoveryLoader from "./ui/RadarDiscoveryLoader";
 
 const EVENT_CATEGORIES = ["Hackathon", "Workshop", "Summit", "Competition", "Cultural", "Webinar"];
 const EVENT_TYPES = ["Technical", "Non-Technical", "Mixed"];
@@ -206,8 +207,13 @@ export default function ExploreEvents() {
 
             {/* RESULTS */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {loading && (
+                    <div className="col-span-full py-12">
+                        <RadarDiscoveryLoader label="Scanning national activity stream..." />
+                    </div>
+                )}
                 <AnimatePresence mode="popLayout">
-                    {events.map((event, idx) => (
+                    {!loading && events.map((event, idx) => (
                         <motion.div
                             key={event.name + idx}
                             initial={{ opacity: 0, scale: 0.9 }}
