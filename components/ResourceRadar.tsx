@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Search, MapPin, Users, Award, ExternalLink, Linkedin, Twitter, Github, Globe, Loader2, Sparkles, Trophy, Mail } from "lucide-react";
-import PremiumLoader from "@/components/ui/PremiumLoader";
 import { BorderBeam } from "@/components/animations/BorderBeam";
 
 interface ResourcePerson {
@@ -91,7 +90,7 @@ export default function ResourceRadar() {
                         disabled={loading}
                         className="px-8 py-4 bg-gold-500 hover:bg-gold-600 disabled:bg-zinc-800 disabled:text-zinc-200 text-black font-black uppercase tracking-widest text-[11px] rounded-2xl transition-all shadow-lg shadow-gold-500/10 flex items-center justify-center gap-2"
                     >
-                        {loading ? <PremiumLoader size="sm" dotCount={3} /> : <Sparkles className="w-4 h-4" />}
+                        {loading ? <Loader2 className="w-4 h-4 animate-spin text-black" /> : <Sparkles className="w-4 h-4" />}
                         Scan Talent
                     </button>
                 </div>
@@ -106,13 +105,24 @@ export default function ResourceRadar() {
                         exit={{ opacity: 0 }}
                         className="py-32 text-center space-y-6"
                     >
-                        <div className="relative w-40 h-40 mx-auto glass-panel rounded-full flex items-center justify-center overflow-hidden border-gold-500/20">
-                            <div className="absolute inset-0 border-2 border-gold-500/20 rounded-full animate-ping" />
-                            <div className="absolute inset-0 border-2 border-gold-500 border-t-transparent rounded-full animate-spin [animation-duration:3s]" />
-                            <Users className="w-10 h-10 text-gold-500/40 relative z-10" />
+                        <div className="relative w-48 h-48 mx-auto flex items-center justify-center">
+                            {/* Rotating radar sweep */}
+                            <motion.div
+                                animate={{ rotate: 360 }}
+                                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                                className="absolute inset-0 rounded-full border border-gold-500/10 bg-[conic-gradient(from_0deg,transparent_0deg,rgba(212,175,55,0.1)_90deg,transparent_90deg)]"
+                            />
+                            {/* Static circles */}
+                            <div className="absolute inset-4 rounded-full border border-white/5" />
+                            <div className="absolute inset-12 rounded-full border border-white/5" />
+                            <div className="absolute inset-20 rounded-full border border-white/5" />
+                            
+                            <div className="relative z-10 w-24 h-24 glass-panel rounded-full flex items-center justify-center border-gold-500/20 shadow-[0_0_30px_rgba(212,175,55,0.1)]">
+                                <Users className="w-8 h-8 text-gold-500/60" />
+                            </div>
                         </div>
                         <div className="space-y-1">
-                            <h3 className="text-xl font-bold bg-gradient-to-r from-white to-zinc-500 bg-clip-text text-transparent uppercase tracking-[0.2em]">Mining Intelligence...</h3>
+                            <h3 className="text-xl font-bold bg-gradient-to-r from-white to-zinc-500 bg-clip-text text-transparent uppercase tracking-[0.2em] font-astronomus">Mining Intelligence...</h3>
                             <p className="text-[10px] text-zinc-300 uppercase font-black tracking-widest">Scanning professional networks and university records</p>
                         </div>
                     </motion.div>
