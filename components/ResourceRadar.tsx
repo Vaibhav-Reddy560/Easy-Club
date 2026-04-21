@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Search, MapPin, Users, Award, ExternalLink, Linkedin, Twitter, Github, Globe, Loader2, Sparkles, Trophy, Mail } from "lucide-react";
 import { BorderBeam } from "@/components/animations/BorderBeam";
+import RadarDiscoveryLoader from "@/components/ui/RadarDiscoveryLoader";
 
 interface ResourcePerson {
     name: string;
@@ -105,25 +106,14 @@ export default function ResourceRadar() {
                         exit={{ opacity: 0 }}
                         className="py-32 text-center space-y-6"
                     >
-                        <div className="relative w-48 h-48 mx-auto flex items-center justify-center">
-                            {/* Rotating radar sweep */}
-                            <motion.div
-                                animate={{ rotate: 360 }}
-                                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                                className="absolute inset-0 rounded-full border border-gold-500/10 bg-[conic-gradient(from_0deg,transparent_0deg,rgba(212,175,55,0.1)_90deg,transparent_90deg)]"
+                        <div className="mx-auto flex flex-col items-center">
+                            <RadarDiscoveryLoader 
+                                label="Mining Intelligence..." 
+                                className="scale-110 sm:scale-125"
                             />
-                            {/* Static circles */}
-                            <div className="absolute inset-4 rounded-full border border-white/5" />
-                            <div className="absolute inset-12 rounded-full border border-white/5" />
-                            <div className="absolute inset-20 rounded-full border border-white/5" />
-                            
-                            <div className="relative z-10 w-24 h-24 glass-panel rounded-full flex items-center justify-center border-gold-500/20 shadow-[0_0_30px_rgba(212,175,55,0.1)]">
-                                <Users className="w-8 h-8 text-gold-500/60" />
-                            </div>
-                        </div>
-                        <div className="space-y-1">
-                            <h3 className="text-xl font-bold bg-gradient-to-r from-white to-zinc-500 bg-clip-text text-transparent uppercase tracking-[0.2em] font-astronomus">Mining Intelligence...</h3>
-                            <p className="text-[10px] text-zinc-300 uppercase font-black tracking-widest">Scanning professional networks and university records</p>
+                            <p className="text-[10px] text-zinc-400 uppercase font-bold tracking-[0.2em] mt-4 opacity-60">
+                                Scanning professional networks and university records
+                            </p>
                         </div>
                     </motion.div>
                 ) : error ? (
