@@ -1,0 +1,103 @@
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  --color: #FBBF24; /* App Gold */
+  --animation: 2s ease-in-out infinite;
+  --loader-scale: 1;
+}
+
+/* Size Variants */
+.sm { --loader-scale: 0.5; }
+.md { --loader-scale: 0.8; }
+.lg { --loader-scale: 1.2; }
+
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: calc(20px * var(--loader-scale));
+  height: calc(20px * var(--loader-scale));
+  border: solid calc(2px * var(--loader-scale)) var(--color);
+  border-radius: 50%;
+  margin: 0 calc(6px * var(--loader-scale));
+  background-color: transparent;
+  animation: circle-keys var(--animation);
+}
+
+.circle .dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(16px * var(--loader-scale));
+  height: calc(16px * var(--loader-scale));
+  border-radius: 50%;
+  background-color: var(--color);
+  animation: dot-keys var(--animation);
+}
+
+.circle .outline {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(20px * var(--loader-scale));
+  height: calc(20px * var(--loader-scale));
+  border-radius: 50%;
+  animation: outline-keys var(--animation);
+}
+
+/* Staggered Delays for 5 Circles */
+.circle:nth-child(2) { animation-delay: 0.3s; }
+.circle:nth-child(3) { animation-delay: 0.6s; }
+.circle:nth-child(4) { animation-delay: 0.9s; }
+.circle:nth-child(5) { animation-delay: 1.2s; }
+
+.circle:nth-child(2) .dot { animation-delay: 0.3s; }
+.circle:nth-child(3) .dot { animation-delay: 0.6s; }
+.circle:nth-child(4) .dot { animation-delay: 0.9s; }
+.circle:nth-child(5) .dot { animation-delay: 1.2s; }
+
+.circle:nth-child(1) .outline { animation-delay: 0.9s; }
+.circle:nth-child(2) .outline { animation-delay: 1.2s; }
+.circle:nth-child(3) .outline { animation-delay: 1.5s; }
+.circle:nth-child(4) .outline { animation-delay: 1.8s; }
+.circle:nth-child(5) .outline { animation-delay: 2.1s; }
+
+@keyframes circle-keys {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes dot-keys {
+  0% { transform: scale(1); }
+  50% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+
+@keyframes outline-keys {
+  0% {
+    transform: scale(0);
+    outline: solid calc(20px * var(--loader-scale)) var(--color);
+    outline-offset: 0;
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    outline: solid 0 transparent;
+    outline-offset: calc(20px * var(--loader-scale));
+    opacity: 0;
+  }
+}

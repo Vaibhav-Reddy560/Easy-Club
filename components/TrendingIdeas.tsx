@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Loader2, ChevronRight, TrendingUp, Target, Info } from "lucide-react";
+import PremiumLoader from "@/components/ui/PremiumLoader";
 
 const CLUB_TYPES = [
     "Bio", "Math", "Physics", "Chemistry", "Racing", "Dance", "Singing",
@@ -123,7 +124,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                         exit={{ opacity: 0 }}
                         className="flex flex-col items-center justify-center py-32 space-y-4"
                     >
-                        <Loader2 className="w-10 h-10 text-gold-500 animate-spin" />
+                        <PremiumLoader size="lg" />
                         <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-[0.3em] animate-pulse">Scanning Global Campus Trends...</p>
                     </motion.div>
                 ) : error ? (

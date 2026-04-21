@@ -23,6 +23,7 @@ import ClubGrid from "@/components/ClubGrid";
 import Questionnaire from "@/components/Questionnaire";
 import AboutPage from "@/components/AboutPage";
 import ExploreClubs from "@/components/ExploreClubs";
+import PremiumLoader from "@/components/ui/PremiumLoader";
 import ExploreEvents from "@/components/ExploreEvents";
 import DesignWorkspace from "@/components/domains/DesignWorkspace";
 import ContentWorkspace from "@/components/domains/ContentWorkspace";
@@ -489,8 +490,8 @@ export default function App() {
 
   if (authLoading || loading) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-4">
-        <div className="w-12 h-12 border-4 border-gold-500/20 border-t-gold-500 rounded-full animate-spin" />
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-8">
+        <PremiumLoader size="lg" />
         <p className="text-signature-gradient font-bold uppercase tracking-[0.3em] text-[10px] animate-pulse">Syncing Hub...</p>
       </div>
     );

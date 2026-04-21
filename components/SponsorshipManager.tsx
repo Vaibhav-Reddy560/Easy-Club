@@ -19,6 +19,7 @@ import {
     Loader2,
     CheckCircle2
 } from "lucide-react";
+import PremiumLoader from "@/components/ui/PremiumLoader";
 import { Club, Sponsor, SponsorStage } from "@/lib/types";
 import { useTasks } from "@/lib/TaskContext";
 import { exportToDocx } from "@/lib/export-utils";
@@ -338,7 +339,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                             className="w-full py-4 bg-gold-500 text-black rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xl shadow-gold-500/10 disabled:opacity-60"
                         >
                             {isGeneratingDeck ? (
-                                <><Loader2 className="w-4 h-4 animate-spin" /> Generating Deck...</>
+                                <><PremiumLoader size="sm" dotCount={3} className="mr-1" /> Generating Deck...</>
                             ) : deckSuccess ? (
                                 <><CheckCircle2 className="w-4 h-4" /> Downloaded!</>
                             ) : (

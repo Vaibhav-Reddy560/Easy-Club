@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Search, MapPin, Users, Award, ExternalLink, Linkedin, Twitter, Github, Globe, Loader2, Sparkles, Trophy, Mail } from "lucide-react";
+import PremiumLoader from "@/components/ui/PremiumLoader";
 import { BorderBeam } from "@/components/animations/BorderBeam";
 
 interface ResourcePerson {
@@ -90,7 +91,7 @@ export default function ResourceRadar() {
                         disabled={loading}
                         className="px-8 py-4 bg-gold-500 hover:bg-gold-600 disabled:bg-neutral-800 disabled:text-neutral-600 text-black font-black uppercase tracking-widest text-[11px] rounded-2xl transition-all shadow-lg shadow-gold-500/10 flex items-center justify-center gap-2"
                     >
-                        {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+                        {loading ? <PremiumLoader size="sm" dotCount={3} /> : <Sparkles className="w-4 h-4" />}
                         Scan Talent
                     </button>
                 </div>
