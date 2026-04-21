@@ -41,7 +41,8 @@ import LoginView from "@/components/LoginView";
 import { Club, ClubEvent, EventConfig, MemberRole, ActivityLogEvent, EventStatus, PostEventData } from "@/lib/types";
 import { useAuth } from "@/lib/auth";
 import { signInWithGoogle, logout } from "@/lib/firebase";
-import { getUserClubs, saveClub, deleteClubFromDb, subscribeUserClubs } from "@/lib/db";
+import { subscribeUserClubs, saveClub, deleteClubFromDb } from "@/lib/db";
+import DynamicIsland from "@/components/DynamicIsland";
 
 // --- MAIN APPLICATION ---
 
@@ -503,20 +504,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-dot-matrix text-white antialiased pb-20 md:pb-0 relative overflow-hidden">
-      {/* Global Sync Indicator */}
-      <AnimatePresence>
-        {isSaving && (
-          <motion.div
-            initial={{ y: -50, opacity: 0 }}
-            animate={{ y: 20, opacity: 1 }}
-            exit={{ y: -50, opacity: 0 }}
-            className="fixed top-0 left-1/2 -translate-x-1/2 z-[200] px-6 py-2 bg-black/80 backdrop-blur-xl border border-gold-500/20 rounded-full flex items-center gap-3 shadow-2xl shadow-gold-500/5 group"
-          >
-            <div className="w-2 h-2 bg-gold-500 rounded-full animate-ping" />
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-signature-gradient">Synchronizing Hub...</span>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <DynamicIsland isSaving={isSaving} />
 
       {/* Ambient Aurora Orbs */}
       <div className="ambient-glow" style={{ top: '10%', left: '20%', animationDelay: '0s' }} />

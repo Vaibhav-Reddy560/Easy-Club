@@ -30,7 +30,6 @@ const astronomus = localFont({
 });
 
 import { TaskProvider } from "@/lib/TaskContext";
-import TaskOverlay from "@/components/TaskOverlay";
 
 export const metadata: Metadata = {
   title: "Easy Club",
@@ -47,7 +46,6 @@ export default function RootLayout({
       <body className={`${inter.className} font-sometype antialiased`}>
         <TaskProvider>
             {children}
-            <TaskOverlay />
         </TaskProvider>
       </body>
     </html>
