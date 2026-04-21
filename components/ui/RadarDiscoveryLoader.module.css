@@ -4,156 +4,142 @@
   align-items: center;
   justify-content: center;
   padding: 4rem;
-  gap: 2rem;
+  gap: 2.5rem;
   width: 100%;
-  background: transparent;
 }
 
 .loader {
     position: relative;
-    width: 240px;
-    height: 240px;
-    background: radial-gradient(circle, #101014 0%, #050505 80%);
+    width: 260px;
+    height: 260px;
+    background: radial-gradient(circle, #101014 0%, #050505 85%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    border: 1px solid rgba(255, 180, 5, 0.15);
-    box-shadow: 0 0 100px rgba(0, 0, 0, 0.9), inset 0 0 50px rgba(0, 0, 0, 0.8);
+    border: 1.5px solid rgba(255, 180, 5, 0.1);
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.9);
 }
 
-/* Three concentric rings */
 .ring {
     position: absolute;
     border-radius: 50%;
-    border: 1px solid rgba(255, 180, 5, 0.1);
-    box-shadow: inset 0 0 20px rgba(255, 180, 5, 0.03);
+    border: 1px solid rgba(255, 180, 5, 0.08);
 }
 
-.ring:nth-child(1) { inset: 5px; }
-.ring:nth-child(2) { inset: 45px; opacity: 0.8; }
-.ring:nth-child(3) { inset: 85px; opacity: 0.6; }
+.ring:nth-child(1) { inset: 10px; }
+.ring:nth-child(2) { inset: 55px; opacity: 0.6; }
+.ring:nth-child(3) { inset: 100px; opacity: 0.4; }
 
 .sweep {
     position: absolute;
     width: 100%;
     height: 100%;
-    /* Single atmospheric tail fading from transparent to gold */
-    background: conic-gradient(
-        from 0deg,
-        rgba(255, 180, 5, 0.4) 0deg,
-        transparent 90deg,
-        transparent 360deg
-    );
-    animation: rotate-reverse 4s linear infinite; /* Counter-clockwise or clockwise? Reference looks like clockwise. */
     z-index: 5;
-}
-
-/* Adjusting to clockwise as per typical radar and reference */
-@keyframes rotate-clockwise {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-.sweep {
-    animation: rotate-clockwise 3s linear infinite;
+    animation: rotate-clockwise 3.5s linear infinite;
+    /* Ensure only one hard edge by having the gradient reach solid at its start/end point */
     background: conic-gradient(
-        from 0deg,
-        transparent 210deg,
-        rgba(255, 180, 5, 0.05) 280deg,
-        rgba(255, 180, 5, 0.5) 360deg
+        from -90deg, 
+        transparent 0deg,
+        rgba(255, 180, 5, 0.02) 45deg,
+        rgba(255, 180, 5, 0.45) 90deg,
+        transparent 90deg
     );
-    filter: blur(2px);
 }
 
-/* The single sharp leading line */
+/* The single solid leading line */
 .sweep::after {
     content: "";
     position: absolute;
     top: 50%;
     left: 50%;
     width: 50%;
-    height: 1.5px;
+    height: 2.5px; /* Thicker, more solid */
     background: #FFB405;
     transform-origin: left;
-    transform: translateY(-50%) rotate(0deg); /* Exactly at the start of the gradient */
-    box-shadow: 0 0 15px #FFB405, 0 0 30px rgba(255, 180, 5, 0.4);
-    filter: blur(0px); /* Keep the line sharp */
-    z-index: 10;
+    filter: blur(0.2px);
+    /* Position exactly at the 90deg point of the conic gradient above */
+    transform: translateY(-50%) rotate(0deg); 
+    box-shadow: 
+        0 0 10px #FFB405, 
+        0 0 25px rgba(255, 180, 5, 0.3);
 }
 
-/* Central Hub */
+@keyframes rotate-clockwise {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
 .loader::before {
     content: "";
     position: absolute;
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     background: #FFB405;
     border-radius: 50%;
     z-index: 30;
-    box-shadow: 0 0 20px #FFB405, 0 0 40px rgba(255, 180, 5, 0.5);
+    box-shadow: 0 0 20px #FFB405;
 }
 
 .dot {
     position: absolute;
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     background: #FFB405;
     border-radius: 50%;
     box-shadow: 
         0 0 10px #FFB405, 
-        0 0 20px rgba(255, 180, 5, 0.8),
-        0 0 40px rgba(255, 180, 5, 0.4);
+        0 0 25px rgba(255, 180, 5, 0.8);
     opacity: 0;
-    animation: blink-glow 3s linear infinite;
+    animation: blink-glow 3.5s linear infinite;
     z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Pulsing ripple effect for dots */
 .dot::after {
     content: "";
     position: absolute;
-    inset: -4px;
-    border: 1px solid rgba(255, 180, 5, 0.5);
+    inset: -6px;
+    border: 1.5px solid rgba(255, 180, 5, 0.4);
     border-radius: 50%;
-    animation: ripple 1.5s ease-out infinite;
+    animation: ripple 2s ease-out infinite;
     opacity: 0;
 }
 
 @keyframes ripple {
-    0% { transform: scale(0.8); opacity: 0.8; }
-    100% { transform: scale(2.5); opacity: 0; }
+    0% { transform: scale(0.6); opacity: 0.9; }
+    100% { transform: scale(2.8); opacity: 0; }
 }
 
 @keyframes blink-glow {
-    0% { opacity: 0; transform: scale(0.4); }
-    10% { opacity: 1; transform: scale(1.2); }
-    20% { opacity: 0.6; transform: scale(1); }
-    40% { opacity: 0; transform: scale(1.1); }
-    100% { opacity: 0; }
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    7% { opacity: 1; transform: scale(1.3); }
+    15% { opacity: 0.7; transform: scale(1); }
+    30% { opacity: 0; transform: scale(1.2); }
 }
 
-#dot-1 { top: 30%; left: 42%; animation-delay: 1.2s; }
-#dot-2 { top: 62%; left: 70%; animation-delay: 2.2s; }
-#dot-3 { top: 22%; left: 82%; animation-delay: 3.1s; }
-#dot-4 { top: 78%; left: 32%; animation-delay: 3.8s; }
-#dot-5 { top: 50%; left: 22%; animation-delay: 0.5s; }
+#dot-1 { top: 32%; left: 45%; animation-delay: 1.5s; }
+#dot-2 { top: 60%; left: 72%; animation-delay: 2.5s; }
+#dot-3 { top: 25%; left: 80%; animation-delay: 3.2s; }
+#dot-4 { top: 75%; left: 35%; animation-delay: 0.4s; }
+#dot-5 { top: 48%; left: 28%; animation-delay: 1.0s; }
 
 .statusText {
     font-family: 'Astronomus', sans-serif;
     color: #FFB405;
-    text-shadow: 0 0 15px rgba(255, 180, 5, 0.4);
-    font-size: 10px;
+    text-shadow: 0 0 20px rgba(255, 180, 5, 0.3);
+    font-size: 11px;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 0.6em;
-    animation: pulse-glow 2s ease-in-out infinite;
+    animation: pulse-glow 2.5s ease-in-out infinite;
     text-align: center;
-    margin-top: 10px;
 }
 
 @keyframes pulse-glow {
-    0%, 100% { opacity: 0.4; filter: contrast(1.2); }
-    50% { opacity: 1; filter: contrast(1.5); }
+    0%, 100% { opacity: 0.5; filter: drop-shadow(0 0 2px rgba(255, 180, 5, 0)); }
+    50% { opacity: 1; filter: drop-shadow(0 0 10px rgba(255, 180, 5, 0.5)); }
 }
