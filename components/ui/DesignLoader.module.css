@@ -26,34 +26,43 @@
   bottom: -6px;
   width: 18px;
   height: 110px;
-  border-radius: 20px 20px 5px 5px;
+  border-radius: 6px 6px 2px 2px;
   background-repeat: no-repeat;
   
-  /* The Pencil Body & Tip Design - Refined for realistic gold depth */
+  /* 
+     Architecture based on reference:
+     1. Gold Lead (bottom)
+     2. White Cone (above lead)
+     3. Signature Gold Body (mid)
+     4. White Cap (top)
+  */
   background-image: 
-    /* 1. Pencil Lead Tip - Deep Amber */
-    linear-gradient(#AE7102 5px, transparent 0),
-    /* 2. Wooden Cone Shading - Honey Wood tones */
-    linear-gradient(45deg, rgba(174, 113, 2, 0.2) 49%, #E8A800 51%),
-    linear-gradient(315deg, rgba(174, 113, 2, 0.2) 49%, #E8A800 51%),
-    /* 3. Pencil Body - Signature Gold with honey-gold center (not white) */
-    linear-gradient(to right, #AE7102 0%, #D4960A 20%, #FFB405 50%, #D4960A 80%, #AE7102 100%);
+    /* 1. Lead Tip - Pure Gold */
+    linear-gradient(#FFB405 5px, transparent 0),
+    /* 2. White Cone - Clean & Sharp */
+    linear-gradient(45deg, transparent 49%, #FFFFFF 51%),
+    linear-gradient(315deg, transparent 49%, #FFFFFF 51%),
+    /* 3. Signature Gold Body - Multi-stop depth */
+    linear-gradient(to right, #AE7102 0%, #FF8800 20%, #FFB405 50%, #FF8800 80%, #AE7102 100%),
+    /* 4. White Top Cap */
+    linear-gradient(#FFFFFF 12px, transparent 0);
     
-  background-size: 4px 5px, 9px 12px, 9px 12px, 100% 93px;
-  background-position: center bottom, left bottom, right bottom, left top;
+  background-size: 5px 5px, 9px 15px, 9px 15px, 100% 70px, 100% 12px;
+  background-position: center bottom, left 90px, right 90px, left 15px, left top;
+  
   transform: rotate(25deg);
   animation: 
     pencilRot 4s cubic-bezier(0.4, 0, 0.2, 1) infinite,
-    pencilGlint 3s ease-in-out infinite;
+    pencilGlint 4s ease-in-out infinite;
   box-shadow: 
-    0 8px 20px rgba(0, 0, 0, 0.4),
-    0 0 10px rgba(212, 150, 10, 0.15);
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    0 0 15px rgba(212, 150, 10, 0.1);
   z-index: 2;
 }
 
 @keyframes pencilGlint {
-  0%, 100% { filter: contrast(1); }
-  50% { filter: contrast(1.08) brightness(1.05); }
+  0%, 100% { filter: contrast(1) drop-shadow(0 0 0px rgba(255,255,255,0)); }
+  50% { filter: contrast(1.1) brightness(1.03) drop-shadow(0 0 2px rgba(255,215,0,0.2)); }
 }
 
 @keyframes drawLine {
