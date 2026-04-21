@@ -2,7 +2,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  --color: #FBBF24; /* App Gold */
+  /* Using established brand colors */
+  --gold-light: #FBBF24;
+  --gold-deep: #D97706;
+  --gold-glow: rgba(245, 158, 11, 0.5);
   --loader-scale: 1;
 }
 
@@ -16,12 +19,16 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  width: calc(28px * var(--loader-scale));
-  height: calc(28px * var(--loader-scale));
-  border: solid calc(2px * var(--loader-scale)) var(--color);
+  width: calc(30px * var(--loader-scale));
+  height: calc(30px * var(--loader-scale));
   border-radius: 50%;
   margin: 0 calc(10px * var(--loader-scale));
-  /* Very subtle pulse for structural stability */
+  
+  /* Gradient Border Effect */
+  background: linear-gradient(#050505, #050505) padding-box,
+              linear-gradient(135deg, var(--gold-light), var(--gold-deep)) border-box;
+  border: calc(2px * var(--loader-scale)) solid transparent;
+  
   animation: ring-steady 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   will-change: transform;
 }
@@ -30,8 +37,11 @@
   width: calc(16px * var(--loader-scale));
   height: calc(16px * var(--loader-scale));
   border-radius: 50%;
-  background-color: var(--color);
-  /* Speck-to-Core growth effect from reference */
+  
+  /* 3D Metallic Gradient */
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-deep) 100%);
+  box-shadow: 0 0 calc(10px * var(--loader-scale)) var(--gold-glow);
+  
   animation: speck-to-core 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   will-change: transform, opacity;
 }
@@ -43,14 +53,16 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: calc(1.5px * var(--loader-scale)) solid var(--color);
-  /* Outward atmospheric wave ejection */
+  /* Gradient-faded ripple */
+  background: radial-gradient(circle, var(--gold-light) 0%, transparent 70%);
+  border: calc(1px * var(--loader-scale)) solid var(--gold-light);
+  
   animation: outward-wave 2.4s cubic-bezier(0.2, 0, 0.2, 1) infinite;
   will-change: transform, opacity;
   pointer-events: none;
 }
 
-/* Staggered Liquid Wave (12.5% offset for 4 dots) */
+/* Staggered Liquid Wave */
 .circle:nth-child(2) { animation-delay: 0.3s; }
 .circle:nth-child(3) { animation-delay: 0.6s; }
 .circle:nth-child(4) { animation-delay: 0.9s; }
@@ -60,8 +72,14 @@
 .circle:nth-child(4) .dot, .circle:nth-child(4) .ripple { animation-delay: 0.9s; }
 
 @keyframes ring-steady {
-  0%, 100% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.05); opacity: 1; }
+  0%, 100% { 
+    transform: scale(1); 
+    filter: brightness(1);
+  }
+  50% { 
+    transform: scale(1.05); 
+    filter: brightness(1.3); /* Metallic shimmer */
+  }
 }
 
 @keyframes speck-to-core {
@@ -78,7 +96,7 @@
 @keyframes outward-wave {
   0% {
     transform: translate(-50%, -50%) scale(1);
-    opacity: 0.7;
+    opacity: 0.5;
   }
   70%, 100% {
     transform: translate(-50%, -50%) scale(3.5);
