@@ -12,7 +12,10 @@ const RadarDiscoveryLoader = ({ label = "Initializing discovery sequence", class
   return (
     <div className={`${styles.container} ${className}`}>
       <div className={styles.loader}>
-        <span />
+        <div className={styles.ring} />
+        <div className={styles.ring} />
+        <div className={styles.ring} />
+        <div className={styles.sweep} />
         <div id={styles["dot-1"]} className={styles.dot} />
         <div id={styles["dot-2"]} className={styles.dot} />
         <div id={styles["dot-3"]} className={styles.dot} />

@@ -10,79 +10,112 @@
 
 .loader {
     position: relative;
-    width: 180px;
-    height: 180px;
-    background: #09090b; /* Zinc 950 */
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, #18181b 0%, #09090b 70%); /* Zinc 900 to 950 */
     border-radius: 50%;
-    box-shadow: inset 0px 0px 15px rgba(212, 175, 55, 0.2); /* Gold glow */
-    border: 1px solid rgba(212, 175, 55, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(212, 175, 55, 0.05);
 }
 
-.loader::before {
-    content: "";
+/* Three concentric rings */
+.ring {
     position: absolute;
-    inset: 30px;
-    background: transparent;
-    border: 1px solid rgba(212, 175, 55, 0.15);
     border-radius: 50%;
-    box-shadow: inset 0px 0px 10px rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.05);
 }
 
-.loader::after {
-    content: "";
+.ring:nth-child(1) {
+    inset: 10px;
+}
+
+.ring:nth-child(2) {
+    inset: 50px;
+}
+
+.ring:nth-child(3) {
+    inset: 90px;
+}
+
+.sweep {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: conic-gradient(transparent, transparent, transparent, rgba(212, 175, 55, 0.5));
+    /* Wider, softer atmospheric tail */
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        transparent 160deg,
+        rgba(212, 175, 55, 0.05) 240deg,
+        rgba(212, 175, 55, 0.4) 355deg,
+        transparent 360deg
+    );
     animation: rotate 3s linear infinite;
-    filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.3));
+    z-index: 5;
+    filter: blur(4px);
 }
 
-.loader span {
+.sweep::after {
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
     width: 50%;
     height: 2px;
-    background: linear-gradient(90deg, rgba(212, 175, 55, 1), transparent);
+    background: linear-gradient(90deg, #FFB405, transparent);
     transform-origin: left;
+    transform: rotate(-5deg); 
     filter: blur(0.5px);
-    animation: rotate 3s linear infinite;
-    z-index: 10;
+    box-shadow: 0 0 20px rgba(255, 180, 5, 0.8);
+}
+
+/* Central Hub */
+.loader::before {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #FFB405;
+    border-radius: 50%;
+    z-index: 20;
+    box-shadow: 0 0 15px #FFB405;
 }
 
 .dot {
     position: absolute;
-    width: 4px;
-    height: 4px;
-    background: #D4AF37;
+    width: 6px;
+    height: 6px;
+    background: #FFB405;
     border-radius: 50%;
-    filter: drop-shadow(0 0 10px #D4AF37);
+    filter: drop-shadow(0 0 12px #FFB405);
     opacity: 0;
     animation: blink 3s linear infinite;
+    z-index: 10;
 }
 
-#dot-1 { top: 30%; left: 40%; animation-delay: 0.5s; }
-#dot-2 { top: 60%; left: 70%; animation-delay: 1.2s; }
-#dot-3 { top: 20%; left: 80%; animation-delay: 1.8s; }
-#dot-4 { top: 80%; left: 30%; animation-delay: 2.3s; }
-#dot-5 { top: 50%; left: 20%; animation-delay: 0s; }
+#dot-1 { top: 32%; left: 45%; animation-delay: 0.8s; }
+#dot-2 { top: 58%; left: 68%; animation-delay: 1.5s; }
+#dot-3 { top: 25%; left: 78%; animation-delay: 2.1s; }
+#dot-4 { top: 75%; left: 35%; animation-delay: 2.6s; }
+#dot-5 { top: 48%; left: 25%; animation-delay: 0.3s; }
 
 .statusText {
     font-family: 'Astronomus', sans-serif;
-    color: #D4AF37;
+    background: linear-gradient(180deg, #FFB405 0%, #D4AF37 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     font-size: 11px;
     font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 0.4em;
+    letter-spacing: 0.5em;
     animation: pulse 2s ease-in-out infinite;
     text-align: center;
-    max-width: 300px;
-    line-height: 1.6;
+    max-width: 400px;
 }
 
 @keyframes rotate {
@@ -91,12 +124,13 @@
 }
 
 @keyframes blink {
-    0%, 100% { opacity: 0; transform: scale(0.5); }
-    10% { opacity: 1; transform: scale(1.2); }
-    20% { opacity: 0; transform: scale(1); }
+    0% { opacity: 0; transform: scale(0.5); }
+    10% { opacity: 1; transform: scale(1.4); }
+    30% { opacity: 0.4; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.8); }
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 1; }
+    0%, 100% { opacity: 0.5; filter: blur(0.5px); }
+    50% { opacity: 1; filter: blur(0); }
 }
