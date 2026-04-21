@@ -23,14 +23,13 @@ import {
     ChevronDown
 } from "lucide-react";
 import { Club, MemberRole, TeamInvite, ActivityLogEvent, ClubMember } from "@/lib/types";
-import { saveClub } from "@/lib/db";
 
 interface MyTeamViewProps {
     clubs: Club[];
-    setClubs: React.Dispatch<React.SetStateAction<Club[]>>;
+    onUpdateClub: (updatedClub: Club) => void;
 }
 
-export default function MyTeamView({ clubs, setClubs }: MyTeamViewProps) {
+export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
     const [selectedClubId, setSelectedClubId] = useState<string | null>(clubs[0]?.id || null);
     
     // Automatically select the first club if available and none selected
@@ -42,15 +41,14 @@ export default function MyTeamView({ clubs, setClubs }: MyTeamViewProps) {
 
     const activeClub = clubs.find(c => c.id === selectedClubId);
 
-    const onUpdateClub = async (updatedClub: Club) => {
+    const handleUpdateActiveClub = async (updatedClubFn: (c: Club) => Club) => {
         if (!selectedClubId) return;
-        const newClubs = clubs.map(c => c.id === selectedClubId ? updatedClub : c);
-        setClubs(newClubs);
+        const activeClub = clubs.find(c => c.id === selectedClubId);
+        if (!activeClub) return;
         
-        const activeC = newClubs.find(c => c.id === selectedClubId);
-        if (activeC && activeC.ownerId) {
-            void saveClub(activeC as Club & { ownerId: string });
-        }
+        // Apply transformation and push to centralized handler
+        const updatedClub = updatedClubFn(activeClub);
+        onUpdateClub(updatedClub);
     };
 
     const [activeTab, setActiveTab] = useState<'roster' | 'invites' | 'activity'>('roster');

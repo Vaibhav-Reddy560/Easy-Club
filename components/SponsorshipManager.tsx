@@ -22,7 +22,6 @@ import {
 import { Club, Sponsor, SponsorStage } from "@/lib/types";
 import { useTasks } from "@/lib/TaskContext";
 import { exportToDocx } from "@/lib/export-utils";
-import { saveClub } from "@/lib/db";
 
 interface SponsorshipManagerProps {
     clubs: Club[];
@@ -88,7 +87,6 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
         };
 
         onUpdateClub(updatedClub);
-        await saveClub(updatedClub as Club & { ownerId: string });
 
         // Reset form
         setNewCompany('');
@@ -109,14 +107,12 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
         });
         const updatedClub = { ...currentClub, sponsors: updatedSponsors };
         onUpdateClub(updatedClub);
-        await saveClub(updatedClub as Club & { ownerId: string });
     };
 
     const handleDeleteLead = async (sponsorId: string) => {
         if (!currentClub) return;
         const updatedClub = { ...currentClub, sponsors: sponsors.filter(s => s.id !== sponsorId) };
         onUpdateClub(updatedClub);
-        await saveClub(updatedClub as Club & { ownerId: string });
     };
 
     const handleGenerateDeck = async () => {

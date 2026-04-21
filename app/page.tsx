@@ -44,6 +44,8 @@ import { getUserClubs, saveClub, deleteClubFromDb, subscribeUserClubs } from "@/
 
 export default function App() {
   const { user, loading: authLoading } = useAuth();
+  const [isSyncing, setIsSyncing] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const [clubs, setClubs] = useState<Club[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -94,14 +96,15 @@ export default function App() {
         setLoading(true);
       }
       
-      const unsubscribe = subscribeUserClubs(user.uid, user.email, (fetchedClubs, isSyncing) => {
+      const unsubscribe = subscribeUserClubs(user.uid, user.email, (fetchedClubs, syncing) => {
         if (isMounted) {
           setClubs(fetchedClubs);
+          setIsSyncing(syncing);
           
           // Only stop the "Syncing Hub" if:
           // 1. We found some clubs (even from cache, to show them instantly)
-          // 2. OR the server has finished syncing (isSyncing is false)
-          if (fetchedClubs.length > 0 || !isSyncing) {
+          // 2. OR the server has finished syncing (syncing is false)
+          if (fetchedClubs.length > 0 || !syncing) {
             setLoading(false);
             lastSyncedUid.current = user.uid;
             localStorage.setItem('last_synced_uid', user.uid);
@@ -718,11 +721,11 @@ export default function App() {
           </div>
 
           <div className={`${activeNav === 'my-team' ? 'block' : 'hidden'}`}>
-            <MyTeamView clubs={clubs} setClubs={setClubs} />
+            <MyTeamView clubs={clubs} onUpdateClub={onUpdateClub} />
           </div>
 
           <div className={`${activeNav === 'membership' ? 'block' : 'hidden'}`}>
-            <MembershipView clubs={clubs} setClubs={setClubs} />
+            <MembershipView clubs={clubs} onUpdateClub={onUpdateClub} />
           </div>
 
           <div className={`${activeNav === 'social-tracker' ? 'block' : 'hidden'}`}>
@@ -732,8 +735,16 @@ export default function App() {
           <div className={`${activeNav === 'sponsorship' ? 'block' : 'hidden'}`}>
             <SponsorshipManager
               clubs={clubs}
-              onUpdateClub={(updatedClub) => {
-                setClubs(prev => prev.map(c => c.id === updatedClub.id ? updatedClub : c));
+              onUpdateClub={async (updatedClub: Club) => {
+                setClubs(prevClubs => prevClubs.map(c => c.id === updatedClub.id ? updatedClub : c));
+                if (user && updatedClub.ownerId === user.uid) {
+                  setIsSaving(true);
+                  try {
+                    await saveClub(updatedClub as Club & { ownerId: string });
+                  } finally {
+                    setTimeout(() => setIsSaving(false), 500);
+                  }
+                }
               }}
             />
           </div>
@@ -821,12 +832,33 @@ export default function App() {
                 >
                   Cancel
                 </button>
-                <button
-                  onClick={confirmDelete}
-                  className="flex-1 px-6 py-4 rounded-xl bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-red-500 transition-all shadow-lg"
-                >
-                  Confirm Delete
-                </button>
+                <div className="flex items-center gap-6">
+              {/* Sync Indicator */}
+              <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-neutral-900 border border-white/5 rounded-full">
+                {(isSaving || isSyncing) ? (
+                  <>
+                    <Loader2 className="w-3 h-3 text-gold-500 animate-spin" />
+                    <span className="text-[9px] font-black uppercase tracking-widest text-neutral-400">
+                      {isSaving ? 'Cloud Backup...' : 'Syncing Hub...'}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <CheckCircle2 className="w-3 h-3 text-green-500" />
+                    <span className="text-[9px] font-black uppercase tracking-widest text-neutral-500">
+                      Sync Secured
+                    </span>
+                  </>
+                )}
+              </div>
+              
+              <button 
+                onClick={() => setProfileOpen(!profileOpen)}
+                className="w-10 h-10 rounded-xl bg-gradient-to-br from-neutral-800 to-neutral-900 flex items-center justify-center text-signature-gradient font-black border border-white/5 hover:border-gold-500/20 transition-all shadow-xl"
+              >
+                {user.email?.[0].toUpperCase() || 'U'}
+              </button>
+            </div>
               </div>
             </motion.div>
           </div>

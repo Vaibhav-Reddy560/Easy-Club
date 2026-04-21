@@ -8,10 +8,10 @@ import { saveClub } from "@/lib/db";
 
 interface MembershipViewProps {
   clubs: Club[];
-  setClubs: React.Dispatch<React.SetStateAction<Club[]>>;
+  onUpdateClub: (updatedClub: Club) => void;
 }
 
-export default function MembershipView({ clubs, setClubs }: MembershipViewProps) {
+export default function MembershipView({ clubs, onUpdateClub }: MembershipViewProps) {
   const [selectedClubId, setSelectedClubId] = useState<string | null>(clubs[0]?.id || null);
   const [activeTab, setActiveTab] = useState<'recruitment-pool' | 'new-recruit'>('recruitment-pool');
 
@@ -24,15 +24,14 @@ export default function MembershipView({ clubs, setClubs }: MembershipViewProps)
   const activeClub = clubs.find((c: Club) => c.id === selectedClubId);
   const members = activeClub?.members || [];
 
-  const handleUpdateActiveClub = async (updatedClub: (c: Club) => Club) => {
+  const handleUpdateActiveClub = async (updatedClubFn: (c: Club) => Club) => {
     if (!selectedClubId) return;
-    const newClubs = clubs.map((c: Club) => c.id === selectedClubId ? updatedClub(c) : c);
-    setClubs(newClubs);
+    const activeClub = clubs.find(c => c.id === selectedClubId);
+    if (!activeClub) return;
     
-    const activeC = newClubs.find(c => c.id === selectedClubId);
-    if (activeC && activeC.ownerId) {
-        await saveClub(activeC as Club & { ownerId: string });
-    }
+    // Apply the transformation and push to the centralized handler
+    const updatedClub = updatedClubFn(activeClub);
+    onUpdateClub(updatedClub);
   };
 
   const handleRecruitMember = (e: React.FormEvent) => {
