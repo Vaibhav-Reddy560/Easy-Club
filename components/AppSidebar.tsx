@@ -35,7 +35,7 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
         <aside 
             onMouseMove={(e) => mouseY.set(e.clientY)}
             onMouseLeave={() => mouseY.set(Infinity)}
-            className="hidden md:flex w-80 flex-col pt-16 pr-8 border-r border-white/5 space-y-8 sticky top-20 h-[calc(100vh-5rem)]"
+            className="hidden md:flex w-80 flex-col pt-16 pl-6 pr-8 border-r border-white/5 space-y-8 sticky top-20 h-[calc(100vh-5rem)]"
         >
             <div className="space-y-2">
                 {sections.map((section) => {
