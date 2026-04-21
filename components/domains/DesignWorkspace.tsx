@@ -290,7 +290,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
       {/* Section Header */}
       <div className="flex flex-col gap-2">
         <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Design Studio</h2>
-        <p className="text-[10px] text-zinc-200 font-bold uppercase tracking-[0.2em]">AI-Powered Visual Asset Engine</p>
+        <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-[0.2em]">AI-Powered Visual Asset Engine</p>
       </div>
 
       {/* Tab Navigation */}
@@ -299,7 +299,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
           <button
             key={f.id}
             onClick={() => setActiveTab(f.id)}
-            className={`px-5 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 whitespace-nowrap transition-all ${activeTab === f.id ? "bg-gold-500 text-black shadow-lg shadow-gold-500/10" : "text-zinc-200 hover:text-white"}`}
+            className={`px-5 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 whitespace-nowrap transition-all ${activeTab === f.id ? "bg-gold-500 text-black shadow-lg shadow-gold-500/10" : "text-white hover:text-white"}`}
           >
             <f.icon className="w-3.5 h-3.5" />
             {f.label}
@@ -316,7 +316,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
             </div>
             <div className="space-y-2">
               <h3 className="text-2xl font-bold text-white">Certificate Design</h3>
-              <p className="text-zinc-200 text-sm max-w-md mx-auto">For professional certificate designs, we recommend using Canva&apos;s template library. We&apos;ve selected the best category for your event type.</p>
+              <p className="text-white text-sm max-w-md mx-auto">For professional certificate designs, we recommend using Canva&apos;s template library. We&apos;ve selected the best category for your event type.</p>
             </div>
             <a
               href={getCertificateUrl(config.subType)}
@@ -326,7 +326,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
             >
               Open Canva Templates <ExternalLink className="w-4 h-4" />
             </a>
-            <p className="text-[9px] text-zinc-300 uppercase tracking-widest">Best match: <span className="text-signature-gradient font-bold">{config.subType || "Event"} Certificate</span></p>
+            <p className="text-[9px] text-zinc-100 uppercase tracking-widest">Best match: <span className="text-signature-gradient font-bold">{config.subType || "Event"} Certificate</span></p>
           </motion.div>
         )}
 
@@ -348,7 +348,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                         <button
                           key={d.label}
                           onClick={() => setPosterDim(d)}
-                          className={`flex-1 px-3 py-2 rounded-xl text-[9px] font-bold uppercase transition-all border ${posterDim.label === d.label ? "bg-gold-500 text-black border-gold-500" : "bg-black/40 text-zinc-200 border-white/5 hover:border-white/10"}`}
+                          className={`flex-1 px-3 py-2 rounded-xl text-[9px] font-bold uppercase transition-all border ${posterDim.label === d.label ? "bg-gold-500 text-black border-gold-500" : "bg-black/40 text-white border-white/5 hover:border-white/10"}`}
                         >
                           {d.label}
                         </button>
@@ -370,7 +370,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                     onChange={e => setCreativityLevel(Number(e.target.value))}
                     className="w-full accent-gold-500 cursor-pointer"
                   />
-                  <div className="flex justify-between text-[8px] text-zinc-300 uppercase tracking-widest font-bold">
+                  <div className="flex justify-between text-[8px] text-zinc-100 uppercase tracking-widest font-bold">
                     <span>Clean & Minimal</span>
                     <span>Bold & Artistic</span>
                   </div>
@@ -396,18 +396,18 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                     <div className="py-8 flex flex-col items-center gap-3 animate-pulse relative z-10">
                       <BorderBeam duration={3} size={200} />
                       <Sparkles className="w-6 h-6 text-gold-500/40" />
-                      <p className="text-[9px] text-zinc-200 font-bold uppercase tracking-widest">Analyzing event profile...</p>
+                      <p className="text-[9px] text-white font-bold uppercase tracking-widest">Analyzing event profile...</p>
                     </div>
                   )}
 
                   {vibeData && vibeGen.status === "success" && (
                     <div className="space-y-4 relative z-10">
-                      <div className="bg-black/60 p-5 rounded-2xl border border-white/5 text-[11px] text-zinc-300 leading-relaxed">
+                      <div className="bg-black/60 p-5 rounded-2xl border border-white/5 text-[11px] text-white leading-relaxed">
                         {vibeData.vibe}
                       </div>
                       <div className="flex gap-2 text-[9px]">
                         <span className="px-3 py-1 bg-gold-500/10 border border-gold-500/20 rounded-full text-signature-gradient font-bold">Font: {vibeData.fontFamily}</span>
-                        <span className="px-3 py-1 bg-white/5 border border-white/5 rounded-full text-zinc-200 font-bold">Effect: {vibeData.effectStyle}</span>
+                        <span className="px-3 py-1 bg-white/5 border border-white/5 rounded-full text-white font-bold">Effect: {vibeData.effectStyle}</span>
                       </div>
                       {!vibeAccepted && (
                         <div className="flex gap-3">
@@ -461,8 +461,8 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                     </div>
                   ) : (
                     <label className="flex flex-col items-center gap-3 py-8 border-2 border-dashed border-white/10 rounded-2xl cursor-pointer hover:border-gold-500/30 transition-all group">
-                      <Upload className="w-6 h-6 text-zinc-300 group-hover:text-gold-500 transition-colors" />
-                      <span className="text-[9px] text-zinc-200 font-bold uppercase tracking-widest">Drop or click to upload</span>
+                      <Upload className="w-6 h-6 text-white group-hover:text-gold-500 transition-colors" />
+                      <span className="text-[9px] text-white font-bold uppercase tracking-widest">Drop or click to upload</span>
                       <input type="file" accept="image/*" onChange={handleRefUpload} className="hidden" />
                     </label>
                   )}
@@ -479,7 +479,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                 </button>
 
                 {!vibeAccepted && !useOverride && (
-                  <p className="text-[9px] text-zinc-300 text-center uppercase tracking-widest">Suggest and accept a vibe first, or override with your own</p>
+                  <p className="text-[9px] text-zinc-100 text-center uppercase tracking-widest">Suggest and accept a vibe first, or override with your own</p>
                 )}
 
                 {imageGen.status === "generating" && (
@@ -492,7 +492,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
               {/* ─── RIGHT: Live Preview (3 cols) ────────────────────── */}
               <div className="xl:col-span-3 space-y-6">
                 <div className="flex justify-between items-center">
-                  <label className="text-[10px] text-zinc-200 font-bold uppercase tracking-widest">Live Preview — {currentFormat.label} {activeTab === "poster" ? `(${posterDim.dim})` : `(${currentFormat.dim})`}</label>
+                  <label className="text-[10px] text-white font-bold uppercase tracking-widest">Live Preview — {currentFormat.label} {activeTab === "poster" ? `(${posterDim.dim})` : `(${currentFormat.dim})`}</label>
                   {imageGen.status === "success" && (
                     <button onClick={handleExport} className="px-6 py-2 bg-white text-black rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:bg-gold-500 transition-all shadow-lg">
                       <Download className="w-3 h-3" /> Export Digital

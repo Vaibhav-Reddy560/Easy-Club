@@ -155,7 +155,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
       {/* Section Header */}
       <div className="flex flex-col gap-2">
         <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Content Lab</h2>
-        <p className="text-[10px] text-zinc-200 font-bold uppercase tracking-[0.2em]">AI-Powered Promotional & Document Engine</p>
+        <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-[0.2em]">AI-Powered Promotional & Document Engine</p>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Outreach & Promo Messaging Section */}
@@ -170,7 +170,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
             <button
               onClick={handleGeneratePromo}
               disabled={isGeneratingPromo}
-              className="px-3 py-1 border border-white/10 rounded-full text-[9px] font-bold uppercase tracking-tighter text-zinc-200 hover:text-signature-gradient transition-all"
+              className="px-3 py-1 border border-white/10 rounded-full text-[9px] font-bold uppercase tracking-tighter text-zinc-100 hover:text-signature-gradient transition-all"
             >
               {isGeneratingPromo ? <Loader2 className="w-3 h-3 animate-spin" /> : 'Regenerate'}
             </button>
@@ -180,19 +180,19 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
             {isGeneratingPromo ? (
               <div className="py-20 flex flex-col items-center justify-center text-center space-y-4 animate-pulse">
                 <Sparkles className="w-8 h-8 text-gold-500/40" />
-                <p className="text-[10px] font-bold text-zinc-200 uppercase tracking-widest">Generating Professional Copy</p>
+                <p className="text-[10px] font-bold text-white uppercase tracking-widest">Generating Professional Copy</p>
               </div>
             ) : generatedPromo ? (
               <div className="space-y-6">
                 {/* Long Version */}
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-[10px] font-bold text-zinc-300 uppercase">Standard (WhatsApp / Email)</span>
+                    <span className="text-[10px] font-bold text-zinc-100 uppercase">Standard (WhatsApp / Email)</span>
                     <button onClick={() => copyToClipboard(generatedPromo.long, 'long')} className="text-signature-gradient text-[10px] font-bold flex items-center gap-1">
                       {copiedId === 'long' ? <Check className="w-3 h-3 text-gold-500" /> : <Copy className="w-3 h-3 text-gold-500" />} Copy
                     </button>
                   </div>
-                  <div className="bg-black/60 p-5 rounded-2xl border border-white/5 text-[11px] text-zinc-300 whitespace-pre-wrap leading-relaxed">
+                  <div className="bg-black/60 p-5 rounded-2xl border border-white/5 text-[11px] text-white whitespace-pre-wrap leading-relaxed">
                     {generatedPromo.long}
                   </div>
                 </div>
@@ -200,12 +200,12 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
                 {/* Short / Concise Version */}
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-[10px] font-bold text-zinc-300 uppercase">Short (Instagram Caption / Story)</span>
+                    <span className="text-[10px] font-bold text-zinc-100 uppercase">Short (Instagram Caption / Story)</span>
                     <button onClick={() => copyToClipboard(generatedPromo.short, 'short')} className="text-signature-gradient text-[10px] font-bold flex items-center gap-1">
                       {copiedId === 'short' ? <Check className="w-3 h-3 text-gold-500" /> : <Copy className="w-3 h-3 text-gold-500" />} Copy
                     </button>
                   </div>
-                  <div className="bg-black/60 p-5 rounded-2xl border border-gold-500/10 text-[11px] text-zinc-300 whitespace-pre-wrap leading-relaxed">
+                  <div className="bg-black/60 p-5 rounded-2xl border border-gold-500/10 text-[11px] text-white whitespace-pre-wrap leading-relaxed">
                     {generatedPromo.short}
                   </div>
                 </div>
@@ -245,7 +245,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
             ) : letterGen.status === 'generating' ? (
               <div className="py-16 flex flex-col items-center justify-center space-y-6">
                 <TypewriterLoader />
-                <p className="text-[10px] font-bold text-zinc-200 uppercase tracking-widest animate-pulse">Drafting Professional Letter</p>
+                <p className="text-[10px] font-bold text-white uppercase tracking-widest animate-pulse">Drafting Professional Letter</p>
               </div>
             ) : (
               <button 
@@ -253,7 +253,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
                 className="w-full bg-black/40 border border-dashed border-white/10 rounded-3xl p-10 flex flex-col items-center gap-4 group hover:border-gold-500/40 transition-all"
               >
                 <File className="w-5 h-5 text-gold-500 group-hover:text-gold-500 transition-colors" />
-                <span className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest">Generate Official Letter</span>
+                <span className="text-[10px] font-bold text-zinc-100 uppercase tracking-widest">Generate Official Letter</span>
               </button>
             )}
           </div>
@@ -286,7 +286,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5 text-zinc-300">
+              <tbody className="divide-y divide-white/5 text-white">
                 {Array.isArray(sheetGen.result) && sheetGen.result.map((row: Record<string, string | number>, i: number) => (
                   <tr key={i} className="hover:bg-white/5 transition-colors">
                     {Object.values(row).map((val: string | number, j: number) => (
@@ -300,13 +300,13 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
         ) : sheetGen.status === 'generating' ? (
           <div className="py-20 flex flex-col items-center justify-center space-y-4 animate-pulse">
             <Table className="w-10 h-10 text-gold-500/40" />
-            <p className="text-[10px] font-bold text-zinc-200 uppercase tracking-widest">Compiling Data Sheet...</p>
+            <p className="text-[10px] font-bold text-white uppercase tracking-widest">Compiling Data Sheet...</p>
           </div>
         ) : (
           <div className="py-20 flex flex-col items-center justify-center border border-dashed border-white/10 rounded-[3rem] space-y-6">
             <div className="text-center space-y-2">
-              <p className="text-[11px] font-bold text-zinc-300 uppercase tracking-widest">No Active Data Sheet</p>
-              <p className="text-[9px] text-zinc-300">The agent can generate budgets, schedules, or trackers</p>
+              <p className="text-[11px] font-bold text-white uppercase tracking-widest">No Active Data Sheet</p>
+              <p className="text-[9px] text-zinc-100">The agent can generate budgets, schedules, or trackers</p>
             </div>
             <button 
               onClick={handleGenerateSheet}

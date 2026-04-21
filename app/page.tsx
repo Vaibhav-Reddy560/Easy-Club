@@ -672,7 +672,7 @@ export default function App() {
 
                   <div className="mb-12 border-b border-white/5 pb-8">
                     <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">
-                      {activeEvent?.name} <span className="text-zinc-400 font-normal ml-3 font-sans">/ Workspace</span>
+                      {activeEvent?.name} <span className="text-white font-normal ml-3 font-astronomus">/ Workspace</span>
                     </h2>
                   </div>
 

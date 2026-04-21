@@ -113,7 +113,7 @@ export default function SocialWorkspace({ activeEvent }: SocialWorkspaceProps) {
                 <h4 className="text-2xl font-bold tracking-tight flex items-center gap-3 text-white">
                   <Sparkles className="w-6 h-6 text-gold-500" /> Proposed Speaker Roles
                 </h4>
-                <p className="text-zinc-300 text-xs font-medium uppercase tracking-[0.2em] mt-2 flex items-center gap-2">
+                <p className="text-zinc-100 text-xs font-medium uppercase tracking-[0.2em] mt-2 flex items-center gap-2">
                   <MapPin className="w-3 h-3" /> Tailored for location: {city}
                 </p>
               </div>
@@ -135,13 +135,13 @@ export default function SocialWorkspace({ activeEvent }: SocialWorkspaceProps) {
                       </div>
                       <div>
                         <h5 className="font-bold text-lg text-white group-hover:text-signature-gradient transition-colors">{person.name}</h5>
-                        <p className="text-[10px] text-zinc-300 uppercase font-black tracking-widest mt-1">{person.location}</p>
+                        <p className="text-[10px] text-zinc-100 uppercase font-black tracking-widest mt-1">{person.location}</p>
                       </div>
                     </div>
 
                     <div className="space-y-2">
                       <div className="text-[9px] font-black text-signature-gradient uppercase tracking-widest mb-1">Target Persona</div>
-                      <div className="bg-zinc-900/40 p-3 rounded-xl border border-white/5 text-[11px] font-bold text-zinc-300 group-hover:text-white">
+                      <div className="bg-zinc-900/40 p-3 rounded-xl border border-white/5 text-[11px] font-bold text-zinc-100 group-hover:text-white">
                         {person.role}
                       </div>
                     </div>
@@ -170,7 +170,7 @@ export default function SocialWorkspace({ activeEvent }: SocialWorkspaceProps) {
           </div>
           <div>
             <h6 className="font-bold text-lg text-white">Invitation Engine</h6>
-            <p className="text-[10px] text-zinc-200 font-bold uppercase tracking-widest mt-1 text-center md:text-left">
+            <p className="text-[10px] text-white font-bold uppercase tracking-widest mt-1 text-center md:text-left">
               {isGenerating ? "AI is drafting personalized outreach..." : "Generate professional expert invitations"}
             </p>
           </div>
@@ -202,7 +202,7 @@ export default function SocialWorkspace({ activeEvent }: SocialWorkspaceProps) {
               setIsGenerating(false);
             }
           }}
-          className="px-8 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-[10px] font-black uppercase tracking-widest text-zinc-300 hover:text-signature-gradient hover:border-gold-500 transition-all flex items-center gap-2"
+          className="px-8 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-[10px] font-black uppercase tracking-widest text-zinc-100 hover:text-signature-gradient hover:border-gold-500 transition-all flex items-center gap-2"
         >
           {isGenerating ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
           {isGenerating ? "Processing..." : "Generate Master Invitation"}
@@ -228,11 +228,11 @@ export default function SocialWorkspace({ activeEvent }: SocialWorkspaceProps) {
               
               <div className="mb-8">
                 <h3 className="text-2xl font-bold text-white mb-2 tracking-tight">AI Outreach Template</h3>
-                <p className="text-zinc-300 text-[10px] uppercase font-bold tracking-widest">Tailored for: {experts[0]?.name}</p>
+                <p className="text-zinc-100 text-[10px] uppercase font-bold tracking-widest">Tailored for: {experts[0]?.name}</p>
               </div>
 
               <div className="flex-1 overflow-y-auto bg-black/40 border border-white/5 rounded-3xl p-8 mb-8 custom-scrollbar">
-                <pre className="text-sm text-zinc-300 whitespace-pre-wrap font-sans leading-relaxed">
+                <pre className="text-sm text-zinc-100 whitespace-pre-wrap font-sans leading-relaxed">
                   {outreachTemplate}
                 </pre>
               </div>
