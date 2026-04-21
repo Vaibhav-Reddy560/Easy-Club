@@ -47,13 +47,17 @@ export default function ExploreClubs() {
         const LOCAL_KEY = `easyclub_saved_clubs_${userId}`;
         const localData = localStorage.getItem(LOCAL_KEY);
         if (localData) {
-            try {
-                const clubs: ScrapedClub[] = JSON.parse(localData);
-                clubs.forEach(c => saveExploreClub(userId, c));
-                localStorage.removeItem(LOCAL_KEY);
-            } catch (e) {
-                console.error("Migration failed:", e);
-            }
+            void (async () => {
+                try {
+                    const clubs: ScrapedClub[] = JSON.parse(localData);
+                    // Wait for all saves to finish before clearing
+                    await Promise.all(clubs.map(c => saveExploreClub(userId, c)));
+                    localStorage.removeItem(LOCAL_KEY);
+                    console.log(`Successfully migrated ${clubs.length} clubs to Firestore.`);
+                } catch (e) {
+                    console.error("Migration failed:", e);
+                }
+            })();
         }
 
         const unsubscribe = subscribeSavedExploreClubs(userId, (clubs) => {

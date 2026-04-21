@@ -94,13 +94,19 @@ export default function App() {
         setLoading(true);
       }
       
-      const unsubscribe = subscribeUserClubs(user.uid, user.email, (fetchedClubs) => {
+      const unsubscribe = subscribeUserClubs(user.uid, user.email, (fetchedClubs, isSyncing) => {
         if (isMounted) {
           setClubs(fetchedClubs);
-          setLoading(false);
-          lastSyncedUid.current = user.uid;
-          localStorage.setItem('last_synced_uid', user.uid);
-          clearTimeout(safetyTimeout);
+          
+          // Only stop the "Syncing Hub" if:
+          // 1. We found some clubs (even from cache, to show them instantly)
+          // 2. OR the server has finished syncing (isSyncing is false)
+          if (fetchedClubs.length > 0 || !isSyncing) {
+            setLoading(false);
+            lastSyncedUid.current = user.uid;
+            localStorage.setItem('last_synced_uid', user.uid);
+            clearTimeout(safetyTimeout);
+          }
         }
       });
       

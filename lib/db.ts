@@ -29,27 +29,41 @@ import {
   export function subscribeUserClubs(
     userId: string, 
     userEmail: string | null, 
-    onUpdate: (clubs: Club[]) => void
+    onUpdate: (clubs: Club[], isSyncing: boolean) => void
   ): Unsubscribe {
     if (!db) return () => {};
 
-    // Consolidate owner and member checks into a single query
-    const clubsQuery = userEmail 
-      ? query(
-          collection(db, CLUBS_COLLECTION), 
-          or(
-            where("ownerId", "==", userId),
-            where("memberEmails", "array-contains", userEmail)
-          )
-        )
-      : query(collection(db, CLUBS_COLLECTION), where("ownerId", "==", userId));
+    const clubsMap = new Map<string, Club>();
+    let ownerSyncing = true;
+    let memberSyncing = userEmail ? true : false;
+    
+    const updateResults = (snapshot: any, isMember: boolean) => {
+      if (isMember) memberSyncing = snapshot.metadata.fromCache;
+      else ownerSyncing = snapshot.metadata.fromCache;
 
-    return onSnapshot(clubsQuery, (snapshot) => {
-      const fetchedClubs = snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Club));
-      onUpdate(fetchedClubs);
-    }, (error) => {
-      console.error("Clubs subscription error:", error);
-    });
+      snapshot.docs.forEach((d: any) => {
+        clubsMap.set(d.id, { ...d.data(), id: d.id } as Club);
+      });
+
+      // We are "syncing" if either subscription is still purely from cache
+      onUpdate(Array.from(clubsMap.values()), ownerSyncing || memberSyncing);
+    };
+
+    // Query 1: Clubs owned by user
+    const ownerQuery = query(collection(db, CLUBS_COLLECTION), where("ownerId", "==", userId));
+    const unsubOwner = onSnapshot(ownerQuery, { includeMetadataChanges: true }, (snap) => updateResults(snap, false), (err) => console.error("Owner clubs sub error:", err));
+
+    // Query 2: Clubs where user is a member
+    let unsubMember = () => {};
+    if (userEmail) {
+      const memberQuery = query(collection(db, CLUBS_COLLECTION), where("memberEmails", "array-contains", userEmail));
+      unsubMember = onSnapshot(memberQuery, { includeMetadataChanges: true }, (snap) => updateResults(snap, true), (err) => console.error("Member clubs sub error:", err));
+    }
+
+    return () => {
+      unsubOwner();
+      unsubMember();
+    };
   }
 
   export async function getUserClubs(userId: string, userEmail: string | null): Promise<Club[]> {
@@ -105,10 +119,22 @@ import {
       const clubRef = doc(db, CLUBS_COLLECTION, club.id);
       // Denormalize member emails for array-contains queries
       const memberEmails = (club.members || []).map(m => m.email).filter(Boolean);
-      await setDoc(clubRef, { ...club, memberEmails }, { merge: true });
+      
+      // Ensure ownerId is ALWAYS present and correct
+      const payload = { 
+        ...club, 
+        memberEmails, 
+        lastUpdated: new Date().toISOString() 
+      };
+      
+      await setDoc(clubRef, payload, { merge: true });
+      console.log(`[Firestore] Successfully saved club: ${club.name} (${club.id})`);
       return true;
-    } catch (error) {
-      console.error("Error saving club to Firestore:", error);
+    } catch (error: any) {
+      console.error("[Firestore] Error saving club:", error);
+      if (error.code === 'permission-denied') {
+        alert("Permission Denied: You do not have authority to save changes to this club.");
+      }
       return false;
     }
   }
@@ -121,9 +147,10 @@ import {
   
     try {
       await deleteDoc(doc(db, CLUBS_COLLECTION, clubId));
+      console.log(`[Firestore] Deleted club: ${clubId}`);
       return true;
     } catch (error) {
-      console.error("Error deleting club:", error);
+      console.error("[Firestore] Error deleting club:", error);
       return false;
     }
   }
@@ -141,7 +168,7 @@ import {
       const clubs = snapshot.docs.map(d => d.data().club as ScrapedClub);
       onUpdate(clubs);
     }, (error) => {
-      console.error("Saved clubs subscription error:", error);
+      console.error("[Firestore] Saved clubs subscription error:", error);
     });
   }
 
@@ -158,9 +185,10 @@ import {
         club,
         savedAt: new Date().toISOString()
       });
+      console.log(`[Firestore] Saved explore club: ${club.name}`);
       return true;
     } catch (error) {
-      console.error("Error saving explore club:", error);
+      console.error("[Firestore] Error saving explore club:", error);
       return false;
     }
   }
