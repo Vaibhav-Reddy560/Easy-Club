@@ -33,18 +33,18 @@
 
 .ring1 {
     inset: 4px;
-    border-color: rgba(255, 136, 0, 0.3);
-    box-shadow: 0 0 16px rgba(255, 136, 0, 0.15), inset 0 0 16px rgba(255, 136, 0, 0.07);
+    border-color: rgba(212, 150, 10, 0.28);
+    box-shadow: 0 0 14px rgba(212, 150, 10, 0.12), inset 0 0 14px rgba(212, 150, 10, 0.06);
 }
 .ring2 {
     inset: 55px;
-    border-color: rgba(255, 180, 5, 0.22);
-    box-shadow: 0 0 12px rgba(255, 180, 5, 0.1), inset 0 0 12px rgba(255, 180, 5, 0.05);
+    border-color: rgba(212, 175, 55, 0.22);
+    box-shadow: 0 0 11px rgba(212, 175, 55, 0.1), inset 0 0 11px rgba(212, 175, 55, 0.05);
 }
 .ring3 {
     inset: 100px;
-    border-color: rgba(174, 113, 2, 0.2);
-    box-shadow: 0 0 8px rgba(174, 113, 2, 0.08), inset 0 0 8px rgba(174, 113, 2, 0.04);
+    border-color: rgba(174, 113, 2, 0.18);
+    box-shadow: 0 0 8px rgba(174, 113, 2, 0.07), inset 0 0 8px rgba(174, 113, 2, 0.04);
 }
 
 /* ─── Single rotating wrapper ─── */
@@ -62,30 +62,30 @@
     border-radius: 50%;
     background: conic-gradient(
         from 90deg at 50% 50%,
-        rgba(255, 136, 0, 0.0)  0deg,
-        rgba(255, 136, 0, 0.0)  90deg,
-        rgba(255, 136, 0, 0.04) 170deg,
-        rgba(255, 157, 0, 0.15) 240deg,
-        rgba(255, 180, 5, 0.35) 310deg,
-        rgba(255, 191, 68, 0.5) 355deg,
-        rgba(255, 136, 0, 0.0)  360deg
+        rgba(212, 150, 10, 0.0)  0deg,
+        rgba(212, 150, 10, 0.0)  90deg,
+        rgba(212, 150, 10, 0.04) 170deg,
+        rgba(212, 165, 20, 0.14) 240deg,
+        rgba(212, 175, 55, 0.32) 310deg,
+        rgba(232, 190, 60, 0.48) 355deg,
+        rgba(212, 150, 10, 0.0)  360deg
     );
 }
 
-/* The single sharp leading line — gradient from bright orange at root to gold at tip */
+/* The single sharp leading line — toned-down gold */
 .sweepLine {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 50%;
-    height: 2.5px;
-    background: linear-gradient(90deg, #FF8800 0%, #FFB405 55%, #FFBF44 100%);
+    width: 47%;  /* keeps tip safely within the circle boundary */
+    height: 2px;
+    background: linear-gradient(90deg, #D4960A 0%, #FFB405 55%, #FFBF44 100%);
     transform-origin: left center;
     transform: translateY(-50%) rotate(0deg);
     border-radius: 0 2px 2px 0;
     box-shadow:
-        0 0 6px 1px #FF9D00,
-        0 0 20px 3px rgba(255, 136, 0, 0.45);
+        0 0 5px 1px #D4AF37,
+        0 0 14px 2px rgba(212, 175, 55, 0.4);
 }
 
 @keyframes spin {
@@ -93,29 +93,29 @@
     to   { transform: rotate(360deg); }
 }
 
-/* ─── Central hub — bright orange core ─── */
+/* ─── Central hub — warm gold core ─── */
 .hub {
     position: absolute;
     width: 11px;
     height: 11px;
-    background: radial-gradient(circle, #FFBF44 0%, #FF8800 100%);
+    background: radial-gradient(circle, #FFDF80 0%, #D4960A 100%);
     border-radius: 50%;
     z-index: 30;
     box-shadow:
-        0 0 10px 3px rgba(255, 136, 0, 0.8),
-        0 0 24px 5px rgba(255, 136, 0, 0.35);
+        0 0 10px 3px rgba(212, 175, 55, 0.75),
+        0 0 22px 4px rgba(212, 150, 10, 0.3);
 }
 
-/* ─── Discovery dots — warm gold with orange outer glow ─── */
+/* ─── Discovery dots — warm gold ─── */
 .dot {
     position: absolute;
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: radial-gradient(circle, #FFDF80 0%, #FFB405 60%, #FF9D00 100%);
+    background: radial-gradient(circle, #FFF0A0 0%, #FFB405 60%, #D4960A 100%);
     box-shadow:
-        0 0 8px  3px rgba(255, 180, 5, 0.95),
-        0 0 22px 5px rgba(255, 136, 0, 0.5);
+        0 0 8px  3px rgba(212, 175, 55, 0.95),
+        0 0 20px 4px rgba(212, 150, 10, 0.45);
     opacity: 0;
     z-index: 20;
     outline: 1.5px solid rgba(255, 191, 68, 0.0);
@@ -141,7 +141,7 @@
 /* ─── Status text — full signature gradient ─── */
 .statusText {
     font-family: 'Astronomus', sans-serif;
-    background: linear-gradient(180deg, #FF8800 0%, #FF9D00 18%, #FFB405 36%, #FFBF44 49%, #F99A00 63%, #AE7102 100%);
+    background: linear-gradient(180deg, #D4960A 0%, #E8A800 18%, #FFB405 36%, #FFBF44 49%, #D4960A 63%, #AE7102 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
