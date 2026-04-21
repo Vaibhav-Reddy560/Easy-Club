@@ -49,7 +49,7 @@ export default function ResourceRadar({ initialDomain }: ResourceRadarProps) {
             if (!response.ok) throw new Error(data.error || "Search failed");
             setResults(data);
         } catch (err: unknown) {
-            const discoveryErr = err as DiscoveryError;
+            const discoveryErr = err as Error;
             setError(discoveryErr.message);
         } finally {
             setLoading(false);
