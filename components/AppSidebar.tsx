@@ -71,7 +71,7 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
                                     className="absolute left-0 w-1 h-6 bg-gold-500 rounded-full"
                                 />
                             )}
-                            <Icon className={`w-5 h-5 transition-transform duration-300 group-hover:scale-110 ${isActive ? 'text-gold-400' : 'text-white/60'}`} />
+                            <Icon className={`w-6 h-6 transition-transform duration-300 group-hover:scale-110 ${isActive ? 'text-gold-400' : 'text-white/60'}`} />
                             <span className={`text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-transform ${isActive ? 'translate-x-1 text-signature-gradient' : ''}`}>
                                 {section.label}
                             </span>
