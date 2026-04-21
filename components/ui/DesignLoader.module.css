@@ -11,10 +11,12 @@
   position: relative;
   height: 200px;
   width: 200px;
-  border-bottom: 3px solid #FF9D00;
+  /* Multi-stop signature gradient for the drawn line */
+  border-bottom: 4px solid #FF9D00;
+  border-image: linear-gradient(90deg, #FF8800 0%, #FF9D00 20%, #FFB405 45%, #FFBF44 55%, #F99A00 80%, #AE7102 100%) 1;
   box-sizing: border-box;
-  animation: drawLine 4s linear infinite;
-  filter: drop-shadow(0 0 10px rgba(255, 157, 0, 0.4));
+  animation: drawLine 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  filter: drop-shadow(0 0 15px rgba(255, 180, 5, 0.5));
 }
 
 .loader::before {
@@ -22,43 +24,57 @@
   position: absolute;
   left: calc(100% + 14px);
   bottom: -6px;
-  width: 16px;
-  height: 100px;
+  width: 18px;
+  height: 110px;
   border-radius: 20px 20px 50px 50px;
   background-repeat: no-repeat;
   
-  /* The Pencil Body & Tip Design */
+  /* The Pencil Body & Tip Design - More dimension */
   background-image: 
-    /* Pencil Tip - Gold lead */
-    linear-gradient(#FFB405 6px, transparent 0),
-    /* Pencil Tip Shading - Light wood */
-    linear-gradient(45deg, rgba(212, 175, 55, 0.2) 49%, #FFF0A0 51%),
-    linear-gradient(315deg, rgba(212, 175, 55, 0.2) 49%, #FFF0A0 51%),
-    /* Pencil Body - Deep Signature Gold Gradient */
-    linear-gradient( to bottom, #FFDF80 10%, #AE7102 10%, #AE7102 90%, #FFDF80 90% );
+    /* Pencil Tip - Gold lead with extra glow */
+    linear-gradient(#FFE080 3px, #FFB405 6px, transparent 0),
+    /* Pencil Tip Shading - Light wood with more texture */
+    linear-gradient(45deg, rgba(212, 175, 55, 0.3) 49%, #FFF4B0 51%),
+    linear-gradient(315deg, rgba(212, 175, 55, 0.3) 49%, #FFF4B0 51%),
+    /* Pencil Body - Complex Multi-stop Gradient for metallic look */
+    linear-gradient(to right, #AE7102 0%, #FFB405 25%, #FFDF80 50%, #FFB405 75%, #AE7102 100%);
     
-  background-size: 3px 3px, 8px 8px, 8px 8px, 16px 88px;
-  background-position: center bottom, left 88px, right 88px, left top;
+  background-size: 3px 6px, 9px 9px, 9px 9px, 100% 98px;
+  background-position: center bottom, left 98px, right 98px, left top;
   transform: rotate(25deg);
-  animation: pencilRot 4s linear infinite;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  animation: 
+    pencilRot 4s cubic-bezier(0.4, 0, 0.2, 1) infinite,
+    pencilShine 2s linear infinite;
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.5),
+    0 0 15px rgba(255, 180, 5, 0.2);
+  z-index: 2;
+}
+
+@keyframes pencilShine {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.2) contrast(1.1); }
+  100% { filter: brightness(1); }
 }
 
 @keyframes drawLine {
   0%, 100% {
     width: 0px;
     opacity: 0;
+    filter: blur(2px);
   }
-  5%, 45% {
+  10%, 40% {
     opacity: 1;
+    filter: blur(0);
   }
   45%, 55% {
-    width: 200px;
+    width: 205px;
   }
-  55%, 95% {
+  60%, 90% {
     opacity: 1;
+    filter: blur(0);
   }
-  95% {
+  100% {
     opacity: 0;
   }
 }
@@ -72,8 +88,8 @@
 
   55%,
   100% {
-    bottom: -12px;
-    left: calc(100% + 16px);
+    bottom: -15px;
+    left: calc(100% + 18px);
     transform: rotate(220deg);
   }
 }
