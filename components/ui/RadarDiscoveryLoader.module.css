@@ -61,7 +61,7 @@
     inset: 0;
     border-radius: 50%;
     background: conic-gradient(
-        from 0deg at 50% 50%,
+        from 90deg at 50% 50%,
         rgba(255, 136, 0, 0.0)  0deg,
         rgba(255, 136, 0, 0.0)  90deg,
         rgba(255, 136, 0, 0.04) 170deg,
