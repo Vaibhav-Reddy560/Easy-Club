@@ -11,7 +11,7 @@ interface PremiumLoaderProps {
 
 /**
  * PremiumLoader - A high-fidelity, Gold-themed multi-dot loader.
- * Replaces standard loading spinners across the app for a premium feel.
+ * Features harmonic concentric pulses and dual outward energy ripples.
  */
 const PremiumLoader = ({ size = 'md', className = '', dotCount = 5 }: PremiumLoaderProps) => {
   return (
@@ -19,7 +19,9 @@ const PremiumLoader = ({ size = 'md', className = '', dotCount = 5 }: PremiumLoa
       {[...Array(dotCount)].map((_, i) => (
         <div key={i} className={styles.circle}>
           <div className={styles.dot} />
-          <div className={styles.outline} />
+          {/* Dual ripples for depth and separation from the core circles */}
+          <div className={`${styles.ripple} ${styles.ripple1}`} />
+          <div className={`${styles.ripple} ${styles.ripple2}`} />
         </div>
       ))}
     </div>
