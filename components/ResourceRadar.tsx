@@ -18,16 +18,23 @@ interface ResourcePerson {
     tags: string[];
 }
 
-interface DiscoveryError {
-    message: string;
+interface ResourceRadarProps {
+    initialDomain?: string;
 }
 
-export default function ResourceRadar() {
-    const [domain, setDomain] = useState("AI & Machine Learning");
+export default function ResourceRadar({ initialDomain }: ResourceRadarProps) {
+    const [domain, setDomain] = useState(initialDomain || "AI & Machine Learning");
     const [location, setLocation] = useState("Bengaluru");
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState<ResourcePerson[]>([]);
     const [error, setError] = useState<string | null>(null);
+
+    // Update domain when initialDomain prop changes (event context)
+    React.useEffect(() => {
+        if (initialDomain) {
+            setDomain(initialDomain);
+        }
+    }, [initialDomain]);
 
     const handleSearch = async () => {
         setLoading(true);
@@ -53,15 +60,15 @@ export default function ResourceRadar() {
         <div className="space-y-12">
             {/* Header Area */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/5 pb-10">
-                <div className="space-y-2">
-                    <div className="flex items-center gap-3">
-                        <div className="p-2 bg-gold-500/10 rounded-lg border border-gold-500/20">
-                            <Users className="w-5 h-5 text-gold-500" />
+                <div className="space-y-4">
+                    <div className="flex items-center gap-4">
+                        <div className="p-3 bg-gold-500/10 rounded-2xl border border-gold-500/20 shadow-[0_0_20px_rgba(245,158,11,0.1)]">
+                            <Users className="w-6 h-6 text-gold-500" />
                         </div>
-                        <h1 className="text-3xl font-black uppercase tracking-tighter text-white">Resource <span className="text-signature-gradient">Radar</span></h1>
+                        <h1 className="text-4xl font-black uppercase tracking-tighter text-signature-gradient font-astronomus">Suggested <span className="text-white opacity-90">Experts</span></h1>
                     </div>
-                    <p className="text-sm text-zinc-100 font-medium max-w-lg">
-                        Elite professional discovery. Find mentors, speakers, and industry experts for your club sessions.
+                    <p className="text-sm text-zinc-100 font-medium max-w-lg leading-relaxed">
+                        Precision professional discovery. Find the perfect mentors, speakers, and industry specialists tailored to your event&apos;s core focus.
                     </p>
                 </div>
 
