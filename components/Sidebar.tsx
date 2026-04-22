@@ -35,7 +35,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
       <nav className="h-20 border-b border-white/10 flex items-center justify-between px-4 md:px-8 bg-black/40 backdrop-blur-3xl sticky top-0 z-50 shadow-2xl">
         <div className="flex items-center gap-1 md:gap-2 transition-all">
           <motion.div 
-            className="relative w-10 h-10 flex items-center justify-center"
+            className="relative w-9 h-9 flex items-center justify-center"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
@@ -58,7 +58,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
               viewBox="0 0 216 218" 
               fill="none" 
               xmlns="http://www.w3.org/2000/svg" 
-              className="w-8 h-8 drop-shadow-[0_0_12px_rgba(255,180,0,0.4)]"
+              className="w-7 h-7 drop-shadow-[0_0_12px_rgba(255,180,0,0.4)]"
             >
               {/* Thinner Outer Ring */}
               <circle cx="108" cy="108.8" r="102" stroke="url(#paint0_radial_195_3)" stroke-width="4"/>
@@ -115,7 +115,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
               </defs>
             </svg>
           </motion.div>
-          <h1 className="text-3xl md:text-[2.5rem] font-normal text-signature-gradient tracking-wider font-airstream leading-none pr-3 translate-y-[1px]">Easy Club</h1>
+          <h1 className="text-3xl md:text-[2.25rem] font-normal text-signature-gradient tracking-wider font-airstream leading-none pr-3 translate-y-[1px]">Easy Club</h1>
         </div>
         <div className="flex gap-3 md:gap-6 items-center">
           <button
