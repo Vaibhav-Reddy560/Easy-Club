@@ -75,91 +75,75 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
             <div className="glass-panel p-8 rounded-[3rem] space-y-8 border-white/5 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-gold-500/5 blur-[120px] -z-10" />
                 
-                <div className="flex flex-col xl:flex-row items-center justify-between gap-8">
-                    <div className="flex flex-col items-start gap-5">
+                <div className="flex flex-col gap-8">
+                    {/* Top Row: Title + Search Group */}
+                    <div className="flex flex-col xl:flex-row items-center justify-between gap-8">
                         <div className="flex items-center gap-4">
                             <div className="w-12 h-12 bg-gold-500/10 rounded-2xl flex items-center justify-center border border-gold-500/20 shadow-[0_0_25px_rgba(245,158,11,0.08)]">
                                 <Users className="w-6 h-6 text-gold-500" />
                             </div>
-                            <h1 
-                                style={{
-                                    background: 'linear-gradient(180deg, #FF8800 0%, #FF9D00 18%, #FFB405 36%, #FFBF44 49%, #F99A00 63%, #AE7102 100%)',
-                                    WebkitBackgroundClip: 'text',
-                                    WebkitTextFillColor: 'transparent',
-                                    backgroundClip: 'text',
-                                    display: 'inline-block'
-                                }}
-                                className="text-3xl font-black uppercase tracking-[-0.02em] font-astronomus leading-tight py-1"
-                            >
+                            <h1 className="text-3xl font-black uppercase tracking-[-0.02em] font-astronomus leading-tight py-1 text-signature-gradient">
                                 Suggested Experts
                             </h1>
                         </div>
 
-                        {/* Integrated Target Personas Chips - Moved below Title */}
-                        {targetPersonas.length > 0 && (
-                            <div className="flex flex-wrap items-center gap-3">
-                                {targetPersonas.map((persona, i) => (
-                                    <button
-                                        key={i}
-                                        onClick={() => setDomain(persona.expertise)}
-                                        className={`px-5 py-2.5 rounded-2xl border transition-all flex flex-col items-start gap-0 group ${
-                                            domain === persona.expertise 
-                                            ? "bg-gold-500/10 border-gold-500/40 shadow-[0_0_20px_rgba(245,158,11,0.1)]" 
-                                            : "bg-white/[0.02] border-white/10 hover:border-gold-500/40"
-                                        }`}
-                                    >
-                                        <span className="text-[8px] font-black uppercase tracking-widest text-white">
-                                            Expert Role
-                                        </span>
-                                        <span 
-                                            style={{
-                                                background: 'linear-gradient(180deg, #FF8800 0%, #FF9D00 18%, #FFB405 36%, #FFBF44 49%, #F99A00 63%, #AE7102 100%)',
-                                                WebkitBackgroundClip: 'text',
-                                                WebkitTextFillColor: 'transparent',
-                                                backgroundClip: 'text'
-                                            }}
-                                            className="text-[10px] font-bold uppercase tracking-tight leading-tight"
-                                        >
-                                            {persona.role}
-                                        </span>
-                                    </button>
-                                ))}
+                        <div className="flex flex-col sm:flex-row items-center gap-3 w-full xl:w-auto">
+                            <div className="flex items-center gap-3 w-full sm:w-auto">
+                                <div className="relative group w-full sm:w-52">
+                                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white hover:text-gold-500 transition-colors" />
+                                    <input
+                                        type="text"
+                                        value={domain}
+                                        onChange={(e) => setDomain(e.target.value)}
+                                        placeholder="Domain"
+                                        className="w-full pl-11 pr-5 py-3.5 bg-black/40 border border-white/20 rounded-2xl text-xs font-bold text-white placeholder:text-white/60 focus:border-gold-500/50 outline-none transition-all"
+                                    />
+                                </div>
+                                <div className="relative group w-full sm:w-40">
+                                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white hover:text-gold-500 transition-colors" />
+                                    <input
+                                        type="text"
+                                        value={location}
+                                        onChange={(e) => setLocation(e.target.value)}
+                                        placeholder="Loc"
+                                        className="w-full pl-11 pr-5 py-3.5 bg-black/40 border border-white/20 rounded-2xl text-xs font-bold text-white placeholder:text-white/60 focus:border-gold-500/50 outline-none transition-all"
+                                    />
+                                </div>
                             </div>
-                        )}
+                            <button
+                                onClick={handleSearch}
+                                disabled={loading}
+                                className="w-full sm:w-auto px-10 py-4 bg-gold-500 hover:bg-gold-400 disabled:bg-zinc-800 text-black font-black uppercase tracking-[0.2em] text-[10px] rounded-2xl transition-all shadow-xl shadow-gold-500/10 flex items-center justify-center gap-3 active:scale-95"
+                            >
+                                {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+                                Find People
+                            </button>
+                        </div>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row items-center gap-3 w-full xl:w-auto">
-                        <div className="flex items-center gap-3 w-full sm:w-auto">
-                            <div className="relative group w-full sm:w-52">
-                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white hover:text-gold-500 transition-colors" />
-                                <input
-                                    type="text"
-                                    value={domain}
-                                    onChange={(e) => setDomain(e.target.value)}
-                                    placeholder="Domain"
-                                    className="w-full pl-11 pr-5 py-3.5 bg-black/40 border border-white/20 rounded-2xl text-xs font-bold text-white placeholder:text-white/60 focus:border-gold-500/50 outline-none transition-all"
-                                />
-                            </div>
-                            <div className="relative group w-full sm:w-40">
-                                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white hover:text-gold-500 transition-colors" />
-                                <input
-                                    type="text"
-                                    value={location}
-                                    onChange={(e) => setLocation(e.target.value)}
-                                    placeholder="Loc"
-                                    className="w-full pl-11 pr-5 py-3.5 bg-black/40 border border-white/20 rounded-2xl text-xs font-bold text-white placeholder:text-white/60 focus:border-gold-500/50 outline-none transition-all"
-                                />
-                            </div>
+                    {/* Bottom Row: Persona Chips */}
+                    {targetPersonas.length > 0 && (
+                        <div className="flex flex-wrap items-center gap-3">
+                            {targetPersonas.map((persona, i) => (
+                                <button
+                                    key={i}
+                                    onClick={() => setDomain(persona.expertise)}
+                                    className={`px-5 py-2.5 rounded-2xl border transition-all flex flex-col items-start gap-0 group ${
+                                        domain === persona.expertise 
+                                        ? "bg-gold-500/10 border-gold-500/40 shadow-[0_0_20px_rgba(245,158,11,0.1)]" 
+                                        : "bg-white/[0.02] border-white/10 hover:border-gold-500/40"
+                                    }`}
+                                >
+                                    <span className="text-[8px] font-black uppercase tracking-widest text-white">
+                                        Expert Role
+                                    </span>
+                                    <span className="text-[10px] font-bold uppercase tracking-tight leading-tight text-signature-gradient">
+                                        {persona.role}
+                                    </span>
+                                </button>
+                            ))}
                         </div>
-                        <button
-                            onClick={handleSearch}
-                            disabled={loading}
-                            className="w-full sm:w-auto px-10 py-4 bg-gold-500 hover:bg-gold-400 disabled:bg-zinc-800 text-black font-black uppercase tracking-[0.2em] text-[10px] rounded-2xl transition-all shadow-xl shadow-gold-500/10 flex items-center justify-center gap-3 active:scale-95"
-                        >
-                            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
-                            Find People
-                        </button>
-                    </div>
+                    )}
                 </div>
 
                 <div className="flex items-center gap-10 pt-2 border-t border-white/5">
