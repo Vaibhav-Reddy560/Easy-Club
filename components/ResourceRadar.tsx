@@ -81,8 +81,17 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                             <div className="w-12 h-12 bg-gold-500/10 rounded-2xl flex items-center justify-center border border-gold-500/20 shadow-[0_0_25px_rgba(245,158,11,0.08)]">
                                 <Users className="w-6 h-6 text-gold-500" />
                             </div>
-                            <h1 className="text-3xl font-black uppercase tracking-[-0.02em] text-signature-gradient font-astronomus leading-tight py-1">
-                                Suggested Speakers
+                            <h1 
+                                style={{
+                                    background: 'linear-gradient(180deg, #FF8800 0%, #FF9D00 18%, #FFB405 36%, #FFBF44 49%, #F99A00 63%, #AE7102 100%)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent',
+                                    backgroundClip: 'text',
+                                    display: 'inline-block'
+                                }}
+                                className="text-3xl font-black uppercase tracking-[-0.02em] font-astronomus leading-tight py-1"
+                            >
+                                Suggested Experts
                             </h1>
                         </div>
 
@@ -96,13 +105,21 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                                         className={`px-5 py-2.5 rounded-2xl border transition-all flex flex-col items-start gap-0 group ${
                                             domain === persona.expertise 
                                             ? "bg-gold-500/10 border-gold-500/40 shadow-[0_0_20px_rgba(245,158,11,0.1)]" 
-                                            : "bg-white/[0.02] border-white/5 hover:border-gold-500/30"
+                                            : "bg-white/[0.02] border-white/10 hover:border-gold-500/40"
                                         }`}
                                     >
-                                        <span className={`text-[8px] font-black uppercase tracking-widest ${domain === persona.expertise ? "text-white" : "text-white/40 group-hover:text-white"}`}>
+                                        <span className="text-[8px] font-black uppercase tracking-widest text-white">
                                             Expert Role
                                         </span>
-                                        <span className="text-[10px] font-bold text-signature-gradient uppercase tracking-tight leading-tight">
+                                        <span 
+                                            style={{
+                                                background: 'linear-gradient(180deg, #FF8800 0%, #FF9D00 18%, #FFB405 36%, #FFBF44 49%, #F99A00 63%, #AE7102 100%)',
+                                                WebkitBackgroundClip: 'text',
+                                                WebkitTextFillColor: 'transparent',
+                                                backgroundClip: 'text'
+                                            }}
+                                            className="text-[10px] font-bold uppercase tracking-tight leading-tight"
+                                        >
                                             {persona.role}
                                         </span>
                                     </button>
@@ -114,23 +131,23 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                     <div className="flex flex-col sm:flex-row items-center gap-3 w-full xl:w-auto">
                         <div className="flex items-center gap-3 w-full sm:w-auto">
                             <div className="relative group w-full sm:w-52">
-                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-hover:text-gold-500 transition-colors" />
+                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white hover:text-gold-500 transition-colors" />
                                 <input
                                     type="text"
                                     value={domain}
                                     onChange={(e) => setDomain(e.target.value)}
                                     placeholder="Domain"
-                                    className="w-full pl-11 pr-5 py-3.5 bg-black/40 border border-white/10 rounded-2xl text-xs font-bold text-white focus:border-gold-500/50 outline-none transition-all"
+                                    className="w-full pl-11 pr-5 py-3.5 bg-black/40 border border-white/20 rounded-2xl text-xs font-bold text-white placeholder:text-white/60 focus:border-gold-500/50 outline-none transition-all"
                                 />
                             </div>
                             <div className="relative group w-full sm:w-40">
-                                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-hover:text-gold-500 transition-colors" />
+                                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white hover:text-gold-500 transition-colors" />
                                 <input
                                     type="text"
                                     value={location}
                                     onChange={(e) => setLocation(e.target.value)}
                                     placeholder="Loc"
-                                    className="w-full pl-11 pr-5 py-3.5 bg-black/40 border border-white/10 rounded-2xl text-xs font-bold text-white focus:border-gold-500/50 outline-none transition-all"
+                                    className="w-full pl-11 pr-5 py-3.5 bg-black/40 border border-white/20 rounded-2xl text-xs font-bold text-white placeholder:text-white/60 focus:border-gold-500/50 outline-none transition-all"
                                 />
                             </div>
                         </div>
@@ -140,19 +157,18 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                             className="w-full sm:w-auto px-10 py-4 bg-gold-500 hover:bg-gold-400 disabled:bg-zinc-800 text-black font-black uppercase tracking-[0.2em] text-[10px] rounded-2xl transition-all shadow-xl shadow-gold-500/10 flex items-center justify-center gap-3 active:scale-95"
                         >
                             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
-                            Scan Talent
+                            Find People
                         </button>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-4 pt-2">
-                    <div className="flex items-center gap-2">
-                        <span className="px-2 py-0.5 bg-gold-500/10 rounded-md text-[8px] font-black uppercase tracking-widest text-gold-500 border border-gold-500/20">
+                <div className="flex items-center gap-10 pt-2 border-t border-white/5">
+                    <div className="flex items-center gap-8">
+                        <span className="px-3 py-1 bg-gold-500/10 rounded-lg text-[9px] font-black uppercase tracking-widest text-gold-500 border border-gold-500/30">
                             {subType || "General Event"}
                         </span>
-                        <div className="w-1 h-1 rounded-full bg-white/10" />
-                        <div className="flex items-center gap-1 text-[9px] font-bold text-white/40 uppercase tracking-widest">
-                            <MapPin className="w-3 h-3 text-gold-500" />
+                        <div className="flex items-center gap-2 text-[10px] font-bold text-white uppercase tracking-widest">
+                            <MapPin className="w-3.5 h-3.5 text-gold-500" />
                             Targeting {location}
                         </div>
                     </div>
@@ -160,15 +176,6 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
             </div>
 
             {/* Content Area */}
-            <AnimatePresence mode="wait">
-                {loading ? (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="py-32 text-center"
-                    >
-                        <RadarDiscoveryLoader 
                             label="Discovery in Progress" 
                             className="scale-125"
                         />
