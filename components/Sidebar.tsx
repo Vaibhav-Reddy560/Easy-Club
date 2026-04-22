@@ -35,49 +35,51 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
       <nav className="h-20 border-b border-white/10 flex items-center justify-between px-4 md:px-8 bg-black/40 backdrop-blur-3xl sticky top-0 z-50 shadow-2xl">
         <div className="flex items-center gap-2 md:gap-4 transition-all">
           <motion.svg 
-            width="28" 
-            height="28" 
+            width="40" 
+            height="40" 
             viewBox="0 0 216 218" 
             fill="none" 
             xmlns="http://www.w3.org/2000/svg" 
-            className="w-7 h-7 drop-shadow-[0_0_8px_rgba(255,165,0,0.3)]"
-            initial={{ scale: 0.9 }}
-            animate={{ scale: 1 }}
+            className="w-10 h-10 drop-shadow-[0_0_12px_rgba(255,165,0,0.4)]"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
           >
             <path d="M108 5.38672C164.634 5.38672 210.613 51.6518 210.613 108.808C210.613 165.964 164.634 212.229 108 212.229C51.3659 212.229 5.38672 165.964 5.38672 108.808C5.38692 51.6518 51.3661 5.38672 108 5.38672Z" stroke="url(#paint0_radial_195_3)" stroke-width="10.7731"/>
             
             {/* Pulsing Glow Layer */}
             <motion.g 
-              filter="url(#filter0_f_195_3)"
               animate={{ 
-                scale: [1, 1.1, 1],
-                opacity: [0.5, 0.8, 0.5]
+                scale: [1, 1.15, 1],
+                opacity: [0.4, 0.7, 0.4]
               }}
               transition={{
-                duration: 3,
+                duration: 2.5,
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              style={{ originX: "108px", originY: "108px" }}
+              style={{ transformOrigin: "center" }}
             >
-              <circle cx="108.269" cy="108.808" r="78.6434" fill="url(#paint1_radial_195_3)" fill-opacity="0.55"/>
+              <g filter="url(#filter0_f_195_3)">
+                <circle cx="108.269" cy="108.808" r="78.6434" fill="url(#paint1_radial_195_3)" fill-opacity="0.55"/>
+              </g>
             </motion.g>
 
             {/* Pulsing Core Layer */}
             <motion.g 
-              filter="url(#filter1_dd_195_3)"
               animate={{ 
-                scale: [1, 1.05, 1],
+                scale: [0.85, 1.1, 0.85],
               }}
               transition={{
                 duration: 2,
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              style={{ originX: "108px", originY: "108px" }}
+              style={{ transformOrigin: "center" }}
             >
-              <circle cx="108.269" cy="108.808" r="55.4813" fill="url(#paint2_radial_195_3)"/>
+              <g filter="url(#filter1_dd_195_3)">
+                <circle cx="108.269" cy="108.808" r="55.4813" fill="url(#paint2_radial_195_3)"/>
+              </g>
             </motion.g>
 
             <defs>
