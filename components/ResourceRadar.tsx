@@ -77,12 +77,22 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                 
                 <div className="flex flex-col gap-8">
                     {/* Top Row: Title + Search Group */}
-                    <div className="flex flex-col xl:flex-row items-center justify-between gap-8">
-                        <div className="flex items-center gap-4">
+                    <div className="flex flex-col xl:flex-row items-center justify-between gap-8 w-full">
+                        <div className="flex items-center gap-6 min-w-max">
                             <div className="w-12 h-12 bg-gold-500/10 rounded-2xl flex items-center justify-center border border-gold-500/20 shadow-[0_0_25px_rgba(245,158,11,0.08)]">
                                 <Users className="w-6 h-6 text-gold-500" />
                             </div>
-                            <h1 className="text-3xl font-black uppercase tracking-[-0.02em] font-astronomus leading-tight py-1 text-signature-gradient">
+                            <h1 
+                                className="text-3xl font-black uppercase tracking-[-0.02em] font-astronomus whitespace-nowrap"
+                                style={{
+                                    background: 'linear-gradient(180deg, #FF8800 0%, #FF9D00 18%, #FFB405 36%, #FFBF44 49%, #F99A00 63%, #AE7102 100%)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent',
+                                    backgroundClip: 'text',
+                                    color: 'transparent',
+                                    display: 'inline-block'
+                                }}
+                            >
                                 Suggested Experts
                             </h1>
                         </div>
