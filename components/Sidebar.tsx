@@ -98,20 +98,20 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
 
               <defs>
                 <radialGradient id="paint0_radial_195_3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(108 108.808) rotate(90) scale(108.808 108)">
-                  <stop stop-color="#FF9900"/>
-                  <stop offset="0.370192" stop-color="#FFD37E"/>
-                  <stop offset="0.663462" stop-color="#FFE1A6"/>
-                  <stop offset="1" stop-color="#CA7F00"/>
+                  <stop stop-color="#FF6600"/>
+                  <stop offset="0.370192" stop-color="#FF8C00"/>
+                  <stop offset="0.663462" stop-color="#FFB405"/>
+                  <stop offset="1" stop-color="#9A3412"/>
                 </radialGradient>
                 <radialGradient id="paint1_radial_195_3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(108.269 108.808) rotate(90) scale(78.6434)">
-                  <stop stop-color="#FFA900"/>
-                  <stop offset="0.360577" stop-color="#FFC95F"/>
-                  <stop offset="1" stop-color="#996500"/>
+                  <stop stop-color="#FF7700"/>
+                  <stop offset="0.360577" stop-color="#FF9F00"/>
+                  <stop offset="1" stop-color="#7C2D12"/>
                 </radialGradient>
                 <radialGradient id="paint2_radial_195_3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(108.269 108.808) rotate(90) scale(58)">
-                  <stop stop-color="#FFA600"/>
-                  <stop offset="0.245192" stop-color="#FFBB34"/>
-                  <stop offset="1" stop-color="#AC7202"/>
+                  <stop stop-color="#FF5500"/>
+                  <stop offset="0.245192" stop-color="#FF8C00"/>
+                  <stop offset="1" stop-color="#450A0A"/>
                 </radialGradient>
               </defs>
             </svg>
