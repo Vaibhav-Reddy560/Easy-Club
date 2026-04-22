@@ -33,19 +33,19 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
     <>
       <DynamicIsland />
       <nav className="h-20 border-b border-white/10 flex items-center justify-between px-4 md:px-8 bg-black/40 backdrop-blur-3xl sticky top-0 z-50 shadow-2xl">
-        <div className="flex items-center gap-0.5 md:gap-1 transition-all">
+        <div className="flex items-center gap-1 md:gap-2 transition-all">
           <motion.div 
-            className="relative w-12 h-12 flex items-center justify-center"
+            className="relative w-10 h-10 flex items-center justify-center"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            {/* Atmospheric Ripple (Inspired by 4-circle loader) */}
+            {/* Atmospheric Ripple */}
             <motion.div 
-              className="absolute inset-0 rounded-full border border-gold-500/20"
+              className="absolute inset-0 rounded-full border border-gold-400/20"
               animate={{ 
                 scale: [1, 1.4, 1],
-                opacity: [0.3, 0, 0.3]
+                opacity: [0.2, 0, 0.2]
               }}
               transition={{
                 duration: 3,
@@ -58,7 +58,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
               viewBox="0 0 216 218" 
               fill="none" 
               xmlns="http://www.w3.org/2000/svg" 
-              className="w-10 h-10 drop-shadow-[0_0_15px_rgba(255,165,0,0.5)]"
+              className="w-8 h-8 drop-shadow-[0_0_12px_rgba(255,180,0,0.4)]"
             >
               {/* Thinner Outer Ring */}
               <circle cx="108" cy="108.8" r="102" stroke="url(#paint0_radial_195_3)" stroke-width="4"/>
@@ -66,8 +66,8 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
               {/* Pulsing Glow Layer */}
               <motion.g 
                 animate={{ 
-                  scale: [1, 1.15, 1],
-                  opacity: [0.4, 0.7, 0.4]
+                  scale: [1, 1.12, 1],
+                  opacity: [0.3, 0.6, 0.3]
                 }}
                 transition={{
                   duration: 2.5,
@@ -79,10 +79,10 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
                 <circle cx="108.269" cy="108.808" r="78.6434" fill="url(#paint1_radial_195_3)" fill-opacity="0.4"/>
               </motion.g>
 
-              {/* Pulsing Core (Contracting & Expanding) */}
+              {/* Pulsing Core */}
               <motion.g 
                 animate={{ 
-                  scale: [0.88, 1.08, 0.88],
+                  scale: [0.9, 1.05, 0.9],
                 }}
                 transition={{
                   duration: 2,
@@ -92,31 +92,30 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
                 style={{ transformOrigin: "center" }}
               >
                 <circle cx="108.269" cy="108.808" r="58" fill="url(#paint2_radial_195_3)"/>
-                {/* Inner Bright Spot */}
                 <circle cx="108.269" cy="108.808" r="15" fill="white" fill-opacity="0.3" filter="blur(8px)"/>
               </motion.g>
 
               <defs>
                 <radialGradient id="paint0_radial_195_3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(108 108.808) rotate(90) scale(108.808 108)">
-                  <stop stop-color="#FF8A00"/>
-                  <stop offset="0.370192" stop-color="#FFB405"/>
-                  <stop offset="0.663462" stop-color="#FFD37E"/>
-                  <stop offset="1" stop-color="#CA7F00"/>
-                </radialGradient>
-                <radialGradient id="paint1_radial_195_3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(108.269 108.808) rotate(90) scale(78.6434)">
-                  <stop stop-color="#FF9900"/>
-                  <stop offset="0.360577" stop-color="#FFC95F"/>
+                  <stop stop-color="#FFB000"/>
+                  <stop offset="0.370192" stop-color="#FFD700"/>
+                  <stop offset="0.663462" stop-color="#FFE1A6"/>
                   <stop offset="1" stop-color="#92400E"/>
                 </radialGradient>
-                <radialGradient id="paint2_radial_195_3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(108.269 108.808) rotate(90) scale(58)">
-                  <stop stop-color="#FF8800"/>
-                  <stop offset="0.245192" stop-color="#FBBF24"/>
+                <radialGradient id="paint1_radial_195_3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(108.269 108.808) rotate(90) scale(78.6434)">
+                  <stop stop-color="#FFC000"/>
+                  <stop offset="0.360577" stop-color="#FFD700"/>
                   <stop offset="1" stop-color="#78350F"/>
+                </radialGradient>
+                <radialGradient id="paint2_radial_195_3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(108.269 108.808) rotate(90) scale(58)">
+                  <stop stop-color="#FFB000"/>
+                  <stop offset="0.245192" stop-color="#FBBF24"/>
+                  <stop offset="1" stop-color="#451A03"/>
                 </radialGradient>
               </defs>
             </svg>
           </motion.div>
-          <h1 className="text-3xl md:text-[2.75rem] font-normal text-signature-gradient tracking-tight font-airstream leading-none pr-3 translate-y-[2px]">Easy Club</h1>
+          <h1 className="text-3xl md:text-[2.5rem] font-normal text-signature-gradient tracking-wider font-airstream leading-none pr-3 translate-y-[1px]">Easy Club</h1>
         </div>
         <div className="flex gap-3 md:gap-6 items-center">
           <button
