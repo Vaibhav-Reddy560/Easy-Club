@@ -75,34 +75,34 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
             <div className="glass-panel p-8 rounded-[3rem] space-y-8 border-white/5 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-gold-500/5 blur-[120px] -z-10" />
                 
-                <div className="flex flex-col xl:flex-row items-center justify-between gap-10">
-                    <div className="flex flex-col lg:flex-row items-center gap-8">
-                        <div className="flex items-center gap-5">
-                            <div className="w-14 h-14 bg-gold-500/10 rounded-2xl flex items-center justify-center border border-gold-500/20 shadow-[0_0_30px_rgba(245,158,11,0.1)]">
-                                <Users className="w-7 h-7 text-gold-500" />
+                <div className="flex flex-col xl:flex-row items-center justify-between gap-8">
+                    <div className="flex flex-col items-start gap-5">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-gold-500/10 rounded-2xl flex items-center justify-center border border-gold-500/20 shadow-[0_0_25px_rgba(245,158,11,0.08)]">
+                                <Users className="w-6 h-6 text-gold-500" />
                             </div>
-                            <h1 className="text-4xl sm:text-5xl font-black uppercase tracking-[-0.05em] text-signature-gradient font-astronomus leading-none py-2">
+                            <h1 className="text-3xl font-black uppercase tracking-[-0.02em] text-signature-gradient font-astronomus leading-tight py-1">
                                 Suggested Speakers
                             </h1>
                         </div>
 
-                        {/* Integrated Target Personas Chips */}
+                        {/* Integrated Target Personas Chips - Moved below Title */}
                         {targetPersonas.length > 0 && (
                             <div className="flex flex-wrap items-center gap-3">
                                 {targetPersonas.map((persona, i) => (
                                     <button
                                         key={i}
                                         onClick={() => setDomain(persona.expertise)}
-                                        className={`px-5 py-3 rounded-2xl border transition-all flex flex-col items-start gap-0.5 group ${
+                                        className={`px-5 py-2.5 rounded-2xl border transition-all flex flex-col items-start gap-0 group ${
                                             domain === persona.expertise 
                                             ? "bg-gold-500/10 border-gold-500/40 shadow-[0_0_20px_rgba(245,158,11,0.1)]" 
                                             : "bg-white/[0.02] border-white/5 hover:border-gold-500/30"
                                         }`}
                                     >
-                                        <span className={`text-[10px] font-black uppercase tracking-tight ${domain === persona.expertise ? "text-white" : "text-white/60 group-hover:text-white"}`}>
-                                            {persona.name}
+                                        <span className={`text-[8px] font-black uppercase tracking-widest ${domain === persona.expertise ? "text-white" : "text-white/40 group-hover:text-white"}`}>
+                                            Expert Role
                                         </span>
-                                        <span className="text-[8px] font-bold text-signature-gradient uppercase tracking-widest opacity-80 group-hover:opacity-100">
+                                        <span className="text-[10px] font-bold text-signature-gradient uppercase tracking-tight leading-tight">
                                             {persona.role}
                                         </span>
                                     </button>
@@ -111,26 +111,26 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                         )}
                     </div>
 
-                    <div className="flex flex-col sm:flex-row items-center gap-4 w-full xl:w-auto">
+                    <div className="flex flex-col sm:flex-row items-center gap-3 w-full xl:w-auto">
                         <div className="flex items-center gap-3 w-full sm:w-auto">
-                            <div className="relative group w-full sm:w-56">
+                            <div className="relative group w-full sm:w-52">
                                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-hover:text-gold-500 transition-colors" />
                                 <input
                                     type="text"
                                     value={domain}
                                     onChange={(e) => setDomain(e.target.value)}
                                     placeholder="Domain"
-                                    className="w-full pl-12 pr-6 py-4 bg-black/40 border border-white/10 rounded-2xl text-sm font-bold text-white focus:border-gold-500/50 outline-none transition-all"
+                                    className="w-full pl-11 pr-5 py-3.5 bg-black/40 border border-white/10 rounded-2xl text-xs font-bold text-white focus:border-gold-500/50 outline-none transition-all"
                                 />
                             </div>
-                            <div className="relative group w-full sm:w-44">
+                            <div className="relative group w-full sm:w-40">
                                 <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-hover:text-gold-500 transition-colors" />
                                 <input
                                     type="text"
                                     value={location}
                                     onChange={(e) => setLocation(e.target.value)}
                                     placeholder="Loc"
-                                    className="w-full pl-12 pr-6 py-4 bg-black/40 border border-white/10 rounded-2xl text-sm font-bold text-white focus:border-gold-500/50 outline-none transition-all"
+                                    className="w-full pl-11 pr-5 py-3.5 bg-black/40 border border-white/10 rounded-2xl text-xs font-bold text-white focus:border-gold-500/50 outline-none transition-all"
                                 />
                             </div>
                         </div>
