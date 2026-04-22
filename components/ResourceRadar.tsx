@@ -176,11 +176,26 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
             </div>
 
             {/* Content Area */}
-                            label="Discovery in Progress" 
-                            className="scale-125"
-                        />
-                    </motion.div>
-                ) : results.length > 0 ? (
+            <div className="min-h-[400px]">
+                <AnimatePresence mode="wait">
+                    {loading ? (
+                        <motion.div
+                            key="loader"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="flex flex-col items-center justify-center pt-8"
+                        >
+                            <RadarDiscoveryLoader 
+                                label="Discovery in Progress" 
+                                className="scale-125"
+                            />
+                            <div className="mt-8 text-center space-y-2">
+                                <p className="text-white text-xs font-black uppercase tracking-[0.3em] animate-pulse">Scanning Global Talent Network...</p>
+                                <p className="text-white text-[9px] font-bold uppercase tracking-widest">Identifying {domain} experts in {location}</p>
+                            </div>
+                        </motion.div>
+                    ) : results.length > 0 ? (
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -263,5 +278,6 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                 )}
             </AnimatePresence>
         </div>
+    </div>
     );
 }
