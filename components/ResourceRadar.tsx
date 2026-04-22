@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Search, MapPin, Users, Award, ExternalLink, Linkedin, Twitter, Github, Globe, Loader2, Sparkles, Trophy, Mail } from "lucide-react";
+import { Search, MapPin, Users, Award, ExternalLink, Linkedin, Twitter, Github, Globe, Loader2, Sparkles, Trophy, Mail, Briefcase } from "lucide-react";
 import { BorderBeam } from "@/components/animations/BorderBeam";
 import RadarDiscoveryLoader from "@/components/ui/RadarDiscoveryLoader";
 
@@ -18,13 +18,23 @@ interface ResourcePerson {
     tags: string[];
 }
 
-interface ResourceRadarProps {
-    initialDomain?: string;
+interface TargetPersona {
+    name: string;
+    role: string;
+    expertise: string;
+    location: string;
 }
 
-export default function ResourceRadar({ initialDomain }: ResourceRadarProps) {
+interface ResourceRadarProps {
+    initialDomain?: string;
+    targetPersonas?: TargetPersona[];
+    city?: string;
+    subType?: string;
+}
+
+export default function ResourceRadar({ initialDomain, targetPersonas = [], city, subType }: ResourceRadarProps) {
     const [domain, setDomain] = useState(initialDomain || "AI & Machine Learning");
-    const [location, setLocation] = useState("Bengaluru");
+    const [location, setLocation] = useState(city || "Bengaluru");
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState<ResourcePerson[]>([]);
     const [error, setError] = useState<string | null>(null);
@@ -34,7 +44,10 @@ export default function ResourceRadar({ initialDomain }: ResourceRadarProps) {
         if (initialDomain) {
             setDomain(initialDomain);
         }
-    }, [initialDomain]);
+        if (city) {
+            setLocation(city);
+        }
+    }, [initialDomain, city]);
 
     const handleSearch = async () => {
         setLoading(true);
@@ -57,51 +70,100 @@ export default function ResourceRadar({ initialDomain }: ResourceRadarProps) {
     };
 
     return (
-        <div className="space-y-12">
-            {/* Header Area */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/5 pb-10">
-                <div className="space-y-4">
-                    <div className="flex items-center gap-4">
-                        <div className="p-3 bg-gold-500/10 rounded-2xl border border-gold-500/20 shadow-[0_0_20px_rgba(245,158,11,0.1)]">
-                            <Users className="w-6 h-6 text-gold-500" />
+        <div className="space-y-10">
+            {/* Unified Suggested Experts Header */}
+            <div className="glass-panel p-10 rounded-[3rem] space-y-10 border-white/5 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-96 h-96 bg-gold-500/5 blur-[120px] -z-10" />
+                
+                <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-8">
+                    <div className="space-y-4">
+                        <div className="flex items-center gap-6">
+                            <div className="w-16 h-16 bg-gold-500/10 rounded-2xl flex items-center justify-center border border-gold-500/20 shadow-[0_0_30px_rgba(245,158,11,0.15)]">
+                                <Users className="w-8 h-8 text-gold-500" />
+                            </div>
+                            <div>
+                                <h1 className="text-5xl font-black uppercase tracking-[-0.05em] text-signature-gradient font-astronomus leading-tight">
+                                    Suggested <span className="text-white opacity-80">Experts</span>
+                                </h1>
+                                <div className="flex items-center gap-3 mt-1">
+                                    <span className="px-2 py-0.5 bg-gold-500/10 rounded-md text-[8px] font-black uppercase tracking-widest text-gold-500 border border-gold-500/20">
+                                        {subType || "General Event"}
+                                    </span>
+                                    <div className="flex items-center gap-1 text-[9px] font-bold text-white/40 uppercase tracking-widest">
+                                        <MapPin className="w-3 h-3 text-gold-500" />
+                                        Tailored for {location}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <h1 className="text-4xl font-black uppercase tracking-tighter text-signature-gradient font-astronomus">Suggested <span className="text-white opacity-90">Experts</span></h1>
                     </div>
-                    <p className="text-sm text-zinc-100 font-medium max-w-lg leading-relaxed">
-                        Precision professional discovery. Find the perfect mentors, speakers, and industry specialists tailored to your event&apos;s core focus.
-                    </p>
+
+                    <div className="flex flex-col sm:flex-row items-center gap-4 w-full xl:w-auto">
+                        <div className="relative group w-full sm:w-64">
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-hover:text-gold-500 transition-colors" />
+                            <input
+                                type="text"
+                                value={domain}
+                                onChange={(e) => setDomain(e.target.value)}
+                                placeholder="Expert Domain"
+                                className="w-full pl-12 pr-6 py-4 bg-black/40 border border-white/10 rounded-2xl text-sm font-bold text-white focus:border-gold-500/50 outline-none transition-all"
+                            />
+                        </div>
+                        <div className="relative group w-full sm:w-48">
+                            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-hover:text-gold-500 transition-colors" />
+                            <input
+                                type="text"
+                                value={location}
+                                onChange={(e) => setLocation(e.target.value)}
+                                placeholder="Location"
+                                className="w-full pl-12 pr-6 py-4 bg-black/40 border border-white/10 rounded-2xl text-sm font-bold text-white focus:border-gold-500/50 outline-none transition-all"
+                            />
+                        </div>
+                        <button
+                            onClick={handleSearch}
+                            disabled={loading}
+                            className="w-full sm:w-auto px-10 py-4 bg-gold-500 hover:bg-gold-400 disabled:bg-zinc-800 text-black font-black uppercase tracking-[0.2em] text-[10px] rounded-2xl transition-all shadow-xl shadow-gold-500/10 flex items-center justify-center gap-3 active:scale-95"
+                        >
+                            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+                            Scan Talent
+                        </button>
+                    </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4">
-                    <div className="relative group">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-100 group-hover:text-gold-500 transition-colors" />
-                        <input
-                            type="text"
-                            value={domain}
-                            onChange={(e) => setDomain(e.target.value)}
-                            placeholder="Expert Domain (e.g. AI, Music, Design)"
-                            className="w-full sm:w-64 pl-12 pr-6 py-4 glass-card rounded-2xl text-sm font-bold text-white focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20 outline-none transition-all placeholder:text-zinc-100"
-                        />
+                {/* Horizontal Scroll of Target Personas (Option A) */}
+                {targetPersonas.length > 0 && (
+                    <div className="pt-6 border-t border-white/5">
+                        <div className="flex items-center gap-3 mb-6">
+                            <Briefcase className="w-3.5 h-3.5 text-gold-500" />
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40">Required Target Personas</h2>
+                        </div>
+                        <div className="flex gap-4 overflow-x-auto pb-4 custom-scrollbar no-scrollbar">
+                            {targetPersonas.map((persona, i) => (
+                                <motion.div
+                                    key={i}
+                                    whileHover={{ y: -4 }}
+                                    className="flex-shrink-0 w-64 p-6 bg-white/[0.02] border border-white/5 rounded-3xl space-y-4 hover:border-gold-500/30 transition-all group"
+                                >
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-10 h-10 rounded-xl bg-zinc-950 flex items-center justify-center border border-white/5 group-hover:border-gold-500/20">
+                                            <Linkedin className="w-5 h-5 text-gold-500" />
+                                        </div>
+                                        <div className="min-w-0">
+                                            <h3 className="text-xs font-bold text-white truncate uppercase tracking-tight">{persona.name}</h3>
+                                            <p className="text-[9px] text-signature-gradient font-black uppercase tracking-widest">{persona.role}</p>
+                                        </div>
+                                    </div>
+                                    <button 
+                                        onClick={() => setDomain(persona.expertise)}
+                                        className="w-full py-2.5 bg-black/40 border border-white/10 rounded-xl text-[8px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:border-gold-500/50 transition-all"
+                                    >
+                                        Auto-Match Domain
+                                    </button>
+                                </motion.div>
+                            ))}
+                        </div>
                     </div>
-                    <div className="relative group">
-                        <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-100 group-hover:text-gold-500 transition-colors" />
-                        <input
-                            type="text"
-                            value={location}
-                            onChange={(e) => setLocation(e.target.value)}
-                            placeholder="City"
-                            className="w-full sm:w-48 pl-12 pr-6 py-4 glass-card rounded-2xl text-sm font-bold text-white focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20 outline-none transition-all placeholder:text-zinc-100"
-                        />
-                    </div>
-                    <button
-                        onClick={handleSearch}
-                        disabled={loading}
-                        className="px-8 py-4 bg-gold-500 hover:bg-gold-600 disabled:bg-zinc-800 disabled:text-zinc-200 text-black font-black uppercase tracking-widest text-[11px] rounded-2xl transition-all shadow-lg shadow-gold-500/10 flex items-center justify-center gap-2"
-                    >
-                        {loading ? <Loader2 className="w-4 h-4 animate-spin text-black" /> : <Sparkles className="w-4 h-4" />}
-                        Scan Talent
-                    </button>
-                </div>
+                )}
             </div>
 
             {/* Content Area */}
@@ -111,125 +173,92 @@ export default function ResourceRadar({ initialDomain }: ResourceRadarProps) {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="py-32 text-center space-y-6"
+                        className="py-32 text-center"
                     >
-                        <div className="mx-auto flex flex-col items-center">
-                            <RadarDiscoveryLoader 
-                                label="Mining Intelligence..." 
-                                className="scale-110 sm:scale-125"
-                            />
-                            <p className="text-[10px] text-zinc-400 uppercase font-bold tracking-[0.2em] mt-4 opacity-60">
-                                Scanning professional networks and university records
-                            </p>
-                        </div>
-                    </motion.div>
-                ) : error ? (
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="py-20 text-center"
-                    >
-                        <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-8 max-w-md mx-auto">
-                            <p className="text-red-400 font-bold mb-2">Search Error</p>
-                            <p className="text-sm text-white">{error}</p>
-                            <button 
-                                onClick={handleSearch}
-                                className="mt-6 text-[10px] font-black uppercase tracking-widest text-signature-gradient hover:brightness-110 transition-colors"
-                            >
-                                Try Again
-                            </button>
-                        </div>
+                        <RadarDiscoveryLoader 
+                            label="Discovery in Progress" 
+                            className="scale-125"
+                        />
                     </motion.div>
                 ) : results.length > 0 ? (
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 pb-20"
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-32"
                     >
                         {results.map((person, idx) => (
-                            <motion.div
+                            <div
                                 key={idx}
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: idx * 0.1 }}
-                                className="group relative glass-card p-1 rounded-[2.2rem] overflow-hidden shadow-2xl"
+                                className="group relative glass-card p-1 rounded-[2.5rem] overflow-hidden"
                             >
-                                <div className="bg-[#0A0A0A]/80 backdrop-blur-xl rounded-[2rem] overflow-hidden relative border border-white/5 h-full">
-                                    <BorderBeam duration={10} size={250} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    {/* Platform Label */}
-                                <div className="absolute top-6 right-6 z-20 flex items-center gap-2">
-                                    <div className="px-3 py-1 bg-black/80 backdrop-blur-md rounded-full border border-white/10 flex items-center gap-2 text-[8px] font-black uppercase tracking-widest text-white">
-                                        {person.website.includes("linkedin") ? <Linkedin className="w-2.5 h-2.5" /> : 
-                                         person.website.includes("twitter") || person.website.includes("x.com") ? <Twitter className="w-2.5 h-2.5" /> :
-                                         person.website.includes("github") ? <Github className="w-2.5 h-2.5" /> : <Globe className="w-2.5 h-2.5" />}
-                                        Verified Network
-                                    </div>
-                                </div>
-
-                                <div className="p-8 space-y-6">
-                                    <div className="flex items-start gap-4">
-                                        <div className="relative">
-                                            <div className="absolute inset-0 bg-gold-500/20 blur-xl scale-125 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                            <Image
-                                                src={person.imageUrl}
-                                                alt={person.name}
-                                                width={64}
-                                                height={64}
-                                                unoptimized
-                                                className="w-16 h-16 rounded-2xl object-cover border border-white/10 relative z-10"
-                                            />
+                                <div className="bg-[#0A0A0A]/90 backdrop-blur-3xl rounded-[2.3rem] overflow-hidden relative border border-white/5 h-full flex flex-col">
+                                    <BorderBeam duration={8} size={300} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    
+                                    <div className="p-8 space-y-6 flex-1">
+                                        <div className="flex items-start justify-between">
+                                            <div className="relative">
+                                                <div className="absolute inset-0 bg-gold-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                <Image
+                                                    src={person.imageUrl}
+                                                    alt={person.name}
+                                                    width={72}
+                                                    height={72}
+                                                    unoptimized
+                                                    className="w-16 h-16 rounded-2xl object-cover border border-white/10 relative z-10"
+                                                />
+                                            </div>
+                                            <div className="px-3 py-1 bg-white/[0.03] rounded-full border border-white/5 flex items-center gap-2 text-[8px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-gold-500 transition-colors">
+                                                <Linkedin className="w-2.5 h-2.5" />
+                                                Professional
+                                            </div>
                                         </div>
-                                        <div className="flex-1 space-y-1 min-w-0">
-                                            <h3 className="text-lg font-black text-white truncate leading-none uppercase tracking-tighter">{person.name}</h3>
-                                            <p className="text-[10px] font-bold text-signature-gradient uppercase tracking-widest line-clamp-1">{person.role}</p>
-                                            {person.college_affiliation && (
-                                                <div className="flex items-center gap-1.5 text-[8px] font-black text-white/40 uppercase tracking-widest pt-1">
-                                                    <Award className="w-2.5 h-2.5 text-gold-500" />
-                                                    {person.college_affiliation}
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
 
-                                    <div className="relative">
-                                        <div className="absolute -left-2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-gold-500/20 to-transparent" />
-                                        <p className="text-[11px] text-white font-medium leading-[1.8] pl-2 italic">
+                                        <div className="space-y-1">
+                                            <h3 className="text-xl font-black text-white uppercase tracking-tighter leading-tight">{person.name}</h3>
+                                            <p className="text-[10px] font-black text-signature-gradient uppercase tracking-[0.1em]">{person.role}</p>
+                                        </div>
+
+                                        <p className="text-[11px] text-white/60 font-medium leading-[1.8] italic line-clamp-3">
                                             &quot;{person.reason}&quot;
                                         </p>
+
+                                        <div className="flex flex-wrap gap-2">
+                                            {person.tags?.map((tag, i) => (
+                                                <span key={i} className="px-2 py-0.5 bg-white/5 rounded text-[7px] font-black uppercase tracking-widest text-white/40">
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
                                     </div>
 
-                                    <div className="flex flex-wrap gap-2 pt-2">
-                                        {person.tags?.map((tag, i) => (
-                                            <span key={i} className="px-2 py-0.5 bg-zinc-900 rounded text-[7px] font-black uppercase tracking-widest text-white">
-                                                {tag}
-                                            </span>
-                                        ))}
+                                    <div className="p-6 pt-0">
+                                        <a
+                                            href={person.website}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="w-full py-4 bg-gold-500 text-black rounded-2xl flex items-center justify-center gap-3 transition-all hover:bg-white font-black uppercase tracking-[0.2em] text-[9px] shadow-[0_10px_20px_rgba(245,158,11,0.1)]"
+                                        >
+                                            View LinkedIn Profile 
+                                            <ExternalLink className="w-3 h-3" />
+                                        </a>
                                     </div>
-
-                                    <a
-                                        href={`mailto:expert@example.com?subject=Invitation to Speak at Easy Club&body=Hi ${encodeURIComponent(person.name)},%0D%0A%0D%0AWe are highly impressed by your work in ${encodeURIComponent(person.tags?.[0] || 'your field')} and would love to invite you as a speaker for our upcoming event.%0D%0A%0D%0ALooking forward to connecting!`}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="w-full py-4 bg-white/[0.03] hover:bg-gold-500 hover:text-black rounded-2xl border border-white/5 flex items-center justify-center gap-3 transition-all group/btn"
-                                    >
-                                        <span className="text-[9px] font-black uppercase tracking-[0.2em] group-hover/btn:scale-105 transition-transform">Initiate Email Invitation</span>
-                                        <Mail className="w-3 h-3 transition-transform group-hover/btn:translate-x-0.5" />
-                                    </a>
                                 </div>
-                                </div>
-                            </motion.div>
+                            </div>
                         ))}
                     </motion.div>
                 ) : (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="py-32 text-center"
+                        className="py-32 text-center space-y-6"
                     >
-                        <div className="w-20 h-20 bg-white/[0.02] rounded-full flex items-center justify-center mx-auto border border-white/5 mb-8">
-                            <Trophy className="w-8 h-8 text-white/10" />
+                        <div className="w-24 h-24 bg-white/[0.01] rounded-full flex items-center justify-center mx-auto border border-white/5">
+                            <Search className="w-10 h-10 text-white/5" />
                         </div>
-                        <h3 className="text-sm font-black text-white uppercase tracking-[0.3em]">Awaiting Discovery Scan</h3>
+                        <div className="space-y-2">
+                            <h3 className="text-md font-black text-white uppercase tracking-[0.3em]">Expert Engine Standby</h3>
+                            <p className="text-[10px] text-white/20 font-bold uppercase tracking-widest">Awaiting discovery scan for {domain}</p>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
