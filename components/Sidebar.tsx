@@ -33,7 +33,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
     <>
       <DynamicIsland />
       <nav className="h-20 border-b border-white/10 flex items-center justify-between px-4 md:px-8 bg-black/40 backdrop-blur-3xl sticky top-0 z-50 shadow-2xl">
-        <div className="flex items-center gap-2 md:gap-4 transition-all">
+        <div className="flex items-center gap-1 md:gap-2 transition-all">
           <motion.svg 
             width="40" 
             height="40" 
@@ -126,7 +126,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
               </radialGradient>
             </defs>
           </motion.svg>
-          <h1 className="text-2xl md:text-3xl font-normal text-signature-gradient tracking-wide font-airstream leading-none pr-3">Easy Club</h1>
+          <h1 className="text-2xl md:text-4xl font-normal text-signature-gradient tracking-wide font-airstream leading-none pr-3">Easy Club</h1>
         </div>
         <div className="flex gap-3 md:gap-6 items-center">
           <button
