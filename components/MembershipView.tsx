@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Shield, UserPlus, Check, ChevronDown, UserCheck, X, Users } from "lucide-react";
-import { Club, ClubMember, MemberRole, RecruitmentBasis } from "@/lib/types";
+import { Shield, UserPlus, Check, ChevronDown, UserCheck, X, Users, Settings, Upload, Save, FileSpreadsheet } from "lucide-react";
+import { Club, ClubMember, MemberRole, RecruitmentBasis, MembershipConfig } from "@/lib/types";
 import { saveClub } from "@/lib/db";
 
 interface MembershipViewProps {
@@ -23,6 +23,37 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
 
   const activeClub = clubs.find((c: Club) => c.id === selectedClubId);
   const members = activeClub?.members || [];
+
+  // Configuration State
+  const [configMode, setConfigMode] = useState<'fee-based' | 'test-based'>('fee-based');
+  const [feeAmount, setFeeAmount] = useState<number>(0);
+  const [paperLink, setPaperLink] = useState("");
+  const [answers, setAnswers] = useState("");
+  const [minimumMarks, setMinimumMarks] = useState<number>(0);
+
+  // CSV Verification State
+  const [csvData, setCsvData] = useState("");
+  const [verificationResult, setVerificationResult] = useState<{name: string, email: string, status: string, passed: boolean}[] | null>(null);
+
+  React.useEffect(() => {
+    if (activeClub?.membershipConfig) {
+      setConfigMode(activeClub.membershipConfig.mode);
+      setFeeAmount(activeClub.membershipConfig.feeAmount || 0);
+      setPaperLink(activeClub.membershipConfig.testDetails?.paperLink || "");
+      setAnswers(activeClub.membershipConfig.testDetails?.answers || "");
+      setMinimumMarks(activeClub.membershipConfig.testDetails?.minimumMarks || 0);
+      setNewBasis(activeClub.membershipConfig.mode === 'fee-based' ? 'Fee Paid' : 'Test Passed');
+      setNewTestDetails(activeClub.membershipConfig.testDetails?.paperLink ? `Paper: ${activeClub.membershipConfig.testDetails.paperLink}` : "");
+    } else {
+      setConfigMode('fee-based');
+      setFeeAmount(0);
+      setPaperLink("");
+      setAnswers("");
+      setMinimumMarks(0);
+      setNewBasis('Fee Paid');
+      setNewTestDetails("");
+    }
+  }, [activeClub?.id, activeClub?.membershipConfig]);
 
   const handleUpdateActiveClub = async (updatedClubFn: (c: Club) => Club) => {
     if (!selectedClubId) return;
@@ -77,6 +108,82 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
     }));
   };
 
+  const handleSaveConfig = () => {
+    handleUpdateActiveClub((c: Club) => ({
+      ...c,
+      membershipConfig: {
+        mode: configMode,
+        feeAmount: configMode === 'fee-based' ? feeAmount : undefined,
+        testDetails: configMode === 'test-based' ? {
+          paperLink,
+          answers,
+          minimumMarks
+        } : undefined
+      }
+    }));
+  };
+
+  const handleVerifyCSV = () => {
+    if (!csvData) return;
+    
+    // Format expected: Name, Email, Status (Paid/Marks)
+    const lines = csvData.split('\n');
+    const results: {name: string, email: string, status: string, passed: boolean}[] = [];
+    
+    // Skip header and empty lines
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
+      
+      const parts = line.split(',');
+      if (parts.length >= 3) {
+        const name = parts[0].trim();
+        const email = parts[1].trim();
+        const statusValue = parts[2].trim();
+        
+        let passed = false;
+        if (configMode === 'fee-based') {
+          passed = statusValue.toLowerCase() === 'paid' || statusValue.toLowerCase() === 'yes';
+        } else {
+          const marks = parseInt(statusValue);
+          passed = !isNaN(marks) && marks >= minimumMarks;
+        }
+        
+        results.push({
+          name,
+          email,
+          status: passed ? 'Verified' : 'Failed',
+          passed
+        });
+      }
+    }
+    
+    setVerificationResult(results);
+  };
+  
+  const handleOnboardVerified = () => {
+    if (!verificationResult) return;
+    
+    const passedCandidates = verificationResult.filter(r => r.passed);
+    const newMembers: ClubMember[] = passedCandidates.map(c => ({
+      id: Math.random().toString(36).substr(2, 9),
+      name: c.name,
+      email: c.email,
+      role: 'General Member',
+      joinDate: new Date().toISOString().split('T')[0],
+      basis: configMode === 'fee-based' ? 'Fee Paid' : 'Test Passed'
+    }));
+    
+    handleUpdateActiveClub((c: Club) => ({
+      ...c,
+      members: [...(c.members || []), ...newMembers]
+    }));
+    
+    setVerificationResult(null);
+    setCsvData("");
+    setActiveTab('recruitment-pool');
+  };
+
   if (!clubs || clubs.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-32 text-center">
@@ -110,6 +217,159 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
           </select>
           <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-white pointer-events-none group-hover:text-gold-500 transition-colors" />
         </div>
+      </div>
+
+      {/* Membership Configuration */}
+      <div className="bg-zinc-900/60 border border-white/5 rounded-[2.5rem] p-10 space-y-8">
+        <div>
+          <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2"><Settings className="w-5 h-5 text-gold-500" /> Membership Configuration</h3>
+          <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-widest">Set rules for onboarding new members</p>
+        </div>
+        
+        <div className="grid grid-cols-2 gap-4">
+          <button
+            type="button"
+            onClick={() => setConfigMode('fee-based')}
+            className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${configMode === 'fee-based' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black/40 border-white/10 text-white hover:border-white/30'}`}
+          >
+            Fee Based
+          </button>
+          <button
+            type="button"
+            onClick={() => setConfigMode('test-based')}
+            className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${configMode === 'test-based' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black/40 border-white/10 text-white hover:border-white/30'}`}
+          >
+            Test Based
+          </button>
+        </div>
+        
+        <div className="space-y-5">
+          {configMode === 'fee-based' ? (
+            <div>
+              <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Membership Fee (INR)</label>
+              <input
+                type="number"
+                value={feeAmount}
+                onChange={e => setFeeAmount(parseInt(e.target.value) || 0)}
+                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
+                placeholder="e.g. 500"
+              />
+            </div>
+          ) : (
+            <>
+              <div>
+                <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Test Paper Link (Google Forms)</label>
+                <input
+                  type="url"
+                  value={paperLink}
+                  onChange={e => setPaperLink(e.target.value)}
+                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
+                  placeholder="https://forms.gle/..."
+                />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Answer Key / Hints</label>
+                  <input
+                    type="text"
+                    value={answers}
+                    onChange={e => setAnswers(e.target.value)}
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
+                    placeholder="Brief description"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Minimum Marks to Pass</label>
+                  <input
+                    type="number"
+                    value={minimumMarks}
+                    onChange={e => setMinimumMarks(parseInt(e.target.value) || 0)}
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
+                    placeholder="e.g. 40"
+                  />
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+        
+        <div className="flex justify-end pt-2">
+          <button
+            onClick={handleSaveConfig}
+            className="px-6 py-3 bg-white/5 hover:bg-gold-500/20 text-white hover:brightness-110 rounded-xl text-[11px] font-bold uppercase tracking-widest border border-transparent hover:border-gold-500/30 transition-all flex items-center gap-2"
+          >
+            <Save className="w-4 h-4" /> Save Configuration
+          </button>
+        </div>
+      </div>
+
+      {/* CSV Verification Section */}
+      <div className="bg-zinc-900/60 border border-white/5 rounded-[2.5rem] p-10 space-y-8">
+        <div>
+          <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2"><FileSpreadsheet className="w-5 h-5 text-gold-500" /> Automated Verification</h3>
+          <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-widest">Upload Google Forms CSV export to verify candidates</p>
+        </div>
+        
+        <div>
+          <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Paste CSV Data (Format: Name, Email, Status/Marks)</label>
+          <textarea
+            value={csvData}
+            onChange={e => setCsvData(e.target.value)}
+            className="w-full h-32 bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors resize-none font-mono text-[11px]"
+            placeholder="Name, Email, Score&#10;John Doe, john@example.com, Paid&#10;Jane Smith, jane@example.com, 45"
+          />
+        </div>
+        
+        <div className="flex justify-end">
+          <button
+            onClick={handleVerifyCSV}
+            disabled={!csvData}
+            className="px-6 py-3 bg-gold-500 hover:bg-gold-400 text-black rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Upload className="w-4 h-4" /> Verify Submissions
+          </button>
+        </div>
+        
+        {verificationResult && (
+          <div className="mt-8 border-t border-white/10 pt-8">
+            <h4 className="text-[11px] font-bold uppercase tracking-widest text-white mb-4">Verification Results</h4>
+            <div className="bg-black/40 border border-white/5 rounded-xl overflow-hidden">
+              <table className="w-full text-left text-sm">
+                <thead className="bg-white/5 text-[10px] font-black uppercase tracking-widest text-signature-gradient border-b border-white/5">
+                  <tr>
+                    <th className="px-6 py-3">Candidate</th>
+                    <th className="px-6 py-3">Email</th>
+                    <th className="px-6 py-3">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {verificationResult.map((result, idx) => (
+                    <tr key={idx}>
+                      <td className="px-6 py-4 text-white font-bold">{result.name}</td>
+                      <td className="px-6 py-4 text-zinc-100 text-[10px] uppercase tracking-wider">{result.email}</td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex px-2 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border ${result.passed ? 'bg-green-500/10 text-green-500 border-green-500/30' : 'bg-red-500/10 text-red-500 border-red-500/30'}`}>
+                          {result.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            
+            {verificationResult.some(r => r.passed) && (
+              <div className="mt-6 flex justify-end">
+                <button
+                  onClick={handleOnboardVerified}
+                  className="px-6 py-3 bg-signature-gradient text-black rounded-xl text-[11px] font-black uppercase tracking-widest hover:brightness-110 transition-all flex items-center gap-2"
+                >
+                  <UserPlus className="w-4 h-4" /> Onboard Verified Candidates
+                </button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Stats Section Removed as per User Request */}

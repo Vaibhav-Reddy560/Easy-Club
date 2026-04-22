@@ -101,12 +101,23 @@ export interface ClubMember {
     testDetails?: string;
 }
 
+export interface MembershipConfig {
+    mode: 'fee-based' | 'test-based';
+    feeAmount?: number;
+    testDetails?: {
+        paperLink: string;
+        answers: string;
+        minimumMarks: number;
+    };
+}
+
 export interface Club {
     id: string;
     ownerId?: string;
     name: string;
     events: ClubEvent[];
     members?: ClubMember[];
+    membershipConfig?: MembershipConfig;
     invites?: TeamInvite[];
     activityLog?: ActivityLogEvent[];
     sponsors?: Sponsor[];
