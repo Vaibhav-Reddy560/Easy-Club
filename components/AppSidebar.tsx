@@ -20,7 +20,7 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
         { id: 'explore-clubs' as NavSection, label: 'Explore Clubs', icon: Globe },
         { id: 'explore-events' as NavSection, label: 'Explore Events', icon: Trophy },
         { id: 'my-clubs' as NavSection, label: 'My Clubs', icon: Folder },
-        { id: 'membership' as NavSection, label: 'Membership and Recruitment', icon: Users, restricted: true },
+        { id: 'membership' as NavSection, label: 'Membership & Recruitment', icon: Users, restricted: true },
         { id: 'ideation' as NavSection, label: 'Event Ideation', icon: Zap },
         { id: 'social-tracker' as NavSection, label: 'Social Tracker', icon: ChartBar },
         { id: 'sponsorship' as NavSection, label: 'Funding & Sponsorship', icon: Banknote, restricted: true },
