@@ -71,53 +71,68 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
 
     return (
         <div className="space-y-10">
-            {/* Unified Suggested Experts Header */}
-            <div className="glass-panel p-10 rounded-[3rem] space-y-10 border-white/5 relative overflow-hidden">
+            {/* Unified Suggested Speakers Header */}
+            <div className="glass-panel p-8 rounded-[3rem] space-y-8 border-white/5 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-gold-500/5 blur-[120px] -z-10" />
                 
-                <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-8">
-                    <div className="space-y-4">
-                        <div className="flex items-center gap-6">
-                            <div className="w-16 h-16 bg-gold-500/10 rounded-2xl flex items-center justify-center border border-gold-500/20 shadow-[0_0_30px_rgba(245,158,11,0.15)]">
-                                <Users className="w-8 h-8 text-gold-500" />
+                <div className="flex flex-col xl:flex-row items-center justify-between gap-10">
+                    <div className="flex flex-col lg:flex-row items-center gap-8">
+                        <div className="flex items-center gap-5">
+                            <div className="w-14 h-14 bg-gold-500/10 rounded-2xl flex items-center justify-center border border-gold-500/20 shadow-[0_0_30px_rgba(245,158,11,0.1)]">
+                                <Users className="w-7 h-7 text-gold-500" />
                             </div>
-                            <div>
-                                <h1 className="text-5xl font-black uppercase tracking-[-0.05em] text-signature-gradient font-astronomus leading-tight">
-                                    Suggested <span className="text-white opacity-80">Experts</span>
-                                </h1>
-                                <div className="flex items-center gap-3 mt-1">
-                                    <span className="px-2 py-0.5 bg-gold-500/10 rounded-md text-[8px] font-black uppercase tracking-widest text-gold-500 border border-gold-500/20">
-                                        {subType || "General Event"}
-                                    </span>
-                                    <div className="flex items-center gap-1 text-[9px] font-bold text-white/40 uppercase tracking-widest">
-                                        <MapPin className="w-3 h-3 text-gold-500" />
-                                        Tailored for {location}
-                                    </div>
-                                </div>
-                            </div>
+                            <h1 className="text-4xl sm:text-5xl font-black uppercase tracking-[-0.05em] text-signature-gradient font-astronomus leading-none py-2">
+                                Suggested Speakers
+                            </h1>
                         </div>
+
+                        {/* Integrated Target Personas Chips */}
+                        {targetPersonas.length > 0 && (
+                            <div className="flex flex-wrap items-center gap-3">
+                                {targetPersonas.map((persona, i) => (
+                                    <button
+                                        key={i}
+                                        onClick={() => setDomain(persona.expertise)}
+                                        className={`px-5 py-3 rounded-2xl border transition-all flex flex-col items-start gap-0.5 group ${
+                                            domain === persona.expertise 
+                                            ? "bg-gold-500/10 border-gold-500/40 shadow-[0_0_20px_rgba(245,158,11,0.1)]" 
+                                            : "bg-white/[0.02] border-white/5 hover:border-gold-500/30"
+                                        }`}
+                                    >
+                                        <span className={`text-[10px] font-black uppercase tracking-tight ${domain === persona.expertise ? "text-white" : "text-white/60 group-hover:text-white"}`}>
+                                            {persona.name}
+                                        </span>
+                                        <span className="text-[8px] font-bold text-signature-gradient uppercase tracking-widest opacity-80 group-hover:opacity-100">
+                                            {persona.role}
+                                        </span>
+                                    </button>
+                                ))}
+                            </div>
+                        )}
                     </div>
 
                     <div className="flex flex-col sm:flex-row items-center gap-4 w-full xl:w-auto">
-                        <div className="relative group w-full sm:w-64">
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-hover:text-gold-500 transition-colors" />
-                            <input
-                                type="text"
-                                value={domain}
-                                onChange={(e) => setDomain(e.target.value)}
-                                placeholder="Expert Domain"
-                                className="w-full pl-12 pr-6 py-4 bg-black/40 border border-white/10 rounded-2xl text-sm font-bold text-white focus:border-gold-500/50 outline-none transition-all"
-                            />
-                        </div>
-                        <div className="relative group w-full sm:w-48">
-                            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-hover:text-gold-500 transition-colors" />
-                            <input
-                                type="text"
-                                value={location}
-                                onChange={(e) => setLocation(e.target.value)}
-                                placeholder="Location"
-                                className="w-full pl-12 pr-6 py-4 bg-black/40 border border-white/10 rounded-2xl text-sm font-bold text-white focus:border-gold-500/50 outline-none transition-all"
-                            />
+                        <div className="flex items-center gap-3 w-full sm:w-auto">
+                            <div className="relative group w-full sm:w-56">
+                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-hover:text-gold-500 transition-colors" />
+                                <input
+                                    type="text"
+                                    value={domain}
+                                    onChange={(e) => setDomain(e.target.value)}
+                                    placeholder="Domain"
+                                    className="w-full pl-12 pr-6 py-4 bg-black/40 border border-white/10 rounded-2xl text-sm font-bold text-white focus:border-gold-500/50 outline-none transition-all"
+                                />
+                            </div>
+                            <div className="relative group w-full sm:w-44">
+                                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-hover:text-gold-500 transition-colors" />
+                                <input
+                                    type="text"
+                                    value={location}
+                                    onChange={(e) => setLocation(e.target.value)}
+                                    placeholder="Loc"
+                                    className="w-full pl-12 pr-6 py-4 bg-black/40 border border-white/10 rounded-2xl text-sm font-bold text-white focus:border-gold-500/50 outline-none transition-all"
+                                />
+                            </div>
                         </div>
                         <button
                             onClick={handleSearch}
@@ -130,40 +145,18 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                     </div>
                 </div>
 
-                {/* Horizontal Scroll of Target Personas (Option A) */}
-                {targetPersonas.length > 0 && (
-                    <div className="pt-6 border-t border-white/5">
-                        <div className="flex items-center gap-3 mb-6">
-                            <Briefcase className="w-3.5 h-3.5 text-gold-500" />
-                            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40">Required Target Personas</h2>
-                        </div>
-                        <div className="flex gap-4 overflow-x-auto pb-4 custom-scrollbar no-scrollbar">
-                            {targetPersonas.map((persona, i) => (
-                                <motion.div
-                                    key={i}
-                                    whileHover={{ y: -4 }}
-                                    className="flex-shrink-0 w-64 p-6 bg-white/[0.02] border border-white/5 rounded-3xl space-y-4 hover:border-gold-500/30 transition-all group"
-                                >
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-10 h-10 rounded-xl bg-zinc-950 flex items-center justify-center border border-white/5 group-hover:border-gold-500/20">
-                                            <Linkedin className="w-5 h-5 text-gold-500" />
-                                        </div>
-                                        <div className="min-w-0">
-                                            <h3 className="text-xs font-bold text-white truncate uppercase tracking-tight">{persona.name}</h3>
-                                            <p className="text-[9px] text-signature-gradient font-black uppercase tracking-widest">{persona.role}</p>
-                                        </div>
-                                    </div>
-                                    <button 
-                                        onClick={() => setDomain(persona.expertise)}
-                                        className="w-full py-2.5 bg-black/40 border border-white/10 rounded-xl text-[8px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:border-gold-500/50 transition-all"
-                                    >
-                                        Auto-Match Domain
-                                    </button>
-                                </motion.div>
-                            ))}
+                <div className="flex items-center gap-4 pt-2">
+                    <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 bg-gold-500/10 rounded-md text-[8px] font-black uppercase tracking-widest text-gold-500 border border-gold-500/20">
+                            {subType || "General Event"}
+                        </span>
+                        <div className="w-1 h-1 rounded-full bg-white/10" />
+                        <div className="flex items-center gap-1 text-[9px] font-bold text-white/40 uppercase tracking-widest">
+                            <MapPin className="w-3 h-3 text-gold-500" />
+                            Targeting {location}
                         </div>
                     </div>
-                )}
+                </div>
             </div>
 
             {/* Content Area */}
