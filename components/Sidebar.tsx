@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { Settings, User, Info } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface UserMetadata {
   avatar_url?: string;
