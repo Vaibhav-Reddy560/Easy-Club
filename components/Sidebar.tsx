@@ -33,100 +33,90 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
     <>
       <DynamicIsland />
       <nav className="h-20 border-b border-white/10 flex items-center justify-between px-4 md:px-8 bg-black/40 backdrop-blur-3xl sticky top-0 z-50 shadow-2xl">
-        <div className="flex items-center gap-1 md:gap-2 transition-all">
-          <motion.svg 
-            width="40" 
-            height="40" 
-            viewBox="0 0 216 218" 
-            fill="none" 
-            xmlns="http://www.w3.org/2000/svg" 
-            className="w-10 h-10 drop-shadow-[0_0_12px_rgba(255,165,0,0.4)]"
+        <div className="flex items-center gap-0.5 md:gap-1 transition-all">
+          <motion.div 
+            className="relative w-12 h-12 flex items-center justify-center"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            <path d="M108 5.38672C164.634 5.38672 210.613 51.6518 210.613 108.808C210.613 165.964 164.634 212.229 108 212.229C51.3659 212.229 5.38672 165.964 5.38672 108.808C5.38692 51.6518 51.3661 5.38672 108 5.38672Z" stroke="url(#paint0_radial_195_3)" stroke-width="10.7731"/>
-            
-            {/* Pulsing Glow Layer */}
-            <motion.g 
+            {/* Atmospheric Ripple (Inspired by 4-circle loader) */}
+            <motion.div 
+              className="absolute inset-0 rounded-full border border-gold-500/20"
               animate={{ 
-                scale: [1, 1.15, 1],
-                opacity: [0.4, 0.7, 0.4]
+                scale: [1, 1.4, 1],
+                opacity: [0.3, 0, 0.3]
               }}
               transition={{
-                duration: 2.5,
+                duration: 3,
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              style={{ transformOrigin: "center" }}
-            >
-              <g filter="url(#filter0_f_195_3)">
-                <circle cx="108.269" cy="108.808" r="78.6434" fill="url(#paint1_radial_195_3)" fill-opacity="0.55"/>
-              </g>
-            </motion.g>
+            />
 
-            {/* Pulsing Core Layer */}
-            <motion.g 
-              animate={{ 
-                scale: [0.85, 1.1, 0.85],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              style={{ transformOrigin: "center" }}
+            <svg 
+              viewBox="0 0 216 218" 
+              fill="none" 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="w-10 h-10 drop-shadow-[0_0_15px_rgba(255,165,0,0.5)]"
             >
-              <g filter="url(#filter1_dd_195_3)">
-                <circle cx="108.269" cy="108.808" r="55.4813" fill="url(#paint2_radial_195_3)"/>
-              </g>
-            </motion.g>
+              {/* Thinner Outer Ring */}
+              <circle cx="108" cy="108.8" r="102" stroke="url(#paint0_radial_195_3)" stroke-width="4"/>
+              
+              {/* Pulsing Glow Layer */}
+              <motion.g 
+                animate={{ 
+                  scale: [1, 1.15, 1],
+                  opacity: [0.4, 0.7, 0.4]
+                }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                style={{ transformOrigin: "center" }}
+              >
+                <circle cx="108.269" cy="108.808" r="78.6434" fill="url(#paint1_radial_195_3)" fill-opacity="0.4"/>
+              </motion.g>
 
-            <defs>
-              <filter id="filter0_f_195_3" x="18.8529" y="19.3915" width="178.833" height="178.833" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-                <feGaussianBlur stdDeviation="5.38653" result="effect1_foregroundBlur_195_3"/>
-              </filter>
-              <filter id="filter1_dd_195_3" x="31.2418" y="31.7806" width="154.055" height="154.055" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                <feOffset dy="2.15461"/>
-                <feGaussianBlur stdDeviation="5.38653"/>
-                <feComposite in2="hardAlpha" operator="out"/>
-                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.48 0"/>
-                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_195_3"/>
-                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                <feOffset/>
-                <feGaussianBlur stdDeviation="10.7731"/>
-                <feComposite in2="hardAlpha" operator="out"/>
-                <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 0.45 0 0 0 0 0 0 0 0 0.45 0"/>
-                <feBlend mode="normal" in2="effect1_dropShadow_195_3" result="effect2_dropShadow_195_3"/>
-                <feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_195_3" result="shape"/>
-              </filter>
-              <radialGradient id="paint0_radial_195_3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(108 108.808) rotate(90) scale(108.808 108)">
-                <stop stop-color="#FF9900"/>
-                <stop offset="0.370192" stop-color="#FFD37E"/>
-                <stop offset="0.663462" stop-color="#FFE1A6"/>
-                <stop offset="1" stop-color="#CA7F00"/>
-              </radialGradient>
-              <radialGradient id="paint1_radial_195_3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(108.269 108.808) rotate(90) scale(78.6434)">
-                <stop stop-color="#FFA900"/>
-                <stop offset="0.360577" stop-color="#FFC95F"/>
-                <stop offset="0.673077" stop-color="#FF9100"/>
-                <stop offset="1" stop-color="#996500"/>
-              </radialGradient>
-              <radialGradient id="paint2_radial_195_3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(108.269 108.808) rotate(90) scale(55.4813)">
-                <stop stop-color="#FFA600"/>
-                <stop offset="0.245192" stop-color="#FFBB34"/>
-                <stop offset="0.399038" stop-color="#FFA900"/>
-                <stop offset="0.605769" stop-color="#FF9D00"/>
-                <stop offset="0.793269" stop-color="#FFA900"/>
-                <stop offset="1" stop-color="#AC7202"/>
-              </radialGradient>
-            </defs>
-          </motion.svg>
-          <h1 className="text-2xl md:text-4xl font-normal text-signature-gradient tracking-wide font-airstream leading-none pr-3">Easy Club</h1>
+              {/* Pulsing Core (Contracting & Expanding) */}
+              <motion.g 
+                animate={{ 
+                  scale: [0.88, 1.08, 0.88],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                style={{ transformOrigin: "center" }}
+              >
+                <circle cx="108.269" cy="108.808" r="58" fill="url(#paint2_radial_195_3)"/>
+                {/* Inner Bright Spot */}
+                <circle cx="108.269" cy="108.808" r="15" fill="white" fill-opacity="0.3" filter="blur(8px)"/>
+              </motion.g>
+
+              <defs>
+                <radialGradient id="paint0_radial_195_3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(108 108.808) rotate(90) scale(108.808 108)">
+                  <stop stop-color="#FF9900"/>
+                  <stop offset="0.370192" stop-color="#FFD37E"/>
+                  <stop offset="0.663462" stop-color="#FFE1A6"/>
+                  <stop offset="1" stop-color="#CA7F00"/>
+                </radialGradient>
+                <radialGradient id="paint1_radial_195_3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(108.269 108.808) rotate(90) scale(78.6434)">
+                  <stop stop-color="#FFA900"/>
+                  <stop offset="0.360577" stop-color="#FFC95F"/>
+                  <stop offset="1" stop-color="#996500"/>
+                </radialGradient>
+                <radialGradient id="paint2_radial_195_3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(108.269 108.808) rotate(90) scale(58)">
+                  <stop stop-color="#FFA600"/>
+                  <stop offset="0.245192" stop-color="#FFBB34"/>
+                  <stop offset="1" stop-color="#AC7202"/>
+                </radialGradient>
+              </defs>
+            </svg>
+          </motion.div>
+          <h1 className="text-3xl md:text-[2.75rem] font-normal text-signature-gradient tracking-tight font-airstream leading-none pr-3 translate-y-[2px]">Easy Club</h1>
         </div>
         <div className="flex gap-3 md:gap-6 items-center">
           <button
