@@ -20,6 +20,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [isGeneratingPromo, setIsGeneratingPromo] = useState(false);
   const [promoError, setPromoError] = useState<string | null>(null);
+  const [includeEmojis, setIncludeEmojis] = useState(false);
 
   // Hooks for new generators
   const letterGen = useGenerator("Generating Letter Copy...");
@@ -50,7 +51,8 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
         body: JSON.stringify({
           event: activeEvent,
           club: activeClub,
-          config: activeEvent.config
+          config: activeEvent.config,
+          includeEmojis: includeEmojis
         }),
       });
 
@@ -167,13 +169,23 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
             <h4 className="text-signature-gradient font-bold uppercase text-xs tracking-widest flex items-center gap-2">
               <Share2 className="w-4 h-4 text-gold-500" /> Promotional Campaign
             </h4>
-            <button
-              onClick={handleGeneratePromo}
-              disabled={isGeneratingPromo}
-              className="px-3 py-1 border border-white/10 rounded-full text-[9px] font-bold uppercase tracking-tighter text-zinc-100 hover:text-signature-gradient transition-all"
-            >
-              {isGeneratingPromo ? <Loader2 className="w-3 h-3 animate-spin" /> : 'Regenerate'}
-            </button>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setIncludeEmojis(!includeEmojis)}
+                className={`flex items-center gap-2 px-3 py-1 rounded-full border transition-all duration-300 ${includeEmojis ? 'border-gold-500/50 bg-gold-500/10 text-gold-400' : 'border-white/10 bg-white/5 text-zinc-400'}`}
+                title={includeEmojis ? "Emojis Enabled" : "Emojis Disabled"}
+              >
+                <span className="text-[9px] font-bold uppercase tracking-tighter">{includeEmojis ? 'Emojis ON' : 'Emojis OFF'}</span>
+                <span className="text-xs">{includeEmojis ? '✨' : '🚫'}</span>
+              </button>
+              <button
+                onClick={handleGeneratePromo}
+                disabled={isGeneratingPromo}
+                className="px-3 py-1 border border-white/10 rounded-full text-[9px] font-bold uppercase tracking-tighter text-zinc-100 hover:text-signature-gradient transition-all"
+              >
+                {isGeneratingPromo ? <Loader2 className="w-3 h-3 animate-spin" /> : 'Regenerate'}
+              </button>
+            </div>
           </div>
 
           <div className="space-y-6">

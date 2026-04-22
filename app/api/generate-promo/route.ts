@@ -9,7 +9,10 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: validationErr }, { status: 400 });
         }
         
-        const { event, club, config } = body!;
+        const { event, club, config, includeEmojis } = body!;
+        const emojiInstruction = includeEmojis 
+            ? "- USE RELEVANT EMOJIS in appropriate places to make the message engaging, but maintain a professional structure."
+            : "- DO NOT USE EMOJIS.";
 
         const prompt = `
       You are an expert communications strategist for ${club.name}. 
@@ -17,7 +20,7 @@ export async function POST(req: Request) {
       
       STRICT NEGATIVE CONSTRAINTS (MANDATORY):
       - DO NOT USE ASTERISKS (*) or Markdown bolding.
-      - DO NOT USE EMOJIS.
+      ${emojiInstruction}
       - DO NOT USE SECTION HEADERS like "Practical Details", "Registration Details", or "Contact Information".
       - DO NOT USE 24-HOUR BRACKETS. If the time is 9:30 PM, ONLY write "9:30 PM". Do not add "(21:30)".
       - DO NOT USE "INR". Always use the symbol "₹".

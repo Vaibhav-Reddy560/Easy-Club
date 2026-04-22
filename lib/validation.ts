@@ -19,7 +19,9 @@ export const GeneratePromoSchema = {
     if (!body?.event?.name || !body?.club?.name) {
       return { data: null, error: "Missing required fields (event.name, club.name)" };
     }
-    return { data: body, error: null };
+    const data = { ...body };
+    if (typeof body.includeEmojis === 'undefined') data.includeEmojis = false;
+    return { data, error: null };
   }
 };
 
