@@ -92,7 +92,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
       {/* Header & Selector */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter py-2">Membership <span className="text-[0.8em] px-1">&</span> Recruitment</h2>
+          <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter py-2">Membership X Recruitment</h2>
           <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-[0.2em] mt-2">
             Selective Onboarding and Core Team Management
           </p>
