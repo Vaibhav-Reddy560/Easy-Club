@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Shield, UserPlus, Check, ChevronDown, UserCheck, X, Users, Settings, Upload, Save, FileSpreadsheet } from "lucide-react";
-import { Club, ClubMember, MemberRole, RecruitmentBasis, MembershipConfig } from "@/lib/types";
+import { Club, ClubMember, MemberRole, RecruitmentBasis, MembershipConfig, Question } from "@/lib/types";
 import { saveClub } from "@/lib/db";
 
 interface MembershipViewProps {
@@ -27,29 +27,43 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
   // Configuration State
   const [configMode, setConfigMode] = useState<'fee-based' | 'test-based'>('fee-based');
   const [feeAmount, setFeeAmount] = useState<number>(0);
-  const [paperLink, setPaperLink] = useState("");
-  const [answers, setAnswers] = useState("");
-  const [minimumMarks, setMinimumMarks] = useState<number>(0);
+  
+  // Test Builder State
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [passPercentage, setPassPercentage] = useState<number>(60);
+  const [timeLimitMinutes, setTimeLimitMinutes] = useState<number>(20);
 
-  // CSV Verification State
-  const [csvData, setCsvData] = useState("");
-  const [verificationResult, setVerificationResult] = useState<{name: string, email: string, status: string, passed: boolean}[] | null>(null);
+  // Question Form State
+  const [newQuestionText, setNewQuestionText] = useState("");
+  const [newQuestionType, setNewQuestionType] = useState<'mcq' | 'multi' | 'short'>('mcq');
+  const [newQuestionOptions, setNewQuestionOptions] = useState<string[]>(['', '']);
+  const [newQuestionCorrectAnswer, setNewQuestionCorrectAnswer] = useState<string>('');
+  const [newQuestionCorrectAnswers, setNewQuestionCorrectAnswers] = useState<string[]>([]);
+  const [newQuestionMarks, setNewQuestionMarks] = useState<number>(1);
 
   React.useEffect(() => {
     if (activeClub?.membershipConfig) {
       setConfigMode(activeClub.membershipConfig.mode);
       setFeeAmount(activeClub.membershipConfig.feeAmount || 0);
-      setPaperLink(activeClub.membershipConfig.testDetails?.paperLink || "");
-      setAnswers(activeClub.membershipConfig.testDetails?.answers || "");
-      setMinimumMarks(activeClub.membershipConfig.testDetails?.minimumMarks || 0);
+      
+      const testDetails = activeClub.membershipConfig.testDetails;
+      if (testDetails) {
+        setQuestions(testDetails.questions || []);
+        setPassPercentage(testDetails.passPercentage || 60);
+        setTimeLimitMinutes(testDetails.timeLimitMinutes || 20);
+      } else {
+        setQuestions([]);
+        setPassPercentage(60);
+        setTimeLimitMinutes(20);
+      }
       setNewBasis(activeClub.membershipConfig.mode === 'fee-based' ? 'Fee Paid' : 'Test Passed');
-      setNewTestDetails(activeClub.membershipConfig.testDetails?.paperLink ? `Paper: ${activeClub.membershipConfig.testDetails.paperLink}` : "");
+      setNewTestDetails(testDetails ? `Online Test (${testDetails.questions?.length || 0} questions)` : "");
     } else {
       setConfigMode('fee-based');
       setFeeAmount(0);
-      setPaperLink("");
-      setAnswers("");
-      setMinimumMarks(0);
+      setQuestions([]);
+      setPassPercentage(60);
+      setTimeLimitMinutes(20);
       setNewBasis('Fee Paid');
       setNewTestDetails("");
     }
@@ -115,73 +129,38 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
         mode: configMode,
         feeAmount: configMode === 'fee-based' ? feeAmount : undefined,
         testDetails: configMode === 'test-based' ? {
-          paperLink,
-          answers,
-          minimumMarks
+          questions,
+          passPercentage,
+          timeLimitMinutes
         } : undefined
       }
     }));
   };
 
-  const handleVerifyCSV = () => {
-    if (!csvData) return;
-    
-    // Format expected: Name, Email, Status (Paid/Marks)
-    const lines = csvData.split('\n');
-    const results: {name: string, email: string, status: string, passed: boolean}[] = [];
-    
-    // Skip header and empty lines
-    for (let i = 1; i < lines.length; i++) {
-      const line = lines[i].trim();
-      if (!line) continue;
-      
-      const parts = line.split(',');
-      if (parts.length >= 3) {
-        const name = parts[0].trim();
-        const email = parts[1].trim();
-        const statusValue = parts[2].trim();
-        
-        let passed = false;
-        if (configMode === 'fee-based') {
-          passed = statusValue.toLowerCase() === 'paid' || statusValue.toLowerCase() === 'yes';
-        } else {
-          const marks = parseInt(statusValue);
-          passed = !isNaN(marks) && marks >= minimumMarks;
-        }
-        
-        results.push({
-          name,
-          email,
-          status: passed ? 'Verified' : 'Failed',
-          passed
-        });
-      }
-    }
-    
-    setVerificationResult(results);
-  };
-  
-  const handleOnboardVerified = () => {
-    if (!verificationResult) return;
-    
-    const passedCandidates = verificationResult.filter(r => r.passed);
-    const newMembers: ClubMember[] = passedCandidates.map(c => ({
+  const handleAddQuestion = () => {
+    if (!newQuestionText.trim()) return;
+
+    const newQuestion: Question = {
       id: Math.random().toString(36).substr(2, 9),
-      name: c.name,
-      email: c.email,
-      role: 'General Member',
-      joinDate: new Date().toISOString().split('T')[0],
-      basis: configMode === 'fee-based' ? 'Fee Paid' : 'Test Passed'
-    }));
-    
-    handleUpdateActiveClub((c: Club) => ({
-      ...c,
-      members: [...(c.members || []), ...newMembers]
-    }));
-    
-    setVerificationResult(null);
-    setCsvData("");
-    setActiveTab('recruitment-pool');
+      text: newQuestionText,
+      type: newQuestionType,
+      options: newQuestionType !== 'short' ? newQuestionOptions.filter(o => o.trim()) : [],
+      correctAnswer: newQuestionType === 'multi' ? newQuestionCorrectAnswers : newQuestionCorrectAnswer,
+      marks: newQuestionMarks
+    };
+
+    setQuestions([...questions, newQuestion]);
+
+    // Reset Form
+    setNewQuestionText("");
+    setNewQuestionOptions(['', '']);
+    setNewQuestionCorrectAnswer('');
+    setNewQuestionCorrectAnswers([]);
+    setNewQuestionMarks(1);
+  };
+
+  const handleRemoveQuestion = (id: string) => {
+    setQuestions(questions.filter(q => q.id !== id));
   };
 
   if (!clubs || clubs.length === 0) {
@@ -256,44 +235,208 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
               />
             </div>
           ) : (
-            <>
-              <div>
-                <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Test Paper Link (Google Forms)</label>
-                <input
-                  type="url"
-                  value={paperLink}
-                  onChange={e => setPaperLink(e.target.value)}
-                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
-                  placeholder="https://forms.gle/..."
-                />
-              </div>
+            <div className="space-y-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Answer Key / Hints</label>
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Passing Percentage (%)</label>
                   <input
-                    type="text"
-                    value={answers}
-                    onChange={e => setAnswers(e.target.value)}
+                    type="number"
+                    value={passPercentage}
+                    onChange={e => setPassPercentage(parseInt(e.target.value) || 0)}
                     className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
-                    placeholder="Brief description"
+                    placeholder="e.g. 60"
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Minimum Marks to Pass</label>
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Time Limit (Minutes)</label>
                   <input
                     type="number"
-                    value={minimumMarks}
-                    onChange={e => setMinimumMarks(parseInt(e.target.value) || 0)}
+                    value={timeLimitMinutes}
+                    onChange={e => setTimeLimitMinutes(parseInt(e.target.value) || 0)}
                     className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
-                    placeholder="e.g. 40"
+                    placeholder="e.g. 20"
                   />
                 </div>
               </div>
-            </>
+
+              {/* Questions List */}
+              <div className="space-y-4">
+                <h4 className="text-[11px] font-black uppercase tracking-widest text-white">Questions ({questions.length})</h4>
+                {questions.map((q, idx) => (
+                  <div key={q.id} className="bg-black/40 border border-white/10 rounded-xl p-4 relative group">
+                    <button onClick={() => handleRemoveQuestion(q.id)} className="absolute top-4 right-4 text-white/40 hover:text-red-500 transition-colors">
+                      <X className="w-4 h-4" />
+                    </button>
+                    <p className="text-sm text-white font-bold mb-2">Q{idx + 1}. {q.text}</p>
+                    <div className="flex items-center gap-3 text-[10px] uppercase tracking-widest text-zinc-100 font-bold mb-3">
+                      <span className="bg-white/5 px-2 py-1 rounded">{q.type}</span>
+                      <span className="bg-white/5 px-2 py-1 rounded">{q.marks} Marks</span>
+                    </div>
+                    {q.type !== 'short' && (
+                      <div className="space-y-1">
+                        {q.options.map((opt, i) => {
+                          const isCorrect = q.type === 'multi' ? (q.correctAnswer as string[]).includes(opt) : q.correctAnswer === opt;
+                          return (
+                            <div key={i} className={`text-xs p-2 rounded ${isCorrect ? 'bg-green-500/10 text-green-500 border border-green-500/20' : 'bg-white/5 text-zinc-100'}`}>
+                              {opt}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                    {q.type === 'short' && (
+                      <div className="text-xs p-2 rounded bg-green-500/10 text-green-500 border border-green-500/20">
+                        Answer: {q.correctAnswer}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Add Question Form */}
+              <div className="bg-black/20 border border-white/5 border-dashed rounded-2xl p-6 space-y-5">
+                <h4 className="text-[11px] font-black uppercase tracking-widest text-gold-500">Add New Question</h4>
+                
+                <div>
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Question Text</label>
+                  <textarea
+                    value={newQuestionText}
+                    onChange={e => setNewQuestionText(e.target.value)}
+                    className="w-full h-20 bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors resize-none"
+                    placeholder="Enter question text..."
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-5">
+                  <div>
+                    <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Question Type</label>
+                    <select
+                      value={newQuestionType}
+                      onChange={(e) => {
+                        setNewQuestionType(e.target.value as any);
+                        setNewQuestionCorrectAnswer('');
+                        setNewQuestionCorrectAnswers([]);
+                      }}
+                      className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none"
+                    >
+                      <option value="mcq">Single Choice (MCQ)</option>
+                      <option value="multi">Multiple Select</option>
+                      <option value="short">Short Answer</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Marks</label>
+                    <input
+                      type="number"
+                      value={newQuestionMarks}
+                      onChange={e => setNewQuestionMarks(parseInt(e.target.value) || 1)}
+                      className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none"
+                    />
+                  </div>
+                </div>
+
+                {newQuestionType !== 'short' ? (
+                  <div className="space-y-3">
+                    <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Options & Correct Answer</label>
+                    {newQuestionOptions.map((opt, idx) => (
+                      <div key={idx} className="flex items-center gap-3">
+                        {newQuestionType === 'mcq' ? (
+                          <input 
+                            type="radio" 
+                            name="correctAnswer" 
+                            checked={newQuestionCorrectAnswer === opt && opt !== ''}
+                            onChange={() => setNewQuestionCorrectAnswer(opt)}
+                            className="w-4 h-4 accent-gold-500"
+                          />
+                        ) : (
+                          <input 
+                            type="checkbox" 
+                            checked={newQuestionCorrectAnswers.includes(opt)}
+                            onChange={(e) => {
+                              if (e.target.checked) setNewQuestionCorrectAnswers([...newQuestionCorrectAnswers, opt]);
+                              else setNewQuestionCorrectAnswers(newQuestionCorrectAnswers.filter(a => a !== opt));
+                            }}
+                            className="w-4 h-4 accent-gold-500 rounded"
+                          />
+                        )}
+                        <input
+                          type="text"
+                          value={opt}
+                          onChange={(e) => {
+                            const newOpts = [...newQuestionOptions];
+                            const oldVal = newOpts[idx];
+                            newOpts[idx] = e.target.value;
+                            setNewQuestionOptions(newOpts);
+                            
+                            // Update correct answer if it was selected
+                            if (newQuestionType === 'mcq' && newQuestionCorrectAnswer === oldVal) {
+                              setNewQuestionCorrectAnswer(e.target.value);
+                            } else if (newQuestionType === 'multi' && newQuestionCorrectAnswers.includes(oldVal)) {
+                              setNewQuestionCorrectAnswers(newQuestionCorrectAnswers.map(a => a === oldVal ? e.target.value : a));
+                            }
+                          }}
+                          className="flex-1 bg-black/40 border border-white/10 rounded-lg px-4 py-2 text-sm text-white outline-none"
+                          placeholder={`Option ${idx + 1}`}
+                        />
+                        <button 
+                          onClick={() => setNewQuestionOptions(newQuestionOptions.filter((_, i) => i !== idx))}
+                          className="p-2 text-white/40 hover:text-red-500 transition-colors"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+                    <button 
+                      onClick={() => setNewQuestionOptions([...newQuestionOptions, ''])}
+                      className="text-[10px] font-bold text-gold-500 hover:text-gold-400 uppercase tracking-widest"
+                    >
+                      + Add Option
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Correct Answer (Exact Match)</label>
+                    <input
+                      type="text"
+                      value={newQuestionCorrectAnswer}
+                      onChange={e => setNewQuestionCorrectAnswer(e.target.value)}
+                      className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none"
+                      placeholder="Enter the correct short answer..."
+                    />
+                  </div>
+                )}
+
+                <div className="flex justify-end pt-2 border-t border-white/5">
+                  <button
+                    onClick={handleAddQuestion}
+                    className="px-6 py-2 bg-white text-black hover:bg-zinc-200 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all"
+                  >
+                    Save Question
+                  </button>
+                </div>
+              </div>
+            </div>
           )}
         </div>
         
-        <div className="flex justify-end pt-2">
+        <div className="flex justify-between items-center pt-2">
+          {configMode === 'test-based' && selectedClubId ? (
+            <div className="flex items-center gap-4">
+              <span className="text-[10px] text-zinc-400 font-mono tracking-wider border border-white/10 bg-black/40 px-3 py-2 rounded-lg select-all">
+                {typeof window !== 'undefined' ? `${window.location.origin}/club/${selectedClubId}/test` : `/club/${selectedClubId}/test`}
+              </span>
+              <button 
+                onClick={() => {
+                  navigator.clipboard.writeText(`${window.location.origin}/club/${selectedClubId}/test`);
+                  alert("Test link copied!");
+                }}
+                className="text-[10px] font-bold text-gold-500 uppercase tracking-widest hover:text-gold-400 transition-colors"
+              >
+                Copy Link
+              </button>
+            </div>
+          ) : <div></div>}
+          
           <button
             onClick={handleSaveConfig}
             className="px-6 py-3 bg-white/5 hover:bg-gold-500/20 text-white hover:brightness-110 rounded-xl text-[11px] font-bold uppercase tracking-widest border border-transparent hover:border-gold-500/30 transition-all flex items-center gap-2"
@@ -301,75 +444,6 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
             <Save className="w-4 h-4" /> Save Configuration
           </button>
         </div>
-      </div>
-
-      {/* CSV Verification Section */}
-      <div className="bg-zinc-900/60 border border-white/5 rounded-[2.5rem] p-10 space-y-8">
-        <div>
-          <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2"><FileSpreadsheet className="w-5 h-5 text-gold-500" /> Automated Verification</h3>
-          <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-widest">Upload Google Forms CSV export to verify candidates</p>
-        </div>
-        
-        <div>
-          <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Paste CSV Data (Format: Name, Email, Status/Marks)</label>
-          <textarea
-            value={csvData}
-            onChange={e => setCsvData(e.target.value)}
-            className="w-full h-32 bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors resize-none font-mono text-[11px]"
-            placeholder="Name, Email, Score&#10;John Doe, john@example.com, Paid&#10;Jane Smith, jane@example.com, 45"
-          />
-        </div>
-        
-        <div className="flex justify-end">
-          <button
-            onClick={handleVerifyCSV}
-            disabled={!csvData}
-            className="px-6 py-3 bg-gold-500 hover:bg-gold-400 text-black rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <Upload className="w-4 h-4" /> Verify Submissions
-          </button>
-        </div>
-        
-        {verificationResult && (
-          <div className="mt-8 border-t border-white/10 pt-8">
-            <h4 className="text-[11px] font-bold uppercase tracking-widest text-white mb-4">Verification Results</h4>
-            <div className="bg-black/40 border border-white/5 rounded-xl overflow-hidden">
-              <table className="w-full text-left text-sm">
-                <thead className="bg-white/5 text-[10px] font-black uppercase tracking-widest text-signature-gradient border-b border-white/5">
-                  <tr>
-                    <th className="px-6 py-3">Candidate</th>
-                    <th className="px-6 py-3">Email</th>
-                    <th className="px-6 py-3">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {verificationResult.map((result, idx) => (
-                    <tr key={idx}>
-                      <td className="px-6 py-4 text-white font-bold">{result.name}</td>
-                      <td className="px-6 py-4 text-zinc-100 text-[10px] uppercase tracking-wider">{result.email}</td>
-                      <td className="px-6 py-4">
-                        <span className={`inline-flex px-2 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border ${result.passed ? 'bg-green-500/10 text-green-500 border-green-500/30' : 'bg-red-500/10 text-red-500 border-red-500/30'}`}>
-                          {result.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            
-            {verificationResult.some(r => r.passed) && (
-              <div className="mt-6 flex justify-end">
-                <button
-                  onClick={handleOnboardVerified}
-                  className="px-6 py-3 bg-signature-gradient text-black rounded-xl text-[11px] font-black uppercase tracking-widest hover:brightness-110 transition-all flex items-center gap-2"
-                >
-                  <UserPlus className="w-4 h-4" /> Onboard Verified Candidates
-                </button>
-              </div>
-            )}
-          </div>
-        )}
       </div>
 
       {/* Stats Section Removed as per User Request */}

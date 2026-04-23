@@ -101,13 +101,34 @@ export interface ClubMember {
     testDetails?: string;
 }
 
+export interface Question {
+    id: string;
+    text: string;
+    type: 'mcq' | 'multi' | 'short';
+    options: string[];
+    correctAnswer: string | string[]; // string for mcq/short, string[] for multi
+    marks: number;
+}
+
+export interface TestAttempt {
+    id: string;
+    userId: string; // or email
+    name: string;
+    answers: Record<string, string | string[]>; // questionId -> answer
+    score: number;
+    total: number;
+    percentage: number;
+    passed: boolean;
+    timestamp: string;
+}
+
 export interface MembershipConfig {
     mode: 'fee-based' | 'test-based';
     feeAmount?: number;
     testDetails?: {
-        paperLink: string;
-        answers: string;
-        minimumMarks: number;
+        questions: Question[];
+        passPercentage: number;
+        timeLimitMinutes?: number;
     };
 }
 
