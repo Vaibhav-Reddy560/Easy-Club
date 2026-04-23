@@ -1,555 +1,434 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { Shield, UserPlus, Check, ChevronDown, UserCheck, X, Users, Settings, Upload, Save, FileSpreadsheet } from "lucide-react";
-import { Club, ClubMember, MemberRole, RecruitmentBasis, MembershipConfig } from "@/lib/types";
-import { saveClub } from "@/lib/db";
+import { 
+  Users, 
+  Plus, 
+  Mail, 
+  Shield, 
+  Trash2, 
+  MoreVertical,
+  CheckCircle2,
+  XCircle,
+  Clock,
+  LayoutDashboard,
+  Search,
+  Filter,
+  UserPlus,
+  ArrowRight,
+  FileText,
+  Settings,
+  ChevronDown,
+  Info
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { updateClub } from "@/lib/firebase";
+import { Club, ClubMember, Question, TestDetails, MembershipConfig } from "@/lib/types";
 
 interface MembershipViewProps {
-  clubs: Club[];
-  onUpdateClub: (updatedClub: Club) => void;
+  club: Club;
+  onUpdate: () => void;
 }
 
-export default function MembershipView({ clubs, onUpdateClub }: MembershipViewProps) {
-  const [selectedClubId, setSelectedClubId] = useState<string | null>(clubs[0]?.id || null);
-  const [activeTab, setActiveTab] = useState<'recruitment-pool' | 'new-recruit'>('recruitment-pool');
-
-  // Form State
-  const [newName, setNewName] = useState("");
-  const [newEmail, setNewEmail] = useState("");
-  const [newBasis, setNewBasis] = useState<RecruitmentBasis>('Fee Paid');
-  const [newTestDetails, setNewTestDetails] = useState("");
-
-  const activeClub = clubs.find((c: Club) => c.id === selectedClubId);
-  const members = activeClub?.members || [];
-
-  // Configuration State
-  const [configMode, setConfigMode] = useState<'fee-based' | 'test-based'>('fee-based');
-  const [feeAmount, setFeeAmount] = useState<number>(0);
-  const [paperLink, setPaperLink] = useState("");
-  const [answers, setAnswers] = useState("");
-  const [minimumMarks, setMinimumMarks] = useState<number>(0);
-
-  // CSV Verification State
-  const [csvData, setCsvData] = useState("");
-  const [verificationResult, setVerificationResult] = useState<{name: string, email: string, status: string, passed: boolean}[] | null>(null);
-
-  React.useEffect(() => {
-    if (activeClub?.membershipConfig) {
-      setConfigMode(activeClub.membershipConfig.mode);
-      setFeeAmount(activeClub.membershipConfig.feeAmount || 0);
-      setPaperLink(activeClub.membershipConfig.testDetails?.paperLink || "");
-      setAnswers(activeClub.membershipConfig.testDetails?.answers || "");
-      setMinimumMarks(activeClub.membershipConfig.testDetails?.minimumMarks || 0);
-      setNewBasis(activeClub.membershipConfig.mode === 'fee-based' ? 'Fee Paid' : 'Test Passed');
-      setNewTestDetails(activeClub.membershipConfig.testDetails?.paperLink ? `Paper: ${activeClub.membershipConfig.testDetails.paperLink}` : "");
-    } else {
-      setConfigMode('fee-based');
-      setFeeAmount(0);
-      setPaperLink("");
-      setAnswers("");
-      setMinimumMarks(0);
-      setNewBasis('Fee Paid');
-      setNewTestDetails("");
-    }
-  }, [activeClub?.id, activeClub?.membershipConfig]);
-
-  const handleUpdateActiveClub = async (updatedClubFn: (c: Club) => Club) => {
-    if (!selectedClubId) return;
-    const activeClub = clubs.find(c => c.id === selectedClubId);
-    if (!activeClub) return;
-    
-    // Apply the transformation and push to the centralized handler
-    const updatedClub = updatedClubFn(activeClub);
-    onUpdateClub(updatedClub);
-  };
-
-  const handleRecruitMember = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newName || !newEmail) return;
-
-    const newMember: ClubMember = {
-      id: Math.random().toString(36).substr(2, 9),
-      name: newName,
-      email: newEmail,
-      role: 'General Member',
-      joinDate: new Date().toISOString().split('T')[0],
-      basis: newBasis,
-      testDetails: newBasis === 'Test Passed' ? newTestDetails : undefined
-    };
-    handleUpdateActiveClub((c: Club) => ({
-      ...c,
-      members: [...(c.members || []), newMember]
-    }));
-
-    // Reset Form
-    setNewName("");
-    setNewEmail("");
-    setNewTestDetails("");
-    setActiveTab('recruitment-pool');
-  };
-
-  const handlePromote = (memberId: string, currentRole: MemberRole) => {
-    let newRole: MemberRole = 'General Member';
-    if (currentRole === 'General Member') newRole = 'Junior Core';
-    else if (currentRole === 'Junior Core') newRole = 'Senior Core';
-
-    handleUpdateActiveClub((c: Club) => ({
-      ...c,
-      members: (c.members || []).map((m: ClubMember) => m.id === memberId ? { ...m, role: newRole } : m)
-    }));
-  };
-
-  const handleRemove = (memberId: string) => {
-    handleUpdateActiveClub((c: Club) => ({
-      ...c,
-      members: (c.members || []).filter((m: ClubMember) => m.id !== memberId)
-    }));
-  };
-
-  const handleSaveConfig = () => {
-    handleUpdateActiveClub((c: Club) => ({
-      ...c,
-      membershipConfig: {
-        mode: configMode,
-        feeAmount: configMode === 'fee-based' ? feeAmount : undefined,
-        testDetails: configMode === 'test-based' ? {
-          paperLink,
-          answers,
-          minimumMarks
-        } : undefined
-      }
-    }));
-  };
-
-  const handleVerifyCSV = () => {
-    if (!csvData) return;
-    
-    // Format expected: Name, Email, Status (Paid/Marks)
-    const lines = csvData.split('\n');
-    const results: {name: string, email: string, status: string, passed: boolean}[] = [];
-    
-    // Skip header and empty lines
-    for (let i = 1; i < lines.length; i++) {
-      const line = lines[i].trim();
-      if (!line) continue;
-      
-      const parts = line.split(',');
-      if (parts.length >= 3) {
-        const name = parts[0].trim();
-        const email = parts[1].trim();
-        const statusValue = parts[2].trim();
-        
-        let passed = false;
-        if (configMode === 'fee-based') {
-          passed = statusValue.toLowerCase() === 'paid' || statusValue.toLowerCase() === 'yes';
-        } else {
-          const marks = parseInt(statusValue);
-          passed = !isNaN(marks) && marks >= minimumMarks;
-        }
-        
-        results.push({
-          name,
-          email,
-          status: passed ? 'Verified' : 'Failed',
-          passed
-        });
-      }
-    }
-    
-    setVerificationResult(results);
-  };
+export default function MembershipView({ club, onUpdate }: MembershipViewProps) {
+  const [activeSubTab, setActiveSubTab] = useState<'roster' | 'config' | 'test-builder'>('roster');
+  const [isUpdating, setIsUpdating] = useState(false);
   
-  const handleOnboardVerified = () => {
-    if (!verificationResult) return;
-    
-    const passedCandidates = verificationResult.filter(r => r.passed);
-    const newMembers: ClubMember[] = passedCandidates.map(c => ({
-      id: Math.random().toString(36).substr(2, 9),
-      name: c.name,
-      email: c.email,
-      role: 'General Member',
-      joinDate: new Date().toISOString().split('T')[0],
-      basis: configMode === 'fee-based' ? 'Fee Paid' : 'Test Passed'
-    }));
-    
-    handleUpdateActiveClub((c: Club) => ({
-      ...c,
-      members: [...(c.members || []), ...newMembers]
-    }));
-    
-    setVerificationResult(null);
-    setCsvData("");
-    setActiveTab('recruitment-pool');
+  // Membership Config State
+  const [config, setConfig] = useState<MembershipConfig>(
+    club.membershipConfig || { mode: 'open' }
+  );
+
+  // Test Builder State
+  const [testDetails, setTestDetails] = useState<TestDetails>(
+    club.membershipConfig?.testDetails || {
+      timeLimitMinutes: 20,
+      passPercentage: 60,
+      questions: []
+    }
+  );
+
+  const handleUpdateConfig = async () => {
+    setIsUpdating(true);
+    try {
+      const updatedConfig = {
+        ...config,
+        testDetails: config.mode === 'test-based' ? testDetails : undefined
+      };
+      await updateClub(club.id, { membershipConfig: updatedConfig });
+      onUpdate();
+    } catch (error) {
+      console.error("Error updating config:", error);
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
-  if (!clubs || clubs.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center py-32 text-center">
-        <Users className="w-16 h-16 text-white mb-6" />
-        <h3 className="text-2xl font-bold text-white mb-2 uppercase tracking-widest">No Clubs Established</h3>
-        <p className="text-white text-sm">Create a club in &quot;My Clubs&quot; before tracking members.</p>
-      </div>
-    );
-  }
+  const addQuestion = () => {
+    const newQuestion: Question = {
+      id: Math.random().toString(36).substring(2, 9),
+      type: 'mcq',
+      question: '',
+      options: ['', '', '', ''],
+      correctAnswer: '',
+      marks: 1
+    };
+    setTestDetails({
+      ...testDetails,
+      questions: [...testDetails.questions, newQuestion]
+    });
+  };
+
+  const updateQuestion = (id: string, updates: Partial<Question>) => {
+    setTestDetails({
+      ...testDetails,
+      questions: testDetails.questions.map(q => q.id === id ? { ...q, ...updates } : q)
+    });
+  };
+
+  const removeQuestion = (id: string) => {
+    setTestDetails({
+      ...testDetails,
+      questions: testDetails.questions.filter(q => q.id !== id)
+    });
+  };
 
   return (
-    <div className="space-y-8 max-w-6xl mx-auto">
-      {/* Header & Selector */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+    <div className="space-y-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter py-2">Membership X Recruitment</h2>
-          <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-[0.2em] mt-2">
-            Selective Onboarding and Core Team Management
-          </p>
+          <h2 className="text-3xl font-bold text-white mb-2 font-astronomus">Membership Control</h2>
+          <p className="text-gray-400">Manage how users join and view your current roster.</p>
         </div>
-
-        <div className="relative group min-w-[250px]">
-          <select
-            value={selectedClubId || ""}
-            onChange={(e) => setSelectedClubId(e.target.value)}
-            className="w-full appearance-none bg-zinc-900 border border-white/10 rounded-2xl py-4 pl-6 pr-12 text-sm font-bold text-white uppercase tracking-widest outline-none hover:border-gold-500/50 transition-colors focus:border-gold-500"
-          >
-            {clubs.map((club) => (
-              <option key={club.id} value={club.id}>{club.name}</option>
-            ))}
-          </select>
-          <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-white pointer-events-none group-hover:text-gold-500 transition-colors" />
+        
+        <div className="flex gap-2 p-1 bg-white/5 rounded-2xl w-fit">
+          {[
+            { id: 'roster', label: 'Roster', icon: Users },
+            { id: 'config', label: 'Access', icon: Shield },
+            { id: 'test-builder', label: 'Test Builder', icon: FileText }
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveSubTab(tab.id as any)}
+              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 ${
+                activeSubTab === tab.id 
+                  ? "bg-purple-600 text-white shadow-lg" 
+                  : "text-gray-400 hover:text-white"
+              }`}
+            >
+              <tab.icon className="w-4 h-4" />
+              <span className="hidden sm:inline">{tab.label}</span>
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Membership Configuration */}
-      <div className="bg-zinc-900/60 border border-white/5 rounded-[2.5rem] p-10 space-y-8">
-        <div>
-          <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2"><Settings className="w-5 h-5 text-gold-500" /> Membership Configuration</h3>
-          <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-widest">Set rules for onboarding new members</p>
-        </div>
-        
-        <div className="grid grid-cols-2 gap-4">
-          <button
-            type="button"
-            onClick={() => setConfigMode('fee-based')}
-            className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${configMode === 'fee-based' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black/40 border-white/10 text-white hover:border-white/30'}`}
+      <AnimatePresence mode="wait">
+        {activeSubTab === 'roster' && (
+          <motion.div
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 10 }}
+            className="space-y-6"
           >
-            Fee Based
-          </button>
-          <button
-            type="button"
-            onClick={() => setConfigMode('test-based')}
-            className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${configMode === 'test-based' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black/40 border-white/10 text-white hover:border-white/30'}`}
-          >
-            Test Based
-          </button>
-        </div>
-        
-        <div className="space-y-5">
-          {configMode === 'fee-based' ? (
-            <div>
-              <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Membership Fee (INR)</label>
-              <input
-                type="number"
-                value={feeAmount}
-                onChange={e => setFeeAmount(parseInt(e.target.value) || 0)}
-                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
-                placeholder="e.g. 500"
-              />
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="glass-morphism rounded-2xl p-4 flex items-center gap-4">
+                <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                  <Users className="w-5 h-5 text-blue-400" />
+                </div>
+                <div>
+                  <div className="text-xl font-bold text-white">{club.members?.length || 0}</div>
+                  <div className="text-[10px] text-gray-500 uppercase font-bold tracking-widest">Total Members</div>
+                </div>
+              </div>
+              <div className="glass-morphism rounded-2xl p-4 flex items-center gap-4">
+                <div className="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center">
+                  <UserPlus className="w-5 h-5 text-green-400" />
+                </div>
+                <div>
+                  <div className="text-xl font-bold text-white">12</div>
+                  <div className="text-[10px] text-gray-500 uppercase font-bold tracking-widest">New (30d)</div>
+                </div>
+              </div>
             </div>
-          ) : (
-            <>
-              <div>
-                <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Test Paper Link (Google Forms)</label>
-                <input
-                  type="url"
-                  value={paperLink}
-                  onChange={e => setPaperLink(e.target.value)}
-                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
-                  placeholder="https://forms.gle/..."
-                />
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div>
-                  <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Answer Key / Hints</label>
-                  <input
-                    type="text"
-                    value={answers}
-                    onChange={e => setAnswers(e.target.value)}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
-                    placeholder="Brief description"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Minimum Marks to Pass</label>
-                  <input
-                    type="number"
-                    value={minimumMarks}
-                    onChange={e => setMinimumMarks(parseInt(e.target.value) || 0)}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
-                    placeholder="e.g. 40"
-                  />
-                </div>
-              </div>
-            </>
-          )}
-        </div>
-        
-        <div className="flex justify-end pt-2">
-          <button
-            onClick={handleSaveConfig}
-            className="px-6 py-3 bg-white/5 hover:bg-gold-500/20 text-white hover:brightness-110 rounded-xl text-[11px] font-bold uppercase tracking-widest border border-transparent hover:border-gold-500/30 transition-all flex items-center gap-2"
-          >
-            <Save className="w-4 h-4" /> Save Configuration
-          </button>
-        </div>
-      </div>
 
-      {/* CSV Verification Section */}
-      <div className="bg-zinc-900/60 border border-white/5 rounded-[2.5rem] p-10 space-y-8">
-        <div>
-          <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2"><FileSpreadsheet className="w-5 h-5 text-gold-500" /> Automated Verification</h3>
-          <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-widest">Upload Google Forms CSV export to verify candidates</p>
-        </div>
-        
-        <div>
-          <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Paste CSV Data (Format: Name, Email, Status/Marks)</label>
-          <textarea
-            value={csvData}
-            onChange={e => setCsvData(e.target.value)}
-            className="w-full h-32 bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors resize-none font-mono text-[11px]"
-            placeholder="Name, Email, Score&#10;John Doe, john@example.com, Paid&#10;Jane Smith, jane@example.com, 45"
-          />
-        </div>
-        
-        <div className="flex justify-end">
-          <button
-            onClick={handleVerifyCSV}
-            disabled={!csvData}
-            className="px-6 py-3 bg-gold-500 hover:bg-gold-400 text-black rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <Upload className="w-4 h-4" /> Verify Submissions
-          </button>
-        </div>
-        
-        {verificationResult && (
-          <div className="mt-8 border-t border-white/10 pt-8">
-            <h4 className="text-[11px] font-bold uppercase tracking-widest text-white mb-4">Verification Results</h4>
-            <div className="bg-black/40 border border-white/5 rounded-xl overflow-hidden">
-              <table className="w-full text-left text-sm">
-                <thead className="bg-white/5 text-[10px] font-black uppercase tracking-widest text-signature-gradient border-b border-white/5">
-                  <tr>
-                    <th className="px-6 py-3">Candidate</th>
-                    <th className="px-6 py-3">Email</th>
-                    <th className="px-6 py-3">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {verificationResult.map((result, idx) => (
-                    <tr key={idx}>
-                      <td className="px-6 py-4 text-white font-bold">{result.name}</td>
-                      <td className="px-6 py-4 text-zinc-100 text-[10px] uppercase tracking-wider">{result.email}</td>
-                      <td className="px-6 py-4">
-                        <span className={`inline-flex px-2 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border ${result.passed ? 'bg-green-500/10 text-green-500 border-green-500/30' : 'bg-red-500/10 text-red-500 border-red-500/30'}`}>
-                          {result.status}
-                        </span>
-                      </td>
+            <div className="glass-morphism rounded-3xl overflow-hidden">
+              <div className="p-6 border-b border-white/10 flex items-center justify-between">
+                <div className="relative w-full max-w-md">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                  <input 
+                    type="text" 
+                    placeholder="Search roster..." 
+                    className="w-full bg-white/5 border border-white/10 rounded-xl py-2 pl-10 pr-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                  />
+                </div>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left">
+                  <thead>
+                    <tr className="bg-white/5 text-[10px] uppercase tracking-widest text-gray-400 font-bold">
+                      <th className="px-6 py-4">Member</th>
+                      <th className="px-6 py-4">Role</th>
+                      <th className="px-6 py-4">Joined Via</th>
+                      <th className="px-6 py-4 text-right">Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            
-            {verificationResult.some(r => r.passed) && (
-              <div className="mt-6 flex justify-end">
-                <button
-                  onClick={handleOnboardVerified}
-                  className="px-6 py-3 bg-signature-gradient text-black rounded-xl text-[11px] font-black uppercase tracking-widest hover:brightness-110 transition-all flex items-center gap-2"
-                >
-                  <UserPlus className="w-4 h-4" /> Onboard Verified Candidates
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-
-      {/* Stats Section Removed as per User Request */}
-
-      {/* Tabs */}
-      <div className="flex gap-4 border-b border-white/10">
-        <button
-          onClick={() => setActiveTab('recruitment-pool')}
-          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'recruitment-pool' ? 'text-signature-gradient border-gold-500' : 'text-white border-transparent hover:text-white'}`}
-        >
-          General Roster
-        </button>
-        <button
-          onClick={() => setActiveTab('new-recruit')}
-          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'new-recruit' ? 'text-signature-gradient border-gold-500' : 'text-white border-transparent hover:text-white'}`}
-        >
-          New Recruitment
-        </button>
-      </div>
-
-      {/* Content */}
-      <div className="min-h-[500px]">
-        {activeTab === 'recruitment-pool' && (
-          <div className="bg-zinc-900/40 border border-white/5 rounded-[2rem] overflow-hidden">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-black/40 text-[10px] font-black uppercase tracking-widest text-signature-gradient border-b border-white/5">
-                <tr>
-                  <th className="px-8 py-5">Member</th>
-                  <th className="px-8 py-5">Role</th>
-                  <th className="px-8 py-5">Verification</th>
-                  <th className="px-8 py-5">Date Joined</th>
-                  <th className="px-8 py-5 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                {members.filter((m: ClubMember) => m.role === 'General Member').length === 0 ? (
-                  <tr>
-                    <td colSpan={5} className="py-20 text-center text-white uppercase tracking-widest font-bold text-[10px]">
-                      No members in roster. Recruit first.
-                    </td>
-                  </tr>
-                ) : (
-                  members
-                    .filter((m: ClubMember) => m.role === 'General Member')
-                    .map((member: ClubMember) => (
-                    <tr key={member.id} className="hover:bg-white/[0.02] transition-colors group">
-                      <td className="px-8 py-6">
-                        <p className="font-bold text-white mb-1">{member.name}</p>
-                        <p className="text-[10px] text-zinc-100 uppercase tracking-wider">{member.email}</p>
-                      </td>
-                      <td className="px-8 py-6">
-                        <span className="inline-flex px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest bg-white/5 text-white border border-white/10">
-                          {member.role}
-                        </span>
-                      </td>
-                      <td className="px-8 py-6">
-                        <div className="flex items-center gap-2">
-                          <Check className="w-3 h-3 text-green-500" />
-                          <span className="text-[10px] font-bold text-white uppercase tracking-widest">
-                            {member.basis}
+                  </thead>
+                  <tbody className="divide-y divide-white/5">
+                    {club.members?.map((member) => (
+                      <tr key={member.id} className="hover:bg-white/5 transition-all group">
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500/20 to-blue-500/20 flex items-center justify-center text-xs font-bold text-white border border-white/10">
+                              {member.name.charAt(0)}
+                            </div>
+                            <div>
+                              <div className="font-bold text-white text-sm">{member.name}</div>
+                              <div className="text-xs text-gray-500">{member.email}</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-tighter ${
+                            member.role === 'Admin' ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' : 'bg-gray-500/10 text-gray-400 border border-gray-500/20'
+                          }`}>
+                            {member.role}
                           </span>
-                        </div>
-                      </td>
-                      <td className="px-8 py-6 text-[11px] text-zinc-100 font-mono">
-                        {member.joinDate}
-                      </td>
-                      <td className="px-8 py-6 text-right">
-                        <div className="flex items-center justify-end gap-3 opacity-50 group-hover:opacity-100 transition-opacity">
-                          <button
-                            onClick={() => handlePromote(member.id, 'General Member')}
-                            className="px-4 py-2 bg-white/5 hover:bg-gold-500/20 text-white hover:brightness-110 rounded-lg text-[9px] font-bold uppercase tracking-widest border border-transparent hover:border-gold-500/30 transition-all"
-                          >
-                            Promote to Core Team
-                          </button>
-                          <button
-                            onClick={() => handleRemove(member.id)}
-                            className="p-2 text-white hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
-                            title="Remove Member"
-                          >
-                            <X className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="text-xs text-white font-medium">{member.basis || 'Admin Added'}</div>
+                          <div className="text-[10px] text-gray-500">{member.joinDate}</div>
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                          <button className="text-gray-500 hover:text-red-400 transition-all"><Trash2 className="w-4 h-4" /></button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </motion.div>
         )}
 
-
-        {activeTab === 'new-recruit' && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <form onSubmit={handleRecruitMember} className="bg-zinc-900/60 border border-white/5 rounded-[2.5rem] p-10 space-y-8">
+        {activeSubTab === 'config' && (
+          <motion.div
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 10 }}
+            className="max-w-2xl"
+          >
+            <div className="glass-morphism rounded-3xl p-8 space-y-8">
               <div>
-                <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2"><UserPlus className="w-5 h-5 text-gold-500" /> Admit New Member</h3>
-                <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-widest">Verify and onboard candidates</p>
+                <h3 className="text-xl font-bold text-white mb-4 font-astronomus">Joining Protocol</h3>
+                <div className="grid grid-cols-1 gap-4">
+                  {[
+                    { id: 'invite-only', label: 'Invite Only', desc: 'Members can only be added manually by Admins.', icon: Shield },
+                    { id: 'open', label: 'Open Enrollment', desc: 'Anyone can join the club instantly.', icon: UserPlus },
+                    { id: 'test-based', label: 'Test-Based Admission', desc: 'Candidates must pass an online test to join.', icon: FileText }
+                  ].map((mode) => (
+                    <button
+                      key={mode.id}
+                      onClick={() => setConfig({ ...config, mode: mode.id as any })}
+                      className={`w-full p-6 rounded-2xl border-2 transition-all text-left flex gap-4 ${
+                        config.mode === mode.id 
+                          ? "border-purple-500 bg-purple-500/10" 
+                          : "border-white/5 bg-white/5 hover:border-white/10"
+                      }`}
+                    >
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${config.mode === mode.id ? "bg-purple-500 text-white" : "bg-white/5 text-gray-500"}`}>
+                        <mode.icon className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <div className={`font-bold text-lg ${config.mode === mode.id ? "text-white" : "text-gray-400"}`}>{mode.label}</div>
+                        <p className="text-sm text-gray-500 mt-1">{mode.desc}</p>
+                      </div>
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              <div className="space-y-5">
-                <div>
-                  <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Full Name</label>
-                  <input
-                    type="text"
-                    required
-                    value={newName}
-                    onChange={e => setNewName(e.target.value)}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
-                  />
+              {config.mode === 'test-based' && (
+                <div className="p-4 bg-purple-500/10 border border-purple-500/20 rounded-2xl flex gap-3">
+                  <Info className="w-5 h-5 text-purple-400 flex-shrink-0" />
+                  <p className="text-xs text-purple-300">
+                    Admission test is active. Go to "Test Builder" to configure questions and pass requirements.
+                  </p>
                 </div>
-                <div>
-                  <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Email Address</label>
-                  <input
-                    type="email"
-                    required
-                    value={newEmail}
-                    onChange={e => setNewEmail(e.target.value)}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Verification Basis</label>
-                  <div className="grid grid-cols-2 gap-4">
-                    <button
-                      type="button"
-                      onClick={() => setNewBasis('Fee Paid')}
-                      className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${newBasis === 'Fee Paid' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black/40 border-white/10 text-white hover:border-white/30'}`}
-                    >
-                      Fee Paid
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setNewBasis('Test Passed')}
-                      className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${newBasis === 'Test Passed' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black/40 border-white/10 text-white hover:border-white/30'}`}
-                    >
-                      Test Passed
-                    </button>
-                  </div>
-                </div>
+              )}
 
-                {newBasis === 'Test Passed' && (
-                  <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
-                    <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Exercise/Test Details</label>
-                    <textarea
-                      required
-                      value={newTestDetails}
-                      onChange={e => setNewTestDetails(e.target.value)}
-                      placeholder="e.g. Scored 85% in App Dev Sprint..."
-                      className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors h-24 resize-none"
-                    />
-                  </motion.div>
-                )}
-              </div>
-
-              <div className="pt-4 border-t border-white/5">
-                <button type="submit" className="w-full bg-gold-500 text-black font-black uppercase tracking-widest text-[11px] py-4 rounded-xl hover:brightness-110 flex items-center justify-center gap-2">
-                  <UserCheck className="w-4 h-4" /> Finalize Recruitment
+              <div className="pt-4">
+                <button 
+                  onClick={handleUpdateConfig}
+                  disabled={isUpdating}
+                  className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-2xl transition-all shadow-xl shadow-purple-500/20 disabled:opacity-50"
+                >
+                  {isUpdating ? "Processing..." : "Update Protocol"}
                 </button>
               </div>
-            </form>
+            </div>
+          </motion.div>
+        )}
 
-            {/* Core Promotion Info panel */}
-            <div className="bg-zinc-900/40 border border-white/5 border-dashed rounded-[2.5rem] p-10 flex flex-col justify-center items-center text-center">
-              <Shield className="w-16 h-16 text-white mb-6" />
-              <h4 className="text-xl font-bold text-white mb-4">Core Team Hierarchy</h4>
-              <p className="text-sm text-zinc-100 leading-relaxed max-w-sm mb-8">
-                The Club Core is composed of driven individuals who manage the club. Recruit members first, then promote exceptional candidates to the <strong className="text-signature-gradient font-bold">Core Team</strong> from the Member Directory to grant management access.
-              </p>
+        {activeSubTab === 'test-builder' && (
+          <motion.div
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 10 }}
+            className="space-y-8"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+              <div className="glass-morphism rounded-2xl p-6">
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-4">Passing Criteria (%)</label>
+                <div className="flex items-center gap-4">
+                  <input 
+                    type="range" 
+                    min="10" 
+                    max="100" 
+                    step="5"
+                    value={testDetails.passPercentage}
+                    onChange={(e) => setTestDetails({ ...testDetails, passPercentage: parseInt(e.target.value) })}
+                    className="flex-1 accent-purple-500" 
+                  />
+                  <span className="text-xl font-bold text-white w-12">{testDetails.passPercentage}%</span>
+                </div>
+              </div>
+              <div className="glass-morphism rounded-2xl p-6">
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-4">Time Limit (Minutes)</label>
+                <div className="flex items-center gap-4">
+                  <Clock className="w-5 h-5 text-purple-400" />
+                  <input 
+                    type="number"
+                    value={testDetails.timeLimitMinutes}
+                    onChange={(e) => setTestDetails({ ...testDetails, timeLimitMinutes: parseInt(e.target.value) })}
+                    className="bg-transparent text-xl font-bold text-white w-20 focus:outline-none"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xl font-bold text-white font-astronomus">Question Bank</h3>
+                <button 
+                  onClick={addQuestion}
+                  className="bg-white/5 hover:bg-white/10 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 border border-white/10 transition-all"
+                >
+                  <Plus className="w-4 h-4" /> Add Question
+                </button>
+              </div>
+
+              {testDetails.questions.length === 0 ? (
+                <div className="py-20 text-center glass-morphism rounded-3xl border-2 border-dashed border-white/10">
+                  <p className="text-gray-500">No questions added yet. Click above to start building.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {testDetails.questions.map((q, idx) => (
+                    <div key={q.id} className="glass-morphism rounded-3xl p-6 border border-white/5 relative group">
+                      <button 
+                        onClick={() => removeQuestion(q.id)}
+                        className="absolute top-6 right-6 text-gray-600 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+
+                      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                        <div className="md:col-span-1 text-2xl font-bold text-purple-500/30">
+                          {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
+                        </div>
+                        <div className="md:col-span-11 space-y-4">
+                          <div className="flex gap-4">
+                            <select 
+                              value={q.type}
+                              onChange={(e) => updateQuestion(q.id, { type: e.target.value as any })}
+                              className="bg-white/5 border border-white/10 rounded-xl p-2 text-xs text-white focus:outline-none"
+                            >
+                              <option value="mcq">Single Choice (MCQ)</option>
+                              <option value="multi">Multiple Choice</option>
+                              <option value="short">Short Answer</option>
+                            </select>
+                            <input 
+                              type="number"
+                              value={q.marks}
+                              onChange={(e) => updateQuestion(q.id, { marks: parseInt(e.target.value) })}
+                              className="bg-white/5 border border-white/10 rounded-xl p-2 text-xs text-white w-20 focus:outline-none"
+                              placeholder="Marks"
+                            />
+                          </div>
+                          
+                          <input 
+                            type="text" 
+                            placeholder="Type your question here..."
+                            value={q.question}
+                            onChange={(e) => updateQuestion(q.id, { question: e.target.value })}
+                            className="w-full bg-transparent text-lg font-bold text-white border-b border-white/10 pb-2 focus:outline-none focus:border-purple-500 transition-all"
+                          />
+
+                          {(q.type === 'mcq' || q.type === 'multi') && (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                              {q.options?.map((opt, optIdx) => (
+                                <div key={optIdx} className="flex items-center gap-2">
+                                  <input 
+                                    type={q.type === 'mcq' ? 'radio' : 'checkbox'}
+                                    checked={q.type === 'mcq' ? q.correctAnswer === opt : (q.correctAnswer as string[]).includes(opt)}
+                                    onChange={() => {
+                                      if (q.type === 'mcq') {
+                                        updateQuestion(q.id, { correctAnswer: opt });
+                                      } else {
+                                        const current = q.correctAnswer as string[];
+                                        const updated = current.includes(opt) 
+                                          ? current.filter(c => c !== opt)
+                                          : [...current, opt];
+                                        updateQuestion(q.id, { correctAnswer: updated });
+                                      }
+                                    }}
+                                    className="accent-purple-500"
+                                  />
+                                  <input 
+                                    type="text"
+                                    value={opt}
+                                    onChange={(e) => {
+                                      const newOpts = [...(q.options || [])];
+                                      newOpts[optIdx] = e.target.value;
+                                      updateQuestion(q.id, { options: newOpts });
+                                    }}
+                                    placeholder={`Option ${optIdx + 1}`}
+                                    className="flex-1 bg-white/5 border border-white/10 rounded-xl p-2 text-sm text-gray-300 focus:outline-none"
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          {q.type === 'short' && (
+                            <input 
+                              type="text"
+                              value={q.correctAnswer as string}
+                              onChange={(e) => updateQuestion(q.id, { correctAnswer: e.target.value })}
+                              placeholder="Type correct answer (for auto-grading)"
+                              className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-sm text-gray-300 focus:outline-none"
+                            />
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="flex justify-end gap-4 max-w-4xl pt-6">
               <button 
-                onClick={() => setActiveTab('recruitment-pool')}
-                className="px-6 py-3 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest text-white hover:text-white hover:bg-white/5 transition-all"
+                onClick={handleUpdateConfig}
+                disabled={isUpdating}
+                className="bg-purple-600 hover:bg-purple-700 text-white font-bold px-10 py-4 rounded-2xl transition-all shadow-xl shadow-purple-500/20 disabled:opacity-50"
               >
-                Go to Recruitment Pool
+                {isUpdating ? "Saving..." : "Save Test Configuration"}
               </button>
             </div>
-          </div>
+          </motion.div>
         )}
-      </div>
+      </AnimatePresence>
     </div>
   );
 }

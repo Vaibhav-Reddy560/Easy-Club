@@ -1,85 +1,102 @@
-"use client";
-
-import React from "react";
-import { Globe, Trophy, Folder, ChartBar, Banknote, Users, Shield, Zap } from "lucide-react";
-import { motion, useMotionValue, useTransform } from "framer-motion";
-import { MemberRole } from "@/lib/types";
-import { useRef } from "react";
-
-export type NavSection = 'explore-clubs' | 'explore-events' | 'my-clubs' | 'my-team' | 'membership' | 'ideation' | 'social-tracker' | 'sponsorship';
+import { LayoutDashboard, Target, Trophy, Settings, FolderClosed, Users, UserPlus } from "lucide-react";
+import { motion } from "framer-motion";
+import { Club } from "@/lib/types";
 
 interface AppSidebarProps {
-    activeSection: NavSection;
-    onSectionChange: (section: NavSection) => void;
-    userRole?: MemberRole;
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+  selectedClub: Club | null;
+  onBackToClubs: () => void;
+  collapsed: boolean;
+  setCollapsed: (collapsed: boolean) => void;
+  userRole?: string;
 }
 
-export default function AppSidebar({ activeSection, onSectionChange, userRole = 'Admin' }: AppSidebarProps) {
-    const sections = [
-        { id: 'my-team' as NavSection, label: 'My Team', icon: Shield },
-        { id: 'explore-clubs' as NavSection, label: 'Explore Clubs', icon: Globe },
-        { id: 'explore-events' as NavSection, label: 'Explore Events', icon: Trophy },
-        { id: 'my-clubs' as NavSection, label: 'My Clubs', icon: Folder },
-        { id: 'membership' as NavSection, label: 'Membership X Recruitment', icon: Users, restricted: true },
-        { id: 'ideation' as NavSection, label: 'Event Ideation', icon: Zap },
-        { id: 'social-tracker' as NavSection, label: 'Social Tracker', icon: ChartBar },
-        { id: 'sponsorship' as NavSection, label: 'Funding X Sponsorship', icon: Banknote, restricted: true },
-    ].filter(section => {
-        if (userRole === 'Junior Core' && section.restricted) return false;
-        return true;
-    });
+export function AppSidebar({
+  activeTab,
+  setActiveTab,
+  selectedClub,
+  onBackToClubs,
+  collapsed,
+  setCollapsed,
+  userRole
+}: AppSidebarProps) {
+  
+  const menuItems = [
+    { name: "Dashboard", icon: LayoutDashboard },
+    { name: "Portfolio", icon: Trophy },
+    { name: "Membership", icon: UserPlus },
+    { name: "Sponsorship", icon: Target, restricted: userRole === 'Junior Core' },
+    { name: "Settings", icon: Settings },
+  ];
 
-    const mouseY = useMotionValue(Infinity);
+  const sidebarWidth = collapsed ? "w-20" : "w-64";
 
-    return (
-        <aside 
-            onMouseMove={(e) => mouseY.set(e.clientY)}
-            onMouseLeave={() => mouseY.set(Infinity)}
-            className="hidden md:flex w-80 flex-col pt-16 pl-6 pr-8 border-r border-white/5 space-y-8 sticky top-20 h-[calc(100vh-5rem)]"
-        >
-            <div className="space-y-2">
-                {sections.map((section) => {
-                    const isActive = activeSection === section.id;
-                    const Icon = section.icon;
+  return (
+    <div className={`${sidebarWidth} h-full transition-all duration-300 flex flex-col p-4 bg-[#020617]`}>
+      <div className="flex items-center gap-3 mb-10 px-2">
+        <div className="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/20">
+          <LayoutDashboard className="w-6 h-6 text-white" />
+        </div>
+        {!collapsed && (
+          <span className="text-2xl font-bold text-white font-airstream tracking-wider truncate">Easy Club</span>
+        )}
+      </div>
 
-                    // eslint-disable-next-line react-hooks/rules-of-hooks
-                    const ref = useRef<HTMLButtonElement>(null);
-                    
-                    // eslint-disable-next-line react-hooks/rules-of-hooks
-                    const distance = useTransform(mouseY, (val) => {
-                        const bounds = ref.current?.getBoundingClientRect() ?? { y: 0, height: 0 };
-                        return val - bounds.y - bounds.height / 2;
-                    });
-                    
-                    // eslint-disable-next-line react-hooks/rules-of-hooks
-                    const scaleSync = useTransform(distance, [-150, 0, 150], [1, 1.15, 1]);
+      <div className="flex-1 space-y-1">
+        {selectedClub && (
+          <button
+            onClick={onBackToClubs}
+            className="w-full flex items-center gap-3 p-3 text-gray-500 hover:text-white transition-all mb-6 group rounded-xl hover:bg-white/5"
+          >
+            <FolderClosed className="w-5 h-5 group-hover:scale-110 transition-transform flex-shrink-0" />
+            {!collapsed && <span className="font-bold text-sm">All Clubs</span>}
+          </button>
+        )}
 
-                    return (
-                        <motion.button
-                            ref={ref}
-                            style={{ scale: scaleSync }}
-                            key={section.id}
-                            onClick={() => onSectionChange(section.id)}
-                            className={`w-full flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 group relative ${isActive
-                                ? 'bg-gold-500/10 border border-gold-500/20 shadow-lg shadow-gold-500/5'
-                                : 'text-white hover:bg-white/5 border border-transparent'
-                                }`}
-                        >
-                            {isActive && (
-                                <motion.div
-                                    layoutId="active-pill"
-                                    className="absolute left-0 w-1 h-6 bg-gold-500 rounded-full"
-                                />
-                            )}
-                            <Icon className={`w-6 h-6 transition-transform duration-300 group-hover:scale-110 ${isActive ? 'text-gold-400' : 'text-white/60'}`} />
-                            <span className={`text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-transform ${isActive ? 'translate-x-1 text-signature-gradient' : ''}`}>
-                                {section.label}
-                            </span>
-                        </motion.button>
-                    );
-                })}
-            </div>
+        <div className="space-y-1">
+          {menuItems.map((item) => {
+            if (item.restricted) return null;
+            
+            const isActive = activeTab === item.name;
+            return (
+              <button
+                key={item.name}
+                onClick={() => setActiveTab(item.name)}
+                className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all relative group ${
+                  isActive 
+                    ? "text-white bg-purple-600 shadow-lg shadow-purple-500/20" 
+                    : "text-gray-500 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <item.icon className={`w-5 h-5 flex-shrink-0 ${isActive ? "text-white" : "group-hover:scale-110 transition-transform"}`} />
+                {!collapsed && (
+                  <span className="font-bold text-sm whitespace-nowrap">{item.name}</span>
+                )}
+                {isActive && !collapsed && (
+                  <motion.div 
+                    layoutId="active-indicator"
+                    className="absolute right-4 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+                  />
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
-        </aside>
-    );
+      <div className="mt-auto px-2">
+        <div className={`p-4 rounded-2xl bg-gradient-to-br from-purple-600/10 to-blue-600/10 border border-white/5 ${collapsed ? "items-center" : ""}`}>
+          {!collapsed && (
+            <>
+              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Current Tier</p>
+              <p className="text-white font-bold text-sm mb-3">Enterprise Pro</p>
+              <button className="w-full bg-white/10 hover:bg-white/20 text-white text-[10px] font-bold py-2 rounded-lg transition-all uppercase tracking-widest">Upgrade</button>
+            </>
+          )}
+          {collapsed && <div className="w-2 h-2 rounded-full bg-purple-500 mx-auto animate-pulse"></div>}
+        </div>
+      </div>
+    </div>
+  );
 }

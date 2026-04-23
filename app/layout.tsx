@@ -1,52 +1,30 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import localFont from "next/font/local";
+import { localAirstream, localAstronomus, localDymaxion, localSometypeMono } from "@/lib/fonts";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 
-const inter = Inter({ subsets: ["latin"] });
-
-const airstream = localFont({
-  src: "./fonts/airstream.ttf",
-  variable: "--font-airstream",
-  display: "swap",
-});
-
-const dymaxion = localFont({
-  src: "./fonts/dymaxion.ttf",
-  variable: "--font-dymaxion",
-  display: "swap",
-});
-
-const sometype = localFont({
-  src: "./fonts/sometype-mono.ttf",
-  variable: "--font-sometype",
-  display: "swap",
-});
-
-const astronomus = localFont({
-  src: "./fonts/astronomus.ttf",
-  variable: "--font-astronomus",
-  display: "swap",
-});
-
-import { TaskProvider } from "@/lib/TaskContext";
-
-export const metadata: Metadata = {
+export const metadata = {
   title: "Easy Club",
-  description: "BMSCE IEEE CS Management Hub",
+  description: "Manage your club memberships and sponsorships with ease.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${airstream.variable} ${dymaxion.variable} ${sometype.variable} ${astronomus.variable}`}>
-      <body className={`${inter.className} font-sometype antialiased`}>
-        <TaskProvider>
-            {children}
-        </TaskProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${localAirstream.variable} ${localAstronomus.variable} ${localDymaxion.variable} ${localSometypeMono.variable} font-mono antialiased`}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

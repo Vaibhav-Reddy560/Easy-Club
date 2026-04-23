@@ -1,112 +1,161 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import { BorderBeam } from "./animations/BorderBeam";
-import { Magnetic } from "./animations/Magnetic";
+import React, { useState } from "react";
+import { 
+  auth, 
+  signInWithEmail, 
+  signUpWithEmail 
+} from "@/lib/firebase";
+import { 
+  Mail, 
+  Lock, 
+  ArrowRight, 
+  Zap, 
+  ShieldCheck, 
+  ChevronRight,
+  UserPlus,
+  Loader2
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-interface LoginViewProps {
-  onSignIn: () => void;
-}
+export default function LoginView() {
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-export default function LoginView({ onSignIn }: LoginViewProps) {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
+
+    try {
+      if (isLogin) {
+        await signInWithEmail(email, password);
+      } else {
+        await signUpWithEmail(email, password);
+      }
+    } catch (err: any) {
+      setError(err.message || "An error occurred during authentication.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-6 relative overflow-hidden bg-dot-matrix">
-      {/* Ambient Background Effects */}
-      <div className="absolute top-1/4 -left-20 ambient-glow opacity-40" />
-      <div className="absolute bottom-1/4 -right-20 ambient-glow opacity-30" style={{ animationDelay: "-10s" }} />
+    <div className="min-h-screen bg-[#020617] flex items-center justify-center p-4 relative overflow-hidden selection:bg-purple-500/30">
+      {/* Dynamic Background */}
+      <div className="absolute top-0 left-0 w-full h-full">
+        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-purple-600/10 blur-[120px] rounded-full"></div>
+        <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-blue-600/10 blur-[120px] rounded-full"></div>
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03]"></div>
+      </div>
 
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="relative w-full max-w-md z-10"
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-md relative z-10"
       >
-        {/* Main Login Card */}
-        <div className="glass-panel rounded-[3rem] p-12 relative overflow-hidden group shadow-[0_0_50px_-12px_rgba(255,165,0,0.1)]">
-          <BorderBeam size={400} duration={15} delay={2} />
-          
-          <div className="relative z-10 space-y-10">
-            {/* Logo Section */}
-            <div className="text-center space-y-4">
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="inline-block"
-              >
-                <div className="relative px-6 py-2">
-                  <div className="absolute inset-0 bg-gold-500 blur-3xl opacity-10 animate-pulse" />
-                  <h1 className="relative text-7xl font-normal text-signature-gradient tracking-wide font-airstream leading-none">
-                    Easy Club
-                  </h1>
+        <div className="text-center mb-10">
+          <motion.div 
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            className="w-20 h-20 bg-gradient-to-tr from-purple-600 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-purple-500/20 rotate-12"
+          >
+            <Zap className="w-10 h-10 text-white fill-white" />
+          </motion.div>
+          <h1 className="text-6xl font-bold text-white mb-2 font-airstream tracking-wider whitespace-nowrap">Easy Club</h1>
+          <p className="text-gray-400 font-medium tracking-tight">The ultimate operating system for student organizations.</p>
+        </div>
+
+        <div className="glass-morphism rounded-[2.5rem] p-8 md:p-10 border-white/5 relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-4">
+            <ShieldCheck className="w-5 h-5 text-purple-500/30" />
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-4">
+              <div className="relative group">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-purple-500 transition-colors">
+                  <Mail className="w-5 h-5" />
                 </div>
-              </motion.div>
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                 className="text-zinc-300 text-[10px] font-black uppercase tracking-[0.3em]"
-              >
-                Nationwide Networking Hub
-              </motion.p>
-            </div>
+                <input
+                  type="email"
+                  placeholder="Official Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all font-medium"
+                  required
+                />
+              </div>
 
-            {/* Description Section */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="text-center"
-            >
-              <p className="text-zinc-200 text-sm font-medium leading-relaxed max-w-[280px] mx-auto">
-                Professional club management and nationwide networking, made easy.
-              </p>
-            </motion.div>
-
-            {/* Action Section */}
-            <div className="space-y-6 pt-4">
-              <Magnetic strength={0.2}>
-                <button
-                  onClick={onSignIn}
-                  className="w-full group relative flex items-center justify-center gap-4 px-8 py-5 bg-white text-black font-black uppercase tracking-widest text-[11px] rounded-[1.5rem] transition-all duration-500 hover:bg-gold-500 hover:shadow-[0_20px_40px_-15px_rgba(250,164,26,0.3)] glint-effect"
-                >
-                  <Image 
-                    src="https://www.google.com/favicon.ico" 
-                    width={16} 
-                    height={16} 
-                    alt="Google" 
-                    className="w-4 h-4 transition-transform group-hover:scale-110" 
-                    unoptimized 
-                  />
-                  <span>Sign in with Google</span>
-                </button>
-              </Magnetic>
-              
-              <div className="flex flex-col items-center gap-4">
-                <div className="h-[1px] w-12 bg-white/5" />
-                <p className="text-[9px] text-zinc-200 font-bold uppercase tracking-[0.2em] flex items-center gap-2">
-                  <span className="w-1 h-1 rounded-full bg-gold-500 animate-pulse" />
-                  Authorized Access Secure Connection
-                </p>
+              <div className="relative group">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-purple-500 transition-colors">
+                  <Lock className="w-5 h-5" />
+                </div>
+                <input
+                  type="password"
+                  placeholder="Security Code"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all font-medium"
+                  required
+                />
               </div>
             </div>
+
+            <AnimatePresence>
+              {error && (
+                <motion.div 
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-2xl text-xs font-bold uppercase tracking-widest text-center"
+                >
+                  {error}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-white text-[#020617] font-bold py-5 rounded-2xl flex items-center justify-center gap-2 hover:bg-gray-100 transition-all active:scale-[0.98] disabled:opacity-50 shadow-xl shadow-white/5"
+            >
+              {isLoading ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
+                <>
+                  {isLogin ? "Access Terminal" : "Initialize Account"}
+                  <ChevronRight className="w-5 h-5" />
+                </>
+              )}
+            </button>
+          </form>
+
+          <div className="mt-8 pt-8 border-t border-white/5 text-center">
+            <button
+              onClick={() => setIsLogin(!isLogin)}
+              className="text-gray-400 hover:text-white transition-colors text-sm font-bold flex items-center justify-center gap-2 mx-auto"
+            >
+              {isLogin ? (
+                <>
+                  <UserPlus className="w-4 h-4" /> New here? Request Access
+                </>
+              ) : (
+                <>
+                  <Lock className="w-4 h-4" /> Existing operative? Log in
+                </>
+              )}
+            </button>
           </div>
         </div>
 
-        {/* Footer/Meta Section */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="mt-12 text-center"
-        >
-          <p className="text-[8px] text-zinc-200 font-bold uppercase tracking-widest leading-loose">
-            Enterprise Grade Encryption<br />
-            Powered by Gemini 3.1 Flash-Lite & Firebase Hub
-          </p>
-        </motion.div>
+        <div className="mt-10 flex items-center justify-center gap-8 text-[10px] font-bold text-gray-500 uppercase tracking-[0.3em]">
+          <span className="hover:text-gray-300 cursor-pointer">Protocol</span>
+          <span className="hover:text-gray-300 cursor-pointer">Security</span>
+          <span className="hover:text-gray-300 cursor-pointer">Network</span>
+        </div>
       </motion.div>
     </div>
   );
