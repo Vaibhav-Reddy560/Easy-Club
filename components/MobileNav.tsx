@@ -1,50 +1,48 @@
-import { LayoutDashboard, Trophy, Target, Settings, Users, UserPlus } from "lucide-react";
-import { Club } from "@/lib/types";
+"use client";
+
+import React from "react";
+import { Globe, Trophy, Folder, Shield, Settings, Users, Zap, ChartBar, Banknote } from "lucide-react";
+import { NavSection } from "./AppSidebar";
+import { MemberRole } from "@/lib/types";
 
 interface MobileNavProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
-  selectedClub: Club | null;
-  userRole?: string;
+    activeSection: NavSection;
+    onSectionChange: (section: NavSection) => void;
+    userRole?: MemberRole;
 }
 
-export function MobileNav({
-  activeTab,
-  setActiveTab,
-  selectedClub,
-  userRole
-}: MobileNavProps) {
-  if (!selectedClub) return null;
+export default function MobileNav({ activeSection, onSectionChange, userRole = 'Admin' }: MobileNavProps) {
+    const sections = [
+        { id: 'my-team' as NavSection, label: 'Team', icon: Shield },
+        { id: 'explore-clubs' as NavSection, label: 'Clubs', icon: Globe },
+        { id: 'explore-events' as NavSection, label: 'Events', icon: Trophy },
+        { id: 'my-clubs' as NavSection, label: 'My Hub', icon: Folder },
+        { id: 'membership' as NavSection, label: 'Members', icon: Users, restricted: true },
+        // Add more if needed, but 4-5 is best for bottom nav
+    ].filter(section => {
+        if (userRole === 'Junior Core' && section.restricted) return false;
+        return true;
+    });
 
-  const menuItems = [
-    { name: "Dashboard", icon: LayoutDashboard },
-    { name: "Portfolio", icon: Trophy },
-    { name: "Membership", icon: UserPlus },
-    { name: "Sponsorship", icon: Target, restricted: userRole === 'Junior Core' },
-    { name: "Settings", icon: Settings },
-  ];
+    return (
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-2xl border-t border-white/5 px-4 pb-6 pt-3 z-[100] flex items-center justify-around">
+            {sections.map((section) => {
+                const isActive = activeSection === section.id;
+                const Icon = section.icon;
 
-  return (
-    <div className="fixed bottom-0 left-0 right-0 glass-morphism border-t border-white/10 z-50 flex items-center justify-around px-4 py-3 pb-8">
-      {menuItems.map((item) => {
-        if (item.restricted) return null;
-        
-        const isActive = activeTab === item.name;
-        return (
-          <button
-            key={item.name}
-            onClick={() => setActiveTab(item.name)}
-            className={`flex flex-row items-center gap-2 p-2 rounded-xl transition-all ${
-              isActive 
-                ? "text-purple-400 bg-purple-500/10" 
-                : "text-gray-500"
-            }`}
-          >
-            <item.icon className="w-5 h-5" />
-            {isActive && <span className="text-[10px] font-bold uppercase tracking-widest">{item.name}</span>}
-          </button>
-        );
-      })}
-    </div>
-  );
+                return (
+                    <button
+                        key={section.id}
+                        onClick={() => onSectionChange(section.id)}
+                        className={`flex flex-col items-center justify-center gap-1 px-2 py-1.5 rounded-xl transition-all duration-300 ${isActive ? 'bg-gold-500/10 text-gold-400 scale-105' : 'text-zinc-400'}`}
+                    >
+                        <Icon className={`w-5 h-5 ${isActive ? 'text-gold-400' : 'text-zinc-400'}`} />
+                        <span className={`text-[9px] font-bold uppercase tracking-tight whitespace-nowrap ${isActive ? 'text-signature-gradient' : ''}`}>
+                            {section.label}
+                        </span>
+                    </button>
+                );
+            })}
+        </nav>
+    );
 }
