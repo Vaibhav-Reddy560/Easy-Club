@@ -34,10 +34,10 @@ export default function MobileNav({ activeSection, onSectionChange, userRole = '
                     <button
                         key={section.id}
                         onClick={() => onSectionChange(section.id)}
-                        className={`flex flex-col items-center gap-1.5 transition-all duration-300 ${isActive ? 'text-gold-400 scale-110' : 'text-zinc-300'}`}
+                        className={`flex flex-col items-center justify-center gap-1 px-2 py-1.5 rounded-xl transition-all duration-300 ${isActive ? 'bg-gold-500/10 text-gold-400 scale-105' : 'text-zinc-400'}`}
                     >
-                        <Icon className={`w-5 h-5 ${isActive ? 'text-gold-400' : 'text-zinc-300'}`} />
-                        <span className={`text-[9px] font-bold uppercase tracking-tight ${isActive ? 'text-signature-gradient' : ''}`}>
+                        <Icon className={`w-5 h-5 ${isActive ? 'text-gold-400' : 'text-zinc-400'}`} />
+                        <span className={`text-[9px] font-bold uppercase tracking-tight whitespace-nowrap ${isActive ? 'text-signature-gradient' : ''}`}>
                             {section.label}
                         </span>
                     </button>

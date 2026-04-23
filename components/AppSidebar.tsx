@@ -60,7 +60,7 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
                             style={{ scale: scaleSync }}
                             key={section.id}
                             onClick={() => onSectionChange(section.id)}
-                            className={`w-full flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 group relative ${isActive
+                            className={`w-full flex flex-row flex-nowrap items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 group relative ${isActive
                                 ? 'bg-gold-500/10 border border-gold-500/20 shadow-lg shadow-gold-500/5'
                                 : 'text-white hover:bg-white/5 border border-transparent'
                                 }`}
@@ -71,8 +71,8 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
                                     className="absolute left-0 w-1 h-6 bg-gold-500 rounded-full"
                                 />
                             )}
-                            <Icon className={`w-6 h-6 transition-transform duration-300 group-hover:scale-110 ${isActive ? 'text-gold-400' : 'text-white/60'}`} />
-                            <span className={`text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-transform ${isActive ? 'translate-x-1 text-signature-gradient' : ''}`}>
+                            <Icon className={`w-6 h-6 flex-shrink-0 transition-transform duration-300 group-hover:scale-110 ${isActive ? 'text-gold-400' : 'text-white/60'}`} />
+                            <span className={`text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-300 ${isActive ? 'translate-x-1 text-signature-gradient' : 'text-white/80'}`}>
                                 {section.label}
                             </span>
                         </motion.button>
