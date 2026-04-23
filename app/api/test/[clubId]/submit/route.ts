@@ -18,6 +18,10 @@ export async function POST(request: Request, { params }: { params: Promise<{ clu
       return NextResponse.json({ error: 'Name, email, and answers are required' }, { status: 400 });
     }
 
+    if (!db) {
+      return NextResponse.json({ error: 'Firebase database not initialized' }, { status: 500 });
+    }
+
     const clubRef = doc(db, 'clubs', clubId);
     const clubSnap = await getDoc(clubRef);
 

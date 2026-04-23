@@ -62,4 +62,6 @@ export const signInWithGoogle = async () => {
 
 export const logout = () => auth && signOut(auth);
 
-export { app, auth, db, Timestamp };
+export { app, auth, Timestamp };
+export const firestore = db as Firestore;
+export { firestore as db };

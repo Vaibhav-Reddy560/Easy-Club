@@ -11,6 +11,10 @@ export async function GET(request: Request, { params }: { params: Promise<{ club
       return NextResponse.json({ error: 'Club ID is required' }, { status: 400 });
     }
 
+    if (!db) {
+      return NextResponse.json({ error: 'Firebase database not initialized' }, { status: 500 });
+    }
+
     const clubRef = doc(db, 'clubs', clubId);
     const clubSnap = await getDoc(clubRef);
 
