@@ -234,7 +234,7 @@ export default function OnlineTestPage() {
                   <div className="flex justify-between items-start mb-6">
                     <h3 className="text-lg font-medium text-gray-900 dark:text-white">
                       <span className="text-blue-600 dark:text-blue-400 mr-2">{index + 1}.</span> 
-                      {q.question}
+                      {q.text}
                     </h3>
                     <span className="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-semibold px-2.5 py-1 rounded-full whitespace-nowrap ml-4">
                       {q.marks} {q.marks === 1 ? 'Mark' : 'Marks'}
