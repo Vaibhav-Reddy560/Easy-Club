@@ -160,7 +160,8 @@ export default function App() {
         e.returnValue = '';
       }
     };
-    window.addEventListener('beforeunload', handleBeforeUnload);    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, [isSaving, hasUnsavedChanges]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -452,7 +453,7 @@ export default function App() {
     if (activeC) void saveClub(activeC as Club & { ownerId: string });
     
     // Log the status change
-    handleLogActivity('Management', `Marked event \"${lifecycleTargetEvent?.name}\" as ${status.toUpperCase()}`);
+    handleLogActivity('Management', `Marked event "${lifecycleTargetEvent?.name}" as ${status.toUpperCase()}`);
   };
 
   const handleSaveReport = (updatedContent: string) => {
@@ -818,7 +819,7 @@ export default function App() {
             >
               <h3 className="text-2xl font-bold text-white mb-2">Delete {modalType === 'club' ? 'Club' : 'Event'}?</h3>
               <p className="text-zinc-100 text-xs mb-8">
-                This action is irreversible. You will lose all data in the <strong className="text-white">\"{inputValue}\"</strong> folder.
+                This action is irreversible. You will lose all data in the <strong className="text-white">"{inputValue}"</strong> folder.
               </p>
               <div className="flex gap-4">
                 <button
@@ -840,19 +841,23 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <EventStatusModal 
-        isOpen={isStatusModalOpen} 
-        onClose={() => setIsStatusModalOpen(false)} 
-        event={lifecycleTargetEvent}
-        onStatusChange={handleStatusChange}
-      />
+      {lifecycleTargetEvent && (
+        <EventStatusModal 
+          isOpen={isStatusModalOpen} 
+          onClose={() => setIsStatusModalOpen(false)} 
+          event={lifecycleTargetEvent}
+          onStatusChange={handleStatusChange}
+        />
+      )}
 
-      <EventReportModal
-        isOpen={isReportModalOpen}
-        onClose={() => setIsReportModalOpen(false)}
-        event={lifecycleTargetEvent}
-        onSave={handleSaveReport}
-      />
+      {lifecycleTargetEvent && (
+        <EventReportModal
+          isOpen={isReportModalOpen}
+          onClose={() => setIsReportModalOpen(false)}
+          event={lifecycleTargetEvent}
+          onSave={handleSaveReport}
+        />
+      )}
 
       <MobileNav activeSection={activeNav} onSectionChange={handleNavChange} />
     </div>
