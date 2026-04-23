@@ -532,7 +532,7 @@ export default function App() {
           userRole={currentUserRole}
         />
 
-        <main className="flex-1 py-8 md:py-16 px-4 md:px-12">
+        <main className="flex-1 pt-8 pb-28 md:py-16 px-4 md:px-12 min-w-0">
           {/* We use display management instead of simple conditional rendering for Explore tabs 
               to keep their state alive without deep prop lifting for every search field. */}
           <div className={`${activeNav === 'my-clubs' ? 'block' : 'hidden'}`}>
@@ -643,23 +643,24 @@ export default function App() {
               {view === 'domains' && (
                 <motion.div key="domains" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                   <div className="flex justify-between items-center mb-8">
+                  <div className="flex justify-between items-center mb-8 gap-4">
                       <button
                         onClick={() => setView('events')}
-                        className="flex items-center gap-2 font-bold hover:text-gold-400 group transition-colors"
+                        className="flex items-center gap-2 font-bold hover:text-gold-400 group transition-colors flex-shrink-0"
                       >
                         <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform text-gold-500" />
                         <span className="text-sm uppercase tracking-widest text-signature-gradient">Back to Dashboard</span>
                       </button>
                     <button
                       onClick={() => setView('questionnaire')}
-                      className="flex items-center gap-2 px-6 py-2 bg-neutral-900 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest hover:border-gold-500/50 hover:text-gold-400 transition-all shadow-xl"
+                      className="flex items-center gap-2 px-6 py-2 bg-neutral-900 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest hover:border-gold-500/50 hover:text-gold-400 transition-all shadow-xl whitespace-nowrap"
                     >
                       <Pencil className="w-3 h-3" /> Edit Config
                     </button>
                   </div>
 
                   <div className="mb-12 border-b border-white/5 pb-8">
-                    <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">
+                    <h2 className="text-3xl md:text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter leading-tight break-words">
                       {activeEvent?.name} <span className="text-white font-normal ml-3 font-astronomus">/ Workspace</span>
                     </h2>
                   </div>
