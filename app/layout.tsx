@@ -1,10 +1,11 @@
 import { localAirstream, localAstronomus, localDymaxion, localSometypeMono } from "@/lib/fonts";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { TaskProvider } from "@/lib/TaskContext";
 
 export const metadata = {
   title: "Easy Club",
-  description: "Manage your club memberships and sponsorships with ease.",
+  description: "BMSCE IEEE CS Management Hub",
 };
 
 export default function RootLayout({
@@ -23,7 +24,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <TaskProvider>
+            {children}
+          </TaskProvider>
         </ThemeProvider>
       </body>
     </html>

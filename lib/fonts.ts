@@ -1,21 +1,25 @@
 import localFont from 'next/font/local';
 
 export const localAirstream = localFont({
-  src: '../public/fonts/Airstream.ttf',
+  src: '../public/fonts/airstream.ttf',
   variable: '--font-airstream',
+  display: 'swap',
 });
 
 export const localAstronomus = localFont({
-  src: '../public/fonts/Astronomus.ttf',
+  src: '../public/fonts/astronomus.ttf',
   variable: '--font-astronomus',
+  display: 'swap',
 });
 
 export const localDymaxion = localFont({
-  src: '../public/fonts/Dymaxion.ttf',
+  src: '../public/fonts/dymaxion.ttf',
   variable: '--font-dymaxion',
+  display: 'swap',
 });
 
 export const localSometypeMono = localFont({
-  src: '../public/fonts/SometypeMono-Regular.ttf',
+  src: '../public/fonts/sometype-mono.ttf',
   variable: '--font-sometype-mono',
+  display: 'swap',
 });
