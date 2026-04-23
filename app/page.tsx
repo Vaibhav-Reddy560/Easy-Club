@@ -1,592 +1,862 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { 
-  Users, 
-  Settings, 
-  Trophy, 
-  Target, 
-  Calendar, 
-  Plus, 
-  LogOut, 
-  LayoutDashboard,
-  ShieldCheck,
-  Zap,
-  ArrowRight,
-  Search,
-  Filter,
-  CheckCircle2,
-  AlertCircle,
-  MoreVertical,
-  ChevronRight,
-  Menu,
-  X,
-  UserPlus
+import React, { useState, useEffect, useRef } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import EventIdeation from "@/components/EventIdeation";
+import SocialTracker from "@/components/SocialTracker";
+import SponsorshipManager from "@/components/SponsorshipManager";
+import {
+  Trash2,
+  ChevronLeft,
+  Palette,
+  FileText,
+  Share2,
+  Pencil,
+  Loader2,
+  CheckCircle2
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { 
-  db, 
-  auth, 
-  getClubs, 
-  addClub, 
-  updateClub, 
-  deleteClub 
-} from "@/lib/firebase";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import LoginView from "@/components/LoginView";
-import { AppSidebar } from "@/components/AppSidebar";
+
+// Import components from the components directory
+import Sidebar from "@/components/Sidebar";
+import AppSidebar, { NavSection } from "@/components/AppSidebar";
+import ClubGrid from "@/components/ClubGrid";
+import Questionnaire from "@/components/Questionnaire";
+import AboutPage from "@/components/AboutPage";
+import ExploreClubs from "@/components/ExploreClubs";
+import PremiumLoader from "@/components/ui/PremiumLoader";
+import ExploreEvents from "@/components/ExploreEvents";
+import DesignWorkspace from "@/components/domains/DesignWorkspace";
+import ContentWorkspace from "@/components/domains/ContentWorkspace";
+import SocialWorkspace from "@/components/domains/SocialWorkspace";
+import EventStatusModal from "@/components/EventStatusModal";
+import EventReportModal from "@/components/EventReportModal";
+import { BorderBeam } from "@/components/animations/BorderBeam";
+import AccountView from "@/components/AccountView";
+import AnalyticsView from "@/components/AnalyticsView";
+import SettingsView from "@/components/SettingsView";
 import MembershipView from "@/components/MembershipView";
-import { MobileNav } from "@/components/MobileNav";
-import { Club, Event, ClubMember } from "@/lib/types";
+import MyTeamView from "@/components/MyTeamView";
+import MobileNav from "@/components/MobileNav";
+import LoginView from "@/components/LoginView";
+import { Club, ClubEvent, EventConfig, MemberRole, ActivityLogEvent, EventStatus, PostEventData } from "@/lib/types";
+import { useAuth } from "@/lib/auth";
+import { signInWithGoogle, logout } from "@/lib/firebase";
+import { subscribeUserClubs, saveClub, deleteClubFromDb } from "@/lib/db";
+import DynamicIsland from "@/components/DynamicIsland";
 
-// --- Sub-components for better organization ---
+// --- MAIN APPLICATION ---
 
-const DashboardView = ({ clubs, onSelectClub }: { clubs: Club[], onSelectClub: (club: Club) => void }) => {
-  return (
-    <div className="space-y-8">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-3xl font-bold text-white mb-2 font-astronomus">Welcome Back!</h2>
-          <p className="text-gray-400">Here's what's happening across your clubs.</p>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-            <input 
-              type="text" 
-              placeholder="Search clubs..." 
-              className="bg-white/5 border border-white/10 rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all w-full md:w-64"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {clubs.map((club) => (
-          <motion.div
-            key={club.id}
-            whileHover={{ y: -5 }}
-            onClick={() => onSelectClub(club)}
-            className="group cursor-pointer glass-morphism rounded-3xl overflow-hidden transition-all hover:border-purple-500/30"
-          >
-            <div className="h-32 bg-gradient-to-br from-purple-600/20 to-blue-600/20 relative">
-              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
-              <div className="absolute -bottom-6 left-6 w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-xl">
-                <Users className="w-8 h-8 text-white" />
-              </div>
-            </div>
-            <div className="p-6 pt-10">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">{club.name}</h3>
-                <span className="text-xs font-medium px-2 py-1 rounded-full bg-white/5 border border-white/10 text-gray-400 uppercase tracking-wider">
-                  {club.role}
-                </span>
-              </div>
-              <p className="text-sm text-gray-400 line-clamp-2 mb-6 h-10">
-                {club.description || "Empowering students through innovation and collaborative projects."}
-              </p>
-              <div className="flex items-center justify-between text-xs text-gray-500">
-                <div className="flex items-center gap-4">
-                  <span className="flex items-center gap-1.5">
-                    <Users className="w-3.5 h-3.5" />
-                    {club.members?.length || 0} Members
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <Calendar className="w-3.5 h-3.5" />
-                    {club.events?.length || 0} Events
-                  </span>
-                </div>
-                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </div>
-          </motion.div>
-        ))}
-
-        <motion.div
-          whileHover={{ scale: 0.98 }}
-          className="rounded-3xl border-2 border-dashed border-white/10 flex flex-col items-center justify-center p-8 text-center cursor-pointer hover:border-purple-500/30 hover:bg-white/5 transition-all min-h-[320px]"
-        >
-          <div className="w-16 h-16 rounded-full bg-purple-500/10 flex items-center justify-center mb-4">
-            <Plus className="w-8 h-8 text-purple-400" />
-          </div>
-          <h3 className="text-lg font-bold text-white mb-2">Register New Club</h3>
-          <p className="text-sm text-gray-500 max-w-[200px]">Create a new space for your organization</p>
-        </motion.div>
-      </div>
-    </div>
-  );
-};
-
-const EventsView = ({ club }: { club: Club }) => {
-  const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
-  
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-white font-astronomus">Event Portfolio</h2>
-        <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-lg shadow-purple-500/20">
-          <Plus className="w-4 h-4" /> Create Event
-        </button>
-      </div>
-
-      <div className="flex gap-2 p-1 bg-white/5 rounded-2xl w-fit">
-        {(['upcoming', 'past'] as const).map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`px-6 py-2 rounded-xl text-sm font-medium transition-all ${
-              activeTab === tab 
-                ? "bg-purple-600 text-white shadow-lg" 
-                : "text-gray-400 hover:text-white"
-            }`}
-          >
-            {tab.charAt(0).toUpperCase() + tab.slice(1)}
-          </button>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 gap-4">
-        {(club.events && club.events.length > 0) ? club.events.map((event) => (
-          <div key={event.id} className="glass-morphism rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:border-white/20 transition-all">
-            <div className="flex gap-6">
-              <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex flex-col items-center justify-center text-center">
-                <span className="text-xs text-purple-400 font-bold uppercase">Oct</span>
-                <span className="text-2xl font-bold text-white">24</span>
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-white mb-1">{event.name}</h3>
-                <p className="text-sm text-gray-400 flex items-center gap-2">
-                  <Calendar className="w-4 h-4" /> 10:00 AM - 4:00 PM • Main Auditorium
-                </p>
-                <div className="flex gap-2 mt-3">
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 uppercase font-bold tracking-tighter">Workshop</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 uppercase font-bold tracking-tighter">Budget Approved</span>
-                </div>
-              </div>
-            </div>
-            <div className="flex items-center gap-4 w-full md:w-auto">
-              <div className="flex -space-x-2">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="w-8 h-8 rounded-full border-2 border-background bg-gray-800 flex items-center justify-center text-[10px] text-white">
-                    JD
-                  </div>
-                ))}
-                <div className="w-8 h-8 rounded-full border-2 border-background bg-purple-600 flex items-center justify-center text-[10px] text-white font-bold">
-                  +12
-                </div>
-              </div>
-              <button className="flex-1 md:flex-none border border-white/10 hover:bg-white/5 text-white px-4 py-2 rounded-xl text-sm transition-all">
-                Details
-              </button>
-            </div>
-          </div>
-        )) : (
-          <div className="py-20 text-center glass-morphism rounded-3xl border-2 border-dashed border-white/10">
-            <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
-              <Calendar className="w-8 h-8 text-gray-600" />
-            </div>
-            <h3 className="text-lg font-bold text-white mb-1">No events scheduled</h3>
-            <p className="text-sm text-gray-500">Start by creating your first club event.</p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-const SponsorshipView = () => (
-  <div className="space-y-6">
-    <div className="flex items-center justify-between">
-      <h2 className="text-2xl font-bold text-white font-astronomus">Sponsorship Pipeline</h2>
-      <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition-all">
-        <Plus className="w-4 h-4" /> New Prospect
-      </button>
-    </div>
-    
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {[
-        { title: "Prospecting", count: 8, color: "blue", total: "$12,400" },
-        { title: "In Discussion", count: 3, color: "purple", total: "$5,000" },
-        { title: "Closed Won", count: 5, color: "green", total: "$28,500" }
-      ].map((stage) => (
-        <div key={stage.title} className="glass-morphism rounded-2xl p-6 border-t-4 border-t-purple-600">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-bold text-white">{stage.title}</h3>
-            <span className="text-xs bg-white/10 px-2 py-0.5 rounded-full text-gray-400">{stage.count}</span>
-          </div>
-          <div className="text-2xl font-bold text-white mb-1">{stage.total}</div>
-          <p className="text-xs text-gray-500 uppercase tracking-widest font-bold">Total Volume</p>
-        </div>
-      ))}
-    </div>
-
-    <div className="glass-morphism rounded-3xl overflow-hidden">
-      <div className="p-6 border-b border-white/10 flex items-center justify-between">
-        <h3 className="font-bold text-white">Active Campaigns</h3>
-        <button className="text-sm text-purple-400 font-bold flex items-center gap-1">
-          View All <ArrowRight className="w-4 h-4" />
-        </button>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="w-full text-left">
-          <thead>
-            <tr className="bg-white/5 text-[10px] uppercase tracking-widest text-gray-400 font-bold">
-              <th className="px-6 py-4">Sponsor</th>
-              <th className="px-6 py-4">Value</th>
-              <th className="px-6 py-4">Status</th>
-              <th className="px-6 py-4 text-right">Action</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-white/5">
-            {[
-              { name: "TechGiant Corp", value: "$5,000", status: "Active", type: "Gold" },
-              { name: "Global Finance", value: "$2,500", status: "Pending", type: "Silver" },
-              { name: "StartUp Inc", value: "$1,000", status: "Active", type: "Bronze" }
-            ].map((sponsor, i) => (
-              <tr key={i} className="hover:bg-white/5 transition-all text-sm group">
-                <td className="px-6 py-4">
-                  <div className="font-bold text-white group-hover:text-purple-400 transition-colors">{sponsor.name}</div>
-                  <div className="text-xs text-gray-500">{sponsor.type} Tier</div>
-                </td>
-                <td className="px-6 py-4 font-mono text-white">{sponsor.value}</td>
-                <td className="px-6 py-4">
-                  <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter ${
-                    sponsor.status === 'Active' ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20'
-                  }`}>
-                    {sponsor.status}
-                  </span>
-                </td>
-                <td className="px-6 py-4 text-right">
-                  <button className="text-gray-500 hover:text-white transition-all"><MoreVertical className="w-4 h-4" /></button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-);
-
-// --- Main Page Component ---
-
-export default function Home() {
-  const [user, setUser] = useState<any>(null);
+export default function App() {
+  const { user, loading: authLoading } = useAuth();
+  const [isSyncing, setIsSyncing] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const [clubs, setClubs] = useState<Club[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState("Dashboard");
-  const [selectedClub, setSelectedClub] = useState<Club | null>(null);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const [activeNav, setActiveNav] = useState<NavSection>('my-clubs');
+  const [view, setView] = useState<'clubs' | 'events' | 'questionnaire' | 'domains' | 'about' | 'account' | 'analytics' | 'settings'>('clubs');
+  const [activeClubId, setActiveClubId] = useState<string | null>(null);
+  const [activeEventId, setActiveEventId] = useState<string | null>(null);
+  const [activeDomain, setActiveDomain] = useState<'Design' | 'Content' | 'Social'>('Design');
+
+  const [currentUserRole, setCurrentUserRole] = useState<MemberRole>('Admin');
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<'club' | 'event'>('club');
+  const [modalOperation, setModalOperation] = useState<'create' | 'rename'>('create');
+  const [targetId, setTargetId] = useState<string | null>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const lastSyncedUid = useRef<string | null>(typeof window !== 'undefined' ? localStorage.getItem('last_synced_uid') : null);
+
+
+  // Lifecycle Modals State
+  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [lifecycleTargetId, setLifecycleTargetId] = useState<string | null>(null);
+
+  const activeClub = clubs.find(c => c.id === activeClubId);
+  const activeEvent = activeClub?.events?.find((e: ClubEvent) => e.id === activeEventId);
+
+  // Optimized loading and syncing logic
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      if (user) {
-        fetchClubs();
-      } else {
-        setLoading(false);
+    let isMounted = true;
+    
+    // Safety timeout to prevent infinite "Syncing Hub" hang
+    const safetyTimeout = setTimeout(() => {
+      if (isMounted) setLoading(false);
+    }, 10000);
+
+    if (authLoading) return () => { 
+      isMounted = false; 
+      clearTimeout(safetyTimeout); 
+    };
+    
+    if (user) {
+      // Only show full-screen loader if it's a completely new user UID
+      if (lastSyncedUid.current !== user.uid) {
+        setLoading(true);
       }
-    });
-    return () => unsubscribe();
-  }, []);
+      
+      const unsubscribe = subscribeUserClubs(user.uid, user.email, (fetchedClubs, syncing) => {
+        if (isMounted) {
+          setClubs(fetchedClubs);
+          setIsSyncing(syncing);
+          
+          // Only stop the "Syncing Hub" if:
+          // 1. We found some clubs (even from cache, to show them instantly)
+          // 2. OR the server has finished syncing (syncing is false)
+          if (fetchedClubs.length > 0 || !syncing) {
+            setLoading(false);
+            lastSyncedUid.current = user.uid;
+            localStorage.setItem('last_synced_uid', user.uid);
+            clearTimeout(safetyTimeout);
+          }
+        }
+      });
+      
+      return () => {
+        isMounted = false;
+        unsubscribe();
+        clearTimeout(safetyTimeout);
+      };
+    } else {
+      if (isMounted) {
+          setClubs([]);
+          setLoading(false);
+          lastSyncedUid.current = null;
+          localStorage.removeItem('last_synced_uid');
+          clearTimeout(safetyTimeout);
+      }
+    }
+    
+    return () => { 
+      isMounted = false; 
+      clearTimeout(safetyTimeout);
+    };
+  }, [user, authLoading]);
 
-  const fetchClubs = async () => {
+  // Calculate current user role whenever club or user changes
+  useEffect(() => {
+    if (!user || !activeClub) {
+      setCurrentUserRole('Admin'); // Default to Admin for personal clips
+      return;
+    }
+
+    const memberMatch = activeClub.members?.find(m => m.email === user.email);
+    if (memberMatch) {
+      setCurrentUserRole(memberMatch.role);
+    } else {
+      setCurrentUserRole('Admin'); // Original owner
+    }
+  }, [user, activeClub]);
+
+  // Protect against accidental navigation during save
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (isSaving || hasUnsavedChanges) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [isSaving, hasUnsavedChanges]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (modalOperation === 'create') {
+      void handleCreate();
+    } else {
+      void handleRename();
+    }
+  };
+  const handleCreate = async () => {
+    if (!user) return;
+    
+    setIsSaving(true);
+    setHasUnsavedChanges(true); // Mark as dirty
     try {
-      const data = await getClubs();
-      setClubs(data);
-    } catch (error) {
-      console.error("Error fetching clubs:", error);
+      if (modalType === 'club') {
+        const newClub: Club = {
+          id: `club_${Date.now()}`,
+          ownerId: user.uid,
+          name: inputValue,
+          events: []
+        };
+        // Optimistic UI update
+        setClubs(prev => [...prev, newClub]);
+        setIsModalOpen(false); 
+        setInputValue("");
+        
+        const success = await saveClub(newClub as Club & { ownerId: string });
+        if (!success) {
+          // Revert if failed
+          setClubs(prev => prev.filter(c => c.id !== newClub.id));
+          alert("Failed to establish club. Reverting changes.");
+        }
+      } else if (activeClubId) {
+        const newEvent: ClubEvent = {
+          id: `event_${Date.now()}`,
+          name: inputValue,
+          config: {
+            city: "Bengaluru",
+            type: 'Technical',
+            subType: 'Workshop',
+            isCollegeEvent: true
+          }
+        };
+        
+        let targetClub: Club | undefined;
+        setClubs(prev => prev.map((c: Club) => {
+          if (c.id === activeClubId) {
+            targetClub = { ...c, events: [...(c.events || []), newEvent] };
+            return targetClub;
+          }
+          return c;
+        }));
+        
+        setIsModalOpen(false); 
+        setInputValue("");
+        
+        if (targetClub) {
+          const success = await saveClub(targetClub as Club & { ownerId: string });
+          if (!success) alert("Failed to add event. Work might not be saved.");
+        }
+      }
+      setHasUnsavedChanges(false);
+    } catch (err) {
+      console.error("Save error:", err);
     } finally {
-      setLoading(false);
+      setIsSaving(false);
     }
   };
 
-  const handleSignOut = async () => {
+  const handleAdoptIdea = async (title: string, ideaConfig: { subType: string, tags: string, description?: string }) => {
+    const targetClubId = activeClubId || clubs[0]?.id;
+    
+    if (!targetClubId || !user) {
+        alert("Please establish at least one club folder before adopting a blueprint.");
+        setActiveNav('my-clubs');
+        return;
+    }
+
+    const newEvent: ClubEvent = {
+      id: Math.random().toString(36).substr(2, 9),
+      name: title,
+      config: {
+        subType: ideaConfig.subType,
+        description: ideaConfig.description || "",
+        date: "",
+        time: "",
+        venue: "",
+        city: "",
+        isLaunched: false
+      }
+    };
+
+    const updatedClubs = clubs.map((c: Club) =>
+      c.id === targetClubId ? { ...c, events: [...(c.events || []), newEvent] } : c
+    );
+    setClubs(updatedClubs);
+    
+    // Switch completely immediately, save in background
+    setActiveClubId(targetClubId);
+    setActiveEventId(newEvent.id);
+    setView('domains');
+    setActiveNav('my-clubs');
+
+    const c = updatedClubs.find(c => c.id === targetClubId);
+    if (c) {
+      setIsSaving(true);
+      await saveClub(c as Club & { ownerId: string });
+      setIsSaving(false);
+    }
+  };
+
+  const handleRename = async () => {
+    setIsSaving(true);
     try {
-      await signOut(auth);
-      setSelectedClub(null);
-    } catch (error) {
-      console.error("Error signing out:", error);
+      if (modalType === 'club') {
+        const updatedClubs = clubs.map((c: Club) => c.id === targetId ? { ...c, name: inputValue } : c);
+        setClubs(updatedClubs);
+        setIsModalOpen(false); // Close instantly
+        setInputValue("");
+        const c = updatedClubs.find(x => x.id === targetId);
+        if (c) await saveClub(c as Club & { ownerId: string });
+      } else {
+        const updatedClubs = clubs.map((c: Club) =>
+          c.id === activeClubId ? {
+            ...c,
+            events: (c.events || []).map((e: ClubEvent) => e.id === targetId ? { ...e, name: inputValue } : e)
+          } : c
+        );
+        setClubs(updatedClubs);
+        setIsModalOpen(false); // Close instantly
+        setInputValue("");
+        const activeC = updatedClubs.find(x => x.id === activeClubId);
+        if (activeC) await saveClub(activeC as Club & { ownerId: string });
+      }
+    } catch (err) {
+      console.error("Rename failed:", err);
+    } finally {
+      setIsSaving(false);
     }
   };
 
-  const handleSelectClub = (club: Club) => {
-    setSelectedClub(club);
-    setActiveTab("Dashboard");
-    setIsMobileMenuOpen(false);
+  const confirmDelete = async () => {
+    setIsSaving(true);
+    try {
+      if (modalType === 'club') {
+        const oldClubs = [...clubs];
+        setClubs(clubs.filter(c => c.id !== targetId));
+        if (activeClubId === targetId) {
+          setActiveClubId(null);
+          setView('clubs');
+        }
+        setIsDeleteModalOpen(false); // Close instantly
+        if (targetId) {
+          const success = await deleteClubFromDb(targetId);
+          if (!success) {
+            setClubs(oldClubs); // Revert on failure
+            throw new Error("Delete failed");
+          }
+        }
+      } else {
+        const updatedClubs = clubs.map((c: Club) =>
+          c.id === activeClubId ? {
+            ...c,
+            events: (c.events || []).filter((e: ClubEvent) => e.id !== targetId)
+          } : c
+        );
+        setClubs(updatedClubs);
+        setIsDeleteModalOpen(false); // Close instantly
+        const activeC = updatedClubs.find(x => x.id === activeClubId);
+        if (activeC) await saveClub(activeC as Club & { ownerId: string });
+      }
+    } catch (err) {
+      console.error("Delete failed:", err);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
-  const handleBackToClubs = () => {
-    setSelectedClub(null);
-    setActiveTab("Dashboard");
+
+  const handleLogActivity = (domain: 'Design' | 'Content' | 'Social' | 'Management', action: string, details?: string) => {
+    if (!activeClubId || !user) return;
+    
+    const newEvent: ActivityLogEvent = {
+      id: Math.random().toString(36).substr(2, 9),
+      userId: user.uid,
+      userName: user.displayName || "Unknown Member",
+      action,
+      domain,
+      timestamp: new Date().toISOString(),
+      details
+    };
+
+    const updatedClubs = clubs.map(c => 
+      c.id === activeClubId 
+        ? { ...c, activityLog: [...(c.activityLog || []), newEvent].slice(-50) } // Keep last 50
+        : c
+    );
+    setClubs(updatedClubs);
+    
+    // Fire and forget save
+    const activeC = updatedClubs.find(c => c.id === activeClubId);
+    if (activeC) {
+      setIsSaving(true);
+      void saveClub(activeC as Club & { ownerId: string }).finally(() => setIsSaving(false));
+    }
   };
 
-  if (loading) {
+  const updateEventConfig = (newData: Partial<EventConfig>) => {
+    if (!activeClubId || !activeEventId) return;
+    const updatedClubs = clubs.map(c => {
+      if (c.id === activeClubId) {
+        return {
+          ...c,
+          events: (c.events || []).map((e: ClubEvent) =>
+            e.id === activeEventId ? { ...e, config: { ...e.config, ...newData } } : e
+          )
+        };
+      }
+      return c;
+    });
+    setClubs(updatedClubs);
+    
+    const activeC = updatedClubs.find(c => c.id === activeClubId);
+    if (activeC) {
+      setIsSaving(true);
+      void saveClub(activeC as Club & { ownerId: string }).finally(() => setIsSaving(false));
+    }
+  };
+
+  /**
+   * Centralized update handler for all modules.
+   * Uses functional updates to ensure data integrity during rapid changes.
+   */
+  const onUpdateClub = async (updatedClub: Club) => {
+    setIsSaving(true);
+    try {
+      // 1. Update local state using functional update to ensure we have the latest 'prev'
+      setClubs(prev => prev.map(c => c.id === updatedClub.id ? updatedClub : c));
+      
+      // 2. Persist to Firestore
+      const success = await saveClub(updatedClub as Club & { ownerId: string });
+      if (!success) {
+        console.error("[Persistence] Failed to sync club updates to cloud.");
+      }
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleNavChange = (section: NavSection) => {
+    setActiveNav(section);
+    // REMOVED: Reset internal view if switching back to My Clubs
+    // This allows users to "leave off" where they were.
+  };
+
+  const lifecycleTargetEvent = activeClub?.events?.find(e => e.id === lifecycleTargetId);
+
+  const handleStatusChange = (eventId: string, status: EventStatus, extra?: { postponedTo?: string; postEventData?: PostEventData; reportContent?: string }) => {
+    if (!activeClubId) return;
+
+    const updatedClubs = clubs.map(c => {
+      if (c.id === activeClubId) {
+        return {
+          ...c,
+          events: (c.events || []).map((e: ClubEvent) => {
+            if (e.id === eventId) {
+              const updatedConfig = { ...e.config, status };
+              if (extra?.postponedTo) updatedConfig.postponedTo = extra.postponedTo;
+              if (extra?.postEventData) updatedConfig.postEventData = extra.postEventData;
+              if (extra?.reportContent) {
+                updatedConfig.report = {
+                  content: extra.reportContent,
+                  generatedAt: new Date().toISOString()
+                };
+              }
+              return { ...e, config: updatedConfig };
+            }
+            return e;
+          })
+        };
+      }
+      return c;
+    });
+
+    setClubs(updatedClubs);
+    const activeC = updatedClubs.find(c => c.id === activeClubId);
+    if (activeC) void saveClub(activeC as Club & { ownerId: string });
+    
+    // Log the status change
+    handleLogActivity('Management', `Marked event "${lifecycleTargetEvent?.name}" as ${status.toUpperCase()}`);
+  };
+
+  const handleSaveReport = (updatedContent: string) => {
+    if (!activeClubId || !lifecycleTargetId) return;
+
+    const updatedClubs = clubs.map(c => {
+      if (c.id === activeClubId) {
+        return {
+          ...c,
+          events: (c.events || []).map((e: ClubEvent) => {
+            if (e.id === lifecycleTargetId && e.config.report) {
+              return {
+                ...e,
+                config: {
+                  ...e.config,
+                  report: {
+                    ...e.config.report,
+                    content: updatedContent,
+                    lastEditedAt: new Date().toISOString()
+                  }
+                }
+              };
+            }
+            return e;
+          })
+        };
+      }
+      return c;
+    });
+
+    setClubs(updatedClubs);
+    const activeC = updatedClubs.find(c => c.id === activeClubId);
+    if (activeC) void saveClub(activeC as Club & { ownerId: string });
+  };
+
+  if (authLoading || loading) {
     return (
-      <div className="h-screen w-full flex items-center justify-center bg-[#020617]">
-        <div className="flex flex-col items-center gap-4">
-          <div className="relative">
-            <div className="w-16 h-16 border-4 border-purple-500/20 border-t-purple-500 rounded-full animate-spin"></div>
-            <Zap className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 text-purple-500 animate-pulse" />
-          </div>
-          <span className="text-purple-400 font-bold tracking-[0.2em] text-xs uppercase animate-pulse">Initializing Terminal</span>
-        </div>
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-8">
+        <PremiumLoader size="lg" />
+        <p className="text-signature-gradient font-bold uppercase tracking-[0.3em] text-[10px] animate-pulse">Syncing Hub...</p>
       </div>
     );
   }
 
   if (!user) {
-    return <LoginView />;
+    return <LoginView onSignIn={signInWithGoogle} />;
   }
 
-  const renderContent = () => {
-    if (!selectedClub) {
-      return <DashboardView clubs={clubs} onSelectClub={handleSelectClub} />;
-    }
+  return (
+    <div className="min-h-screen bg-dot-matrix text-white antialiased pb-20 md:pb-0 relative overflow-hidden">
+      <DynamicIsland isSaving={isSaving} />
 
-    switch (activeTab) {
-      case "Dashboard":
-        return (
-          <div className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              {[
-                { label: "Members", value: selectedClub.members?.length || 0, icon: Users, color: "blue" },
-                { label: "Active Events", value: selectedClub.events?.length || 0, icon: Calendar, color: "purple" },
-                { label: "Sponsorships", value: 12, icon: Target, color: "emerald" },
-                { label: "Tasks", value: 5, icon: Trophy, color: "amber" }
-              ].map((stat, i) => (
-                <div key={i} className="glass-morphism rounded-3xl p-6 hover:bg-white/10 transition-all group">
-                  <div className={`w-12 h-12 rounded-2xl bg-${stat.color}-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                    <stat.icon className={`w-6 h-6 text-${stat.color}-400`} />
+      {/* Ambient Aurora Orbs */}
+      <div className="ambient-glow" style={{ top: '10%', left: '20%', animationDelay: '0s' }} />
+      <div className="ambient-glow" style={{ top: '60%', right: '10%', background: 'radial-gradient(circle at center, rgba(217, 119, 6, 0.1) 0%, transparent 60%)', animationDelay: '-10s' }} />
+
+      <Sidebar 
+        user={{
+          id: user?.uid || "",
+          user_metadata: { 
+            full_name: user?.displayName || "Club Member",
+            avatar_url: user?.photoURL || undefined
+          }
+        }} 
+        onLogout={logout} 
+        onAboutClick={() => setView('about')} 
+        onAccountClick={() => setView('account')}
+        onAnalyticsClick={() => setView('analytics')}
+        onSettingsClick={() => setView('settings')}
+      />
+
+      <div className="max-w-[1600px] mx-auto flex px-4 md:px-6 relative z-10">
+        <AppSidebar 
+          activeSection={activeNav} 
+          onSectionChange={handleNavChange} 
+          userRole={currentUserRole}
+        />
+
+        <main className="flex-1 py-8 md:py-16 px-4 md:px-12">
+          {/* We use display management instead of simple conditional rendering for Explore tabs 
+              to keep their state alive without deep prop lifting for every search field. */}
+          <div className={`${activeNav === 'my-clubs' ? 'block' : 'hidden'}`}>
+            <AnimatePresence mode="wait">
+              {view === 'clubs' && (
+                <ClubGrid
+                  key="clubs"
+                  items={clubs}
+                  onItemClick={(id: string) => { setActiveClubId(id); setView('events'); }}
+                  onRename={(id, name) => {
+                    setTargetId(id);
+                    setInputValue(name);
+                    setModalType('club');
+                    setModalOperation('rename');
+                    setIsModalOpen(true);
+                  }}
+                  onDelete={(id, name) => {
+                    setTargetId(id);
+                    setInputValue(name);
+                    setModalType('club');
+                    setIsDeleteModalOpen(true);
+                  }}
+                  onAddClick={() => {
+                    setModalType('club');
+                    setModalOperation('create');
+                    setInputValue("");
+                    setIsModalOpen(true);
+                  }}
+                  title="My Clubs"
+                  subtitle="Select your organization folder"
+                  addLabel="Establish"
+                />
+              )}
+
+              {view === 'events' && (
+                <motion.div key="events" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
+                  <button
+                    onClick={() => { setView('clubs'); setActiveClubId(null); }}
+                    className="flex items-center gap-2 mb-8 font-bold hover:text-gold-400 group transition-colors"
+                  >
+                    <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform text-gold-500" />
+                    <span className="text-sm uppercase tracking-widest text-signature-gradient">Back to Clubs</span>
+                  </button>
+                  <ClubGrid
+                    items={activeClub?.events || []}
+                    onItemClick={(id: string) => {
+                      setActiveEventId(id);
+                      const clickedEvent = activeClub?.events.find(e => e.id === id);
+                      if (clickedEvent?.config?.isLaunched) {
+                        setView('domains');
+                      } else {
+                        setView('questionnaire');
+                      }
+                    }}
+                    onRename={(id, name) => {
+                      setTargetId(id);
+                      setInputValue(name);
+                      setModalType('event');
+                      setModalOperation('rename');
+                      setIsModalOpen(true);
+                    }}
+                    onDelete={(id, name) => {
+                      setTargetId(id);
+                      setInputValue(name);
+                      setModalType('event');
+                      setIsDeleteModalOpen(true);
+                    }}
+                    onAddClick={() => {
+                      setModalType('event');
+                      setModalOperation('create');
+                      setInputValue("");
+                      setIsModalOpen(true);
+                    }}
+                    onStatusChange={(id) => {
+                      setLifecycleTargetId(id);
+                      setIsStatusModalOpen(true);
+                    }}
+                    onViewReport={(id) => {
+                      setLifecycleTargetId(id);
+                      setIsReportModalOpen(true);
+                    }}
+                    onRevive={(id) => {
+                      setLifecycleTargetId(id);
+                      handleStatusChange(id, 'upcoming');
+                    }}
+                    isEventGrid={true}
+                    title={activeClub?.name || "Organization"}
+                    subtitle="Event Projects / Production Folders"
+                    addLabel="Add Event"
+                  />
+                </motion.div>
+              )}
+
+              {view === 'questionnaire' && (
+                <Questionnaire
+                  key="questionnaire"
+                  activeEvent={activeEvent}
+                  activeEventId={activeEventId}
+                  updateConfig={updateEventConfig}
+                  onBack={() => setView('events')}
+                  onProceed={() => {
+                    updateEventConfig({ isLaunched: true });
+                    setView('domains');
+                  }}
+                />
+              )}
+
+              {view === 'domains' && (
+                <motion.div key="domains" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                  <div className="flex justify-between items-center mb-8">
+                  <div className="flex justify-between items-center mb-8 gap-4">
+                      <button
+                        onClick={() => setView('events')}
+                        className="flex items-center gap-2 font-bold hover:text-gold-400 group transition-colors flex-shrink-0"
+                      >
+                        <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform text-gold-500" />
+                        <span className="text-sm uppercase tracking-widest text-signature-gradient">Back to Dashboard</span>
+                      </button>
+                    <button
+                      onClick={() => setView('questionnaire')}
+                      className="flex items-center gap-2 px-6 py-2 bg-neutral-900 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest hover:border-gold-500/50 hover:text-gold-400 transition-all shadow-xl whitespace-nowrap"
+                    >
+                      <Pencil className="w-3 h-3" /> Edit Config
+                    </button>
                   </div>
-                  <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
-                  <div className="text-sm text-gray-500 font-medium">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="glass-morphism rounded-3xl p-8 border-l-4 border-l-purple-500">
-                <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2 font-astronomus">
-                  <LayoutDashboard className="w-5 h-5 text-purple-400" /> Recent Activity
-                </h3>
-                <div className="space-y-6">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="flex gap-4 relative">
-                      {i !== 3 && <div className="absolute left-4 top-8 bottom-[-16px] w-[2px] bg-white/5"></div>}
-                      <div className="w-8 h-8 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center z-10 flex-shrink-0">
-                        <CheckCircle2 className="w-4 h-4 text-purple-400" />
-                      </div>
-                      <div>
-                        <p className="text-sm text-white font-medium">Updated event budget for "Spring Workshop"</p>
-                        <p className="text-xs text-gray-500 mt-1">2 hours ago • Admin</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
 
-              <div className="glass-morphism rounded-3xl p-8 border-l-4 border-l-blue-500">
-                <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2 font-astronomus">
-                  <Calendar className="w-5 h-5 text-blue-400" /> Upcoming Deadlines
-                </h3>
-                <div className="space-y-4">
-                  {[
-                    { title: "Sponsorship Proposal", date: "Oct 28", priority: "High" },
-                    { title: "Venue Confirmation", date: "Oct 30", priority: "Medium" }
-                  ].map((task, i) => (
-                    <div key={i} className="p-4 bg-white/5 rounded-2xl flex items-center justify-between group hover:bg-white/10 transition-all">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-2 h-2 rounded-full ${task.priority === 'High' ? 'bg-red-500' : 'bg-yellow-500'}`}></div>
-                        <div>
-                          <p className="text-sm font-bold text-white">{task.title}</p>
-                          <p className="text-xs text-gray-500">{task.date}</p>
+                  <div className="mb-12 border-b border-white/5 pb-8">
+                    <h2 className="text-3xl md:text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter leading-tight break-words">
+                      {activeEvent?.name} <span className="text-white font-normal ml-3 font-astronomus">/ Workspace</span>
+                    </h2>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    {[
+                      { id: 'Design', icon: Palette, desc: 'Visual Assets' },
+                      { id: 'Content', icon: FileText, desc: 'Letters & Promo' },
+                      { id: 'Social', icon: Share2, desc: 'Expert Outreach' }
+                    ].map((d) => (
+                      <div
+                        key={d.id}
+                        onClick={() => setActiveDomain(d.id as 'Design' | 'Content' | 'Social')}
+                        className={`p-8 rounded-[2rem] cursor-pointer relative overflow-hidden ${activeDomain === d.id ? 'glass-panel !bg-neutral-900/60 shadow-gold-glow transform -translate-y-2' : 'glass-card hover:border-gold-500/30'}`}
+                      >
+                        {activeDomain === d.id && <BorderBeam duration={8} size={300} />}
+                        <div className="relative z-10">
+                          <d.icon className={`w-8 h-8 mb-4 transition-colors ${activeDomain === d.id ? 'text-gold-400' : 'text-zinc-100'}`} />
+                          <h3 className="text-2xl font-normal font-astronomus leading-tight text-white/90">{d.id}</h3>
+                          <p className={`text-[10px] font-bold uppercase mt-1 tracking-widest ${activeDomain === d.id ? 'text-signature-gradient' : 'text-zinc-100'}`}>{d.desc}</p>
                         </div>
                       </div>
-                      <ArrowRight className="w-4 h-4 text-gray-600 group-hover:text-white transition-all" />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      case "Portfolio":
-        return <EventsView club={selectedClub} />;
-      case "Membership":
-        return <MembershipView club={selectedClub} onUpdate={fetchClubs} />;
-      case "Sponsorship":
-        return <SponsorshipView />;
-      case "Settings":
-        return (
-          <div className="glass-morphism rounded-3xl p-8 max-w-2xl">
-            <h3 className="text-xl font-bold text-white mb-6 font-astronomus">Club Configuration</h3>
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-widest">Club Name</label>
-                <input type="text" defaultValue={selectedClub.name} className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50" />
-              </div>
-              <div>
-                <label className="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-widest">Visibility</label>
-                <div className="flex gap-4">
-                  <button className="flex-1 p-4 rounded-2xl border-2 border-purple-500 bg-purple-500/10 text-white font-bold text-sm">Public</button>
-                  <button className="flex-1 p-4 rounded-2xl border-2 border-white/10 text-gray-500 font-bold text-sm hover:border-white/20 transition-all">Private</button>
-                </div>
-              </div>
-              <div className="pt-4">
-                <button className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-2xl transition-all shadow-xl shadow-purple-500/20">
-                  Save Changes
-                </button>
-              </div>
-            </div>
-          </div>
-        );
-      default:
-        return <div>View coming soon...</div>;
-    }
-  };
-
-  return (
-    <div className="flex h-screen bg-[#020617] overflow-hidden selection:bg-purple-500/30 selection:text-purple-200">
-      {/* Sidebar for Desktop */}
-      <div className="hidden lg:block h-full border-r border-white/5">
-        <AppSidebar
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          selectedClub={selectedClub}
-          onBackToClubs={handleBackToClubs}
-          collapsed={sidebarCollapsed}
-          setCollapsed={setSidebarCollapsed}
-          userRole={selectedClub?.role}
-        />
-      </div>
-
-      {/* Main Container */}
-      <div className="flex-1 flex flex-col h-full overflow-hidden relative">
-        {/* Background Gradients */}
-        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-600/10 blur-[120px] pointer-events-none rounded-full"></div>
-        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/10 blur-[120px] pointer-events-none rounded-full"></div>
-
-        {/* Top Navbar */}
-        <header className="h-16 border-b border-white/5 flex items-center justify-between px-6 z-20 glass-morphism sticky top-0">
-          <div className="flex items-center gap-4">
-            <button 
-              onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden p-2 text-gray-400 hover:text-white"
-            >
-              <Menu className="w-6 h-6" />
-            </button>
-            <div className="flex flex-col">
-              <h1 className="text-xl font-bold text-white font-astronomus tracking-tight truncate max-w-[150px] sm:max-w-none break-words">
-                {selectedClub ? selectedClub.name : "Command Center"}
-              </h1>
-              {selectedClub && (
-                <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
-                  <span className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Active Workspace</span>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
-              <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-purple-500 to-blue-500 flex items-center justify-center text-[10px] font-bold text-white shadow-lg">
-                {user.email?.charAt(0).toUpperCase()}
-              </div>
-              <span className="text-xs text-gray-400 font-medium max-w-[100px] truncate">{user.email}</span>
-            </div>
-            <button 
-              onClick={handleSignOut}
-              className="p-2 text-gray-500 hover:text-red-400 transition-colors"
-              title="Sign Out"
-            >
-              <LogOut className="w-5 h-5" />
-            </button>
-          </div>
-        </header>
-
-        {/* Main Workspace Area */}
-        <main className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar relative z-10 pb-24 lg:pb-8">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={selectedClub ? `${selectedClub.id}-${activeTab}` : "dashboard"}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-            >
-              {renderContent()}
-            </motion.div>
-          </AnimatePresence>
-        </main>
-
-        {/* Mobile Navigation */}
-        <div className="lg:hidden">
-          <MobileNav
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            selectedClub={selectedClub}
-            userRole={selectedClub?.role}
-          />
-        </div>
-      </div>
-
-      {/* Mobile Drawer */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 lg:hidden"
-            />
-            <motion.div
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 left-0 h-full w-[280px] bg-[#020617] border-r border-white/10 z-[60] lg:hidden p-6"
-            >
-              <div className="flex items-center justify-between mb-10">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/20">
-                    <Zap className="w-6 h-6 text-white" />
+                    ))}
                   </div>
-                  <span className="text-xl font-bold text-white font-airstream tracking-wider">Easy Club</span>
-                </div>
-                <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-gray-400 hover:text-white">
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
 
-              <div className="space-y-1">
-                <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4 px-4">Your Spaces</h3>
-                {clubs.map((club) => (
-                  <button
-                    key={club.id}
-                    onClick={() => handleSelectClub(club)}
-                    className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all ${
-                      selectedClub?.id === club.id 
-                        ? "bg-purple-600 text-white shadow-lg shadow-purple-500/20" 
-                        : "text-gray-400 hover:bg-white/5"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <Users className="w-5 h-5" />
-                      <span className="font-bold text-sm truncate max-w-[150px]">{club.name}</span>
-                    </div>
-                    {selectedClub?.id === club.id && <div className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>}
-                  </button>
-                ))}
-              </div>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeDomain}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                    >
+                      {activeDomain === 'Design' && <DesignWorkspace activeEvent={activeEvent} onLogActivity={handleLogActivity} />}
+                      {activeDomain === 'Content' && <ContentWorkspace activeEvent={activeEvent} activeClub={activeClub} updateConfig={updateEventConfig} onLogActivity={handleLogActivity} />}
+                      {activeDomain === 'Social' && <SocialWorkspace activeEvent={activeEvent} />}
+                    </motion.div>
+                  </AnimatePresence>
+                </motion.div>
+              )}
+
+              {view === 'about' && (
+                <AboutPage onBack={() => setView('clubs')} />
+              )}
+
+              {view === 'account' && (
+                <AccountView user={user} onBack={() => setView('clubs')} />
+              )}
+
+              {view === 'analytics' && (
+                <AnalyticsView 
+                  clubsCount={clubs.length} 
+                  eventsCount={clubs.reduce((acc, c) => acc + (c.events?.length || 0), 0)} 
+                  onBack={() => setView('clubs')} 
+                />
+              )}
+
+              {view === 'settings' && (
+                <SettingsView onBack={() => setView('clubs')} />
+              )}
+            </AnimatePresence>
+          </div>
+
+          <div className={`${activeNav === 'explore-clubs' ? 'block' : 'hidden'}`}>
+            <ExploreClubs />
+          </div>
+
+          <div className={`${activeNav === 'explore-events' ? 'block' : 'hidden'}`}>
+            <ExploreEvents />
+          </div>
+
+          <div className={`${activeNav === 'my-team' ? 'block' : 'hidden'}`}>
+            <MyTeamView clubs={clubs} onUpdateClub={onUpdateClub} />
+          </div>
+
+          <div className={`${activeNav === 'membership' ? 'block' : 'hidden'}`}>
+            <MembershipView clubs={clubs} onUpdateClub={onUpdateClub} />
+          </div>
+
+          <div className={`${activeNav === 'social-tracker' ? 'block' : 'hidden'}`}>
+            <SocialTracker clubs={clubs} />
+          </div>
+
+          <div className={`${activeNav === 'sponsorship' ? 'block' : 'hidden'}`}>
+            <SponsorshipManager
+              clubs={clubs}
+              onUpdateClub={onUpdateClub}
+            />
+          </div>
+
+          {activeNav === 'ideation' && (
+            <EventIdeation clubs={clubs} onAdopt={handleAdoptIdea} />
+          )}
+        </main>
+      </div>
+
+      {/* Modal for Creating/Renaming Clubs/Events */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm">
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="relative w-full max-w-lg bg-[#121212] border border-gold-500/20 rounded-[2.5rem] p-10 shadow-2xl"
+            >
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="absolute top-8 right-8 text-white hover:text-gold-400 transition-colors"
+              >
+                <ChevronLeft className="w-6 h-6 rotate-180" />
+              </button>
+              <h3 className="text-2xl font-bold text-white mb-2">
+                {modalOperation === 'create' ? (modalType === 'club' ? 'Establish Club' : 'Create Event') : `Rename ${modalType === 'club' ? 'Club' : 'Event'}`}
+              </h3>
+              <p className="text-zinc-100 text-xs mb-8">
+                {modalOperation === 'create'
+                  ? (modalType === 'club' ? 'Create a master folder for your organization.' : 'Start a new project folder under this club.')
+                  : `Change the name of your ${modalType}.`}
+              </p>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <input
+                  required
+                  autoFocus
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  placeholder="Folder Name..."
+                  className="w-full bg-black border border-neutral-800 rounded-xl p-4 text-white outline-none focus:border-gold-500/50 transition-all font-sans"
+                />
+                <button
+                  type="submit"
+                  disabled={isSaving}
+                  className="w-full bg-gold-gradient text-black font-bold py-4 rounded-xl shadow-xl uppercase tracking-widest hover:scale-[1.02] transition-transform flex items-center justify-center gap-3 disabled:opacity-50 disabled:scale-100"
+                >
+                  {isSaving ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                      Syncing...
+                    </>
+                  ) : (
+                    modalOperation === 'create' ? 'Confirm Establish' : 'Update Name'
+                  )}
+                </button>
+              </form>
             </motion.div>
-          </>
+          </div>
         )}
       </AnimatePresence>
+
+      {/* Delete Confirmation Modal */}
+      <AnimatePresence>
+        {isDeleteModalOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm">
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="relative w-full max-w-md bg-[#121212] border border-red-500/20 rounded-[2.5rem] p-10 shadow-2xl"
+            >
+              <h3 className="text-2xl font-bold text-white mb-2">Delete {modalType === 'club' ? 'Club' : 'Event'}?</h3>
+              <p className="text-zinc-100 text-xs mb-8">
+                This action is irreversible. You will lose all data in the <strong className="text-white">"{inputValue}"</strong> folder.
+              </p>
+              <div className="flex gap-4">
+                <button
+                  onClick={() => setIsDeleteModalOpen(false)}
+                  className="flex-1 px-6 py-4 rounded-xl bg-white/5 text-white font-bold uppercase tracking-widest text-[11px] hover:bg-white/10 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmDelete}
+                  disabled={isSaving}
+                  className="flex-1 px-6 py-4 rounded-xl bg-red-600 text-white font-bold uppercase tracking-widest text-[11px] hover:bg-red-700 transition-colors disabled:opacity-50"
+                >
+                  {isSaving ? 'Deleting...' : 'Yes, Delete'}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      <EventStatusModal 
+        isOpen={isStatusModalOpen} 
+        onClose={() => setIsStatusModalOpen(false)} 
+        event={lifecycleTargetEvent}
+        onStatusChange={handleStatusChange}
+      />
+
+      <EventReportModal
+        isOpen={isReportModalOpen}
+        onClose={() => setIsReportModalOpen(false)}
+        event={lifecycleTargetEvent}
+        onSave={handleSaveReport}
+      />
+
+      <MobileNav activeSection={activeNav} onSectionChange={handleNavChange} />
     </div>
   );
 }
