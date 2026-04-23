@@ -854,7 +854,8 @@ export default function App() {
         <EventReportModal
           isOpen={isReportModalOpen}
           onClose={() => setIsReportModalOpen(false)}
-          event={lifecycleTargetEvent}
+          eventName={lifecycleTargetEvent.name}
+          report={lifecycleTargetEvent.config.report!}
           onSave={handleSaveReport}
         />
       )}
