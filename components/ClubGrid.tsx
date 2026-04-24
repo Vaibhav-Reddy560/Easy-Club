@@ -224,7 +224,7 @@ export default function ClubGrid({ items, onItemClick, onRename, onDelete, onAdd
       <header className="mb-14 flex justify-between items-end border-b border-white/5 pb-8">
         <div>
           <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">{title}</h2>
-          <p className="text-zinc-300 text-sm mt-1 font-medium tracking-[0.2em] uppercase">{subtitle}</p>
+          <p className="text-white text-sm mt-1 font-bold tracking-[0.2em] uppercase">{subtitle}</p>
         </div>
       </header>
       <motion.div 

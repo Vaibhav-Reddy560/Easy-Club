@@ -159,7 +159,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
                         <h2 className="text-3xl font-astronomus text-signature-gradient uppercase tracking-tighter mb-3">
                             Event Architect Hub
                         </h2>
-                        <p className="text-white text-sm font-medium max-w-sm mx-auto leading-relaxed">
+                        <p className="text-white text-sm font-bold uppercase tracking-[0.2em] max-w-sm mx-auto leading-relaxed">
                             Initialize a high-performance session to build your next flagship event.
                         </p>
                     </div>
@@ -349,7 +349,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
                         )}
                     </button>
                     
-                    <div className="absolute -bottom-6 left-8 flex items-center gap-2 text-[9px] text-white font-bold uppercase tracking-widest">
+                    <div className="absolute -bottom-6 left-8 flex items-center gap-2 text-[10px] text-white font-bold uppercase tracking-[0.2em]">
                         <span className="w-1 h-1 bg-gold-500/40 rounded-full" />
                         Enter to Send
                         <span className="w-1 h-1 bg-gold-500/40 rounded-full ml-1" />

@@ -109,7 +109,7 @@ export default function ExploreEvents() {
             <header className="border-b border-white/5 pb-8 flex justify-between items-end">
                 <div>
                     <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Explore Events</h2>
-                    <p className="text-zinc-100 text-sm mt-1 uppercase font-bold tracking-[0.2em] ml-1">National Activity Stream</p>
+                    <p className="text-white text-sm mt-1 uppercase font-bold tracking-[0.2em] ml-1">National Activity Stream</p>
                 </div>
                 <div className="flex gap-4">
                     <div className="text-right">

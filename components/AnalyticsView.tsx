@@ -44,7 +44,7 @@ export default function AnalyticsView({ clubsCount, eventsCount, onBack }: Analy
       <div className="space-y-12">
         <header className="border-b border-white/5 pb-8">
           <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Usage <span className="text-white font-normal ml-2">/ Analytics</span></h2>
-          <p className="text-white text-sm mt-2 max-w-lg font-medium">
+          <p className="text-white text-sm mt-1 uppercase font-bold tracking-[0.2em] ml-1">
             Intelligence overview of your club establishes and event productions.
           </p>
         </header>

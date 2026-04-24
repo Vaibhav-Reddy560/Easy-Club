@@ -33,7 +33,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                     </div>
                     <div>
                         <h2 className="text-5xl font-normal tracking-wide text-signature-gradient font-airstream leading-none">Easy Club</h2>
-                        <p className="text-signature-gradient font-black text-xs uppercase tracking-[0.3em] mt-1 ml-1 leading-none">The Ultimate Operating System for Organizations</p>
+                        <p className="text-white font-bold text-[10px] uppercase tracking-[0.2em] mt-1 ml-1 leading-none">The Ultimate Operating System for Organizations</p>
                     </div>
                 </div>
 

@@ -186,7 +186,7 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                             />
                             <div className="mt-8 text-center space-y-2">
                                 <p className="text-white text-xs font-black uppercase tracking-[0.3em] animate-pulse">Scanning Global Talent Network...</p>
-                                <p className="text-white text-[9px] font-bold uppercase tracking-widest">Identifying {domain} experts in {location}</p>
+                                <p className="text-white text-[10px] font-bold uppercase tracking-[0.2em]">Identifying {domain} experts in {location}</p>
                             </div>
                         </motion.div>
                     ) : results.length > 0 ? (
@@ -266,7 +266,7 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                         </div>
                         <div className="space-y-2">
                             <h3 className="text-md font-black text-white uppercase tracking-[0.3em]">Expert Engine Standby</h3>
-                            <p className="text-[10px] text-white/20 font-bold uppercase tracking-widest">Awaiting discovery scan for {domain}</p>
+                            <p className="text-[10px] text-white/50 font-bold uppercase tracking-[0.2em]">Awaiting discovery scan for {domain}</p>
                         </div>
                     </motion.div>
                 )}
