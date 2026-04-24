@@ -20,7 +20,7 @@ body {
 
 .font-mono {
   letter-spacing: 0.12em;
-  /* Reduced global thickening to 0.15px */
+  /* Balanced baseline thickening */
   text-shadow: 
     0.15px 0 0 currentColor, 
     -0.15px 0 0 currentColor, 
@@ -28,10 +28,23 @@ body {
     0 -0.15px 0 currentColor;
 }
 
-/* Targeted slightly reduced heavy weight for the sidebar (0.3px) */
+/* Adaptive Legibility: Reduce thickening and increase spacing for small labels */
+.text-xs.font-mono,
+.text-[10px].font-mono,
+.text-[11px].font-mono {
+  letter-spacing: 0.15em !important;
+  text-shadow: 
+    0.08px 0 0 currentColor, 
+    -0.08px 0 0 currentColor, 
+    0 0.08px 0 currentColor, 
+    0 -0.08px 0 currentColor !important;
+}
+
+/* Targeted heavy weight for the sidebar (0.3px) */
 aside .font-mono,
 nav .font-mono,
 [role="navigation"] .font-mono {
+  letter-spacing: 0.12em !important;
   text-shadow: 
     0.3px 0 0 currentColor, 
     -0.3px 0 0 currentColor, 
