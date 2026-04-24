@@ -74,6 +74,23 @@ nav .font-mono,
     animation: pulse-gold-glow 3s ease-in-out infinite;
   }
 
+  /* Manual Weight Utilities */
+  .weight-thin {
+    text-shadow: 0.05px 0 0 currentColor, -0.05px 0 0 currentColor, 0 0.05px 0 currentColor, 0 -0.05px 0 currentColor !important;
+  }
+  .weight-light {
+    text-shadow: 0.1px 0 0 currentColor, -0.1px 0 0 currentColor, 0 0.1px 0 currentColor, 0 -0.1px 0 currentColor !important;
+  }
+  .weight-normal {
+    text-shadow: 0.15px 0 0 currentColor, -0.15px 0 0 currentColor, 0 0.15px 0 currentColor, 0 -0.15px 0 currentColor !important;
+  }
+  .weight-bold {
+    text-shadow: 0.3px 0 0 currentColor, -0.3px 0 0 currentColor, 0 0.3px 0 currentColor, 0 -0.3px 0 currentColor !important;
+  }
+  .weight-heavy {
+    text-shadow: 0.4px 0 0 currentColor, -0.4px 0 0 currentColor, 0 0.4px 0 currentColor, 0 -0.4px 0 currentColor !important;
+  }
+
   @keyframes pulse-gold-glow {
     0%, 100% {
       opacity: 1;
