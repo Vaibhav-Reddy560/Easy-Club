@@ -150,7 +150,7 @@ export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
                     <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">My Team</h2>
-                    <p className="text-white text-sm mt-1 uppercase font-bold tracking-[0.2em] ml-1">
+                    <p className="text-[10px] text-white font-bold uppercase tracking-[0.2em] mt-2">
                         Collaboration, Permissions & Global Activity Tracking
                     </p>
                 </div>

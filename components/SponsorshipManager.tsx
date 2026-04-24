@@ -164,7 +164,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                 </div>
                 <div className="space-y-2">
                     <h3 className="text-xl font-bold text-white">No Organizations for Funding</h3>
-                    <p className="text-white text-sm max-w-xs mx-auto font-bold uppercase tracking-[0.2em]">Create a club to unlock the Sponsorship Pipeline Engine.</p>
+                    <p className="text-white text-sm max-w-xs mx-auto font-medium">Create a club to unlock the Sponsorship Pipeline Engine.</p>
                 </div>
             </div>
         );

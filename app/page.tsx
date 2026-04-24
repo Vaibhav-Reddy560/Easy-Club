@@ -799,7 +799,7 @@ export default function App() {
                       Syncing...
                     </>
                   ) : (
-                    modalOperation === 'create' ? 'Confirm Establish' : 'Update Name'
+                    <>Establish Folder</>
                   )}
                 </button>
               </form>
@@ -815,25 +815,25 @@ export default function App() {
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="relative w-full max-w-md bg-[#121212] border border-red-500/20 rounded-[2.5rem] p-10 shadow-2xl"
+              className="relative w-full max-w-lg bg-[#121212] border border-red-500/20 rounded-[2.5rem] p-10 shadow-2xl"
             >
-              <h3 className="text-2xl font-bold text-white mb-2">Delete {modalType === 'club' ? 'Club' : 'Event'}?</h3>
+              <h3 className="text-2xl font-bold text-white mb-2">Archive {modalType === 'club' ? 'Club' : 'Event'}?</h3>
               <p className="text-zinc-100 text-xs mb-8">
-                This action is irreversible. You will lose all data in the <strong className="text-white">"{inputValue}"</strong> folder.
+                Are you sure you want to delete <span className="text-red-400 font-bold underline">&quot;{inputValue}&quot;</span>? This action is permanent and will wipe all associated data.
               </p>
               <div className="flex gap-4">
                 <button
                   onClick={() => setIsDeleteModalOpen(false)}
-                  className="flex-1 px-6 py-4 rounded-xl bg-white/5 text-white font-bold uppercase tracking-widest text-[11px] hover:bg-white/10 transition-colors"
+                  className="flex-1 py-4 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-white/5 transition-all"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={confirmDelete}
                   disabled={isSaving}
-                  className="flex-1 px-6 py-4 rounded-xl bg-red-600 text-white font-bold uppercase tracking-widest text-[11px] hover:bg-red-700 transition-colors disabled:opacity-50"
+                  className="flex-1 py-4 bg-red-600 text-white rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-red-500 transition-all shadow-xl disabled:opacity-50"
                 >
-                  {isSaving ? 'Deleting...' : 'Yes, Delete'}
+                  {isSaving ? 'Deleting...' : 'Delete Permanently'}
                 </button>
               </div>
             </motion.div>
@@ -841,24 +841,19 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {lifecycleTargetEvent && (
-        <EventStatusModal 
-          isOpen={isStatusModalOpen} 
-          onClose={() => setIsStatusModalOpen(false)} 
-          event={lifecycleTargetEvent}
-          onStatusChange={handleStatusChange}
-        />
-      )}
+      <EventStatusModal 
+        isOpen={isStatusModalOpen}
+        onClose={() => setIsStatusModalOpen(false)}
+        event={lifecycleTargetEvent}
+        onStatusChange={handleStatusChange}
+      />
 
-      {lifecycleTargetEvent && (
-        <EventReportModal
-          isOpen={isReportModalOpen}
-          onClose={() => setIsReportModalOpen(false)}
-          eventName={lifecycleTargetEvent.name}
-          report={lifecycleTargetEvent.config.report!}
-          onSave={handleSaveReport}
-        />
-      )}
+      <EventReportModal
+        isOpen={isReportModalOpen}
+        onClose={() => setIsReportModalOpen(false)}
+        event={lifecycleTargetEvent}
+        onSave={handleSaveReport}
+      />
 
       <MobileNav activeSection={activeNav} onSectionChange={handleNavChange} />
     </div>
