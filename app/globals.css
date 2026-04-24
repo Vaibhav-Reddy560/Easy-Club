@@ -20,13 +20,23 @@ body {
 
 .font-mono {
   letter-spacing: 0.08em;
-  /* Increased thickening to 0.4px for a weightier look */
+  /* Baseline thickening for the rest of the app */
+  text-shadow: 
+    0.2px 0 0 currentColor, 
+    -0.2px 0 0 currentColor, 
+    0 0.2px 0 currentColor, 
+    0 -0.2px 0 currentColor;
+}
+
+/* Targeted heavy weight and pure white color ONLY for the left sidebar */
+aside .font-mono,
+nav .font-mono,
+[role="navigation"] .font-mono {
   text-shadow: 
     0.4px 0 0 currentColor, 
     -0.4px 0 0 currentColor, 
     0 0.4px 0 currentColor, 
-    0 -0.4px 0 currentColor;
-  /* Force pure white to replace the greyish default */
+    0 -0.4px 0 currentColor !important;
   color: #ffffff !important;
 }
 
