@@ -83,7 +83,7 @@ export default function App() {
   useEffect(() => {
     let isMounted = true;
     
-    // Safety timeout to prevent infinite \"Syncing Hub\" hang
+    // Safety timeout to prevent infinite "Syncing Hub" hang
     const safetyTimeout = setTimeout(() => {
       if (isMounted) setLoading(false);
     }, 10000);
@@ -104,7 +104,7 @@ export default function App() {
           setClubs(fetchedClubs);
           setIsSyncing(syncing);
           
-          // Only stop the \"Syncing Hub\" if:
+          // Only stop the "Syncing Hub" if:
           // 1. We found some clubs (even from cache, to show them instantly)
           // 2. OR the server has finished syncing (syncing is false)
           if (fetchedClubs.length > 0 || !syncing) {
@@ -188,20 +188,20 @@ export default function App() {
         // Optimistic UI update
         setClubs(prev => [...prev, newClub]);
         setIsModalOpen(false); 
-        setInputValue(\"\");
+        setInputValue("");
         
         const success = await saveClub(newClub as Club & { ownerId: string });
         if (!success) {
           // Revert if failed
           setClubs(prev => prev.filter(c => c.id !== newClub.id));
-          alert(\"Failed to establish club. Reverting changes.\");
+          alert("Failed to establish club. Reverting changes.");
         }
       } else if (activeClubId) {
         const newEvent: ClubEvent = {
           id: `event_${Date.now()}`,
           name: inputValue,
           config: {
-            city: \"Bengaluru\",
+            city: "Bengaluru",
             type: 'Technical',
             subType: 'Workshop',
             isCollegeEvent: true
@@ -218,16 +218,16 @@ export default function App() {
         }));
         
         setIsModalOpen(false); 
-        setInputValue(\"\");
+        setInputValue("");
         
         if (targetClub) {
           const success = await saveClub(targetClub as Club & { ownerId: string });
-          if (!success) alert(\"Failed to add event. Work might not be saved.\");
+          if (!success) alert("Failed to add event. Work might not be saved.");
         }
       }
       setHasUnsavedChanges(false);
     } catch (err) {
-      console.error(\"Save error:\", err);
+      console.error("Save error:", err);
     } finally {
       setIsSaving(false);
     }
@@ -237,7 +237,7 @@ export default function App() {
     const targetClubId = activeClubId || clubs[0]?.id;
     
     if (!targetClubId || !user) {
-        alert(\"Please establish at least one club folder before adopting a blueprint.\");
+        alert("Please establish at least one club folder before adopting a blueprint.");
         setActiveNav('my-clubs');
         return;
     }
@@ -247,11 +247,11 @@ export default function App() {
       name: title,
       config: {
         subType: ideaConfig.subType,
-        description: ideaConfig.description || \"\",
-        date: \"\",
-        time: \"\",
-        venue: \"\",
-        city: \"\",
+        description: ideaConfig.description || "",
+        date: "",
+        time: "",
+        venue: "",
+        city: "",
         isLaunched: false
       }
     };
@@ -282,7 +282,7 @@ export default function App() {
         const updatedClubs = clubs.map((c: Club) => c.id === targetId ? { ...c, name: inputValue } : c);
         setClubs(updatedClubs);
         setIsModalOpen(false); // Close instantly
-        setInputValue(\"\");
+        setInputValue("");
         const c = updatedClubs.find(x => x.id === targetId);
         if (c) await saveClub(c as Club & { ownerId: string });
       } else {
@@ -294,12 +294,12 @@ export default function App() {
         );
         setClubs(updatedClubs);
         setIsModalOpen(false); // Close instantly
-        setInputValue(\"\");
+        setInputValue("");
         const activeC = updatedClubs.find(x => x.id === activeClubId);
         if (activeC) await saveClub(activeC as Club & { ownerId: string });
       }
     } catch (err) {
-      console.error(\"Rename failed:\", err);
+      console.error("Rename failed:", err);
     } finally {
       setIsSaving(false);
     }
@@ -320,7 +320,7 @@ export default function App() {
           const success = await deleteClubFromDb(targetId);
           if (!success) {
             setClubs(oldClubs); // Revert on failure
-            throw new Error(\"Delete failed\");
+            throw new Error("Delete failed");
           }
         }
       } else {
@@ -336,7 +336,7 @@ export default function App() {
         if (activeC) await saveClub(activeC as Club & { ownerId: string });
       }
     } catch (err) {
-      console.error(\"Delete failed:\", err);
+      console.error("Delete failed:", err);
     } finally {
       setIsSaving(false);
     }
@@ -349,7 +349,7 @@ export default function App() {
     const newEvent: ActivityLogEvent = {
       id: Math.random().toString(36).substr(2, 9),
       userId: user.uid,
-      userName: user.displayName || \"Unknown Member\",
+      userName: user.displayName || "Unknown Member",
       action,
       domain,
       timestamp: new Date().toISOString(),
@@ -406,7 +406,7 @@ export default function App() {
       // 2. Persist to Firestore
       const success = await saveClub(updatedClub as Club & { ownerId: string });
       if (!success) {
-        console.error(\"[Persistence] Failed to sync club updates to cloud.\");
+        console.error("[Persistence] Failed to sync club updates to cloud.");
       }
     } finally {
       setIsSaving(false);
@@ -416,7 +416,7 @@ export default function App() {
   const handleNavChange = (section: NavSection) => {
     setActiveNav(section);
     // REMOVED: Reset internal view if switching back to My Clubs
-    // This allows users to \"leave off\" where they were.
+    // This allows users to "leave off" where they were.
   };
 
   const lifecycleTargetEvent = activeClub?.events?.find(e => e.id === lifecycleTargetId);
@@ -453,7 +453,7 @@ export default function App() {
     if (activeC) void saveClub(activeC as Club & { ownerId: string });
     
     // Log the status change
-    handleLogActivity('Management', `Marked event \"\${lifecycleTargetEvent?.name}\" as \${status.toUpperCase()}`);
+    handleLogActivity('Management', `Marked event "${lifecycleTargetEvent?.name}" as ${status.toUpperCase()}`);
   };
 
   const handleSaveReport = (updatedContent: string) => {
@@ -491,9 +491,9 @@ export default function App() {
 
   if (authLoading || loading) {
     return (
-      <div className=\"min-h-screen bg-background flex flex-col items-center justify-center space-y-8\">
-        <PremiumLoader size=\"lg\" />
-        <p className=\"text-signature-gradient font-bold uppercase tracking-[0.3em] text-[10px] animate-pulse\">Syncing Hub...</p>
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-8">
+        <PremiumLoader size="lg" />
+        <p className="text-signature-gradient font-bold uppercase tracking-[0.3em] text-[10px] animate-pulse">Syncing Hub...</p>
       </div>
     );
   }
@@ -503,18 +503,18 @@ export default function App() {
   }
 
   return (
-    <div className=\"min-h-screen bg-dot-matrix text-white antialiased pb-20 md:pb-0 relative overflow-hidden\">
+    <div className="min-h-screen bg-dot-matrix text-white antialiased pb-20 md:pb-0 relative overflow-hidden">
       <DynamicIsland isSaving={isSaving} />
 
       {/* Ambient Aurora Orbs */}
-      <div className=\"ambient-glow\" style={{ top: '10%', left: '20%', animationDelay: '0s' }} />
-      <div className=\"ambient-glow\" style={{ top: '60%', right: '10%', background: 'radial-gradient(circle at center, rgba(217, 119, 6, 0.1) 0%, transparent 60%)', animationDelay: '-10s' }} />
+      <div className="ambient-glow" style={{ top: '10%', left: '20%', animationDelay: '0s' }} />
+      <div className="ambient-glow" style={{ top: '60%', right: '10%', background: 'radial-gradient(circle at center, rgba(217, 119, 6, 0.1) 0%, transparent 60%)', animationDelay: '-10s' }} />
 
       <Sidebar 
         user={{
-          id: user?.uid || \"\",
+          id: user?.uid || "",
           user_metadata: { 
-            full_name: user?.displayName || \"Club Member\",
+            full_name: user?.displayName || "Club Member",
             avatar_url: user?.photoURL || undefined
           }
         }} 
@@ -525,21 +525,21 @@ export default function App() {
         onSettingsClick={() => setView('settings')}
       />
 
-      <div className=\"max-w-[1600px] mx-auto flex px-4 md:px-6 relative z-10\">
+      <div className="max-w-[1600px] mx-auto flex px-4 md:px-6 relative z-10">
         <AppSidebar 
           activeSection={activeNav} 
           onSectionChange={handleNavChange} 
           userRole={currentUserRole}
         />
 
-        <main className=\"flex-1 pt-8 pb-28 md:py-16 px-4 md:px-12 min-w-0\">
+        <main className="flex-1 pt-8 pb-28 md:py-16 px-4 md:px-12 min-w-0">
           {/* We use display management instead of simple conditional rendering for Explore tabs 
               to keep their state alive without deep prop lifting for every search field. */}
-          <div className={`\${activeNav === 'my-clubs' ? 'block' : 'hidden'}`}>
-            <AnimatePresence mode=\"wait\">
+          <div className={`${activeNav === 'my-clubs' ? 'block' : 'hidden'}`}>
+            <AnimatePresence mode="wait">
               {view === 'clubs' && (
                 <ClubGrid
-                  key=\"clubs\"
+                  key="clubs"
                   items={clubs}
                   onItemClick={(id: string) => { setActiveClubId(id); setView('events'); }}
                   onRename={(id, name) => {
@@ -558,23 +558,23 @@ export default function App() {
                   onAddClick={() => {
                     setModalType('club');
                     setModalOperation('create');
-                    setInputValue(\"\");
+                    setInputValue("");
                     setIsModalOpen(true);
                   }}
-                  title=\"My Clubs\"
-                  subtitle=\"Select your organization folder\"
-                  addLabel=\"Establish\"
+                  title="My Clubs"
+                  subtitle="Select your organization folder"
+                  addLabel="Establish"
                 />
               )}
 
               {view === 'events' && (
-                <motion.div key=\"events\" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
+                <motion.div key="events" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
                   <button
                     onClick={() => { setView('clubs'); setActiveClubId(null); }}
-                    className=\"flex items-center gap-2 mb-8 font-bold hover:text-gold-400 group transition-colors\"
+                    className="flex items-center gap-2 mb-8 font-bold hover:text-gold-400 group transition-colors"
                   >
-                    <ChevronLeft className=\"w-5 h-5 group-hover:-translate-x-1 transition-transform text-gold-500\" />
-                    <span className=\"text-sm uppercase tracking-widest text-signature-gradient\">Back to Clubs</span>
+                    <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform text-gold-500" />
+                    <span className="text-sm uppercase tracking-widest text-signature-gradient">Back to Clubs</span>
                   </button>
                   <ClubGrid
                     items={activeClub?.events || []}
@@ -603,7 +603,7 @@ export default function App() {
                     onAddClick={() => {
                       setModalType('event');
                       setModalOperation('create');
-                      setInputValue(\"\");
+                      setInputValue("");
                       setIsModalOpen(true);
                     }}
                     onStatusChange={(id) => {
@@ -619,16 +619,16 @@ export default function App() {
                       handleStatusChange(id, 'upcoming');
                     }}
                     isEventGrid={true}
-                    title={activeClub?.name || \"Organization\"}
-                    subtitle=\"Event Projects / Production Folders\"
-                    addLabel=\"Add Event\"
+                    title={activeClub?.name || "Organization"}
+                    subtitle="Event Projects / Production Folders"
+                    addLabel="Add Event"
                   />
                 </motion.div>
               )}
 
               {view === 'questionnaire' && (
                 <Questionnaire
-                  key=\"questionnaire\"
+                  key="questionnaire"
                   activeEvent={activeEvent}
                   activeEventId={activeEventId}
                   updateConfig={updateEventConfig}
@@ -641,30 +641,30 @@ export default function App() {
               )}
 
               {view === 'domains' && (
-                <motion.div key=\"domains\" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                  <div className=\"flex justify-between items-center mb-8 gap-4\">
+                <motion.div key="domains" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                  <div className="flex justify-between items-center mb-8 gap-4">
                       <button
                         onClick={() => setView('events')}
-                        className=\"flex items-center gap-2 font-bold hover:text-gold-400 group transition-colors flex-shrink-0\"
+                        className="flex items-center gap-2 font-bold hover:text-gold-400 group transition-colors flex-shrink-0"
                       >
-                        <ChevronLeft className=\"w-5 h-5 group-hover:-translate-x-1 transition-transform text-gold-500\" />
-                        <span className=\"text-sm uppercase tracking-widest text-signature-gradient\">Back to Dashboard</span>
+                        <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform text-gold-500" />
+                        <span className="text-sm uppercase tracking-widest text-signature-gradient">Back to Dashboard</span>
                       </button>
                     <button
                       onClick={() => setView('questionnaire')}
-                      className=\"flex items-center gap-2 px-6 py-2 bg-neutral-900 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest hover:border-gold-500/50 hover:text-gold-400 transition-all shadow-xl whitespace-nowrap\"
+                      className="flex items-center gap-2 px-6 py-2 bg-neutral-900 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest hover:border-gold-500/50 hover:text-gold-400 transition-all shadow-xl whitespace-nowrap"
                     >
-                      <Pencil className=\"w-3 h-3\" /> Edit Config
+                      <Pencil className="w-3 h-3" /> Edit Config
                     </button>
                   </div>
 
-                  <div className=\"mb-12 border-b border-white/5 pb-8\">
-                    <h2 className=\"text-3xl md:text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter leading-tight break-words\">
-                      {activeEvent?.name} <span className=\"text-white font-normal ml-3 font-astronomus\">/ Workspace</span>
+                  <div className="mb-12 border-b border-white/5 pb-8">
+                    <h2 className="text-3xl md:text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter leading-tight break-words">
+                      {activeEvent?.name} <span className="text-white font-normal ml-3 font-astronomus">/ Workspace</span>
                     </h2>
                   </div>
 
-                  <div className=\"grid grid-cols-1 md:grid-cols-3 gap-8 mb-12\">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                     {[
                       { id: 'Design', icon: Palette, desc: 'Visual Assets' },
                       { id: 'Content', icon: FileText, desc: 'Letters & Promo' },
@@ -673,19 +673,19 @@ export default function App() {
                       <div
                         key={d.id}
                         onClick={() => setActiveDomain(d.id as 'Design' | 'Content' | 'Social')}
-                        className={`p-8 rounded-[2rem] cursor-pointer relative overflow-hidden \${activeDomain === d.id ? 'glass-panel !bg-neutral-900/60 shadow-gold-glow transform -translate-y-2' : 'glass-card hover:border-gold-500/30'}`}
+                        className={`p-8 rounded-[2rem] cursor-pointer relative overflow-hidden ${activeDomain === d.id ? 'glass-panel !bg-neutral-900/60 shadow-gold-glow transform -translate-y-2' : 'glass-card hover:border-gold-500/30'}`}
                       >
                         {activeDomain === d.id && <BorderBeam duration={8} size={300} />}
-                        <div className=\"relative z-10\">
-                          <d.icon className={`w-8 h-8 mb-4 transition-colors \${activeDomain === d.id ? 'text-gold-400' : 'text-zinc-100'}`} />
-                          <h3 className=\"text-2xl font-normal font-astronomus leading-tight text-white/90\">{d.id}</h3>
-                          <p className={`text-[10px] font-bold uppercase mt-1 tracking-widest \${activeDomain === d.id ? 'text-signature-gradient' : 'text-zinc-100'}`}>{d.desc}</p>
+                        <div className="relative z-10">
+                          <d.icon className={`w-8 h-8 mb-4 transition-colors ${activeDomain === d.id ? 'text-gold-400' : 'text-zinc-100'}`} />
+                          <h3 className="text-2xl font-normal font-astronomus leading-tight text-white/90">{d.id}</h3>
+                          <p className={`text-[10px] font-bold uppercase mt-1 tracking-widest ${activeDomain === d.id ? 'text-signature-gradient' : 'text-zinc-100'}`}>{d.desc}</p>
                         </div>
                       </div>
                     ))}
                   </div>
 
-                  <AnimatePresence mode=\"wait\">
+                  <AnimatePresence mode="wait">
                     <motion.div
                       key={activeDomain}
                       initial={{ opacity: 0, y: 10 }}
@@ -722,27 +722,27 @@ export default function App() {
             </AnimatePresence>
           </div>
 
-          <div className={`\${activeNav === 'explore-clubs' ? 'block' : 'hidden'}`}>
+          <div className={`${activeNav === 'explore-clubs' ? 'block' : 'hidden'}`}>
             <ExploreClubs />
           </div>
 
-          <div className={`\path{\activeNav === 'explore-events' ? 'block' : 'hidden'}`}>
+          <div className={`${activeNav === 'explore-events' ? 'block' : 'hidden'}`}>
             <ExploreEvents />
           </div>
 
-          <div className={`\${activeNav === 'my-team' ? 'block' : 'hidden'}`}>
+          <div className={`${activeNav === 'my-team' ? 'block' : 'hidden'}`}>
             <MyTeamView clubs={clubs} onUpdateClub={onUpdateClub} />
           </div>
 
-          <div className={`\${activeNav === 'membership' ? 'block' : 'hidden'}`}>
+          <div className={`${activeNav === 'membership' ? 'block' : 'hidden'}`}>
             <MembershipView clubs={clubs} onUpdateClub={onUpdateClub} />
           </div>
 
-          <div className={`\${activeNav === 'social-tracker' ? 'block' : 'hidden'}`}>
+          <div className={`${activeNav === 'social-tracker' ? 'block' : 'hidden'}`}>
             <SocialTracker clubs={clubs} />
           </div>
 
-          <div className={`\${activeNav === 'sponsorship' ? 'block' : 'hidden'}`}>
+          <div className={`${activeNav === 'sponsorship' ? 'block' : 'hidden'}`}>
             <SponsorshipManager
               clubs={clubs}
               onUpdateClub={onUpdateClub}
@@ -758,44 +758,44 @@ export default function App() {
       {/* Modal for Creating/Renaming Clubs/Events */}
       <AnimatePresence>
         {isModalOpen && (
-          <div className=\"fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm\">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm">
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className=\"relative w-full max-w-lg bg-[#121212] border border-gold-500/20 rounded-[2.5rem] p-10 shadow-2xl\"
+              className="relative w-full max-w-lg bg-[#121212] border border-gold-500/20 rounded-[2.5rem] p-10 shadow-2xl"
             >
               <button
                 onClick={() => setIsModalOpen(false)}
-                className=\"absolute top-8 right-8 text-white hover:text-gold-400 transition-colors\"
+                className="absolute top-8 right-8 text-white hover:text-gold-400 transition-colors"
               >
-                <ChevronLeft className=\"w-6 h-6 rotate-180\" />
+                <ChevronLeft className="w-6 h-6 rotate-180" />
               </button>
-              <h3 className=\"text-2xl font-bold text-white mb-2\">
-                {modalOperation === 'create' ? (modalType === 'club' ? 'Establish Club' : 'Create Event') : `Rename \${modalType === 'club' ? 'Club' : 'Event'}`}
+              <h3 className="text-2xl font-bold text-white mb-2">
+                {modalOperation === 'create' ? (modalType === 'club' ? 'Establish Club' : 'Create Event') : `Rename ${modalType === 'club' ? 'Club' : 'Event'}`}
               </h3>
-              <p className=\"text-zinc-100 text-xs mb-8\">
+              <p className="text-zinc-100 text-xs mb-8">
                 {modalOperation === 'create'
                   ? (modalType === 'club' ? 'Create a master folder for your organization.' : 'Start a new project folder under this club.')
-                  : `Change the name of your \${modalType}.`}
+                  : `Change the name of your ${modalType}.`}
               </p>
-              <form onSubmit={handleSubmit} className=\"space-y-6\">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <input
                   required
                   autoFocus
-                  type=\"text\"
+                  type="text"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
-                  placeholder=\"Folder Name...\"
-                  className=\"w-full bg-black border border-neutral-800 rounded-xl p-4 text-white outline-none focus:border-gold-500/50 transition-all font-sans\"
+                  placeholder="Folder Name..."
+                  className="w-full bg-black border border-neutral-800 rounded-xl p-4 text-white outline-none focus:border-gold-500/50 transition-all font-sans"
                 />
                 <button
-                  type=\"submit\"
+                  type="submit"
                   disabled={isSaving}
-                  className=\"w-full bg-gold-gradient text-black font-bold py-4 rounded-xl shadow-xl uppercase tracking-widest hover:scale-[1.02] transition-transform flex items-center justify-center gap-3 disabled:opacity-50 disabled:scale-100\"
+                  className="w-full bg-gold-gradient text-black font-bold py-4 rounded-xl shadow-xl uppercase tracking-widest hover:scale-[1.02] transition-transform flex items-center justify-center gap-3 disabled:opacity-50 disabled:scale-100"
                 >
                   {isSaving ? (
                     <>
-                      <div className=\"w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin\" />
+                      <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />
                       Syncing...
                     </>
                   ) : (
@@ -811,27 +811,27 @@ export default function App() {
       {/* Delete Confirmation Modal */}
       <AnimatePresence>
         {isDeleteModalOpen && (
-          <div className=\"fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm\">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm">
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className=\"relative w-full max-w-md bg-[#121212] border border-red-500/20 rounded-[2.5rem] p-10 shadow-2xl\"
+              className="relative w-full max-w-md bg-[#121212] border border-red-500/20 rounded-[2.5rem] p-10 shadow-2xl"
             >
-              <h3 className=\"text-2xl font-bold text-white mb-2\">Delete \${modalType === 'club' ? 'Club' : 'Event'}?</h3>
-              <p className=\"text-zinc-100 text-xs mb-8\">
-                This action is irreversible. You will lose all data in the <strong className=\"text-white\">\\\"\${inputValue}\\\"</strong> folder.
+              <h3 className="text-2xl font-bold text-white mb-2">Delete {modalType === 'club' ? 'Club' : 'Event'}?</h3>
+              <p className="text-zinc-100 text-xs mb-8">
+                This action is irreversible. You will lose all data in the <strong className="text-white">"{inputValue}"</strong> folder.
               </p>
-              <div className=\"flex gap-4\">
+              <div className="flex gap-4">
                 <button
                   onClick={() => setIsDeleteModalOpen(false)}
-                  className=\"flex-1 px-6 py-4 rounded-xl bg-white/5 text-white font-bold uppercase tracking-widest text-[11px] hover:bg-white/10 transition-colors\"
+                  className="flex-1 px-6 py-4 rounded-xl bg-white/5 text-white font-bold uppercase tracking-widest text-[11px] hover:bg-white/10 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={confirmDelete}
                   disabled={isSaving}
-                  className=\"flex-1 px-6 py-4 rounded-xl bg-red-600 text-white font-bold uppercase tracking-widest text-[11px] hover:bg-red-700 transition-colors disabled:opacity-50\"
+                  className="flex-1 px-6 py-4 rounded-xl bg-red-600 text-white font-bold uppercase tracking-widest text-[11px] hover:bg-red-700 transition-colors disabled:opacity-50"
                 >
                   {isSaving ? 'Deleting...' : 'Yes, Delete'}
                 </button>
