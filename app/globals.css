@@ -19,24 +19,24 @@ body {
 }
 
 .font-mono {
-  letter-spacing: 0.08em;
-  /* Baseline thickening for the rest of the app */
+  letter-spacing: 0.12em;
+  /* Reduced global thickening to 0.15px */
   text-shadow: 
-    0.2px 0 0 currentColor, 
-    -0.2px 0 0 currentColor, 
-    0 0.2px 0 currentColor, 
-    0 -0.2px 0 currentColor;
+    0.15px 0 0 currentColor, 
+    -0.15px 0 0 currentColor, 
+    0 0.15px 0 currentColor, 
+    0 -0.15px 0 currentColor;
 }
 
-/* Targeted heavy weight and pure white color ONLY for the left sidebar */
+/* Targeted slightly reduced heavy weight for the sidebar (0.3px) */
 aside .font-mono,
 nav .font-mono,
 [role="navigation"] .font-mono {
   text-shadow: 
-    0.4px 0 0 currentColor, 
-    -0.4px 0 0 currentColor, 
-    0 0.4px 0 currentColor, 
-    0 -0.4px 0 currentColor !important;
+    0.3px 0 0 currentColor, 
+    -0.3px 0 0 currentColor, 
+    0 0.3px 0 currentColor, 
+    0 -0.3px 0 currentColor !important;
   color: #ffffff !important;
 }
 
