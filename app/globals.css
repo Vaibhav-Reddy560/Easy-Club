@@ -22,6 +22,13 @@ body {
   -webkit-text-stroke: 0.2px currentColor;
 }
 
+/* Prevent stroke leakage to other custom fonts */
+.font-airstream, 
+.font-astronomus, 
+.font-dymaxion {
+  -webkit-text-stroke: 0 !important;
+}
+
 @layer utilities {
   .text-signature-gradient {
     background: linear-gradient(180deg, #FF8800 0%, #FF9D00 18%, #FFB405 36%, #FFBF44 49%, #F99A00 63%, #AE7102 100%);

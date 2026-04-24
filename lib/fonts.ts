@@ -20,6 +20,6 @@ export const localDymaxion = localFont({
 
 export const localSometypeMono = localFont({
   src: '../public/fonts/ari-w9500.ttf',
-  variable: '--font-sometype-mono',
+  variable: '--font-sometype',
   display: 'swap',
 });
