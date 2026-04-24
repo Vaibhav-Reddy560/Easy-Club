@@ -20,12 +20,14 @@ body {
 
 .font-mono {
   letter-spacing: 0.08em;
-  /* Natural thickening that follows the text's color automatically */
+  /* Increased thickening to 0.4px for a weightier look */
   text-shadow: 
-    0.2px 0 0 currentColor, 
-    -0.2px 0 0 currentColor, 
-    0 0.2px 0 currentColor, 
-    0 -0.2px 0 currentColor;
+    0.4px 0 0 currentColor, 
+    -0.4px 0 0 currentColor, 
+    0 0.4px 0 currentColor, 
+    0 -0.4px 0 currentColor;
+  /* Force pure white to replace the greyish default */
+  color: #ffffff !important;
 }
 
 /* Reset for other premium fonts */
@@ -42,7 +44,7 @@ body {
     background-clip: text;
     display: inline;
     /* This ensures the 'currentColor' thickening shadow is Gold when the gradient is active */
-    color: #FBBF24; 
+    color: #FBBF24 !important; 
   }
 
   .animate-pulse-gold {
