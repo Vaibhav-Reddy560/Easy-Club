@@ -31,9 +31,8 @@ body {
   -webkit-text-stroke: 0.2px #FBBF24 !important;
 }
 
-/* Handle hover states where gradients are applied */
-.font-mono:hover,
-[class*="hover:text-signature-gradient"]:hover {
+/* Handle hover states where gradients are applied (targeted only) */
+.hover\:text-signature-gradient:hover {
   -webkit-text-stroke: 0.2px #FBBF24 !important;
 }
 
