@@ -90,7 +90,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                             <span className="text-signature-gradient">Trending Ideas</span>
                             <TrendingUp className="w-8 h-8 text-gold-500 flex-shrink-0" />
                         </h2>
-                        <p className="text-white text-sm mt-1 uppercase font-bold tracking-[0.2em]">AI-Curated Event Blueprints & Market Analysis</p>
+                        <p className="text-white text-sm mt-1 uppercase font-bold tracking-widest">AI-Curated Event Blueprints & Market Analysis</p>
                     </div>
                     <div className="hidden md:flex items-center gap-2 text-[10px] font-bold uppercase tracking-tighter bg-gold-500/5 px-4 py-2 rounded-full border border-gold-500/10">
                         <Sparkles className="w-3 h-3 text-gold-500 flex-shrink-0" /> 

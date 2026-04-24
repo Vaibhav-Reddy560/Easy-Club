@@ -129,7 +129,7 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
                         <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">
                             Social Tracker
                         </h2>
-                        <p className="text-white text-sm mt-1 uppercase font-bold tracking-[0.2em]">Universal Organization & Profile Intelligence</p>
+                        <p className="text-white text-sm mt-1 uppercase font-bold tracking-widest">Universal Organization & Profile Intelligence</p>
                     </div>
 
                     {/* Club Switcher */}

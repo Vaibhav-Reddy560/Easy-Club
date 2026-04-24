@@ -18,31 +18,6 @@ body {
   color: var(--foreground);
 }
 
-.font-mono {
-  letter-spacing: 0.12em;
-}
-
-/* Adaptive Legibility: Keeping spacing but removing stroke */
-.text-xs.font-mono,
-.text-[10px].font-mono,
-.text-[11px].font-mono {
-  letter-spacing: 0.15em !important;
-}
-
-/* Sidebar styling: Keeping pure white color but removing stroke */
-aside .font-mono,
-nav .font-mono,
-[role="navigation"] .font-mono {
-  letter-spacing: 0.12em !important;
-  color: #ffffff !important;
-}
-
-/* Reset for other premium fonts */
-.font-airstream, .font-astronomus, .font-dymaxion {
-  text-shadow: none !important;
-  letter-spacing: normal !important;
-}
-
 @layer utilities {
   .text-signature-gradient {
     background: linear-gradient(180deg, #FF8800 0%, #FF9D00 18%, #FFB405 36%, #FFBF44 49%, #F99A00 63%, #AE7102 100%);
@@ -50,8 +25,6 @@ nav .font-mono,
     -webkit-text-fill-color: transparent;
     background-clip: text;
     display: inline;
-    /* This ensures the 'currentColor' thickening shadow is Gold when the gradient is active */
-    color: #FBBF24 !important; 
   }
 
   .animate-pulse-gold {

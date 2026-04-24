@@ -677,7 +677,7 @@ export default function App() {
                       >
                         {activeDomain === d.id && <BorderBeam duration={8} size={300} />}
                         <div className="relative z-10">
-                           <d.icon className={`w-8 h-8 mb-4 transition-colors ${activeDomain === d.id ? 'text-gold-400' : 'text-zinc-100'}`} />
+                          <d.icon className={`w-8 h-8 mb-4 transition-colors ${activeDomain === d.id ? 'text-gold-400' : 'text-zinc-100'}`} />
                           <h3 className="text-2xl font-normal font-astronomus leading-tight text-white/90">{d.id}</h3>
                           <p className={`text-[10px] font-bold uppercase mt-1 tracking-widest ${activeDomain === d.id ? 'text-signature-gradient' : 'text-zinc-100'}`}>{d.desc}</p>
                         </div>
@@ -799,7 +799,7 @@ export default function App() {
                       Syncing...
                     </>
                   ) : (
-                    modalOperation === 'create' ? 'Establish' : 'Update Folder'
+                    modalOperation === 'create' ? 'Confirm Establish' : 'Update Name'
                   )}
                 </button>
               </form>
@@ -811,31 +811,29 @@ export default function App() {
       {/* Delete Confirmation Modal */}
       <AnimatePresence>
         {isDeleteModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/90 backdrop-blur-md">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm">
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="relative w-full max-w-md bg-[#121212] border border-red-500/20 rounded-[2.5rem] p-10 shadow-3xl text-center"
+              className="relative w-full max-w-md bg-[#121212] border border-red-500/20 rounded-[2.5rem] p-10 shadow-2xl"
             >
-              <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Trash2 className="w-8 h-8 text-red-500" />
-              </div>
               <h3 className="text-2xl font-bold text-white mb-2">Delete {modalType === 'club' ? 'Club' : 'Event'}?</h3>
-              <p className="text-zinc-100 text-xs mb-8 leading-relaxed">
-                Are you sure you want to delete <strong className="text-white">{inputValue}</strong>? All associated data and projects inside this folder will be permanently purged.
+              <p className="text-zinc-100 text-xs mb-8">
+                This action is irreversible. You will lose all data in the <strong className="text-white">"{inputValue}"</strong> folder.
               </p>
               <div className="flex gap-4">
                 <button
                   onClick={() => setIsDeleteModalOpen(false)}
-                  className="flex-1 px-6 py-4 rounded-xl border border-white/10 text-[10px] font-bold uppercase tracking-widest hover:bg-white/5 transition-all text-white"
+                  className="flex-1 px-6 py-4 rounded-xl bg-white/5 text-white font-bold uppercase tracking-widest text-[11px] hover:bg-white/10 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={confirmDelete}
-                  className="flex-1 px-6 py-4 rounded-xl bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-red-500 transition-all shadow-lg"
+                  disabled={isSaving}
+                  className="flex-1 px-6 py-4 rounded-xl bg-red-600 text-white font-bold uppercase tracking-widest text-[11px] hover:bg-red-700 transition-colors disabled:opacity-50"
                 >
-                  Confirm Purge
+                  {isSaving ? 'Deleting...' : 'Yes, Delete'}
                 </button>
               </div>
             </motion.div>
@@ -843,25 +841,21 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* Event Status Modal */}
       {lifecycleTargetEvent && (
-        <EventStatusModal
-          isOpen={isStatusModalOpen}
-          onClose={() => setIsStatusModalOpen(false)}
-          onStatusChange={(eventId, status, extra) => {
-            handleStatusChange(eventId, status, extra);
-          }}
+        <EventStatusModal 
+          isOpen={isStatusModalOpen} 
+          onClose={() => setIsStatusModalOpen(false)} 
           event={lifecycleTargetEvent}
+          onStatusChange={handleStatusChange}
         />
       )}
 
-      {/* Event Report Modal */}
-      {lifecycleTargetEvent && lifecycleTargetEvent.config.report && (
+      {lifecycleTargetEvent && (
         <EventReportModal
           isOpen={isReportModalOpen}
           onClose={() => setIsReportModalOpen(false)}
           eventName={lifecycleTargetEvent.name}
-          report={lifecycleTargetEvent.config.report}
+          report={lifecycleTargetEvent.config.report!}
           onSave={handleSaveReport}
         />
       )}

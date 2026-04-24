@@ -13,7 +13,6 @@ const config: Config = {
         dymaxion: ["'Dymaxion'", "var(--font-dymaxion)", "cursive"],
         sometype: ["'SometypeMono'", "var(--font-sometype)", "monospace"],
         astronomus: ["'Astronomus'", "var(--font-astronomus)", "sans-serif"],
-        mono: ["var(--font-sometype)", "monospace"],
       },
       colors: {
         background: "#050505", // macOS Style Deep Black

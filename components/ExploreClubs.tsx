@@ -222,8 +222,8 @@ export default function ExploreClubs() {
                         Saved ({savedClubs.length})
                     </button>
                     <div className="text-right">
-                    <p className="text-[10px] font-black text-signature-gradient uppercase tracking-widest leading-none">Powered by Web Search</p>
-                    <p className="text-[10px] text-white mt-1 font-bold uppercase tracking-[0.2em]">Live search aggregation</p>
+                        <p className="text-[10px] font-black text-signature-gradient uppercase tracking-widest leading-none">Powered by Web Search</p>
+                        <p className="text-[9px] text-white mt-1">Live search aggregation</p>
                     </div>
                 </div>
             </header>

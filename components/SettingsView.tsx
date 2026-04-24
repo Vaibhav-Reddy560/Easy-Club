@@ -133,7 +133,7 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
                 </div>
                 <div>
                   <h4 className="text-xl font-bold text-white tracking-tight">{section.title}</h4>
-                  <p className="text-[10px] text-white font-bold uppercase tracking-[0.2em] mt-0.5">{section.description}</p>
+                  <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-widest mt-0.5">{section.description}</p>
                 </div>
               </div>
 
