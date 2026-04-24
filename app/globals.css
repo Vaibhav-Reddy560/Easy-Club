@@ -20,36 +20,20 @@ body {
 
 .font-mono {
   letter-spacing: 0.12em;
-  /* Balanced baseline thickening */
-  text-shadow: 
-    0.15px 0 0 currentColor, 
-    -0.15px 0 0 currentColor, 
-    0 0.15px 0 currentColor, 
-    0 -0.15px 0 currentColor;
 }
 
-/* Adaptive Legibility: Reduce thickening and increase spacing for small labels */
+/* Adaptive Legibility: Keeping spacing but removing stroke */
 .text-xs.font-mono,
 .text-[10px].font-mono,
 .text-[11px].font-mono {
   letter-spacing: 0.15em !important;
-  text-shadow: 
-    0.08px 0 0 currentColor, 
-    -0.08px 0 0 currentColor, 
-    0 0.08px 0 currentColor, 
-    0 -0.08px 0 currentColor !important;
 }
 
-/* Targeted heavy weight for the sidebar (0.3px) */
+/* Sidebar styling: Keeping pure white color but removing stroke */
 aside .font-mono,
 nav .font-mono,
 [role="navigation"] .font-mono {
   letter-spacing: 0.12em !important;
-  text-shadow: 
-    0.3px 0 0 currentColor, 
-    -0.3px 0 0 currentColor, 
-    0 0.3px 0 currentColor, 
-    0 -0.3px 0 currentColor !important;
   color: #ffffff !important;
 }
 
@@ -72,23 +56,6 @@ nav .font-mono,
 
   .animate-pulse-gold {
     animation: pulse-gold-glow 3s ease-in-out infinite;
-  }
-
-  /* Manual Weight Utilities */
-  .weight-thin {
-    text-shadow: 0.05px 0 0 currentColor, -0.05px 0 0 currentColor, 0 0.05px 0 currentColor, 0 -0.05px 0 currentColor !important;
-  }
-  .weight-light {
-    text-shadow: 0.1px 0 0 currentColor, -0.1px 0 0 currentColor, 0 0.1px 0 currentColor, 0 -0.1px 0 currentColor !important;
-  }
-  .weight-normal {
-    text-shadow: 0.15px 0 0 currentColor, -0.15px 0 0 currentColor, 0 0.15px 0 currentColor, 0 -0.15px 0 currentColor !important;
-  }
-  .weight-bold {
-    text-shadow: 0.3px 0 0 currentColor, -0.3px 0 0 currentColor, 0 0.3px 0 currentColor, 0 -0.3px 0 currentColor !important;
-  }
-  .weight-heavy {
-    text-shadow: 0.4px 0 0 currentColor, -0.4px 0 0 currentColor, 0 0.4px 0 currentColor, 0 -0.4px 0 currentColor !important;
   }
 
   @keyframes pulse-gold-glow {

@@ -32,7 +32,7 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
     const mouseY = useMotionValue(Infinity);
 
     return (
-        <aside 
+        <aside
             onMouseMove={(e) => mouseY.set(e.clientY)}
             onMouseLeave={() => mouseY.set(Infinity)}
             className="hidden md:flex w-80 flex-col pt-16 pl-6 pr-8 border-r border-white/5 space-y-8 sticky top-20 h-[calc(100vh-5rem)]"
@@ -44,13 +44,13 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
 
                     // eslint-disable-next-line react-hooks/rules-of-hooks
                     const ref = useRef<HTMLButtonElement>(null);
-                    
+
                     // eslint-disable-next-line react-hooks/rules-of-hooks
                     const distance = useTransform(mouseY, (val) => {
                         const bounds = ref.current?.getBoundingClientRect() ?? { y: 0, height: 0 };
                         return val - bounds.y - bounds.height / 2;
                     });
-                    
+
                     // eslint-disable-next-line react-hooks/rules-of-hooks
                     const scaleSync = useTransform(distance, [-150, 0, 150], [1, 1.15, 1]);
 
@@ -72,7 +72,7 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
                                 />
                             )}
                             <Icon className={`w-6 h-6 flex-shrink-0 transition-transform duration-300 group-hover:scale-110 ${isActive ? 'text-gold-400' : 'text-white/60'}`} />
-                            <span className={`text-xs font-bold uppercase tracking-[0.15em] weight-bold whitespace-nowrap transition-all duration-300 ${isActive ? 'translate-x-1 text-signature-gradient' : 'text-white'}`}>
+                            <span className={`text-xs font-bold uppercase tracking-[0.15em] whitespace-nowrap transition-all duration-300 ${isActive ? 'translate-x-1 text-signature-gradient' : 'text-white'}`}>
                                 {section.label}
                             </span>
                         </motion.button>
