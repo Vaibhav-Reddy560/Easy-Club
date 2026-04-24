@@ -72,7 +72,7 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
                                 />
                             )}
                             <Icon className={`w-6 h-6 flex-shrink-0 transition-transform duration-300 group-hover:scale-110 ${isActive ? 'text-gold-400' : 'text-white/60'}`} />
-                            <span className={`text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-300 ${isActive ? 'translate-x-1 text-signature-gradient' : 'text-white/80'}`}>
+                            <span className={`text-xs font-bold uppercase tracking-[0.15em] weight-bold whitespace-nowrap transition-all duration-300 ${isActive ? 'translate-x-1 text-signature-gradient' : 'text-white'}`}>
                                 {section.label}
                             </span>
                         </motion.button>
