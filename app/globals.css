@@ -20,43 +20,17 @@ body {
 
 .font-mono {
   letter-spacing: 0.08em;
-  /* Smart thickening that matches the element's actual color */
+  /* Natural thickening that follows the text's color automatically */
   text-shadow: 
     0.2px 0 0 currentColor, 
     -0.2px 0 0 currentColor, 
     0 0.2px 0 currentColor, 
     0 -0.2px 0 currentColor;
-  -webkit-text-stroke: 0;
 }
 
-/* Specific thickening for gradients since they have no 'currentColor' */
-.text-signature-gradient,
-.font-mono.text-signature-gradient {
-  text-shadow: 
-    0.2px 0 0 #FBBF24, 
-    -0.2px 0 0 #FBBF24, 
-    0 0.2px 0 #FBBF24, 
-    0 -0.2px 0 #FBBF24 !important;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Hover thickening for gradients */
-.hover\:text-signature-gradient:hover {
-  text-shadow: 
-    0.2px 0 0 #FBBF24, 
-    -0.2px 0 0 #FBBF24, 
-    0 0.2px 0 #FBBF24, 
-    0 -0.2px 0 #FBBF24 !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-}
-
-/* Prevent stroke leakage to other custom fonts and reset their spacing */
-.font-airstream, 
-.font-astronomus, 
-.font-dymaxion {
-  -webkit-text-stroke: 0 !important;
+/* Reset for other premium fonts */
+.font-airstream, .font-astronomus, .font-dymaxion {
+  text-shadow: none !important;
   letter-spacing: normal !important;
 }
 
@@ -67,6 +41,8 @@ body {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     display: inline;
+    /* This ensures the 'currentColor' thickening shadow is Gold when the gradient is active */
+    color: #FBBF24; 
   }
 
   .animate-pulse-gold {
