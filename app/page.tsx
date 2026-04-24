@@ -844,25 +844,27 @@ export default function App() {
       </AnimatePresence>
 
       {/* Event Status Modal */}
-      <EventStatusModal
-        isOpen={isStatusModalOpen}
-        onClose={() => setIsStatusModalOpen(false)}
-        onStatusChange={(status, extra) => {
-          if (lifecycleTargetId) {
-            handleStatusChange(lifecycleTargetId, status, extra);
-          }
-        }}
-        event={lifecycleTargetEvent}
-      />
+      {lifecycleTargetEvent && (
+        <EventStatusModal
+          isOpen={isStatusModalOpen}
+          onClose={() => setIsStatusModalOpen(false)}
+          onStatusChange={(eventId, status, extra) => {
+            handleStatusChange(eventId, status, extra);
+          }}
+          event={lifecycleTargetEvent}
+        />
+      )}
 
       {/* Event Report Modal */}
-      <EventReportModal
-        isOpen={isReportModalOpen}
-        onClose={() => setIsReportModalOpen(false)}
-        event={lifecycleTargetEvent}
-        club={activeClub}
-        onSave={handleSaveReport}
-      />
+      {lifecycleTargetEvent && lifecycleTargetEvent.config.report && (
+        <EventReportModal
+          isOpen={isReportModalOpen}
+          onClose={() => setIsReportModalOpen(false)}
+          eventName={lifecycleTargetEvent.name}
+          report={lifecycleTargetEvent.config.report}
+          onSave={handleSaveReport}
+        />
+      )}
 
       <MobileNav activeSection={activeNav} onSectionChange={handleNavChange} />
     </div>
