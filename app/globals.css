@@ -19,14 +19,30 @@ body {
 }
 
 .font-mono {
+  letter-spacing: 0.08em;
   -webkit-text-stroke: 0.2px currentColor;
+  /* Ensure mono text is pure white unless it's a gradient */
+  color: #ffffff;
 }
 
-/* Prevent stroke leakage to other custom fonts */
+/* Match stroke to Signature Gradient colors */
+.text-signature-gradient,
+.font-mono.text-signature-gradient {
+  -webkit-text-stroke: 0.2px #FBBF24 !important;
+}
+
+/* Handle hover states where gradients are applied */
+.font-mono:hover,
+[class*="hover:text-signature-gradient"]:hover {
+  -webkit-text-stroke: 0.2px #FBBF24 !important;
+}
+
+/* Prevent stroke leakage to other custom fonts and reset their spacing */
 .font-airstream, 
 .font-astronomus, 
 .font-dymaxion {
   -webkit-text-stroke: 0 !important;
+  letter-spacing: normal !important;
 }
 
 @layer utilities {
