@@ -677,7 +677,7 @@ export default function App() {
                       >
                         {activeDomain === d.id && <BorderBeam duration={8} size={300} />}
                         <div className="relative z-10">
-                          <d.icon className={`w-8 h-8 mb-4 transition-colors ${activeDomain === d.id ? 'text-gold-400' : 'text-zinc-100'}`} />
+                           <d.icon className={`w-8 h-8 mb-4 transition-colors ${activeDomain === d.id ? 'text-gold-400' : 'text-zinc-100'}`} />
                           <h3 className="text-2xl font-normal font-astronomus leading-tight text-white/90">{d.id}</h3>
                           <p className={`text-[10px] font-bold uppercase mt-1 tracking-widest ${activeDomain === d.id ? 'text-signature-gradient' : 'text-zinc-100'}`}>{d.desc}</p>
                         </div>
@@ -799,7 +799,7 @@ export default function App() {
                       Syncing...
                     </>
                   ) : (
-                    <>Establish Folder</>
+                    modalOperation === 'create' ? 'Establish' : 'Update Folder'
                   )}
                 </button>
               </form>
@@ -811,29 +811,31 @@ export default function App() {
       {/* Delete Confirmation Modal */}
       <AnimatePresence>
         {isDeleteModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/90 backdrop-blur-md">
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="relative w-full max-w-lg bg-[#121212] border border-red-500/20 rounded-[2.5rem] p-10 shadow-2xl"
+              className="relative w-full max-w-md bg-[#121212] border border-red-500/20 rounded-[2.5rem] p-10 shadow-3xl text-center"
             >
-              <h3 className="text-2xl font-bold text-white mb-2">Archive {modalType === 'club' ? 'Club' : 'Event'}?</h3>
-              <p className="text-zinc-100 text-xs mb-8">
-                Are you sure you want to delete <span className="text-red-400 font-bold underline">&quot;{inputValue}&quot;</span>? This action is permanent and will wipe all associated data.
+              <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Trash2 className="w-8 h-8 text-red-500" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-2">Delete {modalType === 'club' ? 'Club' : 'Event'}?</h3>
+              <p className="text-zinc-100 text-xs mb-8 leading-relaxed">
+                Are you sure you want to delete <strong className="text-white">{inputValue}</strong>? All associated data and projects inside this folder will be permanently purged.
               </p>
               <div className="flex gap-4">
                 <button
                   onClick={() => setIsDeleteModalOpen(false)}
-                  className="flex-1 py-4 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-white/5 transition-all"
+                  className="flex-1 px-6 py-4 rounded-xl border border-white/10 text-[10px] font-bold uppercase tracking-widest hover:bg-white/5 transition-all text-white"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={confirmDelete}
-                  disabled={isSaving}
-                  className="flex-1 py-4 bg-red-600 text-white rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-red-500 transition-all shadow-xl disabled:opacity-50"
+                  className="flex-1 px-6 py-4 rounded-xl bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-red-500 transition-all shadow-lg"
                 >
-                  {isSaving ? 'Deleting...' : 'Delete Permanently'}
+                  Confirm Purge
                 </button>
               </div>
             </motion.div>
@@ -841,17 +843,24 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <EventStatusModal 
+      {/* Event Status Modal */}
+      <EventStatusModal
         isOpen={isStatusModalOpen}
         onClose={() => setIsStatusModalOpen(false)}
+        onStatusChange={(status, extra) => {
+          if (lifecycleTargetId) {
+            handleStatusChange(lifecycleTargetId, status, extra);
+          }
+        }}
         event={lifecycleTargetEvent}
-        onStatusChange={handleStatusChange}
       />
 
+      {/* Event Report Modal */}
       <EventReportModal
         isOpen={isReportModalOpen}
         onClose={() => setIsReportModalOpen(false)}
         event={lifecycleTargetEvent}
+        club={activeClub}
         onSave={handleSaveReport}
       />
 

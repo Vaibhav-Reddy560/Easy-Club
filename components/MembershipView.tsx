@@ -168,7 +168,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
       <div className="flex flex-col items-center justify-center py-32 text-center">
         <Users className="w-16 h-16 text-white mb-6" />
         <h3 className="text-2xl font-bold text-white mb-2 uppercase tracking-widest">No Clubs Established</h3>
-        <p className="text-white text-sm">Create a club in &quot;My Clubs&quot; before tracking members.</p>
+        <p className="text-white text-sm">Create a club in "My Clubs" before tracking members.</p>
       </div>
     );
   }

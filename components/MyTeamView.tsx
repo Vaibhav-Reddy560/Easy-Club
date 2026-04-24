@@ -414,7 +414,7 @@ export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
                                                     <span className="text-sm font-bold text-white">{event.userName}</span>
                                                     <span className="text-[10px] text-white uppercase tracking-widest">{event.action}</span>
                                                 </div>
-                                                <p className="text-[11px] text-white leading-relaxed font-sans italic">&quot;{event.details}&quot;</p>
+                                                <p className="text-[11px] text-white leading-relaxed font-sans italic">"{event.details}"</p>
                                             </div>
                                             <div className="flex flex-col items-end gap-1">
                                                 <div className="flex items-center gap-1.5 px-2 py-0.5 bg-white/5 border border-white/10 rounded-lg">
