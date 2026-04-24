@@ -20,31 +20,36 @@ body {
 
 .font-mono {
   letter-spacing: 0.08em;
-  /* Unified thickening using shadows instead of outlines */
+  /* Smart thickening that matches the element's actual color */
   text-shadow: 
     0.2px 0 0 currentColor, 
     -0.2px 0 0 currentColor, 
     0 0.2px 0 currentColor, 
     0 -0.2px 0 currentColor;
   -webkit-text-stroke: 0;
-  color: #ffffff;
 }
 
-/* Ensure the thickening matches the Signature Gradient exactly */
+/* Specific thickening for gradients since they have no 'currentColor' */
 .text-signature-gradient,
 .font-mono.text-signature-gradient {
-  color: #FBBF24 !important; /* Base color for shadows */
+  text-shadow: 
+    0.2px 0 0 #FBBF24, 
+    -0.2px 0 0 #FBBF24, 
+    0 0.2px 0 #FBBF24, 
+    0 -0.2px 0 #FBBF24 !important;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  -webkit-text-stroke: 0 !important;
 }
 
-/* Simultaneous hover transition */
+/* Hover thickening for gradients */
 .hover\:text-signature-gradient:hover {
-  color: #FBBF24 !important;
+  text-shadow: 
+    0.2px 0 0 #FBBF24, 
+    -0.2px 0 0 #FBBF24, 
+    0 0.2px 0 #FBBF24, 
+    0 -0.2px 0 #FBBF24 !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
-  -webkit-text-stroke: 0 !important;
 }
 
 /* Prevent stroke leakage to other custom fonts and reset their spacing */
