@@ -112,11 +112,4 @@ body {
     animation: organic-drift 25s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  @keyframes organic-drift {
-    0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.3; }
-    25% { transform: translate(100px, -30px) scale(1.1) rotate(20deg); opacity: 0.6; }
-    50% { transform: translate(30px, 100px) scale(0.95) rotate(40deg); opacity: 0.4; }
-    75% { transform: translate(-80px, 40px) scale(1.05) rotate(60deg); opacity: 0.7; }
-    100% { transform: translate(-30px, -80px) scale(1) rotate(80deg); opacity: 0.3; }
-  }
 }

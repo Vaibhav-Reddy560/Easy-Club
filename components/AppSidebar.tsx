@@ -60,21 +60,43 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
                             style={{ scale: scaleSync }}
                             key={section.id}
                             onClick={() => onSectionChange(section.id)}
-                            className={`w-full flex flex-row flex-nowrap items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 group relative ${isActive
-                                ? 'bg-gold-500/10 border border-gold-500/20 shadow-lg shadow-gold-500/5'
-                                : 'text-white hover:bg-white/5 border border-transparent'
+                            className={`w-full flex flex-row flex-nowrap items-center gap-4 px-5 py-4 rounded-[1.25rem] transition-all duration-500 group relative ${isActive
+                                ? 'bg-white/[0.04] backdrop-blur-2xl border border-white/10 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)]'
+                                : 'text-white hover:bg-white/[0.02] border border-transparent hover:border-white/5'
                                 }`}
                         >
                             {isActive && (
                                 <motion.div
                                     layoutId="active-pill"
-                                    className="absolute left-0 w-1 h-6 bg-gold-500 rounded-full"
+                                    className="absolute left-0 w-1.5 h-6 bg-gradient-to-b from-[#FF8800] to-[#FFB405] rounded-r-full shadow-[0_0_15px_rgba(255,136,0,0.4)]"
+                                    initial={{ opacity: 0, x: -5 }}
+                                    animate={{ opacity: 1, x: 0 }}
                                 />
                             )}
-                            <Icon className={`w-6 h-6 flex-shrink-0 transition-transform duration-300 group-hover:scale-110 ${isActive ? 'text-gold-400' : 'text-white/60'}`} />
-                            <span className={`text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-300 ${isActive ? 'translate-x-1 text-signature-gradient' : 'text-white/80'}`}>
+                            
+                            <div className="relative flex-shrink-0">
+                                {isActive && (
+                                    <motion.div 
+                                        layoutId="icon-glow"
+                                        className="absolute inset-0 bg-gold-500/20 blur-xl rounded-full"
+                                    />
+                                )}
+                                <Icon className={`w-6 h-6 relative z-10 transition-all duration-500 group-hover:scale-110 ${isActive ? 'text-gold-400 drop-shadow-[0_0_8px_rgba(255,180,0,0.5)]' : 'text-white/40'}`} />
+                            </div>
+
+                            <span className={`text-[11px] font-black uppercase tracking-[0.15em] whitespace-nowrap transition-all duration-500 ${isActive ? 'translate-x-1 text-signature-gradient' : 'text-white/60 group-hover:text-white'}`}>
                                 {section.label}
                             </span>
+
+                            {isActive && (
+                                <motion.div 
+                                    className="absolute inset-0 rounded-[1.25rem] border border-white/5 pointer-events-none"
+                                    animate={{ 
+                                        boxShadow: ["inset 0 0 0px rgba(255,180,0,0)", "inset 0 0 10px rgba(255,180,0,0.05)", "inset 0 0 0px rgba(255,180,0,0)"]
+                                    }}
+                                    transition={{ duration: 4, repeat: Infinity }}
+                                />
+                            )}
                         </motion.button>
                     );
                 })}

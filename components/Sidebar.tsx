@@ -61,7 +61,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
               className="w-7 h-7 drop-shadow-[0_0_12px_rgba(255,180,0,0.4)]"
             >
               {/* Thinner Outer Ring */}
-              <circle cx="108" cy="108.8" r="102" stroke="url(#paint0_radial_195_3)" stroke-width="4"/>
+              <circle cx="108" cy="108.8" r="102" stroke="url(#paint0_radial_195_3)" strokeWidth="4"/>
               
               {/* Pulsing Glow Layer */}
               <motion.g 
@@ -76,7 +76,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
                 }}
                 style={{ transformOrigin: "center" }}
               >
-                <circle cx="108.269" cy="108.808" r="78.6434" fill="url(#paint1_radial_195_3)" fill-opacity="0.4"/>
+                <circle cx="108.269" cy="108.808" r="78.6434" fill="url(#paint1_radial_195_3)" fillOpacity="0.4"/>
               </motion.g>
 
               {/* Pulsing Core */}
@@ -92,25 +92,25 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
                 style={{ transformOrigin: "center" }}
               >
                 <circle cx="108.269" cy="108.808" r="58" fill="url(#paint2_radial_195_3)"/>
-                <circle cx="108.269" cy="108.808" r="15" fill="white" fill-opacity="0.3" filter="blur(8px)"/>
+                <circle cx="108.269" cy="108.808" r="15" fill="white" fillOpacity="0.3" filter="blur(8px)"/>
               </motion.g>
 
               <defs>
                 <radialGradient id="paint0_radial_195_3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(108 108.808) rotate(90) scale(108.808 108)">
-                  <stop stop-color="#FFB000"/>
-                  <stop offset="0.370192" stop-color="#FFD700"/>
-                  <stop offset="0.663462" stop-color="#FFE1A6"/>
-                  <stop offset="1" stop-color="#92400E"/>
+                  <stop stopColor="#FFB000"/>
+                  <stop offset="0.370192" stopColor="#FFD700"/>
+                  <stop offset="0.663462" stopColor="#FFE1A6"/>
+                  <stop offset="1" stopColor="#92400E"/>
                 </radialGradient>
                 <radialGradient id="paint1_radial_195_3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(108.269 108.808) rotate(90) scale(78.6434)">
-                  <stop stop-color="#FFC000"/>
-                  <stop offset="0.360577" stop-color="#FFD700"/>
-                  <stop offset="1" stop-color="#78350F"/>
+                  <stop stopColor="#FFC000"/>
+                  <stop offset="0.360577" stopColor="#FFD700"/>
+                  <stop offset="1" stopColor="#78350F"/>
                 </radialGradient>
                 <radialGradient id="paint2_radial_195_3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(108.269 108.808) rotate(90) scale(58)">
-                  <stop stop-color="#FFB000"/>
-                  <stop offset="0.245192" stop-color="#FBBF24"/>
-                  <stop offset="1" stop-color="#451A03"/>
+                  <stop stopColor="#FFB000"/>
+                  <stop offset="0.245192" stopColor="#FBBF24"/>
+                  <stop offset="1" stopColor="#451A03"/>
                 </radialGradient>
               </defs>
             </svg>

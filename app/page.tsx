@@ -506,10 +506,6 @@ export default function App() {
     <div className="min-h-screen bg-dot-matrix text-white antialiased pb-20 md:pb-0 relative overflow-hidden">
       <DynamicIsland isSaving={isSaving} />
 
-      {/* Ambient Aurora Orbs */}
-      <div className="ambient-glow" style={{ top: '10%', left: '20%', animationDelay: '0s' }} />
-      <div className="ambient-glow" style={{ top: '60%', right: '10%', background: 'radial-gradient(circle at center, rgba(217, 119, 6, 0.1) 0%, transparent 60%)', animationDelay: '-10s' }} />
-
       <Sidebar 
         user={{
           id: user?.uid || "",
@@ -642,6 +638,9 @@ export default function App() {
 
               {view === 'domains' && (
                 <motion.div key="domains" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                    <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-4">
+                      MY CLUBS
+                    </h1>
                   <div className="flex justify-between items-center mb-8 gap-4">
                       <button
                         onClick={() => setView('events')}
@@ -770,6 +769,9 @@ export default function App() {
               >
                 <ChevronLeft className="w-6 h-6 rotate-180" />
               </button>
+              <h2 className="text-3xl font-black text-white mb-10 tracking-tighter">
+                CLUB OVERVIEW
+              </h2>
               <h3 className="text-2xl font-bold text-white mb-2">
                 {modalOperation === 'create' ? (modalType === 'club' ? 'Establish Club' : 'Create Event') : `Rename ${modalType === 'club' ? 'Club' : 'Event'}`}
               </h3>
@@ -815,7 +817,7 @@ export default function App() {
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="relative w-full max-w-md bg-[#121212] border border-red-500/20 rounded-[2.5rem] p-10 shadow-2xl"
+              className="relative w-full max-w-md bg-[#121212] border border-red-500/20 rounded-[2.5rem] p-10 shadow-2xl chassis-panel"
             >
               <h3 className="text-2xl font-bold text-white mb-2">Delete {modalType === 'club' ? 'Club' : 'Event'}?</h3>
               <p className="text-zinc-100 text-xs mb-8">
