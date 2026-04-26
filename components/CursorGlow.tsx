@@ -25,10 +25,10 @@ export const CursorGlow = () => {
   // Create multiple "washes" of light that are very subtle and large
   const background = useTransform(
     [x, y],
-    ([latestX, latestY]) => `
+    ([latestX, latestY]: any[]) => `
       radial-gradient(ellipse 100% 80% at ${latestX}% ${latestY}%, rgba(255, 180, 5, 0.1) 0%, transparent 80%),
-      radial-gradient(ellipse 80% 100% at ${100 - latestX}% ${latestY}%, rgba(255, 120, 0, 0.06) 0%, transparent 75%),
-      radial-gradient(ellipse 120% 120% at ${latestX}% ${100 - latestY}%, rgba(255, 160, 5, 0.04) 0%, transparent 90%)
+      radial-gradient(ellipse 80% 100% at ${100 - (latestX as number)}% ${latestY}%, rgba(255, 120, 0, 0.06) 0%, transparent 75%),
+      radial-gradient(ellipse 120% 120% at ${latestX}% ${100 - (latestY as number)}%, rgba(255, 160, 5, 0.04) 0%, transparent 90%)
     `
   );
 
