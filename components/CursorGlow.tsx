@@ -55,7 +55,7 @@ export const CursorGlow = () => {
           height: "120%",
           background,
           filter: "url(#liquid-wash)",
-          opacity: 0.5,
+          opacity: 0.3,
           mixBlendMode: "screen"
         }}
       />
