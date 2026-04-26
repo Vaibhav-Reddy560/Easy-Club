@@ -25,11 +25,10 @@ export const CursorGlow = () => {
   // Create multiple "washes" of light that are very subtle and large
   const background = useTransform(
     [x, y],
-    ([latestX, latestY]: any[]) => `
-      radial-gradient(ellipse 100% 100% at ${latestX}% ${latestY}%, rgba(255, 180, 5, 0.08) 0%, transparent 80%),
-      radial-gradient(ellipse 80% 80% at ${100 - (latestX as number)}% ${latestY}%, rgba(255, 120, 0, 0.04) 0%, transparent 75%),
-      radial-gradient(ellipse 120% 120% at ${latestX}% ${100 - (latestY as number)}%, rgba(255, 160, 5, 0.02) 0%, transparent 90%),
-      radial-gradient(circle at 50% 50%, rgba(255, 180, 5, 0.01) 0%, transparent 100%)
+    ([latestX, latestY]) => `
+      radial-gradient(ellipse 100% 80% at ${latestX}% ${latestY}%, rgba(255, 180, 5, 0.1) 0%, transparent 80%),
+      radial-gradient(ellipse 80% 100% at ${100 - latestX}% ${latestY}%, rgba(255, 120, 0, 0.06) 0%, transparent 75%),
+      radial-gradient(ellipse 120% 120% at ${latestX}% ${100 - latestY}%, rgba(255, 160, 5, 0.04) 0%, transparent 90%)
     `
   );
 
@@ -50,13 +49,13 @@ export const CursorGlow = () => {
       <motion.div
         className="fixed pointer-events-none z-[2]"
         style={{
-          top: "-20%",
-          left: "-20%",
-          width: "140%",
-          height: "140%",
+          top: "-10%",
+          left: "-10%",
+          width: "120%",
+          height: "120%",
           background,
           filter: "url(#liquid-wash)",
-          opacity: 0.25,
+          opacity: 0.5,
           mixBlendMode: "screen"
         }}
       />
