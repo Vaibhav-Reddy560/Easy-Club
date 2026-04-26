@@ -761,7 +761,7 @@ export default function App() {
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="relative w-full max-w-lg bg-[#121212] border border-gold-500/20 rounded-[2.5rem] p-10 shadow-2xl"
+              className="relative w-full max-w-lg bg-[#121212] border border-gold-500/20 rounded-[2.5rem] p-10 shadow-2xl chassis-panel"
             >
               <button
                 onClick={() => setIsModalOpen(false)}
@@ -801,7 +801,7 @@ export default function App() {
                       <span>Processing...</span>
                     </>
                   ) : (
-                    <span>Confirm Production</span>
+                    modalOperation === 'create' ? 'Confirm Establish' : 'Update Name'
                   )}
                 </button>
               </form>
@@ -817,26 +817,25 @@ export default function App() {
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="relative w-full max-w-md bg-[#121212] border border-red-500/20 rounded-[2rem] p-8 shadow-2xl"
+              className="relative w-full max-w-md bg-[#121212] border border-red-500/20 rounded-[2.5rem] p-10 shadow-2xl chassis-panel"
             >
-              <h3 className="text-xl font-bold text-white mb-4">Confirm Deletion</h3>
-              <p className="text-zinc-400 text-sm mb-8 leading-relaxed">
-                Are you sure you want to terminate <span className="text-white font-bold">"{inputValue}"</span>? 
-                All associated blueprints and production data will be permanently purged.
+              <h3 className="text-2xl font-bold text-white mb-2">Delete {modalType === 'club' ? 'Club' : 'Event'}?</h3>
+              <p className="text-zinc-100 text-xs mb-8">
+                This action is irreversible. You will lose all data in the <strong className="text-white">"{inputValue}"</strong> folder.
               </p>
               <div className="flex gap-4">
                 <button
                   onClick={() => setIsDeleteModalOpen(false)}
-                  className="flex-1 px-6 py-3 rounded-xl bg-white/5 text-white font-bold text-xs uppercase tracking-widest hover:bg-white/10 transition-all"
+                  className="flex-1 px-6 py-4 rounded-xl bg-white/5 text-white font-bold uppercase tracking-widest text-[11px] hover:bg-white/10 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={confirmDelete}
                   disabled={isSaving}
-                  className="flex-1 px-6 py-3 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 font-bold text-xs uppercase tracking-widest hover:bg-red-500/30 transition-all disabled:opacity-50"
+                  className="flex-1 px-6 py-4 rounded-xl bg-red-600 text-white font-bold uppercase tracking-widest text-[11px] hover:bg-red-700 transition-colors disabled:opacity-50"
                 >
-                  {isSaving ? "Purging..." : "Purge Folder"}
+                  {isSaving ? 'Deleting...' : 'Yes, Delete'}
                 </button>
               </div>
             </motion.div>
@@ -844,20 +843,24 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* Lifecycle Modals */}
-      <EventStatusModal
-        isOpen={isStatusModalOpen}
-        onClose={() => setIsStatusModalOpen(false)}
-        event={lifecycleTargetEvent}
-        onStatusChange={(status, extra) => handleStatusChange(lifecycleTargetId!, status, extra)}
-      />
+      {lifecycleTargetEvent && (
+        <EventStatusModal
+          isOpen={isStatusModalOpen}
+          onClose={() => setIsStatusModalOpen(false)}
+          event={lifecycleTargetEvent}
+          onStatusChange={handleStatusChange}
+        />
+      )}
       
-      <EventReportModal
-        isOpen={isReportModalOpen}
-        onClose={() => setIsReportModalOpen(false)}
-        event={lifecycleTargetEvent}
-        onSave={handleSaveReport}
-      />
+      {lifecycleTargetEvent && lifecycleTargetEvent.config.report && (
+        <EventReportModal
+          isOpen={isReportModalOpen}
+          onClose={() => setIsReportModalOpen(false)}
+          eventName={lifecycleTargetEvent.name}
+          report={lifecycleTargetEvent.config.report}
+          onSave={handleSaveReport}
+        />
+      )}
 
       <MobileNav activeSection={activeNav} onSectionChange={handleNavChange} />
     </div>
