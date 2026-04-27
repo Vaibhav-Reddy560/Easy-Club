@@ -44,4 +44,4 @@ next-env.d.ts
 
 # internal
 .gemini/
-.agents
+.agents/
