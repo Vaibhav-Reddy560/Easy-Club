@@ -11,8 +11,9 @@ const config: Config = {
       fontFamily: {
         airstream: ["'Airstream'", "var(--font-airstream)", "serif"],
         dymaxion: ["'Dymaxion'", "var(--font-dymaxion)", "cursive"],
-        sometype: ["'SometypeMono'", "var(--font-sometype)", "monospace"],
+        destrubia: ["'Destrubia'", "var(--font-destrubia)", "sans-serif"],
         astronomus: ["'Astronomus'", "var(--font-astronomus)", "sans-serif"],
+        mono: ["var(--font-destrubia)", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"],
       },
       colors: {
         background: "#050505", // macOS Style Deep Black

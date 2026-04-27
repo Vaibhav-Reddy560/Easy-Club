@@ -1,4 +1,4 @@
-import { localAirstream, localAstronomus, localDymaxion, localSometypeMono } from "@/lib/fonts";
+import { localAirstream, localAstronomus, localDymaxion, localDestrubia } from "@/lib/fonts";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TaskProvider } from "@/lib/TaskContext";
@@ -8,17 +8,15 @@ export const metadata = {
   description: "BMSCE IEEE CS Management Hub",
 };
 
-import { CursorGlow } from "@/components/CursorGlow";
-
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" suppressHydrationWarning className={localSometypeMono.variable}>
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${localAirstream.variable} ${localAstronomus.variable} ${localDymaxion.variable} ${localSometypeMono.variable} antialiased selection:bg-gold-500/30 overflow-x-hidden`}
+        className={`${localAirstream.variable} ${localAstronomus.variable} ${localDymaxion.variable} ${localDestrubia.variable} font-destrubia antialiased`}
       >
         <ThemeProvider
           attribute="class"
@@ -26,7 +24,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <CursorGlow />
           <TaskProvider>
             {children}
           </TaskProvider>

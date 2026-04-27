@@ -18,8 +18,8 @@ export const localDymaxion = localFont({
   display: 'swap',
 });
 
-export const localSometypeMono = localFont({
-  src: '../app/fonts/sometype-mono.ttf',
-  variable: '--font-sometype-mono',
+export const localDestrubia = localFont({
+  src: '../app/fonts/Destrubia-Regular.ttf',
+  variable: '--font-destrubia',
   display: 'swap',
 });

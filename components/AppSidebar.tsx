@@ -61,14 +61,14 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
                             key={section.id}
                             onClick={() => onSectionChange(section.id)}
                             className={`w-full flex flex-row flex-nowrap items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 group relative ${isActive
-                                ? 'bg-gold-500/10 border border-gold-500/20'
+                                ? 'bg-gold-500/10 border border-gold-500/20 shadow-lg shadow-gold-500/5'
                                 : 'text-white hover:bg-white/5 border border-transparent'
                                 }`}
                         >
                             {isActive && (
                                 <motion.div
                                     layoutId="active-pill"
-                                    className="absolute left-0 w-1 h-6 bg-gold-500 rounded-full"
+                                    className="absolute left-2 w-1.5 h-6 bg-gold-500 rounded-full"
                                 />
                             )}
                             <Icon className={`w-6 h-6 flex-shrink-0 transition-transform duration-300 group-hover:scale-110 ${isActive ? 'text-gold-400' : 'text-white/60'}`} />
