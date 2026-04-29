@@ -12,7 +12,7 @@ interface LoginViewProps {
 
 export default function LoginView({ onSignIn }: LoginViewProps) {
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-6 relative overflow-hidden bg-dot-matrix">
+    <div className="min-h-screen bg-transparent flex items-center justify-center p-6 relative overflow-hidden">
       {/* Ambient Background Effects */}
       <div className="absolute top-1/4 -left-20 ambient-glow opacity-40" />
       <div className="absolute bottom-1/4 -right-20 ambient-glow opacity-30" style={{ animationDelay: "-10s" }} />

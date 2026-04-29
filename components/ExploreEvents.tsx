@@ -120,7 +120,7 @@ export default function ExploreEvents() {
             </header>
 
             {/* FILTERS */}
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 bg-zinc-900/40 p-8 rounded-[2.5rem] border border-white/5 shadow-2xl relative overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 glass-panel p-8 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gold-500/5 blur-3xl rounded-full -mr-16 -mt-16" />
                 <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-widest text-white ml-2">Category</label>
@@ -219,7 +219,7 @@ export default function ExploreEvents() {
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.9 }}
-                            className="bg-zinc-900/30 border border-white/5 rounded-[3rem] overflow-hidden group hover:border-gold-500/30 transition-all shadow-2xl flex flex-col relative"
+                            className="glass-card overflow-hidden group hover:border-gold-500/30 transition-all flex flex-col relative"
                         >
                             <div className="absolute top-6 right-6 z-10">
                                 <div className="bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-[9px] font-black text-signature-gradient uppercase tracking-widest">

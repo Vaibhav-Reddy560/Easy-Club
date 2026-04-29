@@ -122,9 +122,9 @@ const GoldFolder = ({
           onClick={isCancelled ? undefined : onClick}
           className={`relative w-20 h-16 ${isCancelled ? 'cursor-default' : 'cursor-pointer'} transform transition-transform group-hover:scale-105`}
         >
-          <div className={`absolute -top-1 left-1 w-10 h-4 ${isCancelled ? 'bg-zinc-700' : 'bg-gold-600'} rounded-t-lg -z-10 transition-colors`} />
-          <div className={`absolute inset-0 ${isCancelled ? 'bg-zinc-700' : 'bg-gold-600'} rounded-lg border ${isCancelled ? 'border-zinc-600' : 'border-gold-500/20'} transition-colors`} />
-          <div className={`absolute inset-0 top-2.5 ${isCancelled ? 'bg-gradient-to-b from-zinc-600 to-zinc-700' : 'bg-mac-folder'} rounded-md border-t ${isCancelled ? 'border-zinc-500/40' : 'border-gold-100/40'} flex items-center justify-center overflow-hidden`}>
+          <div className={`absolute -top-1 left-1 w-10 h-4 ${isCancelled ? 'bg-zinc-700' : 'bg-gold-600'} rounded-t-lg -z-10 shadow-sm transition-colors`} />
+          <div className={`absolute inset-0 ${isCancelled ? 'bg-zinc-700' : 'bg-gold-600'} rounded-lg shadow-lg border ${isCancelled ? 'border-zinc-600' : 'border-gold-500/20'} transition-colors`} />
+          <div className={`absolute inset-0 top-2.5 ${isCancelled ? 'bg-gradient-to-b from-zinc-600 to-zinc-700' : 'bg-mac-folder'} rounded-md shadow-2xl border-t ${isCancelled ? 'border-zinc-500/40' : 'border-gold-100/40'} flex items-center justify-center overflow-hidden`}>
             <FolderClosed className={`w-7 h-7 ${isCancelled ? 'text-zinc-300/40' : 'text-gold-100/40'}`} />
           </div>
         </div>
@@ -221,7 +221,7 @@ const GoldFolder = ({
 export default function ClubGrid({ items, onItemClick, onRename, onDelete, onAddClick, onStatusChange, onViewReport, onRevive, title, subtitle, addLabel, isEventGrid }: ClubGridProps) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <header className="mb-14 flex justify-between items-end border-b border-white/5 pb-8">
+      <header className="mb-14 flex justify-between items-end border-b border-white/15 pb-8">
         <div>
           <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">{title}</h2>
           <p className="text-zinc-300 text-sm mt-1 font-medium tracking-[0.2em] uppercase">{subtitle}</p>

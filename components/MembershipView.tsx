@@ -199,8 +199,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
       </div>
 
       {/* Membership Configuration */}
-      <div className="glass-card rounded-[2.5rem] p-10 space-y-8 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gold-500/5 blur-[100px] pointer-events-none" />
+      <div className="bg-zinc-900/60 border border-white/5 rounded-[2.5rem] p-10 space-y-8">
         <div>
           <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2"><Settings className="w-5 h-5 text-gold-500" /> Membership Configuration</h3>
           <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-widest">Set rules for onboarding new members</p>
@@ -468,7 +467,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
       {/* Content */}
       <div className="min-h-[500px]">
         {activeTab === 'recruitment-pool' && (
-          <div className="glass-card rounded-[2.5rem] overflow-hidden">
+          <div className="bg-zinc-900/40 border border-white/5 rounded-[2rem] overflow-hidden">
             <table className="w-full text-left text-sm">
               <thead className="bg-black/40 text-[10px] font-black uppercase tracking-widest text-signature-gradient border-b border-white/5">
                 <tr>
@@ -539,7 +538,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
 
         {activeTab === 'new-recruit' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <form onSubmit={handleRecruitMember} className="glass-card rounded-[2.5rem] p-10 space-y-8">
+            <form onSubmit={handleRecruitMember} className="bg-zinc-900/60 border border-white/5 rounded-[2.5rem] p-10 space-y-8">
               <div>
                 <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2"><UserPlus className="w-5 h-5 text-gold-500" /> Admit New Member</h3>
                 <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-widest">Verify and onboard candidates</p>

@@ -24,7 +24,7 @@ export default function Questionnaire({ activeEvent, activeEventId, updateConfig
         <ChevronLeft className="w-4 h-4 text-gold-500" /> <span className="text-signature-gradient">Back to Events</span>
       </button>
 
-      <div className="w-full max-w-5xl bg-zinc-900/40 border border-white/5 rounded-[3rem] p-8 md:p-12 shadow-2xl space-y-12">
+      <div className="w-full max-w-5xl glass-panel rounded-[3rem] p-8 md:p-12 space-y-12">
         <header className="border-b border-white/5 pb-8 flex justify-between items-end">
           <div>
             <h2 className="text-3xl font-astronomus text-signature-gradient tracking-tight">Event Name: {activeEvent?.name}</h2>
@@ -138,7 +138,7 @@ export default function Questionnaire({ activeEvent, activeEventId, updateConfig
           </div>
 
           {/* SECTION 3: CONTACTS */}
-          <div className="col-span-full bg-black/40 p-8 rounded-[2.5rem] border border-white/5 space-y-6">
+          <div className="col-span-full glass-card p-8 rounded-[2.5rem] space-y-6">
             <div className="flex items-center gap-2 text-white font-bold uppercase tracking-widest text-[10px]">
               <Users className="w-4 h-4 text-gold-500" /> Points of Contact (2 People)
             </div>
@@ -155,7 +155,7 @@ export default function Questionnaire({ activeEvent, activeEventId, updateConfig
           </div>
 
           {/* SECTION 4: CONTEXT & LINKS */}
-          <div className="col-span-full bg-black/40 p-8 rounded-[2.5rem] border border-white/5 space-y-6">
+          <div className="col-span-full glass-card p-8 rounded-[2.5rem] space-y-6">
             <div className="flex items-center gap-2 text-white font-bold uppercase tracking-widest text-[10px]">
               <LinkIcon className="w-4 h-4 text-gold-500" /> D. Context & Online Presence
             </div>

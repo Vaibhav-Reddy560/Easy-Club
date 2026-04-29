@@ -8,6 +8,9 @@ export const metadata = {
   description: "BMSCE IEEE CS Management Hub",
 };
 
+import { CursorGlow } from "@/components/CursorGlow";
+import { PremiumBackground } from "@/components/ui/PremiumBackground";
+
 export default function RootLayout({
   children,
 }: {
@@ -16,14 +19,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${localAirstream.variable} ${localAstronomus.variable} ${localDymaxion.variable} ${localDestrubia.variable} font-destrubia antialiased`}
+        className={`${localAirstream.variable} ${localAstronomus.variable} ${localDymaxion.variable} ${localDestrubia.variable} font-destrubia antialiased selection:bg-gold-500/30 overflow-x-hidden`}
       >
+        <PremiumBackground />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
+          <CursorGlow />
           <TaskProvider>
             {children}
           </TaskProvider>

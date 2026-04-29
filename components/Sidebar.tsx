@@ -32,7 +32,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
   return (
     <>
       <DynamicIsland />
-      <nav className="h-20 border-b border-white/10 flex items-center justify-between px-4 md:px-8 bg-black/40 backdrop-blur-3xl sticky top-0 z-50 shadow-2xl">
+      <nav className="h-20 glass-panel !border-t-0 !border-x-0 !rounded-none flex items-center justify-between px-4 md:px-8 sticky top-0 z-50 shadow-2xl">
         <div className="flex items-center gap-1 md:gap-2 transition-all">
           <motion.div 
             className="relative w-9 h-9 flex items-center justify-center"
@@ -120,7 +120,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
         <div className="flex gap-3 md:gap-6 items-center">
           <button
             onClick={onAboutClick}
-            className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-gold-500/50 hover:bg-gold-500/5 transition-all group"
+            className="hidden sm:flex items-center gap-2 px-4 py-2 glass-input !p-2 !rounded-xl !border-white/10 hover:border-gold-500/50 hover:bg-gold-500/5 transition-all group"
           >
             <Info className="w-4 h-4 text-white group-hover:text-gold-400 transition-colors" />
             <span className="text-[10px] font-bold uppercase tracking-widest text-white group-hover:text-signature-gradient transition-colors">About the App</span>
@@ -154,7 +154,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
             </button>
 
             {isProfileOpen && (
-              <div className="absolute right-0 mt-3 w-72 bg-zinc-900/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] animate-in fade-in slide-in-from-top-2 duration-300 z-[60]">
+              <div className="absolute right-0 mt-3 w-72 glass-panel p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] animate-in fade-in slide-in-from-top-2 duration-300 z-[60]">
                 <div className="flex items-center gap-4 mb-5 pb-5 border-b border-white/5">
                   <div className="w-12 h-12 rounded-full bg-gold-500/10 flex items-center justify-center text-signature-gradient font-black overflow-hidden border border-gold-500/20 shadow-inner">
                     {user?.user_metadata?.avatar_url ? (

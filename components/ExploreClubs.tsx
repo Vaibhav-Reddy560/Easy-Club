@@ -230,7 +230,7 @@ export default function ExploreClubs() {
 
             {/* FILTERS */}
             {!showSaved && (
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 bg-zinc-900/40 p-8 rounded-[2.5rem] border border-white/5 shadow-2xl relative overflow-hidden">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 glass-panel p-8 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-gold-500/5 blur-3xl rounded-full -mr-16 -mt-16" />
 
                     <div className="space-y-2">
@@ -306,7 +306,7 @@ export default function ExploreClubs() {
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="flex flex-col items-center gap-4 p-8 bg-zinc-900 border border-white/5 rounded-[2.5rem] shadow-2xl"
+                        className="flex flex-col items-center gap-4 p-8 glass-panel"
                     >
                         <div className="flex items-center gap-3">
                             <Sparkles className="w-5 h-5 text-gold-500 opacity-40" />
@@ -363,7 +363,7 @@ export default function ExploreClubs() {
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
-                                className="bg-zinc-900/30 border border-white/5 rounded-[2.5rem] overflow-hidden group hover:border-gold-500/30 transition-all shadow-xl flex flex-col"
+                                className="glass-card overflow-hidden group hover:border-gold-500/30 transition-all flex flex-col"
                             >
                                 <div className="h-48 relative overflow-hidden bg-zinc-800">
                                     <div className="absolute top-4 left-4 z-10 flex gap-2">

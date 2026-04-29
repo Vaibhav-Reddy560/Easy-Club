@@ -8,6 +8,7 @@ import SponsorshipManager from "@/components/SponsorshipManager";
 import {
   Trash2,
   ChevronLeft,
+  ChevronRight,
   Palette,
   FileText,
   Share2,
@@ -491,7 +492,7 @@ export default function App() {
 
   if (authLoading || loading) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-8">
+      <div className="min-h-screen bg-transparent flex flex-col items-center justify-center space-y-8">
         <PremiumLoader size="lg" />
         <p className="text-signature-gradient font-bold uppercase tracking-[0.3em] text-[10px] animate-pulse">Syncing Hub...</p>
       </div>
@@ -503,8 +504,10 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-dot-matrix text-white antialiased pb-20 md:pb-0 relative overflow-hidden">
+    <div className="min-h-screen bg-transparent text-white antialiased pb-20 md:pb-0 relative overflow-hidden">
       <DynamicIsland isSaving={isSaving} />
+
+
 
       <Sidebar 
         user={{
@@ -557,7 +560,7 @@ export default function App() {
                     setInputValue("");
                     setIsModalOpen(true);
                   }}
-                  title="My Clubs"
+                  title="CLUB OVERVIEW"
                   subtitle="Select your organization folder"
                   addLabel="Establish"
                 />
@@ -615,7 +618,7 @@ export default function App() {
                       handleStatusChange(id, 'upcoming');
                     }}
                     isEventGrid={true}
-                    title={activeClub?.name || "Organization"}
+                    title="EVENT OVERVIEW"
                     subtitle="Event Projects / Production Folders"
                     addLabel="Add Event"
                   />
@@ -638,9 +641,6 @@ export default function App() {
 
               {view === 'domains' && (
                 <motion.div key="domains" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                    <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-4">
-                      MY CLUBS
-                    </h1>
                   <div className="flex justify-between items-center mb-8 gap-4">
                       <button
                         onClick={() => setView('events')}
@@ -651,13 +651,13 @@ export default function App() {
                       </button>
                     <button
                       onClick={() => setView('questionnaire')}
-                      className="flex items-center gap-2 px-6 py-2 bg-neutral-900 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest hover:border-gold-500/50 hover:text-gold-400 transition-all shadow-xl whitespace-nowrap"
+                      className="flex items-center gap-2 px-6 py-2 bg-neutral-900 border border-white/20 rounded-full text-[10px] font-bold uppercase tracking-widest hover:border-gold-500/50 hover:text-gold-400 transition-all shadow-xl whitespace-nowrap"
                     >
                       <Pencil className="w-3 h-3" /> Edit Config
                     </button>
                   </div>
 
-                  <div className="mb-12 border-b border-white/5 pb-8">
+                  <div className="mb-12 border-b border-white/15 pb-8">
                     <h2 className="text-3xl md:text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter leading-tight break-words">
                       {activeEvent?.name} <span className="text-white font-normal ml-3 font-astronomus">/ Workspace</span>
                     </h2>
@@ -757,7 +757,7 @@ export default function App() {
       {/* Modal for Creating/Renaming Clubs/Events */}
       <AnimatePresence>
         {isModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/40 backdrop-blur-[120px]">
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -767,11 +767,8 @@ export default function App() {
                 onClick={() => setIsModalOpen(false)}
                 className="absolute top-8 right-8 text-white hover:text-gold-400 transition-colors"
               >
-                <ChevronLeft className="w-6 h-6 rotate-180" />
+                <ChevronRight className="w-6 h-6" />
               </button>
-              <h2 className="text-3xl font-black text-white mb-10 tracking-tighter">
-                CLUB OVERVIEW
-              </h2>
               <h3 className="text-2xl font-bold text-white mb-2">
                 {modalOperation === 'create' ? (modalType === 'club' ? 'Establish Club' : 'Create Event') : `Rename ${modalType === 'club' ? 'Club' : 'Event'}`}
               </h3>
@@ -801,7 +798,7 @@ export default function App() {
                       <span>Processing...</span>
                     </>
                   ) : (
-                    modalOperation === 'create' ? 'Confirm Establish' : 'Update Name'
+                    modalOperation === 'create' ? (modalType === 'club' ? 'Establish Club' : 'Create Event') : (modalType === 'club' ? 'Rename Club' : 'Rename Event')
                   )}
                 </button>
               </form>
@@ -817,7 +814,7 @@ export default function App() {
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="relative w-full max-w-md bg-[#121212] border border-red-500/20 rounded-[2.5rem] p-10 shadow-2xl chassis-panel"
+              className="relative w-full max-w-md bg-[#121212] border border-red-500/20 rounded-[2.5rem] p-10 shadow-2xl"
             >
               <h3 className="text-2xl font-bold text-white mb-2">Delete {modalType === 'club' ? 'Club' : 'Event'}?</h3>
               <p className="text-zinc-100 text-xs mb-8">
