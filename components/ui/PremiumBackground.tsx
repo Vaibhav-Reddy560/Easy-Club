@@ -309,7 +309,6 @@ export const PremiumBackground: React.FC = () => {
 
     return () => {
       window.removeEventListener("resize", resize);
-      window.removeEventListener("pointerdown", handlePointerDown);
       cancelAnimationFrame(animationFrameId);
       gl.deleteProgram(program);
       gl.deleteShader(vs);
