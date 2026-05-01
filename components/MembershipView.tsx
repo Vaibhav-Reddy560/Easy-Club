@@ -179,8 +179,8 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
           <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter py-2">Membership X Recruitment</h2>
-          <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-[0.2em] mt-2">
-            Selective Onboarding and Core Team Management
+          <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-[0.2em] mt-1">
+            Selective onboarding & pipeline management
           </p>
         </div>
 
@@ -188,7 +188,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
           <select
             value={selectedClubId || ""}
             onChange={(e) => setSelectedClubId(e.target.value)}
-            className="w-full appearance-none bg-zinc-900 border border-white/10 rounded-2xl py-4 pl-6 pr-12 text-sm font-bold text-white uppercase tracking-widest outline-none hover:border-gold-500/50 transition-colors focus:border-gold-500"
+            className="w-full appearance-none bg-zinc-900 border border-white/15 rounded-2xl py-4 pl-6 pr-12 text-sm font-bold text-white uppercase tracking-widest outline-none hover:border-gold-500/50 transition-colors focus:border-gold-500"
           >
             {clubs.map((club) => (
               <option key={club.id} value={club.id}>{club.name}</option>
@@ -199,7 +199,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
       </div>
 
       {/* Membership Configuration */}
-      <div className="bg-zinc-900/60 border border-white/5 rounded-[2.5rem] p-10 space-y-8">
+      <div className="bg-[#050505] border border-white/15 rounded-[2.5rem] p-10 space-y-8">
         <div>
           <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2"><Settings className="w-5 h-5 text-gold-500" /> Membership Configuration</h3>
           <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-widest">Set rules for onboarding new members</p>
@@ -209,14 +209,14 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
           <button
             type="button"
             onClick={() => setConfigMode('fee-based')}
-            className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${configMode === 'fee-based' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black/40 border-white/10 text-white hover:border-white/30'}`}
+            className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${configMode === 'fee-based' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black shadow-inner border-white/15 text-white hover:border-white/30'}`}
           >
             Fee Based
           </button>
           <button
             type="button"
             onClick={() => setConfigMode('test-based')}
-            className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${configMode === 'test-based' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black/40 border-white/10 text-white hover:border-white/30'}`}
+            className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${configMode === 'test-based' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black shadow-inner border-white/15 text-white hover:border-white/30'}`}
           >
             Test Based
           </button>
@@ -230,7 +230,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                 type="number"
                 value={feeAmount}
                 onChange={e => setFeeAmount(parseInt(e.target.value) || 0)}
-                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
+                className="w-full bg-black shadow-inner border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
                 placeholder="e.g. 500"
               />
             </div>
@@ -243,7 +243,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                     type="number"
                     value={passPercentage}
                     onChange={e => setPassPercentage(parseInt(e.target.value) || 0)}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
+                    className="w-full bg-black shadow-inner border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
                     placeholder="e.g. 60"
                   />
                 </div>
@@ -253,7 +253,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                     type="number"
                     value={timeLimitMinutes}
                     onChange={e => setTimeLimitMinutes(parseInt(e.target.value) || 0)}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
+                    className="w-full bg-black shadow-inner border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
                     placeholder="e.g. 20"
                   />
                 </div>
@@ -263,7 +263,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
               <div className="space-y-4">
                 <h4 className="text-[11px] font-black uppercase tracking-widest text-white">Questions ({questions.length})</h4>
                 {questions.map((q, idx) => (
-                  <div key={q.id} className="bg-black/40 border border-white/10 rounded-xl p-4 relative group">
+                  <div key={q.id} className="bg-black shadow-inner border border-white/15 rounded-xl p-4 relative group">
                     <button onClick={() => handleRemoveQuestion(q.id)} className="absolute top-4 right-4 text-white/40 hover:text-red-500 transition-colors">
                       <X className="w-4 h-4" />
                     </button>
@@ -302,7 +302,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                   <textarea
                     value={newQuestionText}
                     onChange={e => setNewQuestionText(e.target.value)}
-                    className="w-full h-20 bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors resize-none"
+                    className="w-full h-20 bg-black shadow-inner border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors resize-none"
                     placeholder="Enter question text..."
                   />
                 </div>
@@ -317,7 +317,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                         setNewQuestionCorrectAnswer('');
                         setNewQuestionCorrectAnswers([]);
                       }}
-                      className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none"
+                      className="w-full bg-black shadow-inner border border-white/15 rounded-xl px-4 py-3 text-sm text-white outline-none"
                     >
                       <option value="mcq">Single Choice (MCQ)</option>
                       <option value="multi">Multiple Select</option>
@@ -330,7 +330,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                       type="number"
                       value={newQuestionMarks}
                       onChange={e => setNewQuestionMarks(parseInt(e.target.value) || 1)}
-                      className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none"
+                      className="w-full bg-black shadow-inner border border-white/15 rounded-xl px-4 py-3 text-sm text-white outline-none"
                     />
                   </div>
                 </div>
@@ -375,7 +375,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                               setNewQuestionCorrectAnswers(newQuestionCorrectAnswers.map(a => a === oldVal ? e.target.value : a));
                             }
                           }}
-                          className="flex-1 bg-black/40 border border-white/10 rounded-lg px-4 py-2 text-sm text-white outline-none"
+                          className="flex-1 bg-black shadow-inner border border-white/15 rounded-lg px-4 py-2 text-sm text-white outline-none"
                           placeholder={`Option ${idx + 1}`}
                         />
                         <button 
@@ -400,7 +400,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                       type="text"
                       value={newQuestionCorrectAnswer}
                       onChange={e => setNewQuestionCorrectAnswer(e.target.value)}
-                      className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none"
+                      className="w-full bg-black shadow-inner border border-white/15 rounded-xl px-4 py-3 text-sm text-white outline-none"
                       placeholder="Enter the correct short answer..."
                     />
                   </div>
@@ -422,7 +422,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
         <div className="flex justify-between items-center pt-2">
           {configMode === 'test-based' && selectedClubId ? (
             <div className="flex items-center gap-4">
-              <span className="text-[10px] text-zinc-400 font-mono tracking-wider border border-white/10 bg-black/40 px-3 py-2 rounded-lg select-all">
+              <span className="text-[10px] text-zinc-400 font-mono tracking-wider border border-white/15 bg-black shadow-inner px-3 py-2 rounded-lg select-all">
                 {typeof window !== 'undefined' ? `${window.location.origin}/club/${selectedClubId}/test` : `/club/${selectedClubId}/test`}
               </span>
               <button 
@@ -449,7 +449,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
       {/* Stats Section Removed as per User Request */}
 
       {/* Tabs */}
-      <div className="flex gap-4 border-b border-white/10">
+      <div className="flex gap-4 border-b border-white/15">
         <button
           onClick={() => setActiveTab('recruitment-pool')}
           className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'recruitment-pool' ? 'text-signature-gradient border-gold-500' : 'text-white border-transparent hover:text-white'}`}
@@ -467,9 +467,9 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
       {/* Content */}
       <div className="min-h-[500px]">
         {activeTab === 'recruitment-pool' && (
-          <div className="bg-zinc-900/40 border border-white/5 rounded-[2rem] overflow-hidden">
+          <div className="bg-[#050505] border border-white/15 rounded-[2rem] overflow-hidden">
             <table className="w-full text-left text-sm">
-              <thead className="bg-black/40 text-[10px] font-black uppercase tracking-widest text-signature-gradient border-b border-white/5">
+              <thead className="bg-black shadow-inner text-[10px] font-black uppercase tracking-widest text-signature-gradient border-b border-white/5">
                 <tr>
                   <th className="px-8 py-5">Member</th>
                   <th className="px-8 py-5">Role</th>
@@ -495,7 +495,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                         <p className="text-[10px] text-zinc-100 uppercase tracking-wider">{member.email}</p>
                       </td>
                       <td className="px-8 py-6">
-                        <span className="inline-flex px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest bg-white/5 text-white border border-white/10">
+                        <span className="inline-flex px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest bg-white/5 text-white border border-white/15">
                           {member.role}
                         </span>
                       </td>
@@ -538,7 +538,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
 
         {activeTab === 'new-recruit' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <form onSubmit={handleRecruitMember} className="bg-zinc-900/60 border border-white/5 rounded-[2.5rem] p-10 space-y-8">
+            <form onSubmit={handleRecruitMember} className="bg-[#050505] border border-white/15 rounded-[2.5rem] p-10 space-y-8">
               <div>
                 <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2"><UserPlus className="w-5 h-5 text-gold-500" /> Admit New Member</h3>
                 <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-widest">Verify and onboard candidates</p>
@@ -552,7 +552,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                     required
                     value={newName}
                     onChange={e => setNewName(e.target.value)}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
+                    className="w-full bg-black shadow-inner border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
                   />
                 </div>
                 <div>
@@ -562,7 +562,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                     required
                     value={newEmail}
                     onChange={e => setNewEmail(e.target.value)}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
+                    className="w-full bg-black shadow-inner border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
                   />
                 </div>
                 
@@ -572,14 +572,14 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                     <button
                       type="button"
                       onClick={() => setNewBasis('Fee Paid')}
-                      className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${newBasis === 'Fee Paid' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black/40 border-white/10 text-white hover:border-white/30'}`}
+                      className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${newBasis === 'Fee Paid' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black shadow-inner border-white/15 text-white hover:border-white/30'}`}
                     >
                       Fee Paid
                     </button>
                     <button
                       type="button"
                       onClick={() => setNewBasis('Test Passed')}
-                      className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${newBasis === 'Test Passed' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black/40 border-white/10 text-white hover:border-white/30'}`}
+                      className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${newBasis === 'Test Passed' ? 'bg-gold-500/10 border-gold-500 text-signature-gradient' : 'bg-black shadow-inner border-white/15 text-white hover:border-white/30'}`}
                     >
                       Test Passed
                     </button>
@@ -594,7 +594,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                       value={newTestDetails}
                       onChange={e => setNewTestDetails(e.target.value)}
                       placeholder="e.g. Scored 85% in App Dev Sprint..."
-                      className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors h-24 resize-none"
+                      className="w-full bg-black shadow-inner border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors h-24 resize-none"
                     />
                   </motion.div>
                 )}
@@ -608,7 +608,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
             </form>
 
             {/* Core Promotion Info panel */}
-            <div className="bg-zinc-900/40 border border-white/5 border-dashed rounded-[2.5rem] p-10 flex flex-col justify-center items-center text-center">
+            <div className="bg-[#0a0a0a] border border-white/15 border-dashed rounded-[2.5rem] p-10 flex flex-col justify-center items-center text-center">
               <Shield className="w-16 h-16 text-white mb-6" />
               <h4 className="text-xl font-bold text-white mb-4">Core Team Hierarchy</h4>
               <p className="text-sm text-zinc-100 leading-relaxed max-w-sm mb-8">
@@ -616,7 +616,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
               </p>
               <button 
                 onClick={() => setActiveTab('recruitment-pool')}
-                className="px-6 py-3 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest text-white hover:text-white hover:bg-white/5 transition-all"
+                className="px-6 py-3 border border-white/15 rounded-full text-[10px] font-bold uppercase tracking-widest text-white hover:text-white hover:bg-white/5 transition-all"
               >
                 Go to Recruitment Pool
               </button>

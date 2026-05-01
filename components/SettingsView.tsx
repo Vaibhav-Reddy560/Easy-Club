@@ -122,7 +122,7 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
         {sections.map((section, idx) => (
           <div 
             key={section.id} 
-            className={`bg-zinc-900/40 border border-white/5 rounded-[2.5rem] p-8 overflow-hidden relative group ${idx === 0 ? 'md:col-span-2' : ''}`}
+            className={`bg-[#050505] border border-white/10 rounded-[2.5rem] p-8 overflow-hidden relative group shadow-xl ${idx === 0 ? 'md:col-span-2' : ''}`}
           >
             <div className="absolute top-0 right-0 w-64 h-64 bg-gold-500/5 blur-[100px] -mr-32 -mt-32 transition-opacity opacity-50 group-hover:opacity-100" />
             

@@ -150,8 +150,8 @@ export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
                     <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">My Team</h2>
-                    <p className="text-[10px] text-white font-bold uppercase tracking-[0.2em] mt-2">
-                        Collaboration, Permissions & Global Activity Tracking
+                    <p className="text-zinc-100 text-[10px] mt-1 uppercase font-bold tracking-[0.2em]">
+                        Form your team and track activity
                     </p>
                 </div>
 
@@ -159,7 +159,7 @@ export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
                     <select
                         value={selectedClubId || ""}
                         onChange={(e) => setSelectedClubId(e.target.value)}
-                        className="w-full appearance-none bg-zinc-900 border border-white/10 rounded-2xl py-4 pl-6 pr-12 text-sm font-bold text-white uppercase tracking-widest outline-none hover:border-gold-500/50 transition-colors focus:border-gold-500"
+                        className="w-full appearance-none bg-zinc-900 border border-white/15 rounded-2xl py-4 pl-6 pr-12 text-sm font-bold text-white uppercase tracking-widest outline-none hover:border-gold-500/50 transition-colors focus:border-gold-500"
                     >
                         {clubs.map((club) => (
                             <option key={club.id} value={club.id}>{club.name}</option>
@@ -171,54 +171,59 @@ export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
 
             {/* Quick Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-zinc-900/40 border border-white/5 rounded-3xl p-6">
+                <div className="bg-[#050505] border border-white/15 rounded-3xl p-6 shadow-2xl">
                     <div className="flex items-center gap-4 mb-2">
                         <UsersRound className="w-4 h-4 text-gold-500" />
                         <span className="text-[9px] font-black uppercase tracking-widest text-white">Active Core</span>
                     </div>
                     <div className="flex items-baseline gap-2">
-                        <span className="text-xl text-white tracking-tighter" style={{ fontFamily: 'var(--font-astronomus) !important' }}>{members.length}</span>
+                        <span className="text-3xl text-white tracking-tighter" style={{ fontFamily: 'var(--font-destrubia) !important' }}>{members.length}</span>
                         <span className="text-[10px] text-white font-bold">MEMBERS</span>
                     </div>
                 </div>
-                <div className="bg-zinc-900/40 border border-white/5 rounded-3xl p-6">
+                <div className="bg-[#050505] border border-white/15 rounded-3xl p-6 shadow-2xl">
                     <div className="flex items-center gap-4 mb-2">
                         <Clock className="w-4 h-4 text-gold-500" />
                         <span className="text-[9px] font-black uppercase tracking-widest text-white">Pending Requests</span>
                     </div>
                     <div className="flex items-baseline gap-2">
-                        <span className="text-xl text-white tracking-tighter" style={{ fontFamily: 'var(--font-astronomus) !important' }}>{invites.length}</span>
+                        <span className="text-3xl text-white tracking-tighter" style={{ fontFamily: 'var(--font-destrubia) !important' }}>{invites.length}</span>
                         <span className="text-[10px] text-white font-bold">INVITES</span>
                     </div>
                 </div>
-                <div className="bg-zinc-900/40 border border-white/5 rounded-3xl p-6">
+                <div className="bg-[#050505] border border-white/15 rounded-3xl p-6 shadow-2xl">
                     <div className="flex items-center gap-4 mb-2">
                         <History className="w-4 h-4 text-gold-500" />
                         <span className="text-[9px] font-black uppercase tracking-widest text-white">Global Actions</span>
                     </div>
                     <div className="flex items-baseline gap-2">
-                        <span className="text-xl text-white tracking-tighter" style={{ fontFamily: 'var(--font-astronomus) !important' }}>{activityLog.length}</span>
+                        <span className="text-3xl text-white tracking-tighter" style={{ fontFamily: 'var(--font-destrubia) !important' }}>{activityLog.length}</span>
                         <span className="text-[10px] text-white font-bold">LOGGED</span>
                     </div>
                 </div>
             </div>
 
             {/* Tabs */}
-            <div className="flex gap-4 border-b border-white/10">
+            <div className="flex gap-4 border-b border-white/15">
                 {[
                     { id: 'roster', label: 'Core Roster', icon: Shield },
                     { id: 'invites', label: 'Team Invites', icon: UserPlus },
                     { id: 'activity', label: 'Activity Watchtower', icon: History }
-                ].map(tab => (
-                    <button
-                        key={tab.id}
-                        onClick={() => setActiveTab(tab.id as 'roster' | 'invites' | 'activity')}
-                        className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all flex items-center gap-2 ${activeTab === tab.id ? 'text-signature-gradient border-gold-500' : 'text-white border-transparent hover:text-white'}`}
-                    >
-                        <tab.icon className="w-3 h-3" />
-                        {tab.label}
-                    </button>
-                ))}
+                ].map(tab => {
+                    const isActive = activeTab === tab.id;
+                    return (
+                        <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id as 'roster' | 'invites' | 'activity')}
+                            className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all flex items-center gap-2 ${isActive ? 'border-gold-500' : 'text-white border-transparent hover:text-white'}`}
+                        >
+                            <tab.icon className={`w-3 h-3 shrink-0 ${isActive ? 'text-gold-500' : 'text-white'}`} />
+                            <span className={isActive ? 'text-signature-gradient' : ''}>
+                                {tab.label}
+                            </span>
+                        </button>
+                    );
+                })}
             </div>
 
             {/* Content area */}
@@ -233,14 +238,14 @@ export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
                     {activeTab === 'roster' && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {members.length === 0 ? (
-                                <div className="col-span-2 py-20 text-center bg-zinc-900/40 rounded-[2rem] border border-dashed border-white/10">
+                                <div className="col-span-2 py-20 text-center bg-[#050505] rounded-[2rem] border border-dashed border-white/15">
                                     <p className="text-[10px] font-bold text-white uppercase tracking-widest">No core members yet. Send an invite to begin collaborating.</p>
                                 </div>
                             ) : (
                                 members.map((member: ClubMember) => (
-                                    <div key={member.id} className="bg-zinc-900/40 border border-white/5 rounded-3xl p-8 flex items-center justify-between hover:border-gold-500/30 transition-all group">
+                                    <div key={member.id} className="bg-[#050505] border border-white/15 rounded-3xl p-8 flex items-center justify-between hover:border-gold-500/30 transition-all group shadow-xl">
                                         <div className="flex items-center gap-6">
-                                            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center text-xl font-black text-signature-gradient border border-white/10 shadow-xl group-hover:scale-110 transition-transform">
+                                            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center text-xl font-black text-signature-gradient border border-white/15 shadow-xl group-hover:scale-110 transition-transform">
                                                 {member.name.charAt(0)}
                                             </div>
                                             <div>
@@ -249,7 +254,7 @@ export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
                                                     <span className={`text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full border ${
                                                         member.role === 'Senior Core' ? 'text-signature-gradient border-gold-400/30 bg-gold-400/5' :
                                                         member.role === 'Junior Core' ? 'text-blue-400 border-blue-400/30 bg-blue-400/5' :
-                                                        'text-white border-white/10 bg-white/5'
+                                                        'text-white border-white/15 bg-white/5'
                                                     }`}>
                                                         {member.role}
                                                     </span>
@@ -274,7 +279,7 @@ export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
                     {activeTab === 'invites' && (
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                             {/* Invite Form */}
-                            <div className="bg-zinc-900/60 border border-white/5 rounded-[2.5rem] p-10 space-y-8">
+                            <div className="bg-[#050505] border border-white/15 rounded-[2.5rem] p-10 space-y-8 shadow-2xl">
                                 <div>
                                     <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2"><UserPlus className="w-5 h-5 text-gold-500" /> Send Core Invite</h3>
                                     <p className="text-[10px] text-white font-bold uppercase tracking-widest">Collaborators gain access to your project workspace</p>
@@ -289,7 +294,7 @@ export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
                                             value={inviteEmail}
                                             onChange={e => setInviteEmail(e.target.value)}
                                             placeholder="collaborator@example.com"
-                                            className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
+                                            className="w-full bg-black/40 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
                                         />
                                     </div>
                                     <div>
@@ -300,7 +305,7 @@ export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
                                                     key={role}
                                                     type="button"
                                                     onClick={() => setInviteRole(role as MemberRole)}
-                                                    className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${inviteRole === role ? 'bg-gold-500/10 border-gold-500 text-signature-gradient shadow-gold-glow' : 'bg-black/40 border-white/10 text-zinc-200 hover:border-white/30'}`}
+                                                    className={`py-4 rounded-xl border text-[11px] font-bold uppercase tracking-widest transition-all ${inviteRole === role ? 'bg-gold-500/10 border-gold-500 text-signature-gradient shadow-gold-glow' : 'bg-black/40 border-white/15 text-zinc-200 hover:border-white/30'}`}
                                                 >
                                                     {role}
                                                 </button>
@@ -325,12 +330,12 @@ export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
                             <div className="space-y-4">
                                 <h4 className="text-[10px] font-black uppercase tracking-widest text-white ml-2">Pending Clearances</h4>
                                 {invites.length === 0 ? (
-                                    <div className="py-20 text-center bg-zinc-900/20 rounded-[2.5rem] border border-dashed border-white/5">
+                                    <div className="py-20 text-center bg-[#050505] rounded-[2.5rem] border border-dashed border-white/15">
                                         <p className="text-[10px] font-bold text-white uppercase tracking-widest">No pending invitations. Use the form to send one.</p>
                                     </div>
                                 ) : (
                                     invites.map((invite: TeamInvite) => (
-                                        <div key={invite.id} className="bg-zinc-900/40 border border-white/5 rounded-3xl p-6 flex flex-col gap-4">
+                                        <div key={invite.id} className="bg-[#050505] border border-white/15 rounded-3xl p-6 flex flex-col gap-4 shadow-xl">
                                             <div className="flex justify-between items-start">
                                                 <div>
                                                     <p className="text-sm font-bold text-white mb-1">{invite.email}</p>
@@ -370,7 +375,7 @@ export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
                     )}
 
                     {activeTab === 'activity' && (
-                        <div className="bg-zinc-900/40 border border-white/5 rounded-[2.5rem] overflow-hidden">
+                        <div className="bg-[#050505] border border-white/15 rounded-[2.5rem] shadow-2xl overflow-hidden">
                             <div className="p-8 border-b border-white/5 flex items-center justify-between">
                                 <div>
                                     <h3 className="text-xl font-normal font-astronomus text-white uppercase tracking-tighter">Activity Watchtower</h3>
@@ -417,7 +422,7 @@ export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
                                                 <p className="text-[11px] text-white leading-relaxed font-sans italic">&quot;{event.details}&quot;</p>
                                             </div>
                                             <div className="flex flex-col items-end gap-1">
-                                                <div className="flex items-center gap-1.5 px-2 py-0.5 bg-white/5 border border-white/10 rounded-lg">
+                                                <div className="flex items-center gap-1.5 px-2 py-0.5 bg-white/5 border border-white/15 rounded-lg">
                                                     <Clock className="w-3 h-3 text-gold-500" />
                                                     <span className="text-[10px] text-white font-mono tracking-tight">
                                                         {new Date(event.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -454,7 +459,7 @@ export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
                             <div className="flex gap-4">
                                 <button
                                     onClick={() => setMemberToRemove(null)}
-                                    className="flex-1 px-6 py-4 rounded-xl border border-white/10 text-[10px] font-bold uppercase tracking-widest hover:bg-white/5 transition-all text-white"
+                                    className="flex-1 px-6 py-4 rounded-xl border border-white/15 text-[10px] font-bold uppercase tracking-widest hover:bg-white/5 transition-all text-white"
                                 >
                                     Cancel
                                 </button>

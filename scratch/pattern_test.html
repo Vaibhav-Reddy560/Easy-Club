@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .pattern-preview {
+    width: 100%;
+    height: 100%;
+    
+    /* Isometric Cube Pattern based on the image */
+    --sz: 40px; /* Scaling factor */
+    --line-color: rgba(255, 255, 255, 0.8);
+    --bg-color: #050505;
+    --face-1: #0a0a0a;
+    --face-2: #111111;
+    --face-3: #181818;
+
+    /* Logic:
+       We need to create the isometric grid.
+       The distance between horizontal nodes is roughly 1.732 * vertical.
+    */
+    --w: calc(var(--sz) * 1.732);
+    --h: var(--sz);
+
+    background: 
+      /* Highlights (the white lines) */
+      conic-gradient(from 150deg at 50% 33.3%, var(--line-color) 0 1deg, transparent 1deg 119deg, var(--line-color) 119deg 121deg, transparent 121deg 239deg, var(--line-color) 239deg 241deg, transparent 241deg 360deg) 0 0 / var(--w) var(--h),
+      /* Faces (optional gradients for depth) */
+      conic-gradient(from 150deg at 50% 33.3%, var(--face-1) 0 120deg, var(--face-2) 120deg 240deg, var(--face-3) 240deg 360deg) 0 0 / var(--w) var(--h);
+    
+    background-color: var(--bg-color);
+  }
+</style>
+</head>
+<body>
+  <div class="pattern-preview"></div>
+</body>
+</html>

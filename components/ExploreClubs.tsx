@@ -204,7 +204,7 @@ export default function ExploreClubs() {
             <header className="border-b border-white/5 pb-8 flex justify-between items-end">
                 <div>
                     <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Explore Clubs</h2>
-                    <p className="text-white text-sm mt-1 uppercase font-bold tracking-[0.2em] ml-1">Universal Organization Discovery</p>
+                    <p className="text-zinc-100 text-[10px] mt-1 uppercase font-bold tracking-[0.2em] ml-1"> Discover clubs in a region</p>
                 </div>
                 <div className="flex gap-4 items-end">
                     <button
@@ -215,7 +215,7 @@ export default function ExploreClubs() {
                         className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl border text-[10px] font-black uppercase tracking-widest transition-all ${
                             showSaved
                                 ? "bg-gold-500 text-black border-gold-500 shadow-lg shadow-gold-500/20"
-                                : "bg-white/5 text-white border-white/10 hover:bg-white/10 hover:text-white"
+                                : "bg-white/5 text-white border-white/15 hover:bg-white/10 hover:text-white"
                         }`}
                     >
                         <BookmarkCheck className="w-3.5 h-3.5" />
@@ -230,7 +230,7 @@ export default function ExploreClubs() {
 
             {/* FILTERS */}
             {!showSaved && (
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 glass-panel p-8 relative overflow-hidden">
+                <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr_1fr_1.1fr] gap-6 glass-panel rounded-[2.5rem] p-8 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-gold-500/5 blur-3xl rounded-full -mr-16 -mt-16" />
 
                     <div className="space-y-2">
@@ -238,7 +238,7 @@ export default function ExploreClubs() {
                         <select
                             value={type}
                             onChange={(e) => setType(e.target.value)}
-                            className="w-full bg-black border border-white/10 rounded-2xl px-4 py-3 text-sm text-white focus:border-gold-500/50 outline-none transition-all cursor-pointer appearance-none shadow-inner"
+                            className="w-full bg-black border border-white/15 rounded-2xl px-4 py-3 text-sm text-white focus:border-gold-500/50 outline-none transition-all cursor-pointer appearance-none shadow-inner"
                         >
                             {CLUB_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
                         </select>
@@ -246,12 +246,12 @@ export default function ExploreClubs() {
 
                     <div className="space-y-2">
                         <label className="text-[10px] font-black uppercase tracking-widest text-white ml-2">Category</label>
-                        <div className="flex p-1 bg-black border border-white/10 rounded-2xl h-[46px]">
+                        <div className="flex p-1 bg-black border border-white/15 rounded-2xl h-[46px]">
                             {(["College", "Non-College"] as const).map((cat) => (
                                 <button
                                     key={cat}
                                     onClick={() => setCategory(cat)}
-                                    className={`flex-1 rounded-xl text-[10px] font-black uppercase tracking-tighter transition-all ${category === cat ? "bg-gold-500 text-black shadow-lg" : "text-white hover:text-white"}`}
+                                    className={`flex-1 rounded-xl text-[10px] font-black uppercase tracking-[0.15em] transition-all px-2 ${category === cat ? "bg-gold-500 text-black shadow-lg" : "text-white hover:text-white"}`}
                                 >
                                     {cat}
                                 </button>
@@ -260,7 +260,7 @@ export default function ExploreClubs() {
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-white ml-2">Location</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-white ml-2">Region</label>
                         <div className="relative h-[46px]">
                             <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
                             <input
@@ -268,7 +268,7 @@ export default function ExploreClubs() {
                                 value={location}
                                 onChange={(e) => setLocation(e.target.value)}
                                 placeholder="E.g. Bengaluru, India"
-                                className="w-full h-full bg-black border border-white/10 rounded-2xl pl-11 pr-4 text-sm text-white focus:border-gold-500/50 outline-none transition-all shadow-inner"
+                                className="w-full h-full bg-black border border-white/15 rounded-2xl pl-11 pr-4 text-sm text-white focus:border-gold-500/50 outline-none transition-all shadow-inner"
                             />
                         </div>
                     </div>
@@ -277,7 +277,7 @@ export default function ExploreClubs() {
                         <button
                             onClick={handleSearch}
                             disabled={loading}
-                            className="w-full bg-gold-gradient h-[46px] rounded-2xl flex items-center justify-center gap-2 text-black font-black uppercase tracking-widest text-[11px] hover:scale-[1.02] active:scale-95 transition-all shadow-xl disabled:opacity-50"
+                            className="w-full bg-gold-gradient h-[46px] rounded-2xl border border-white/15 flex items-center justify-center gap-2 text-black font-black uppercase tracking-widest text-[11px] hover:scale-[1.02] active:scale-95 transition-all shadow-xl disabled:opacity-50"
                         >
                             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
                             {loading ? "Discovering..." : "Launch Search"}
@@ -306,7 +306,7 @@ export default function ExploreClubs() {
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="flex flex-col items-center gap-4 p-8 glass-panel"
+                        className="flex flex-col items-center gap-4 p-8 glass-panel rounded-[2.5rem]"
                     >
                         <div className="flex items-center gap-3">
                             <Sparkles className="w-5 h-5 text-gold-500 opacity-40" />
@@ -324,7 +324,7 @@ export default function ExploreClubs() {
                                 setScrapedClubs([]);
                                 handleSearch();
                             }}
-                            className="px-6 py-2 bg-white/5 border border-white/10 rounded-xl text-[9px] font-black uppercase tracking-widest text-white hover:bg-gold-500 hover:text-black transition-all"
+                            className="px-6 py-2 bg-white/5 border border-white/15 rounded-xl text-[9px] font-black uppercase tracking-widest text-white hover:bg-gold-500 hover:text-black transition-all"
                         >
                             Force Refresh
                         </button>
@@ -367,7 +367,7 @@ export default function ExploreClubs() {
                             >
                                 <div className="h-48 relative overflow-hidden bg-zinc-800">
                                     <div className="absolute top-4 left-4 z-10 flex gap-2">
-                                        <div className="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 flex items-center gap-1.5 shadow-lg">
+                                        <div className="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 flex items-center gap-1.5 shadow-lg">
                                             <Globe className="w-3.5 h-3.5 text-blue-400" />
                                             <span className="text-[8px] font-black text-white/70 uppercase tracking-widest">Search Result</span>
                                         </div>
@@ -378,7 +378,7 @@ export default function ExploreClubs() {
                                         className={`absolute top-4 right-4 z-10 p-2.5 rounded-full border backdrop-blur-md transition-all hover:scale-110 ${
                                             isSaved
                                                 ? "bg-gold-500/90 border-gold-500 text-black shadow-lg shadow-gold-500/30"
-                                                : "bg-black/50 border-white/10 text-white/60 hover:text-white hover:border-white/30"
+                                                : "bg-black/50 border-white/15 text-white/60 hover:text-white hover:border-white/30"
                                         }`}
                                         title={isSaved ? "Remove from saved" : "Save this club"}
                                     >
@@ -478,7 +478,7 @@ export default function ExploreClubs() {
                                     setError(null);
                                     handleSearch();
                                 }}
-                                className="px-6 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-[10px] font-bold uppercase tracking-widest text-white hover:text-white transition-all"
+                                className="px-6 py-2 rounded-xl bg-white/5 border border-white/15 hover:bg-white/10 text-[10px] font-bold uppercase tracking-widest text-white hover:text-white transition-all"
                             >
                                 Retry Search
                             </button>

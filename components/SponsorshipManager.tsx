@@ -159,7 +159,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
     if (clubs.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center py-32 space-y-6 text-center">
-                <div className="w-20 h-20 bg-zinc-900 border border-white/10 rounded-full flex items-center justify-center animate-pulse">
+                <div className="w-20 h-20 bg-zinc-900 border border-white/15 rounded-full flex items-center justify-center animate-pulse">
                     <Banknote className="w-10 h-10 text-white/50" />
                 </div>
                 <div className="space-y-2">
@@ -180,10 +180,10 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                 <div>
                     <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter py-2">
                         Funding X Sponsorship
-                    </h2>    <p className="text-white text-sm mt-1 uppercase font-bold tracking-widest">Sponsorship Pipeline & Financial Resource Manager</p>
+                    </h2>    <p className="text-zinc-100 text-[10px] mt-1 uppercase font-bold tracking-[0.2em]">Raise funds and grow your treasury</p>
                 </div>
 
-                <div className="flex gap-2 p-1 bg-zinc-900/60 rounded-2xl border border-white/5">
+                <div className="flex gap-2 p-1 bg-black rounded-2xl border border-white/15">
                     {clubs.map((c) => (
                         <button
                             key={c.id}
@@ -207,10 +207,10 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                     { label: "Active Partners", val: String(activePartners), sub: "Closed partnerships", icon: Building2, color: "text-purple-400" },
                     { label: "Total Leads", val: String(sponsors.length), sub: "Across all stages", icon: Target, color: "text-blue-400" },
                 ].map((stat, i) => (
-                    <div key={i} className="p-8 bg-zinc-900/40 border border-white/5 rounded-[2rem] group hover:border-gold-500/20 transition-all">
+                    <div key={i} className="p-8 bg-[#050505] border border-white/15 rounded-[2rem] group hover:border-gold-500/20 transition-all shadow-xl">
                         <stat.icon className={`w-5 h-5 mb-4 ${stat.color}`} />
                         <p className="text-[10px] text-white font-black uppercase tracking-widest mb-1">{stat.label}</p>
-                        <p className="text-3xl font-black text-white mb-2">{stat.val}</p>
+                        <p className="text-3xl font-black text-white mb-2 font-destrubia">{stat.val}</p>
                         <p className="text-[9px] text-white font-bold uppercase tracking-tight">{stat.sub}</p>
                     </div>
                 ))}
@@ -240,8 +240,8 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                     <span className="text-[10px] font-black uppercase text-white tracking-tighter">{p.stage}</span>
                                 </div>
                                 <div>
-                                    <p className="text-xl font-bold text-white">{p.count}</p>
-                                    <p className="text-[9px] text-white font-bold uppercase">{formatINR(p.value)}</p>
+                                    <p className="text-xl font-bold text-white font-destrubia">{p.count}</p>
+                                    <p className="text-[9px] text-white font-bold uppercase font-destrubia">{formatINR(p.value)}</p>
                                 </div>
                             </div>
                         ))}
@@ -271,7 +271,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                         <tr key={deal.id} className="hover:bg-white/5 transition-all group">
                                             <td className="px-8 py-6 font-bold text-sm">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center">
+                                                    <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-white/15 flex items-center justify-center">
                                                         <Building2 className="w-4 h-4 text-white/50" />
                                                     </div>
                                                     <div>
@@ -349,7 +349,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                     </div>
 
                     {/* Smart Suggestions — derived from real pipeline data */}
-                    <div className="p-8 bg-zinc-900/40 border border-white/5 rounded-[3rem] space-y-6">
+                    <div className="p-8 bg-[#050505] border border-white/15 rounded-[3rem] space-y-6 shadow-2xl">
                         <h5 className="font-bold text-white flex items-center gap-2">
                             <Sparkles className="w-5 h-5 text-gold-500" /> Smart Insights
                         </h5>
@@ -424,7 +424,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                         onChange={e => setNewCompany(e.target.value)}
                                         placeholder="e.g. Google Cloud, Red Bull..."
                                         autoFocus
-                                        className="w-full bg-black border border-white/10 rounded-2xl px-4 py-3 text-sm text-white focus:border-gold-500/50 outline-none transition-all"
+                                        className="w-full bg-black border border-white/15 rounded-2xl px-4 py-3 text-sm text-white focus:border-gold-500/50 outline-none transition-all"
                                     />
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
@@ -435,7 +435,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                             value={newCategory}
                                             onChange={e => setNewCategory(e.target.value)}
                                             placeholder="Technical, EdTech..."
-                                            className="w-full bg-black border border-white/10 rounded-2xl px-4 py-3 text-sm text-white focus:border-gold-500/50 outline-none transition-all"
+                                            className="w-full bg-black border border-white/15 rounded-2xl px-4 py-3 text-sm text-white focus:border-gold-500/50 outline-none transition-all"
                                         />
                                     </div>
                                     <div>
@@ -445,13 +445,13 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                             value={newValue}
                                             onChange={e => setNewValue(e.target.value)}
                                             placeholder="e.g. 50000"
-                                            className="w-full bg-black border border-white/10 rounded-2xl px-4 py-3 text-sm text-white focus:border-gold-500/50 outline-none transition-all"
+                                            className="w-full bg-black border border-white/15 rounded-2xl px-4 py-3 text-sm text-white focus:border-gold-500/50 outline-none transition-all"
                                         />
                                     </div>
                                 </div>
                                 <div>
                                     <label className="text-[10px] font-black uppercase tracking-widest text-white mb-2 block">Stage</label>
-                                    <div className="flex gap-2 p-1 bg-black border border-white/10 rounded-2xl">
+                                    <div className="flex gap-2 p-1 bg-black border border-white/15 rounded-2xl">
                                         {STAGES.map(s => (
                                             <button
                                                 key={s}
@@ -470,7 +470,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                         value={newNotes}
                                         onChange={e => setNewNotes(e.target.value)}
                                         placeholder="Any context, contact name, etc."
-                                        className="w-full bg-black border border-white/10 rounded-2xl px-4 py-3 text-sm text-white focus:border-gold-500/50 outline-none transition-all"
+                                        className="w-full bg-black border border-white/15 rounded-2xl px-4 py-3 text-sm text-white focus:border-gold-500/50 outline-none transition-all"
                                     />
                                 </div>
                             </div>
@@ -478,7 +478,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                             <div className="flex gap-4 pt-2">
                                 <button
                                     onClick={() => setIsAddingLead(false)}
-                                    className="flex-1 py-4 border border-white/10 rounded-2xl text-[10px] font-bold uppercase tracking-widest text-white hover:bg-white/5 transition-all"
+                                    className="flex-1 py-4 border border-white/15 rounded-2xl text-[10px] font-bold uppercase tracking-widest text-white hover:bg-white/5 transition-all"
                                 >
                                     Cancel
                                 </button>

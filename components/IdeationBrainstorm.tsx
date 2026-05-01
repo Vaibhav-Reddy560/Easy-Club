@@ -19,9 +19,69 @@ const CLUB_TYPES = [
 ];
 
 type Message = {
+    id: string;
     role: "user" | "assistant";
     content: string;
 };
+
+const MessageBubble = React.memo(({ m }: { m: Message }) => (
+    <motion.div
+        initial={{ opacity: 0, y: 20, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
+    >
+        <div className={`relative max-w-[85%] rounded-[2rem] p-5 text-sm leading-relaxed shadow-xl ${m.role === 'user'
+            ? 'bg-gold-500/10 border border-gold-500/30 text-gold-50 rounded-tr-sm backdrop-blur-sm'
+            : 'bg-zinc-800/40 border border-white/15 text-white rounded-tl-sm backdrop-blur-md'
+            }`}>
+            {m.content.split('\n').map((line, idx) => (
+                <p key={idx} className={idx > 0 ? "mt-3" : ""}>
+                    {line.split('**').map((part, pidx) =>
+                        pidx % 2 === 1 ? <span key={pidx} className="font-black text-gold-400">{part}</span> : part
+                    )}
+                </p>
+            ))}
+        </div>
+    </motion.div>
+));
+MessageBubble.displayName = "MessageBubble";
+
+const ChatInput = React.memo(({ onSend, disabled }: { onSend: (val: string) => void, disabled: boolean }) => {
+    const [localInput, setLocalInput] = useState("");
+
+    return (
+        <form
+            onSubmit={(e) => {
+                e.preventDefault();
+                if (!localInput.trim() || disabled) return;
+                onSend(localInput);
+                setLocalInput("");
+            }}
+            className="flex gap-3 relative max-w-5xl mx-auto group"
+        >
+            <div className="absolute -inset-1 bg-gradient-to-r from-gold-500/0 via-gold-500/10 to-gold-500/0 rounded-full blur-md opacity-0 group-focus-within:opacity-100 transition-opacity pointer-events-none" />
+
+            <input
+                type="text"
+                value={localInput}
+                onChange={(e) => setLocalInput(e.target.value)}
+                placeholder="E.g. Build a blueprint for an outdoor racing hackathon..."
+                className="flex-1 bg-black border border-white/15 rounded-full px-8 py-5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-gold-500/50 transition-all pr-16 shadow-inner relative z-10"
+                disabled={disabled}
+            />
+            <button
+                type="submit"
+                disabled={!localInput.trim() || disabled}
+                className="absolute right-2.5 top-2.5 bottom-2.5 aspect-square bg-gold-500 rounded-full flex items-center justify-center text-black hover:bg-gold-400 transition-all shadow-lg active:scale-95 disabled:opacity-30 z-20"
+            >
+                <Send className="w-5 h-5 ml-1" />
+            </button>
+
+        </form>
+    );
+});
+ChatInput.displayName = "ChatInput";
+
 
 export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstormProps) {
     const [selectedClubId, setSelectedClubId] = useState<string>(clubs[0]?.id || "");
@@ -29,8 +89,8 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
     
     const [started, setStarted] = useState(false);
     const [messages, setMessages] = useState<Message[]>([]);
-    const [input, setInput] = useState("");
     const [loading, setLoading] = useState(false);
+
     const [currentStatus, setCurrentStatus] = useState<string>("");
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -62,22 +122,22 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
             const data = await response.json();
             
             if (data.status) setCurrentStatus(data.status);
-            setMessages([{ role: "assistant", content: data.reply }]);
+            setMessages([{ id: Date.now().toString(), role: "assistant", content: data.reply }]);
         } catch (err) {
             console.error(err);
-            setMessages([{ role: "assistant", content: "Sorry, I had trouble connecting. Let's brainstorm! What kind of event are you looking to host?" }]);
+            setMessages([{ id: Date.now().toString(), role: "assistant", content: "Sorry, I had trouble connecting. Let's brainstorm! What kind of event are you looking to host?" }]);
         } finally {
             setLoading(false);
             setCurrentStatus("");
         }
     };
 
-    const handleSend = async () => {
-        if (!input.trim() || loading) return;
-        
-        const userMsg: Message = { role: "user", content: input };
+    const handleSend = async (val: string) => {
+        if (!val.trim() || loading) return;
+
+        const userMsg: Message = { id: Date.now().toString(), role: "user", content: val };
         setMessages(prev => [...prev, userMsg]);
-        setInput("");
+
         setLoading(true);
         setCurrentStatus("Architecting Response...");
 
@@ -95,7 +155,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
             const data = await response.json();
             
             if (data.status) setCurrentStatus(data.status);
-            setMessages(prev => [...prev, { role: "assistant", content: data.reply }]);
+            setMessages(prev => [...prev, { id: Date.now().toString(), role: "assistant", content: data.reply }]);
         } catch (err) {
             console.error(err);
         } finally {
@@ -142,7 +202,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
                 animate={{ opacity: 1, y: 0 }}
                 className="max-w-2xl mx-auto py-12 px-4"
             >
-                <div className="p-10 bg-zinc-900/40 border border-white/5 rounded-[3rem] text-center space-y-8 relative overflow-hidden backdrop-blur-xl">
+                <div className="p-10 bg-[#050505] border border-white/15 rounded-[3rem] text-center space-y-8 relative overflow-hidden backdrop-blur-xl shadow-2xl">
                     <div className="absolute -top-32 -left-32 w-64 h-64 bg-gold-500/10 blur-[120px] rounded-full pointer-events-none" />
                     <div className="absolute -bottom-32 -right-32 w-64 h-64 bg-gold-500/5 blur-[120px] rounded-full pointer-events-none" />
                     
@@ -171,7 +231,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
                                 <select 
                                     value={selectedClubId} 
                                     onChange={(e) => setSelectedClubId(e.target.value)}
-                                    className="w-full p-4 bg-black/40 border border-white/10 rounded-2xl text-white text-sm focus:outline-none focus:border-gold-500/50 appearance-none backdrop-blur-md cursor-pointer hover:border-white/20 transition-all"
+                                    className="w-full p-4 bg-black/40 border border-white/15 rounded-2xl text-white text-sm focus:outline-none focus:border-gold-500/50 appearance-none backdrop-blur-md cursor-pointer hover:border-white/20 transition-all"
                                 >
                                     {clubs.map(c => (
                                         <option key={c.id} value={c.id}>{c.name}</option>
@@ -185,7 +245,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
                                 <select 
                                     value={selectedCategory} 
                                     onChange={(e) => setSelectedCategory(e.target.value)}
-                                    className="w-full p-4 bg-black/40 border border-white/10 rounded-2xl text-white text-sm focus:outline-none focus:border-gold-500/50 appearance-none backdrop-blur-md cursor-pointer hover:border-white/20 transition-all"
+                                    className="w-full p-4 bg-black/40 border border-white/15 rounded-2xl text-white text-sm focus:outline-none focus:border-gold-500/50 appearance-none backdrop-blur-md cursor-pointer hover:border-white/20 transition-all"
                                 >
                                     {CLUB_TYPES.map(cat => (
                                         <option key={cat} value={cat}>{cat}</option>
@@ -214,10 +274,10 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
         <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="flex flex-col h-[75vh] max-h-[850px] border border-white/10 rounded-[3rem] bg-black/40 backdrop-blur-2xl overflow-hidden relative shadow-2xl"
+            className="flex flex-col h-[75vh] max-h-[850px] border border-white/15 rounded-[3rem] bg-[#050505] overflow-hidden relative shadow-2xl"
         >
             {/* Header */}
-            <div className="px-8 py-6 border-b border-white/5 bg-black/60 flex justify-between items-center z-10 backdrop-blur-xl">
+            <div className="px-8 py-6 border-b border-white/5 bg-[#080808] flex justify-between items-center z-10">
                 <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-gold-500/10 border border-gold-500/20 rounded-2xl flex items-center justify-center text-gold-500 shadow-inner">
                         <BrainCircuit className="w-6 h-6 animate-pulse" />
@@ -249,7 +309,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
                         className={`px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2 group disabled:opacity-40
                             ${messages.length >= 3 
                                 ? 'bg-gold-500 text-black shadow-gold-glow hover:scale-105' 
-                                : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
+                                : 'bg-white/5 text-white border border-white/15 hover:bg-white/10'
                             }`}
                     >
                         {finalizing ? (
@@ -262,32 +322,10 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
             </div>
 
             {/* Chat Area */}
-            <div className="flex-1 overflow-y-auto px-8 py-8 space-y-8 scrollbar-hide">
+            <div className="flex-1 overflow-y-auto px-8 py-8 space-y-8 scrollbar-hide will-change-transform">
                 <AnimatePresence initial={false}>
-                    {messages.map((m, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ opacity: 0, y: 20, scale: 0.98 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                        >
-                            <div className={`relative max-w-[85%] rounded-[2rem] p-5 text-sm leading-relaxed shadow-xl ${
-                                m.role === 'user' 
-                                    ? 'bg-gold-500/10 border border-gold-500/30 text-gold-50 rounded-tr-sm backdrop-blur-sm' 
-                                    : 'bg-zinc-800/40 border border-white/10 text-white rounded-tl-sm backdrop-blur-md'
-                            }`}>
-                                <div className="absolute top-0 right-0 p-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <Sparkles className="w-3 h-3 text-gold-500" />
-                                </div>
-                                {m.content.split('\n').map((line, idx) => (
-                                    <p key={idx} className={idx > 0 ? "mt-3" : ""}>
-                                        {line.split('**').map((part, pidx) => 
-                                            pidx % 2 === 1 ? <span key={pidx} className="font-black text-gold-400">{part}</span> : part
-                                        )}
-                                    </p>
-                                ))}
-                            </div>
-                        </motion.div>
+                    {messages.map((m) => (
+                        <MessageBubble key={m.id} m={m} />
                     ))}
                     
                     {loading && (
@@ -322,40 +360,11 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
             </div>
 
             {/* Input Area */}
-            <div className="px-8 py-8 border-t border-white/5 bg-black/60 backdrop-blur-3xl">
-                <form 
-                    onSubmit={(e) => { e.preventDefault(); handleSend(); }}
-                    className="flex gap-3 relative max-w-5xl mx-auto group"
-                >
-                    <div className="absolute -inset-1 bg-gradient-to-r from-gold-500/0 via-gold-500/10 to-gold-500/0 rounded-full blur-md opacity-0 group-focus-within:opacity-100 transition-opacity" />
-                    
-                    <input
-                        type="text"
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        placeholder="E.g. Build a blueprint for an outdoor racing hackathon..."
-                        className="flex-1 bg-zinc-900/60 border border-white/10 rounded-full px-8 py-5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-gold-500/50 transition-all backdrop-blur-md pr-16 shadow-inner"
-                        disabled={loading || finalizing}
-                    />
-                    <button
-                        type="submit"
-                        disabled={!input.trim() || loading || finalizing}
-                        className="absolute right-2.5 top-2.5 bottom-2.5 aspect-square bg-gold-500 rounded-full flex items-center justify-center text-black hover:bg-gold-400 transition-all shadow-lg active:scale-95 disabled:opacity-30"
-                    >
-                        {loading ? (
-                            <PremiumLoader size="sm" dotCount={3} />
-                        ) : (
-                            <Send className="w-5 h-5 ml-1" />
-                        )}
-                    </button>
-                    
-                    <div className="absolute -bottom-6 left-8 flex items-center gap-2 text-[9px] text-white font-bold uppercase tracking-widest">
-                        <span className="w-1 h-1 bg-gold-500/40 rounded-full" />
-                        Enter to Send
-                        <span className="w-1 h-1 bg-gold-500/40 rounded-full ml-1" />
-                        Architect is ready for complex prompts
-                    </div>
-                </form>
+            <div className="px-8 py-8 border-t border-white/5 bg-[#080808]">
+                <ChatInput
+                    onSend={handleSend}
+                    disabled={loading || finalizing}
+                />
             </div>
         </motion.div>
     );

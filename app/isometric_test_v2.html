@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isometric Pattern Final Preview</title>
+    <style>
+        :root {
+            --sz: 45px;
+            --h: calc(var(--sz) * 1.732);
+            --line: rgba(255, 255, 255, 0.12);
+            --star-core: rgba(255, 255, 255, 0.9);
+            --star-glow: rgba(255, 255, 255, 0.25);
+            --face-top: #161616;
+            --face-right: #101010;
+            --face-left: #080808;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #050505;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bg-premium-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background:
+                /* 5. Vignette (Atmospheric Depth) */
+                radial-gradient(circle at 50% 50%, transparent 10%, rgba(0, 0, 0, 0.6) 100%),
+                /* 4. Noise Texture (Grainy Premium feel) */
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+                /* 3. Star Highlights (Sharp points + soft glow) */
+                radial-gradient(circle at 50% 25%, var(--star-core) 0.5px, transparent 2px) 0 0 / var(--sz) var(--h),
+                radial-gradient(circle at 50% 75%, var(--star-core) 0.5px, transparent 2px) 0 0 / var(--sz) var(--h),
+                radial-gradient(circle at 50% 25%, var(--star-glow) 0%, transparent 15%) 0 0 / var(--sz) var(--h),
+                radial-gradient(circle at 50% 75%, var(--star-glow) 0%, transparent 15%) 0 0 / var(--sz) var(--h),
+                /* 2. Grid Lines (The wireframe) */
+                conic-gradient(from 120deg at 50% 25%, var(--line) 0deg 0.5deg, transparent 0.5deg 119.5deg, var(--line) 119.5deg 120.5deg, transparent 120.5deg) 0 0 / var(--sz) var(--h),
+                conic-gradient(from 0deg at 50% 75%, transparent 0deg 239.5deg, var(--line) 239.5deg 240.5deg, transparent 240.5deg) 0 0 / var(--sz) var(--h),
+                /* 1. Cube Faces (Geometric foundation) */
+                conic-gradient(from 120deg at 50% 25%, var(--face-top) 0deg 120deg, var(--face-right) 120deg 240deg, var(--face-left) 240deg 360deg) 0 0 / var(--sz) var(--h);
+            
+            background-blend-mode: normal, overlay, normal, normal, normal, normal, normal, normal, normal;
+            background-attachment: fixed !important;
+        }
+
+        .content {
+            z-index: 10;
+            color: white;
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        h1 {
+            font-size: 3rem;
+            letter-spacing: 0.5rem;
+            text-transform: uppercase;
+            background: linear-gradient(to bottom, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-premium-pattern"></div>
+    <div class="content">
+        <h1>MATCHED PATTERN</h1>
+        <p style="opacity: 0.5; letter-spacing: 0.3em;">SILVER ISOMETRIC GRID</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visible Premium Isometric Pattern</title>
+    <style>
+        :root {
+            --sz: 40px;
+            --b1: #252525; /* Top face - Lighter for visibility */
+            --b2: #1a1a1a; /* Right face */
+            --b3: #101010; /* Left face */
+            --gold-bright: rgba(255, 180, 5, 0.35); /* Stronger gold highlight */
+            --gold-dim: rgba(255, 180, 5, 0.1);
+            --bg: #050505;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .background-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                /* 4. Ambient Glow */
+                radial-gradient(circle at 50% 50%, rgba(255, 180, 5, 0.08) 0%, transparent 70%),
+                /* 3. Gold Edge Highlights (Top) */
+                conic-gradient(from 120deg at 50% 25%, var(--gold-bright) 0deg 1deg, transparent 1deg 119deg, var(--gold-bright) 119deg 120deg, transparent 120deg) 0 0 / var(--sz) calc(var(--sz) * 1.732),
+                /* 2. Side Edge Accents */
+                conic-gradient(from 0deg at 50% 75%, transparent 0deg 239deg, var(--gold-dim) 239deg 241deg, transparent 241deg) 0 0 / var(--sz) calc(var(--sz) * 1.732),
+                /* 1. Main Isometric Faces */
+                conic-gradient(from 120deg at 50% 25%, 
+                    var(--b1) 0deg 120deg, 
+                    var(--b2) 120deg 240deg, 
+                    var(--b3) 240deg 360deg
+                ) 0 0 / var(--sz) calc(var(--sz) * 1.732);
+            filter: contrast(1.1) brightness(1.2);
+        }
+
+        .overlay-vignette {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, transparent 10%, rgba(0,0,0,0.7) 100%);
+            pointer-events: none;
+        }
+
+        .noise-texture {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .content-test {
+            z-index: 10;
+            color: white;
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        .content-test h1 {
+            font-size: 3rem;
+            letter-spacing: 1rem;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, #FFB405 0%, #AE7102 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="background-layer"></div>
+    <div class="noise-texture"></div>
+    <div class="overlay-vignette"></div>
+    <div class="content-test">
+        <h1>EASY CLUB</h1>
+        <p style="opacity: 0.7; letter-spacing: 0.3em; font-size: 0.8rem; font-weight: bold;">PREMIUM ISOMETRIC GRID</p>
+    </div>
+</body>
+</html>

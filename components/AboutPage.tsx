@@ -11,78 +11,95 @@ interface AboutPageProps {
 export default function AboutPage({ onBack }: AboutPageProps) {
     return (
         <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            className="max-w-4xl mx-auto space-y-16 py-12 px-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="max-w-4xl mx-auto space-y-8 py-12 px-6"
         >
             <button
                 onClick={onBack}
                 className="flex items-center gap-2 text-signature-gradient font-bold hover:brightness-110 group transition-colors mb-4"
             >
                 <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                <span className="text-sm uppercase tracking-widest">Return to Dashboard</span>
+                <span className="text-[10px] uppercase tracking-[0.2em]">Return to Dashboard</span>
             </button>
 
-            <div className="relative bg-zinc-900/40 border border-white/5 rounded-[4rem] p-16 shadow-2xl overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-1.5 bg-gold-gradient" />
+            <div className="relative bg-[#050505] border border-white/10 rounded-[3rem] p-12 md:p-16 shadow-2xl overflow-hidden backdrop-blur-3xl">
+                {/* Decorative Elements */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-gold-gradient opacity-50" />
+                <div className="absolute -top-24 -left-24 w-64 h-64 bg-gold-500/5 blur-[100px] rounded-full pointer-events-none" />
+                <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-gold-500/5 blur-[100px] rounded-full pointer-events-none" />
 
-                <div className="flex items-center gap-6 mb-12">
-                    <div className="w-16 h-16 rounded-[2rem] bg-gold-500/10 flex items-center justify-center border border-gold-500/20">
-                        <Zap className="w-8 h-8 text-gold-500" />
-                    </div>
-                    <div>
-                        <h2 className="text-5xl font-normal tracking-wide text-signature-gradient font-airstream leading-none">Easy Club</h2>
-                        <p className="text-signature-gradient font-black text-xs uppercase tracking-[0.3em] mt-1 ml-1 leading-none">The Ultimate Operating System for Organizations</p>
+                {/* Header Section */}
+                <div className="flex items-start gap-6 mb-16 relative z-10">
+                    <img
+                        src="/Logo.png"
+                        alt="Easy Club Logo"
+                        className="w-16 h-16 object-contain brightness-110 drop-shadow-gold group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="flex-1 pt-0">
+                        <h2 className="text-6xl font-normal tracking-wider text-signature-gradient font-airstream leading-none">Easy Club</h2>
+                        <p className="text-zinc-400 font-bold text-[10px] uppercase tracking-[0.25em] mt-3 ml-1">Club operations made easy</p>
                     </div>
                 </div>
 
-                <div className="space-y-16">
-                    <section className="space-y-4">
-                        <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-signature-gradient flex items-center gap-3">
-                            <span className="w-8 h-px bg-gold-500/30" /> The Vision
-                        </h3>
-                        <p className="text-lg text-zinc-300 leading-relaxed font-medium pl-11">
-                            <span className="text-signature-gradient font-airstream">Easy Club</span> is a unified intelligence workspace designed to empower student organizations. It eliminates the manual friction of event management by automating content generation, streamlining design workflows, and facilitating expert outreach—all in one high-performance dashboard.
+                {/* Content Section */}
+                <div className="space-y-20 relative z-10">
+                    {/* Vision */}
+                    <section className="space-y-6">
+                        <div className="flex items-center gap-4">
+                            <span className="w-12 h-px bg-gold-500/20" />
+                            <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-gold-500/80">The Vision</h3>
+                        </div>
+                        <p className="text-lg text-zinc-300 leading-relaxed font-medium max-w-3xl">
+                            <span className="text-white font-bold">Easy Club</span> is a comprehensive web application designed as a management system for student and professional clubs to automate design, content, and social scouting tasks. It serves as a definitive workspace for organizations to orchestrate seamless operations while facilitating discovery within a nationwide network of excellence.
                         </p>
                     </section>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16 pl-11">
-                        <section className="space-y-6">
-                            <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-emerald-500 flex items-center gap-3">
-                                <CircleCheck className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" /> Core Capabilities
-                            </h3>
-                            <ul className="space-y-4">
+                    {/* Lists Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
+                        {/* Capabilities */}
+                        <section className="space-y-8">
+                            <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
+                                    <CircleCheck className="w-4 h-4 text-emerald-500" />
+                                </div>
+                                <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-500">Core Capabilities</h3>
+                            </div>
+                            <ul className="space-y-5">
                                 {[
-                                    "Multi-Club & Event Portfolio Tracking",
-                                    "AI-Powered Promo Generation (Multi-Length)",
-                                    "Strict Content Formatting Controls",
-                                    "Local Project Persistence & Data Sync",
-                                    "Design-Ready Domain Segregation",
-                                    "Automated Expert Sourcing Workflows"
+                                    "Design, Social, Content domain automation",
+                                    "Funding, Sponsorship Management",
+                                    "Institutional Memory System",
+                                    "Social Club Networking",
+                                    "Idea Brainstorming"
                                 ].map((item, i) => (
-                                    <li key={i} className="flex items-start gap-4 text-xs text-zinc-200 font-bold group">
-                                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500 group-hover:scale-125 transition-transform" />
+                                    <li key={i} className="flex items-center gap-4 text-sm text-zinc-100 font-bold tracking-wide group">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/40 group-hover:bg-emerald-500 transition-colors" />
                                         {item}
                                     </li>
                                 ))}
                             </ul>
                         </section>
 
-                        <section className="space-y-6">
-                            <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-red-500 flex items-center gap-3">
-                                <CircleAlert className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" /> Non-Capabilities
-                            </h3>
-                            <ul className="space-y-4">
+                        {/* Non-Capabilities */}
+                        <section className="space-y-8">
+                            <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/20">
+                                    <CircleAlert className="w-4 h-4 text-red-500" />
+                                </div>
+                                <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-red-500">Non-Capabilities</h3>
+                            </div>
+                            <ul className="space-y-5">
                                 {[
-                                    "Physical Event Logistics Handling",
-                                    "Financial Transaction Processing",
-                                    "Real-time Attendance Tracking",
-                                    "Club Membership Billing",
-                                    "Hardware Resource Management"
+                                    "Legal Responsibility",
+                                    "Physical Logistics handling",
+                                    "Financial Liability",
+                                    "Automatic Marketing",
+                                    "Transaction processing"
                                 ].map((item, i) => (
-                                    <li key={i} className="flex items-start gap-4 text-xs text-zinc-200 font-bold opacity-80 group">
-                                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-800 group-hover:scale-125 transition-transform" />
+                                    <li key={i} className="flex items-center gap-4 text-sm text-zinc-100 font-bold tracking-wide group">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-red-500/20 group-hover:bg-red-500 transition-colors" />
                                         {item}
                                     </li>
                                 ))}
@@ -91,13 +108,6 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                     </div>
                 </div>
 
-                <div className="mt-20 pt-10 border-t border-white/5 flex justify-between items-center text-[10px] font-mono text-zinc-200 tracking-tighter uppercase">
-                    <div className="flex gap-4">
-                        <span className="px-3 py-1 bg-white/5 rounded-full">V 1.0.4 PRODUCTION</span>
-                        <span className="px-3 py-1 bg-white/5 rounded-full">System: Stable</span>
-                    </div>
-                    <span className="font-airstream text-lg mt-1 text-signature-gradient">© 2026 EASY CLUB INTEL</span>
-                </div>
             </div>
         </motion.div>
     );

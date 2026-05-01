@@ -172,7 +172,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setIncludeEmojis(!includeEmojis)}
-                className={`flex items-center gap-2 px-3 py-1 rounded-full border transition-all duration-300 ${includeEmojis ? 'border-gold-500/50 bg-gold-500/10 text-gold-400' : 'border-white/10 bg-white/5 text-zinc-400'}`}
+                className={`flex items-center gap-2 px-3 py-1 rounded-full border transition-all duration-300 ${includeEmojis ? 'border-gold-500/50 bg-gold-500/10 text-gold-400' : 'border-white/15 bg-white/5 text-zinc-400'}`}
                 title={includeEmojis ? "Emojis Enabled" : "Emojis Disabled"}
               >
                 <span className="text-[9px] font-bold uppercase tracking-tighter">{includeEmojis ? 'Emojis ON' : 'Emojis OFF'}</span>
@@ -181,7 +181,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
               <button
                 onClick={handleGeneratePromo}
                 disabled={isGeneratingPromo}
-                className="px-3 py-1 border border-white/10 rounded-full text-[9px] font-bold uppercase tracking-tighter text-zinc-100 hover:text-signature-gradient transition-all"
+                className="px-3 py-1 border border-white/15 rounded-full text-[9px] font-bold uppercase tracking-tighter text-zinc-100 hover:text-signature-gradient transition-all"
               >
                 {isGeneratingPromo ? <Loader2 className="w-3 h-3 animate-spin" /> : 'Regenerate'}
               </button>
@@ -248,7 +248,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
                   </button>
                   <button 
                     onClick={handleGenerateLetter}
-                    className="px-6 bg-white/5 border border-white/10 text-white rounded-2xl text-[10px] font-bold uppercase hover:bg-white/10"
+                    className="px-6 bg-white/5 border border-white/15 text-white rounded-2xl text-[10px] font-bold uppercase hover:bg-white/10"
                   >
                     Regenerate
                   </button>
@@ -262,7 +262,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
             ) : (
               <button 
                 onClick={handleGenerateLetter}
-                className="w-full bg-black/40 border border-dashed border-white/10 rounded-3xl p-10 flex flex-col items-center gap-4 group hover:border-gold-500/40 transition-all"
+                className="w-full bg-black/40 border border-dashed border-white/15 rounded-3xl p-10 flex flex-col items-center gap-4 group hover:border-gold-500/40 transition-all"
               >
                 <File className="w-5 h-5 text-gold-500 group-hover:text-gold-500 transition-colors" />
                 <span className="text-[10px] font-bold text-zinc-100 uppercase tracking-widest">Generate Official Letter</span>
@@ -281,7 +281,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
           {sheetGen.status === 'success' && (
             <button 
               onClick={downloadExcel}
-              className="px-6 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] font-bold text-white hover:text-signature-gradient hover:border-gold-500/30 transition-all uppercase tracking-widest flex items-center gap-2"
+              className="px-6 py-2 bg-white/5 border border-white/15 rounded-xl text-[10px] font-bold text-white hover:text-signature-gradient hover:border-gold-500/30 transition-all uppercase tracking-widest flex items-center gap-2"
             >
               <Download className="w-3 h-3" /> Export to Excel
             </button>
@@ -315,14 +315,14 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
             <p className="text-[10px] font-bold text-white uppercase tracking-widest">Compiling Data Sheet...</p>
           </div>
         ) : (
-          <div className="py-20 flex flex-col items-center justify-center border border-dashed border-white/10 rounded-[3rem] space-y-6">
+          <div className="py-20 flex flex-col items-center justify-center border border-dashed border-white/15 rounded-[3rem] space-y-6">
             <div className="text-center space-y-2">
               <p className="text-[11px] font-bold text-white uppercase tracking-widest">No Active Data Sheet</p>
               <p className="text-[9px] text-zinc-100">The agent can generate budgets, schedules, or trackers</p>
             </div>
             <button 
               onClick={handleGenerateSheet}
-              className="px-8 py-3 bg-zinc-900 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest text-signature-gradient hover:bg-gold-500/5 transition-all"
+              className="px-8 py-3 bg-zinc-900 border border-white/15 rounded-2xl text-[10px] font-black uppercase tracking-widest text-signature-gradient hover:bg-gold-500/5 transition-all"
             >
               Initialize Data Agent
             </button>

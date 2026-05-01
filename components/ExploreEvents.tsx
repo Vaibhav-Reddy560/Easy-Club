@@ -109,7 +109,7 @@ export default function ExploreEvents() {
             <header className="border-b border-white/5 pb-8 flex justify-between items-end">
                 <div>
                     <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Explore Events</h2>
-                    <p className="text-zinc-100 text-sm mt-1 uppercase font-bold tracking-[0.2em] ml-1">National Activity Stream</p>
+                    <p className="text-zinc-100 text-[10px] mt-1 uppercase font-bold tracking-[0.2em] ml-1">Discover Events in a region</p>
                 </div>
                 <div className="flex gap-4">
                     <div className="text-right">
@@ -120,14 +120,14 @@ export default function ExploreEvents() {
             </header>
 
             {/* FILTERS */}
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 glass-panel p-8 relative overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.45fr_1fr_1.1fr] gap-6 glass-panel rounded-[2.5rem] p-8 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gold-500/5 blur-3xl rounded-full -mr-16 -mt-16" />
                 <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-widest text-white ml-2">Category</label>
                     <select
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
-                        className="w-full bg-black border border-white/10 rounded-2xl px-4 py-3 text-sm text-white focus:border-gold-500/50 outline-none transition-all cursor-pointer appearance-none shadow-inner"
+                        className="w-full bg-black border border-white/15 rounded-2xl px-4 py-3 text-sm text-white focus:border-gold-500/50 outline-none transition-all cursor-pointer appearance-none shadow-inner"
                     >
                         {EVENT_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
@@ -135,12 +135,12 @@ export default function ExploreEvents() {
 
                 <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-widest text-white ml-2">Type</label>
-                    <div className="flex p-1 bg-black border border-white/10 rounded-2xl h-[46px]">
+                    <div className="flex p-1 bg-black border border-white/15 rounded-2xl h-[46px]">
                         {EVENT_TYPES.map((t) => (
                             <button
                                 key={t}
                                 onClick={() => setType(t)}
-                                className={`flex-1 rounded-xl text-[9px] font-black uppercase tracking-tighter transition-all ${type === t ? "bg-gold-500 text-black shadow-lg" : "text-white"}`}
+                                className={`flex-1 rounded-xl text-[9px] font-black uppercase tracking-[0.15em] transition-all px-2 ${type === t ? "bg-gold-500 text-black shadow-lg" : "text-white"}`}
                             >
                                 {t}
                             </button>
@@ -157,7 +157,7 @@ export default function ExploreEvents() {
                             value={location}
                             onChange={(e) => setLocation(e.target.value)}
                             placeholder="All India"
-                            className="w-full h-full bg-black border border-white/10 rounded-2xl pl-11 pr-4 text-sm text-white focus:border-gold-500/50 outline-none shadow-inner"
+                            className="w-full h-full bg-black border border-white/15 rounded-2xl pl-11 pr-4 text-sm text-white focus:border-gold-500/50 outline-none shadow-inner"
                         />
                     </div>
                 </div>
@@ -166,7 +166,7 @@ export default function ExploreEvents() {
                     <button
                         onClick={handleSearch}
                         disabled={loading}
-                        className="w-full bg-gold-gradient h-[46px] rounded-2xl flex items-center justify-center gap-2 text-black font-black uppercase tracking-widest text-[11px] hover:scale-[1.02] active:scale-95 transition-all shadow-xl disabled:opacity-50"
+                        className="w-full bg-gold-gradient h-[46px] rounded-2xl border border-white/15 flex items-center justify-center gap-2 text-black font-black uppercase tracking-widest text-[11px] hover:scale-[1.02] active:scale-95 transition-all shadow-xl disabled:opacity-50"
                     >
                         {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
                         {loading ? "Scanning..." : "Launch Search"}
@@ -179,7 +179,7 @@ export default function ExploreEvents() {
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="flex flex-col items-center gap-4 p-8 bg-zinc-900 border border-white/5 rounded-[2.5rem] shadow-2xl"
+                        className="flex flex-col items-center gap-4 p-8 bg-[#050505] border border-white/15 rounded-[2.5rem] shadow-2xl"
                     >
                         <div className="flex items-center gap-3">
                             <Sparkles className="w-5 h-5 text-gold-500 opacity-40" />
@@ -197,7 +197,7 @@ export default function ExploreEvents() {
                                 setEvents([]);
                                 handleSearch();
                             }}
-                            className="px-6 py-2 bg-white/5 border border-white/10 rounded-xl text-[9px] font-black uppercase tracking-widest text-white hover:bg-gold-500 hover:text-black transition-all"
+                            className="px-6 py-2 bg-white/5 border border-white/15 rounded-xl text-[9px] font-black uppercase tracking-widest text-white hover:bg-gold-500 hover:text-black transition-all"
                         >
                             Force Refresh
                         </button>
@@ -222,7 +222,7 @@ export default function ExploreEvents() {
                             className="glass-card overflow-hidden group hover:border-gold-500/30 transition-all flex flex-col relative"
                         >
                             <div className="absolute top-6 right-6 z-10">
-                                <div className="bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-[9px] font-black text-signature-gradient uppercase tracking-widest">
+                                <div className="bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 text-[9px] font-black text-signature-gradient uppercase tracking-widest">
                                     {event.date}
                                 </div>
                             </div>
@@ -326,7 +326,7 @@ export default function ExploreEvents() {
                                         }
                                     ]);
                                 }}
-                                className="px-8 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 text-[10px] font-bold uppercase tracking-widest text-white hover:text-white transition-all shadow-xl"
+                                className="px-8 py-3 rounded-2xl bg-white/5 border border-white/15 hover:bg-white/10 text-[10px] font-bold uppercase tracking-widest text-white hover:text-white transition-all shadow-xl"
                             >
                                 Simulate with Local Stream
                             </button>

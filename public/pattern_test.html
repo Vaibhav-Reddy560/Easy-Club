@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    margin: 0;
+    background: red; /* VERY OBVIOUS BACKGROUND TO CHECK FOR OVERLAYS */
+    color: white;
+    font-family: sans-serif;
+  }
+  .pattern-fixed {
+    width: 100vw;
+    height: 100vh;
+    --sz: 10px; 
+    --b1: #1a1a1a;
+    --b2: #111111;
+    --b3: #080808;
+    --b4: rgba(0,0,0,0.8);
+    --c1: #F59E0B; /* USE BRIGHT GOLD FOR TESTING VISIBILITY */
+    --ts: 50% / calc(var(--sz) * 17.5) calc(var(--sz) * 29.5);
+    background-color: #050505;
+    background-image:
+      radial-gradient(circle at 50% 50%, var(--b4) calc(var(--sz) * 1), #fff0 calc(var(--sz) * 8)) var(--ts),
+      conic-gradient(from 90deg at 97.5% 67%, var(--c1) 0 87.5deg, #fff0 88deg 100%) var(--ts),
+      conic-gradient(from 182.5deg at 2.5% 67%, #fff0 0 0deg, var(--c1) 0.5deg 90deg, #fff0 0 100%) var(--ts),
+      conic-gradient(from 270deg at 2.5% 33%, var(--c1) 0 87.5deg, #fff0 88deg 100%) var(--ts),
+      conic-gradient(from 2.5deg at 97.5% 33%, #fff0 0 0deg, var(--c1) 0.5deg 90deg, #fff0 0 100%) var(--ts),
+      conic-gradient(from 120deg at 50% 83%, var(--c1) 0 120deg, #fff0 0 100%) var(--ts),
+      conic-gradient(from -60deg at 50% 17%, var(--c1) 0 120deg, #fff0 0 100%) var(--ts),
+      conic-gradient(from 0deg at 50% 50%, #fff0 0 2deg, var(--b2) 2.5deg 57.5deg, #fff0 58deg 62.5deg, var(--b1) 63deg 117.5deg, #fff0 118deg 122.5deg, var(--b3) 123deg 177.5deg, #fff0 178deg 182deg, var(--b2) 182.5deg 237.5deg, #fff0 0 242.5deg, var(--b1) 243deg 297.5deg, #fff0 298deg 302.5deg, var(--b3) 303deg 357.5deg, #fff0 358deg 360deg) var(--ts);
+  }
+</style>
+</head>
+<body>
+  <div class="pattern-fixed">
+    <h1 style="padding: 20px;">Testing Pattern Visibility</h1>
+    <p style="padding: 0 20px;">If you see black cubes with gold outlines, the pattern works.</p>
+  </div>
+</body>
+</html>

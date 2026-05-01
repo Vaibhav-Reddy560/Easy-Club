@@ -129,15 +129,11 @@ const GoldFolder = ({
           </div>
         </div>
 
-        {/* Name & countdown */}
+        {/* Name & status */}
         <div className="flex flex-col items-center gap-0.5 w-full">
-          <span className={`text-[11px] font-semibold ${isCancelled ? 'text-zinc-200 line-through' : 'text-zinc-200 group-hover:text-signature-gradient'} transition-colors text-center truncate w-full px-1 font-sans`}>
-            {name}
-          </span>
-
-          {/* Status indicators */}
+          {/* Status indicators (Events only - now above name for better alignment) */}
           {isEventGrid && (
-            <div className="flex flex-col items-center gap-0.5 min-h-[16px]">
+            <div className="flex flex-col items-center gap-0.5">
               {isPostponed && config?.postponedTo && (
                 <span className="text-[8px] text-yellow-500/80 font-bold uppercase tracking-wider">
                   Moved: {new Date(config.postponedTo).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
@@ -146,7 +142,7 @@ const GoldFolder = ({
               {isCancelled && (
                 <span className="text-[8px] text-zinc-200 font-bold uppercase tracking-wider">Cancelled</span>
               )}
-              {countdown && !isCancelled && status !== 'completed' && (
+              {countdown && !isCancelled && !isCompleted && (
                 <span className={`text-[8px] font-bold uppercase tracking-wider ${countdown === 'Past' ? 'text-red-400/60' : countdown === 'Today!' ? 'text-green-400 animate-pulse' : getStatusColor(status)}`}>
                   {countdown}
                 </span>
@@ -157,8 +153,12 @@ const GoldFolder = ({
             </div>
           )}
 
+          <span className={`text-[11px] font-semibold ${isCancelled ? 'text-zinc-200 line-through' : 'text-zinc-200 group-hover:text-signature-gradient'} transition-colors text-center truncate w-full px-1 font-sans`}>
+            {name}
+          </span>
+
           {/* Hover actions */}
-          <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 mt-1 items-center justify-center">
+          <div className={`flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 items-center justify-center ${isEventGrid ? 'mt-0.5' : 'mt-1'}`}>
             {/* View Report (only for completed events with report) */}
             {hasReport && (
               <button
@@ -185,7 +185,7 @@ const GoldFolder = ({
             {isEventGrid && status !== 'completed' && !isCancelled && onStatusChange && (
               <button
                 onClick={(e) => { e.stopPropagation(); onStatusChange(); }}
-                className="p-1 rounded-md bg-gold-500/10 border border-gold-500/20 text-gold-400 hover:bg-gold-500/20 transition-colors"
+                className="p-1 rounded-md hover:bg-white/10 text-zinc-300 hover:text-gold-400 transition-colors"
                 title="Update Status"
               >
                 <Clock className="w-3 h-3" />
@@ -221,10 +221,10 @@ const GoldFolder = ({
 export default function ClubGrid({ items, onItemClick, onRename, onDelete, onAddClick, onStatusChange, onViewReport, onRevive, title, subtitle, addLabel, isEventGrid }: ClubGridProps) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <header className="mb-14 flex justify-between items-end border-b border-white/15 pb-8">
+      <header className="mb-14 flex justify-between items-end border-b border-white/5 pb-8">
         <div>
           <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">{title}</h2>
-          <p className="text-zinc-300 text-sm mt-1 font-medium tracking-[0.2em] uppercase">{subtitle}</p>
+          <p className="text-zinc-100 text-[10px] mt-1 font-bold tracking-[0.2em] uppercase">{subtitle}</p>
         </div>
       </header>
       <motion.div 

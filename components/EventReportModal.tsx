@@ -33,12 +33,12 @@ export default function EventReportModal({ isOpen, eventName, report, onClose, o
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/40 backdrop-blur-[120px]">
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/20 backdrop-blur-md">
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="relative w-full max-w-3xl bg-[#0a0a0a] border border-white/10 rounded-[2.5rem] p-10 shadow-3xl flex flex-col max-h-[85vh]"
+          className="relative w-full max-w-3xl bg-[#0a0a0a] border border-white/15 rounded-[2.5rem] p-10 shadow-3xl flex flex-col max-h-[85vh]"
         >
           {/* Close */}
           <button onClick={onClose} className="absolute top-8 right-8 text-white transition-colors">
@@ -63,7 +63,7 @@ export default function EventReportModal({ isOpen, eventName, report, onClose, o
               <textarea
                 value={editContent}
                 onChange={e => setEditContent(e.target.value)}
-                className="w-full h-full min-h-[400px] bg-black border border-white/10 rounded-2xl p-6 text-sm text-zinc-300 outline-none focus:border-gold-500/30 resize-none font-sans leading-relaxed"
+                className="w-full h-full min-h-[400px] bg-black border border-white/15 rounded-2xl p-6 text-sm text-zinc-300 outline-none focus:border-gold-500/30 resize-none font-sans leading-relaxed"
               />
             ) : (
               <div className="bg-black/40 border border-white/5 rounded-2xl p-8">
@@ -86,7 +86,7 @@ export default function EventReportModal({ isOpen, eventName, report, onClose, o
           <div className="flex gap-3">
             <button
               onClick={handleCopy}
-              className="px-6 py-3 bg-white/5 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-widest text-zinc-200 hover:bg-white/10 transition-all flex items-center gap-2"
+              className="px-6 py-3 bg-white/5 border border-white/15 rounded-xl text-[10px] font-bold uppercase tracking-widest text-zinc-200 hover:bg-white/10 transition-all flex items-center gap-2"
             >
               {copied ? <Check className="w-3 h-3 text-green-400" /> : <Copy className="w-3 h-3" />}
               {copied ? "Copied" : "Copy"}
@@ -97,7 +97,7 @@ export default function EventReportModal({ isOpen, eventName, report, onClose, o
                 <Save className="w-3 h-3" /> Save Changes
               </button>
             ) : (
-              <button onClick={() => { setEditContent(report.content); setIsEditing(true); }} className="flex-1 py-3 bg-white/5 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-widest text-zinc-200 hover:bg-white/10 transition-all flex items-center justify-center gap-2">
+              <button onClick={() => { setEditContent(report.content); setIsEditing(true); }} className="flex-1 py-3 bg-white/5 border border-white/15 rounded-xl text-[10px] font-bold uppercase tracking-widest text-zinc-200 hover:bg-white/10 transition-all flex items-center justify-center gap-2">
                 <Pencil className="w-3 h-3" /> Edit Report
               </button>
             )}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isometric Pattern Test</title>
+    <style>
+        :root {
+            --bg-color: #050505;
+            --line-color: rgba(255, 255, 255, 0.8);
+            --glow-color: rgba(255, 255, 255, 0.4);
+            --size: 60px;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .isometric-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* The pattern is a set of hexagons divided into 3 rhombi */
+            /* We use conic-gradients to create the faces and lines */
+            background: 
+                /* Stars/Glow at vertices */
+                radial-gradient(circle at 50% 0%, var(--glow-color) 0%, transparent 10%) 0 0 / var(--size) calc(var(--size) * 1.732),
+                radial-gradient(circle at 50% 100%, var(--glow-color) 0%, transparent 10%) 0 0 / var(--size) calc(var(--size) * 1.732),
+                radial-gradient(circle at 0% 50%, var(--glow-color) 0%, transparent 10%) 0 0 / var(--size) calc(var(--size) * 1.732),
+                radial-gradient(circle at 100% 50%, var(--glow-color) 0%, transparent 10%) 0 0 / var(--size) calc(var(--size) * 1.732),
+                radial-gradient(circle at 50% 50%, var(--glow-color) 0%, transparent 15%) 0 0 / var(--size) calc(var(--size) * 1.732),
+                
+                /* Lines */
+                conic-gradient(from 120deg at 50% 25%, var(--line-color) 0deg 1deg, transparent 1deg 119deg, var(--line-color) 119deg 121deg, transparent 121deg) 0 0 / var(--size) calc(var(--size) * 1.732),
+                conic-gradient(from 0deg at 50% 75%, var(--line-color) 0deg 1deg, transparent 1deg 239deg, var(--line-color) 239deg 241deg, transparent 241deg) 0 0 / var(--size) calc(var(--size) * 1.732),
+                conic-gradient(from 120deg at 50% 25%, #111 0 120deg, #0a0a0a 120deg 240deg, #050505 240deg 360deg) 0 0 / var(--size) calc(var(--size) * 1.732);
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            font-family: sans-serif;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="isometric-bg"></div>
+    <div class="content">
+        <h1>Isometric Pattern Match</h1>
+        <p>Testing pattern against user image</p>
+    </div>
+</body>
+</html>

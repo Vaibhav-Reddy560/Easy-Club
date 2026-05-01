@@ -13,6 +13,7 @@ import {
   FileText,
   Share2,
   Pencil,
+  Clock,
   Loader2,
   CheckCircle2
 } from "lucide-react";
@@ -44,6 +45,7 @@ import { useAuth } from "@/lib/auth";
 import { signInWithGoogle, logout } from "@/lib/firebase";
 import { subscribeUserClubs, saveClub, deleteClubFromDb } from "@/lib/db";
 import DynamicIsland from "@/components/DynamicIsland";
+
 
 // --- MAIN APPLICATION ---
 
@@ -492,22 +494,28 @@ export default function App() {
 
   if (authLoading || loading) {
     return (
-      <div className="min-h-screen bg-transparent flex flex-col items-center justify-center space-y-8">
-        <PremiumLoader size="lg" />
-        <p className="text-signature-gradient font-bold uppercase tracking-[0.3em] text-[10px] animate-pulse">Syncing Hub...</p>
+      <div className="min-h-screen bg-transparent flex flex-col items-center justify-center space-y-8 relative overflow-hidden">
+
+        <div className="relative z-10 flex flex-col items-center">
+          <PremiumLoader size="lg" />
+          <p className="text-signature-gradient font-bold uppercase tracking-[0.3em] text-[10px] animate-pulse mt-8">Syncing Hub...</p>
+        </div>
       </div>
     );
   }
 
   if (!user) {
-    return <LoginView onSignIn={signInWithGoogle} />;
+    return (
+      <div className="relative min-h-screen overflow-hidden">
+
+        <LoginView onSignIn={signInWithGoogle} />
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-transparent text-white antialiased pb-20 md:pb-0 relative overflow-hidden">
+    <div className="min-h-screen text-white antialiased pb-20 md:pb-0 relative">
       <DynamicIsland isSaving={isSaving} />
-
-
 
       <Sidebar 
         user={{
@@ -524,14 +532,16 @@ export default function App() {
         onSettingsClick={() => setView('settings')}
       />
 
-      <div className="max-w-[1600px] mx-auto flex px-4 md:px-6 relative z-10">
+      <div className="flex relative z-10 w-full items-stretch">
         <AppSidebar 
           activeSection={activeNav} 
           onSectionChange={handleNavChange} 
           userRole={currentUserRole}
         />
 
-        <main className="flex-1 pt-8 pb-28 md:py-16 px-4 md:px-12 min-w-0">
+        <div className="flex-1 min-w-0">
+          <div className="max-w-[1400px] mx-auto px-4 md:px-12">
+            <main className="pt-8 pb-28 md:py-16 min-w-0">
           {/* We use display management instead of simple conditional rendering for Explore tabs 
               to keep their state alive without deep prop lifting for every search field. */}
           <div className={`${activeNav === 'my-clubs' ? 'block' : 'hidden'}`}>
@@ -560,8 +570,8 @@ export default function App() {
                     setInputValue("");
                     setIsModalOpen(true);
                   }}
-                  title="CLUB OVERVIEW"
-                  subtitle="Select your organization folder"
+                  title="MY CLUBS"
+                  subtitle="All Your Club Folders"
                   addLabel="Establish"
                 />
               )}
@@ -572,7 +582,7 @@ export default function App() {
                     onClick={() => { setView('clubs'); setActiveClubId(null); }}
                     className="flex items-center gap-2 mb-8 font-bold hover:text-gold-400 group transition-colors"
                   >
-                    <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform text-gold-500" />
+                    <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform text-white" />
                     <span className="text-sm uppercase tracking-widest text-signature-gradient">Back to Clubs</span>
                   </button>
                   <ClubGrid
@@ -618,8 +628,8 @@ export default function App() {
                       handleStatusChange(id, 'upcoming');
                     }}
                     isEventGrid={true}
-                    title="EVENT OVERVIEW"
-                    subtitle="Event Projects / Production Folders"
+                    title={`${activeClub?.name || 'CLUB'} EVENTS`}
+                    subtitle="Create your Events"
                     addLabel="Add Event"
                   />
                 </motion.div>
@@ -646,9 +656,15 @@ export default function App() {
                         onClick={() => setView('events')}
                         className="flex items-center gap-2 font-bold hover:text-gold-400 group transition-colors flex-shrink-0"
                       >
-                        <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform text-gold-500" />
+                        <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform text-white" />
                         <span className="text-sm uppercase tracking-widest text-signature-gradient">Back to Dashboard</span>
                       </button>
+                    <button
+                      onClick={() => { setLifecycleTargetId(activeEventId); setIsStatusModalOpen(true); }}
+                      className="flex items-center gap-2 px-6 py-2 bg-neutral-900 border border-white/20 rounded-full text-[10px] font-bold uppercase tracking-widest hover:border-gold-500/50 hover:text-gold-400 transition-all shadow-xl whitespace-nowrap"
+                    >
+                      <Clock className="w-3 h-3" /> Update Status
+                    </button>
                     <button
                       onClick={() => setView('questionnaire')}
                       className="flex items-center gap-2 px-6 py-2 bg-neutral-900 border border-white/20 rounded-full text-[10px] font-bold uppercase tracking-widest hover:border-gold-500/50 hover:text-gold-400 transition-all shadow-xl whitespace-nowrap"
@@ -672,7 +688,7 @@ export default function App() {
                       <div
                         key={d.id}
                         onClick={() => setActiveDomain(d.id as 'Design' | 'Content' | 'Social')}
-                        className={`p-8 rounded-[2rem] cursor-pointer relative overflow-hidden ${activeDomain === d.id ? 'glass-panel !bg-neutral-900/60 shadow-gold-glow transform -translate-y-2' : 'glass-card hover:border-gold-500/30'}`}
+                        className={`p-8 rounded-[2rem] cursor-pointer relative overflow-hidden ${activeDomain === d.id ? 'glass-panel !bg-[#0f0f0f] shadow-gold-glow transform -translate-y-2' : 'glass-card hover:border-gold-500/30'}`}
                       >
                         {activeDomain === d.id && <BorderBeam duration={8} size={300} />}
                         <div className="relative z-10">
@@ -751,13 +767,15 @@ export default function App() {
           {activeNav === 'ideation' && (
             <EventIdeation clubs={clubs} onAdopt={handleAdoptIdea} />
           )}
-        </main>
+          </main>
+        </div>
       </div>
+    </div>
 
       {/* Modal for Creating/Renaming Clubs/Events */}
       <AnimatePresence>
         {isModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/40 backdrop-blur-[120px]">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/20 backdrop-blur-md">
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -845,6 +863,7 @@ export default function App() {
           isOpen={isStatusModalOpen}
           onClose={() => setIsStatusModalOpen(false)}
           event={lifecycleTargetEvent}
+          clubName={activeClub?.name}
           onStatusChange={handleStatusChange}
         />
       )}

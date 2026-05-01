@@ -8,6 +8,7 @@ import { ClubEvent, EventStatus, PostEventData } from "@/lib/types";
 interface EventStatusModalProps {
   isOpen: boolean;
   event: ClubEvent;
+  clubName?: string;
   onClose: () => void;
   onStatusChange: (
     eventId: string, 
@@ -22,7 +23,7 @@ interface EventStatusModalProps {
 
 type Step = 'choose' | 'completed-form' | 'postponed-form' | 'cancelled-confirm' | 'generating';
 
-export default function EventStatusModal({ isOpen, event, onClose, onStatusChange }: EventStatusModalProps) {
+export default function EventStatusModal({ isOpen, event, clubName, onClose, onStatusChange }: EventStatusModalProps) {
   const [step, setStep] = useState<Step>('choose');
   const [postponedDate, setPostponedDate] = useState("");
 
@@ -82,7 +83,7 @@ export default function EventStatusModal({ isOpen, event, onClose, onStatusChang
       const res = await fetch("/api/generate-report", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ event, postEventData }),
+        body: JSON.stringify({ event, postEventData, clubName }),
       });
       const data = await res.json();
 
@@ -107,12 +108,12 @@ export default function EventStatusModal({ isOpen, event, onClose, onStatusChang
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/40 backdrop-blur-[120px]">
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/20 backdrop-blur-md">
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="relative w-full max-w-lg bg-[#0a0a0a] border border-white/10 rounded-[2.5rem] p-10 shadow-3xl"
+          className="relative w-full max-w-lg bg-[#0a0a0a] border border-white/15 rounded-[2.5rem] p-10 shadow-3xl"
         >
           <button onClick={handleClose} className="absolute top-8 right-8 text-white transition-colors">
             <X className="w-5 h-5" />
@@ -175,17 +176,17 @@ export default function EventStatusModal({ isOpen, event, onClose, onStatusChang
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="text-[9px] text-zinc-300 font-bold uppercase tracking-widest block mb-2">Total Registrations</label>
-                    <input type="number" value={totalRegistrations} onChange={e => setTotalRegistrations(e.target.value)} placeholder="0" className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50" />
+                    <input type="number" value={totalRegistrations} onChange={e => setTotalRegistrations(e.target.value)} placeholder="0" className="w-full bg-black border border-white/15 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50" />
                   </div>
                   <div>
                     <label className="text-[9px] text-zinc-300 font-bold uppercase tracking-widest block mb-2">Total Attendees</label>
-                    <input type="number" value={totalAttendees} onChange={e => setTotalAttendees(e.target.value)} placeholder="0" className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50" />
+                    <input type="number" value={totalAttendees} onChange={e => setTotalAttendees(e.target.value)} placeholder="0" className="w-full bg-black border border-white/15 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50" />
                   </div>
                 </div>
 
                 <div>
                   <label className="text-[9px] text-zinc-300 font-bold uppercase tracking-widest block mb-2">Club Member Attendees</label>
-                  <input type="number" value={clubMembers} onChange={e => setClubMembers(e.target.value)} placeholder="0" className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50" />
+                  <input type="number" value={clubMembers} onChange={e => setClubMembers(e.target.value)} placeholder="0" className="w-full bg-black border border-white/15 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50" />
                   {totalAttendees && clubMembers && (
                     <p className="text-[9px] text-zinc-200 mt-1">Non-club: {Math.max(0, (parseInt(totalAttendees) || 0) - (parseInt(clubMembers) || 0))}</p>
                   )}
@@ -193,21 +194,21 @@ export default function EventStatusModal({ isOpen, event, onClose, onStatusChang
 
                 <div>
                   <label className="text-[9px] text-zinc-300 font-bold uppercase tracking-widest block mb-2">Participant Engagement</label>
-                  <textarea value={engagement} onChange={e => setEngagement(e.target.value)} placeholder="How did participants engage? (Q&A, networking, hands-on activities...)" rows={3} className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50 resize-none" />
+                  <textarea value={engagement} onChange={e => setEngagement(e.target.value)} placeholder="How did participants engage? (Q&A, networking, hands-on activities...)" rows={3} className="w-full bg-black border border-white/15 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50 resize-none" />
                 </div>
 
                 <div>
                   <label className="text-[9px] text-zinc-300 font-bold uppercase tracking-widest block mb-2">Benefits Gained</label>
-                  <textarea value={benefits} onChange={e => setBenefits(e.target.value)} placeholder="What did participants take away? (skills, connections, certifications...)" rows={3} className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50 resize-none" />
+                  <textarea value={benefits} onChange={e => setBenefits(e.target.value)} placeholder="What did participants take away? (skills, connections, certifications...)" rows={3} className="w-full bg-black border border-white/15 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50 resize-none" />
                 </div>
 
                 <div>
                   <label className="text-[9px] text-zinc-300 font-bold uppercase tracking-widest block mb-2">Day Conduct Summary</label>
-                  <textarea value={conductSummary} onChange={e => setConductSummary(e.target.value)} placeholder="How was the event conducted on the day? Any highlights or issues?" rows={3} className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50 resize-none" />
+                  <textarea value={conductSummary} onChange={e => setConductSummary(e.target.value)} placeholder="How was the event conducted on the day? Any highlights or issues?" rows={3} className="w-full bg-black border border-white/15 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50 resize-none" />
                 </div>
 
                 <div className="flex gap-3 pt-2">
-                  <button onClick={() => setStep('choose')} className="flex-1 py-3 bg-white/5 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-widest text-zinc-200 hover:bg-white/10 transition-all">
+                  <button onClick={() => setStep('choose')} className="flex-1 py-3 bg-white/5 border border-white/15 rounded-xl text-[10px] font-bold uppercase tracking-widest text-zinc-200 hover:bg-white/10 transition-all">
                     Back
                   </button>
                   <button
@@ -226,10 +227,10 @@ export default function EventStatusModal({ isOpen, event, onClose, onStatusChang
               <motion.div key="postponed" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-5">
                 <div>
                   <label className="text-[9px] text-zinc-300 font-bold uppercase tracking-widest block mb-2">Postponed To</label>
-                  <input type="date" value={postponedDate} onChange={e => setPostponedDate(e.target.value)} className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50 [color-scheme:dark]" />
+                  <input type="date" value={postponedDate} onChange={e => setPostponedDate(e.target.value)} className="w-full bg-black border border-white/15 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500/50 [color-scheme:dark]" />
                 </div>
                 <div className="flex gap-3">
-                  <button onClick={() => setStep('choose')} className="flex-1 py-3 bg-white/5 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-widest text-zinc-200 hover:bg-white/10 transition-all">
+                  <button onClick={() => setStep('choose')} className="flex-1 py-3 bg-white/5 border border-white/15 rounded-xl text-[10px] font-bold uppercase tracking-widest text-zinc-200 hover:bg-white/10 transition-all">
                     Back
                   </button>
                   <button onClick={handlePostponed} disabled={!postponedDate} className="flex-1 py-3 bg-yellow-500 text-black rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-yellow-400 transition-all disabled:opacity-40 disabled:cursor-not-allowed">

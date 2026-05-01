@@ -4,7 +4,7 @@ import { callGeminiSafe } from "@/lib/gemini";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { event, postEventData } = body;
+    const { event, postEventData, clubName } = body;
 
     if (!event || !postEventData) {
       return NextResponse.json({ error: "Missing event or postEventData" }, { status: 400 });
@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
 
 EVENT DETAILS:
 - Name: ${event.name}
+- Club: ${clubName || "Not specified"}
 - Type: ${config.subType || config.type || "General Event"}
 - Date: ${config.date || "Not specified"}
 - Time: ${config.time || "Not specified"}
@@ -32,16 +33,23 @@ POST-EVENT DATA:
 - Benefits Gained by Participants: ${postEventData.benefitsGained}
 - Day-of-Event Conduct Summary: ${postEventData.conductSummary}
 
-Generate the report with these sections:
-1. **Event Overview** — Brief summary of the event purpose and scope
-2. **Attendance & Registration Analysis** — Numbers with club/non-club split, registration-to-attendance conversion rate
-3. **Participant Engagement** — Analysis of how participants engaged
-4. **Outcomes & Benefits** — What participants gained
-5. **Event Execution** — How the day went, logistics, any issues
-6. **Key Metrics** — Bullet-point summary of critical numbers
-7. **Recommendations** — Actionable suggestions for future editions
+Generate the report using EXACTLY these headings. The first heading MUST BE EXACTLY "# ${clubName || 'Club'} Events" (Do not add any extra text or use other variations):
+1. # ${clubName || 'Club'} Events
+   (Write a brief summary of the event purpose and scope here)
+2. ## Attendance & Registration Analysis
+   (Numbers with club/non-club split, registration-to-attendance conversion rate)
+3. ## Participant Engagement
+   (Analysis of how participants engaged)
+4. ## Outcomes & Benefits
+   (What participants gained)
+5. ## Event Execution
+   (How the day went, logistics, any issues)
+6. ## Key Metrics
+   (Bullet-point summary of critical numbers)
+7. ## Recommendations
+   (Actionable suggestions for future editions)
 
-Keep the tone professional but concise. Use markdown formatting. Do NOT wrap the response in a code block.`;
+Keep the tone professional but concise. Use markdown formatting. Do NOT wrap the response in a code block. Always use the exact heading names provided above without appending any extra text.`;
 
     const content = await callGeminiSafe(prompt, 30000);
 

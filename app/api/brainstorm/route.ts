@@ -41,6 +41,7 @@ export async function POST(req: Request) {
             TASK:
             Initiate a high-performance brainstorming session. 
             Welcoming them, then suggest 3 specific, non-generic event archetypes (one safe, one innovative, one high-impact) based on the trends.
+            Each event name MUST be extremely concise (max 2-3 words).
             Ask which direction they want to "Architect" first.
             
             TONE:
@@ -121,7 +122,7 @@ export async function POST(req: Request) {
 
             Return a VALID JSON object exactly in this format:
             {
-                "title": "Punchy creative name",
+                "title": "Concise creative name (MAX 3 WORDS)",
                 "tags": ["Primary Category", "Secondary tag"],
                 "description": "A comprehensive 3-5 sentence description detailing the twist, the value, and the core experience."
             }

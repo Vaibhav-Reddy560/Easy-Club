@@ -90,7 +90,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                             <span className="text-signature-gradient">Trending Ideas</span>
                             <TrendingUp className="w-8 h-8 text-gold-500 flex-shrink-0" />
                         </h2>
-                        <p className="text-white text-sm mt-1 uppercase font-bold tracking-widest">AI-Curated Event Blueprints & Market Analysis</p>
+                        <p className="text-zinc-100 text-[10px] mt-1 uppercase font-bold tracking-[0.2em]">Popular Event Blueprints in the Market</p>
                     </div>
                     <div className="hidden md:flex items-center gap-2 text-[10px] font-bold uppercase tracking-tighter bg-gold-500/5 px-4 py-2 rounded-full border border-gold-500/10">
                         <Sparkles className="w-3 h-3 text-gold-500 flex-shrink-0" /> 
@@ -107,7 +107,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                         onClick={() => setSelectedCategory(cat)}
                         className={`px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${selectedCategory === cat
                             ? "bg-gold-500 text-black shadow-gold-glow"
-                            : "bg-zinc-900/40 text-white border border-white/5 hover:border-gold-500/30 hover:text-white"
+                            : "bg-[#050505] text-white border border-white/15 hover:border-gold-500/30 hover:text-white shadow-sm"
                             }`}
                     >
                         {cat}
@@ -155,7 +155,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: i * 0.1 }}
-                                className="group relative p-10 bg-zinc-900/40 border border-white/5 rounded-[3rem] hover:border-gold-500/40 transition-all duration-500 overflow-hidden"
+                                className="group relative p-10 bg-[#050505] border border-white/15 rounded-[3rem] hover:border-gold-500/40 transition-all duration-500 overflow-hidden shadow-2xl"
                             >
                                 {/* Decorative elements */}
                                 <div className="absolute -top-24 -right-24 w-48 h-48 bg-gold-500/5 blur-[100px] rounded-full group-hover:bg-gold-500/10 transition-all" />
@@ -200,7 +200,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                                             <div className="flex items-center gap-2 text-[9px] font-black text-signature-gradient uppercase tracking-widest">
                                                 <Target className="w-3 h-3" /> Market Reference
                                             </div>
-                                            <div className="p-4 bg-black/60 border border-white/10 rounded-2xl text-[11px] text-zinc-100 italic leading-relaxed">
+                                            <div className="p-4 bg-black/60 border border-white/15 rounded-2xl text-[11px] text-zinc-100 italic leading-relaxed">
                                                 &quot;{idea.references}&quot;
                                             </div>
                                         </div>
@@ -236,7 +236,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                             initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.9, opacity: 0 }}
-                            className="w-full max-w-lg bg-[#0a0a0a] border border-white/10 p-8 rounded-[3rem] shadow-2xl relative overflow-hidden"
+                            className="w-full max-w-lg bg-[#0a0a0a] border border-white/15 p-8 rounded-[3rem] shadow-2xl relative overflow-hidden"
                         >
                             <div className="absolute top-0 right-0 w-64 h-64 bg-gold-500/10 blur-[100px] rounded-full point-events-none" />
                             
@@ -251,7 +251,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                                 value={customInput}
                                 onChange={(e) => setCustomInput(e.target.value)}
                                 placeholder="I want this event to focus heavily on AI, make sure we have a speaker from XYZ..."
-                                className="w-full h-32 px-5 py-4 bg-black/40 border border-white/10 rounded-2xl text-sm text-white placeholder-zinc-400 focus:outline-none focus:border-gold-500/50 mb-6 font-medium leading-relaxed resize-none"
+                                className="w-full h-32 px-5 py-4 bg-black/40 border border-white/15 rounded-2xl text-sm text-white placeholder-zinc-400 focus:outline-none focus:border-gold-500/50 mb-6 font-medium leading-relaxed resize-none"
                             />
 
                             <div className="flex gap-4">
@@ -260,7 +260,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                                         setAdoptingIdea(null);
                                         setCustomInput("");
                                     }}
-                                    className="flex-1 py-4 bg-white/5 border border-white/10 rounded-full text-xs font-black uppercase tracking-widest text-white hover:bg-white/10 transition-colors"
+                                    className="flex-1 py-4 bg-white/5 border border-white/15 rounded-full text-xs font-black uppercase tracking-widest text-white hover:bg-white/10 transition-colors"
                                 >
                                     Cancel
                                 </button>

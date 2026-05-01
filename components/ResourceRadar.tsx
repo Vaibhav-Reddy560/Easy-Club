@@ -141,7 +141,7 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                                     className={`px-5 py-2.5 rounded-2xl border transition-all flex flex-col items-start gap-0 group ${
                                         domain === persona.expertise 
                                         ? "bg-gold-500/10 border-gold-500/40 shadow-[0_0_20px_rgba(245,158,11,0.1)]" 
-                                        : "bg-white/[0.02] border-white/10 hover:border-gold-500/40"
+                                        : "bg-white/[0.02] border-white/15 hover:border-gold-500/40"
                                     }`}
                                 >
                                     <span className="text-[8px] font-black uppercase tracking-widest text-white">
@@ -213,7 +213,7 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                                                     width={72}
                                                     height={72}
                                                     unoptimized
-                                                    className="w-16 h-16 rounded-2xl object-cover border border-white/10 relative z-10"
+                                                    className="w-16 h-16 rounded-2xl object-cover border border-white/15 relative z-10"
                                                 />
                                             </div>
                                             <div className="px-3 py-1 bg-white/[0.03] rounded-full border border-white/5 flex items-center gap-2 text-[8px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-gold-500 transition-colors">
