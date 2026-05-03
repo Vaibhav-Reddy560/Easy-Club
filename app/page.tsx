@@ -211,11 +211,23 @@ export default function App() {
     // 1. OPTIMISTIC UI UPDATE (Sync)
     if (modalOperation === 'create') {
       if (modalType === 'club') {
+        const ownerAsMember: ClubMember = {
+          id: user?.uid || "owner",
+          name: user?.displayName || "Club Founder",
+          email: user?.email || "",
+          role: 'Senior Core',
+          customPosition: "Founder", 
+          joinDate: new Date().toISOString().split('T')[0],
+          basis: 'Fee Paid'
+        };
+
         const newClub: Club = {
           id: `club_${Date.now()}`,
           ownerId: user?.uid || "guest-id",
+          ownerName: user?.displayName || "Club Founder",
+          ownerEmail: user?.email || "",
           name: capturedValue,
-          members: [], 
+          members: [ownerAsMember], 
           events: []
         };
         

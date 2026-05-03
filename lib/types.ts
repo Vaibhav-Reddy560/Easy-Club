@@ -137,6 +137,8 @@ export interface MembershipConfig {
 export interface Club {
     id: string;
     ownerId?: string;
+    ownerName?: string;
+    ownerEmail?: string;
     name: string;
     events: ClubEvent[];
     members?: ClubMember[];
