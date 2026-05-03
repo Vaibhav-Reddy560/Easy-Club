@@ -178,7 +178,7 @@ export default function App() {
   // Calculate current user role whenever club or user changes
   useEffect(() => {
     if (!user || !activeClub) {
-      setCurrentUserRole('Admin'); // Default to Admin for personal clips
+      setCurrentUserRole('Admin');
       return;
     }
 
@@ -186,7 +186,18 @@ export default function App() {
     if (memberMatch) {
       setCurrentUserRole(memberMatch.role);
     } else {
-      setCurrentUserRole('Admin'); // Original owner
+      setCurrentUserRole('Admin');
+      
+      // AUTO-HEALING: If owner details are missing, patch them now
+      if (user.uid === activeClub.ownerId && (!activeClub.ownerName || !activeClub.ownerEmail)) {
+        console.log("[Repair] Patching missing owner metadata...");
+        const patchedClub = {
+          ...activeClub,
+          ownerName: user.displayName || "Club Founder",
+          ownerEmail: user.email || ""
+        };
+        void saveClub(patchedClub as Club & { ownerId: string });
+      }
     }
   }, [user, activeClub]);
 
