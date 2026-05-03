@@ -90,13 +90,18 @@ export default function App() {
   useEffect(() => {
     let isMounted = true;
     
-    const safetyTimeout = setTimeout(() => {
-      if (isMounted) setLoading(false);
-    }, 10000);
-
-    if (authLoading) return () => { isMounted = false; clearTimeout(safetyTimeout); };
+    if (authLoading) return () => { isMounted = false; };
     
     if (user) {
+      // INITIAL SYNC: Give it more time (8s) on first load for mobile/slow networks
+      const safetyTimeout = setTimeout(() => {
+        if (isMounted && clubs.length === 0) {
+          setIsSyncing(false);
+          setLoading(false);
+          console.warn("[Sync] Initial sync timed out. Data may still be loading in background.");
+        }
+      }, 8000); 
+
       if (lastSyncedUid.current !== user.uid) setLoading(true);
       
       const unsubscribe = subscribeUserClubs(user.uid, user.email, (fetchedClubs, syncing) => {
@@ -117,18 +122,13 @@ export default function App() {
             return combined;
           });
 
-          // If we have data, and syncing is taking > 3s, assume we are good for now
+          // Update sync status
           setIsSyncing(syncing);
           
-          if (fetchedClubs.length > 0) {
+          if (fetchedClubs.length > 0 || !syncing) {
             setLoading(false);
             lastSyncedUid.current = user.uid;
             localStorage.setItem('last_synced_uid', user.uid);
-            // Don't clear safetyTimeout here, keep it for initial sync
-          }
-          
-          if (!syncing) {
-            setLoading(false);
             clearTimeout(safetyTimeout);
           }
         }
@@ -141,7 +141,7 @@ export default function App() {
         clearTimeout(safetyTimeout);
       };
     } else {
-      // EMERGENCY MOCK MODE: If Firebase fails, provide a demo playground
+      // EMERGENCY MOCK MODE: ONLY for unauthenticated users
       if (isMounted) {
           const mockClub: Club = {
             id: 'mock-club',
