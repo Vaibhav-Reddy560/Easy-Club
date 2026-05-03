@@ -104,15 +104,15 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
 
 
   // Editable poster text
-  const [editTitle, setEditTitle] = useState(config.designTitle || activeEvent?.name || "Event Title");
-  const [editSubtitle, setEditSubtitle] = useState(config.designSubtitle || "");
-  const [editDate, setEditDate] = useState(config.date || "");
-  const [editTime, setEditTime] = useState(config.time || "");
-  const [editVenue, setEditVenue] = useState(config.venue || "");
-  const [editTeamSize, setEditTeamSize] = useState(config.teamSize || "");
-  const [editFee, setEditFee] = useState(config.feeClub || "");
-  const [editPoc1, setEditPoc1] = useState(config.poc1Name ? `${config.poc1Name}: ${config.poc1Phone || ""}` : "");
-  const [editPoc2, setEditPoc2] = useState(config.poc2Name ? `${config.poc2Name}: ${config.poc2Phone || ""}` : "");
+  const [editTitle, setEditTitle] = useState<string>(config.designTitle as string || activeEvent?.name || "Event Title");
+  const [editSubtitle, setEditSubtitle] = useState<string>(config.designSubtitle as string || "");
+  const [editDate, setEditDate] = useState<string>(config.date as string || "");
+  const [editTime, setEditTime] = useState<string>(config.time as string || "");
+  const [editVenue, setEditVenue] = useState<string>(config.venue as string || "");
+  const [editTeamSize, setEditTeamSize] = useState<string>(config.teamSize as string || "");
+  const [editFee, setEditFee] = useState<string>(config.feeClub as string || "");
+  const [editPoc1, setEditPoc1] = useState<string>(config.poc1Name ? `${config.poc1Name}: ${config.poc1Phone || ""}` : "");
+  const [editPoc2, setEditPoc2] = useState<string>(config.poc2Name ? `${config.poc2Name}: ${config.poc2Phone || ""}` : "");
 
   // Generators
   const vibeGen = useGenerator("Scanning Vibe Database...");
