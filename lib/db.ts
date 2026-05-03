@@ -329,5 +329,7 @@ import {
   }
 
   export async function signOutUser() {
-    await signOut(auth);
+    if (auth) {
+      await signOut(auth);
+    }
   }
