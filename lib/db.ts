@@ -61,7 +61,8 @@ import {
     // Query 2: Clubs where user is a member
     let unsubMember = () => {};
     if (userEmail) {
-      const memberQuery = query(collection(db, CLUBS_COLLECTION), where("memberEmails", "array-contains", userEmail));
+      const normalizedEmail = userEmail.toLowerCase();
+      const memberQuery = query(collection(db, CLUBS_COLLECTION), where("memberEmails", "array-contains", normalizedEmail));
       unsubMember = onSnapshot(memberQuery, { includeMetadataChanges: true }, (snap) => updateResults(snap, true), (err) => console.error("Member clubs sub error:", err));
     }
 
@@ -81,7 +82,7 @@ import {
         query(collection(db, CLUBS_COLLECTION), where("ownerId", "==", userId))
       ];
       if (userEmail) {
-        queries.push(query(collection(db, CLUBS_COLLECTION), where("memberEmails", "array-contains", userEmail)));
+        queries.push(query(collection(db, CLUBS_COLLECTION), where("memberEmails", "array-contains", userEmail.toLowerCase())));
       }
 
       // 1. Try Cache First for INSTANT loading speed
@@ -122,8 +123,8 @@ import {
   
     try {
       const clubRef = doc(db, CLUBS_COLLECTION, club.id);
-      // Denormalize member emails for array-contains queries
-      const memberEmails = (club.members || []).map(m => m.email).filter(Boolean);
+      // Denormalize member emails for array-contains queries - use lowercase for search reliability
+      const memberEmails = (club.members || []).map(m => m.email.toLowerCase()).filter(Boolean);
       
       // Ensure ownerId is ALWAYS present and correct
       const payload = { 

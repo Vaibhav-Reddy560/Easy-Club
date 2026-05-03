@@ -23,9 +23,15 @@ function JoinContent() {
     useEffect(() => {
         if (authLoading) return;
 
-        if (!inviteId || !targetClubId) {
+        if (!inviteId) {
             setStatus('error');
-            setError("Invalid or incomplete invitation link.");
+            setError("Missing invitation token.");
+            return;
+        }
+
+        if (!targetClubId) {
+            setStatus('error');
+            setError("This invitation link is outdated. Please ask the Founder to send a new invite.");
             return;
         }
 
