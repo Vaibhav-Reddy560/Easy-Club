@@ -90,11 +90,13 @@ export default function App() {
   useEffect(() => {
     let isMounted = true;
     
+    let safetyTimeout: NodeJS.Timeout;
+    
     if (authLoading) return () => { isMounted = false; };
     
     if (user) {
       // INITIAL SYNC: Give it more time (8s) on first load for mobile/slow networks
-      const safetyTimeout = setTimeout(() => {
+      safetyTimeout = setTimeout(() => {
         if (isMounted && clubs.length === 0) {
           setIsSyncing(false);
           setLoading(false);
@@ -164,13 +166,11 @@ export default function App() {
           setActiveEventId('mock-event');
           setLoading(false);
           setIsSyncing(false);
-          clearTimeout(safetyTimeout);
       }
     }
     
     return () => { 
       isMounted = false; 
-      clearTimeout(safetyTimeout);
     };
   }, [user, authLoading]);
 
