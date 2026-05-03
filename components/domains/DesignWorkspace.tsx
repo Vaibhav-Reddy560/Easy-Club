@@ -128,7 +128,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
       setEditPoc1(config.poc1Name ? `${config.poc1Name}: ${config.poc1Phone || ""}` : "");
       setEditPoc2(config.poc2Name ? `${config.poc2Name}: ${config.poc2Phone || ""}` : "");
       
-      if (config.designVibe) setVibeData(config.designVibe);
+      if (config.designVibe) setVibeData(config.designVibe as VibeData);
       if (config.designTitleImage) setAiTitleImage(config.designTitleImage);
       if (config.designActiveTab) setActiveTab(config.designActiveTab);
       if (config.designPosterDim) setPosterDim(config.designPosterDim);
