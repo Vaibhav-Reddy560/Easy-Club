@@ -312,6 +312,7 @@ import {
         return { success: true, clubName: targetClub.name };
     } catch (error) {
         console.error("Error accepting invite:", error);
+        return { success: false, error: "Internal server error while processing invite" };
     }
   }
 
