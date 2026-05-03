@@ -13,7 +13,7 @@ import {
     getDocsFromServer
   } from "firebase/firestore";
   import { db } from "./firebase";
-  import { Club, ScrapedClub } from "./types";
+  import { Club, ScrapedClub, TeamInvite, ClubMember } from "./types";
   
   const CLUBS_COLLECTION = "clubs";
   const SAVED_CLUBS_COLLECTION = "saved_explore_clubs";
@@ -210,5 +210,107 @@ import {
     } catch (error) {
       console.error("Error removing explore club:", error);
       return false;
+    }
+  }
+
+  /**
+   * Creates a new team invitation for a club.
+   */
+  export async function createTeamInvite(clubId: string, email: string, role: string): Promise<string | null> {
+    if (!db) return null;
+    try {
+        const inviteId = `inv_${Math.random().toString(36).substring(2, 15)}`;
+        const clubRef = doc(db, CLUBS_COLLECTION, clubId);
+        
+        const invite: TeamInvite = {
+            id: inviteId,
+            email: email.toLowerCase(),
+            role: role as any,
+            status: 'pending',
+            sentAt: new Date().toISOString()
+        };
+
+        // We store invites within the club document for simplicity in this architecture
+        // In a larger app, a separate 'invites' collection might be better
+        const snapshot = await getDocs(query(collection(db, CLUBS_COLLECTION), where("id", "==", clubId)));
+        if (snapshot.empty) return null;
+        
+        const clubData = snapshot.docs[0].data() as Club;
+        const currentInvites = clubData.invites || [];
+        
+        await setDoc(doc(db, CLUBS_COLLECTION, clubId), {
+            ...clubData,
+            invites: [...currentInvites, invite]
+        }, { merge: true });
+
+        return inviteId;
+    } catch (error) {
+        console.error("Error creating invite:", error);
+        return null;
+    }
+  }
+
+  /**
+   * Verifies an invite token and adds the user to the club.
+   */
+  export async function verifyAndAcceptInvite(inviteId: string, user: { id: string, email: string, name: string }): Promise<{ success: boolean, clubName?: string, error?: string }> {
+    if (!db) return { success: false, error: "Database not initialized" };
+    
+    try {
+        // Find the club that has this invite ID
+        const q = query(collection(db, CLUBS_COLLECTION));
+        const snapshot = await getDocs(q);
+        
+        let targetClub: Club | null = null;
+        let targetInvite: TeamInvite | null = null;
+        
+        for (const d of snapshot.docs) {
+            const data = d.data() as Club;
+            const invite = data.invites?.find(i => i.id === inviteId);
+            if (invite) {
+                targetClub = data;
+                targetInvite = invite;
+                break;
+            }
+        }
+
+        if (!targetClub || !targetInvite) {
+            return { success: false, error: "Invalid or expired invitation link" };
+        }
+
+        if (targetInvite.status !== 'pending') {
+            return { success: false, error: "This invitation has already been used" };
+        }
+
+        // Security: Ensure email matches if specified in invite (optional, but professional)
+        if (targetInvite.email && targetInvite.email.toLowerCase() !== user.email.toLowerCase()) {
+            return { success: false, error: `This invite was intended for ${targetInvite.email}` };
+        }
+
+        // Add user to members
+        const newMember: ClubMember = {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: targetInvite.role,
+            joinDate: new Date().toISOString(),
+            basis: 'Fee Paid' // Default for team invites
+        };
+
+        const updatedMembers = [...(targetClub.members || []), newMember];
+        const updatedInvites = targetClub.invites?.map(i => 
+            i.id === inviteId ? { ...i, status: 'accepted' as const } : i
+        );
+
+        await setDoc(doc(db, CLUBS_COLLECTION, targetClub.id), {
+            ...targetClub,
+            members: updatedMembers,
+            invites: updatedInvites
+        }, { merge: true });
+
+        return { success: true, clubName: targetClub.name };
+    } catch (error) {
+        console.error("Error accepting invite:", error);
+        return { success: false, error: "Internal server error while processing invite" };
     }
   }

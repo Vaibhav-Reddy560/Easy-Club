@@ -896,7 +896,7 @@ export default function App() {
           </div>
 
           <div className={`${activeNav === 'my-team' ? 'block' : 'hidden'}`}>
-            <MyTeamView clubs={clubs} onUpdateClub={onUpdateClub} />
+            <MyTeamView clubs={clubs} user={user} onUpdateClub={onUpdateClub} />
           </div>
 
           <div className={`${activeNav === 'membership' ? 'block' : 'hidden'}`}>

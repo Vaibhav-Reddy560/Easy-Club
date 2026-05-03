@@ -97,6 +97,7 @@ export interface ClubMember {
     name: string;
     email: string;
     role: MemberRole;
+    customPosition?: string;
     joinDate: string;
     basis: RecruitmentBasis;
     testDetails?: string;

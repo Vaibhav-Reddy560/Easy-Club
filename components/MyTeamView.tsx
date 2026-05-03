@@ -26,10 +26,11 @@ import { Club, MemberRole, TeamInvite, ActivityLogEvent, ClubMember } from "@/li
 
 interface MyTeamViewProps {
     clubs: Club[];
+    user: any; // Using any for auth user compatibility
     onUpdateClub: (updatedClub: Club) => void;
 }
 
-export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
+export default function MyTeamView({ clubs, user, onUpdateClub }: MyTeamViewProps) {
     const [selectedClubId, setSelectedClubId] = useState<string | null>(clubs[0]?.id || null);
     
     // Automatically select the first club if available and none selected
@@ -69,9 +70,37 @@ export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
         );
     }
 
-    const members = (activeClub.members || []).filter(m => m.role !== 'General Member');
+    const ownerAsMember: ClubMember = {
+        id: activeClub.ownerId,
+        name: user?.displayName || "Club Owner",
+        email: user?.email || "",
+        role: 'Senior Core',
+        customPosition: (activeClub as any).ownerPosition || "", // Dedicated field for owner's self-assigned title
+        joinDate: new Date().toISOString().split('T')[0],
+        basis: 'Fee Paid'
+    };
+
+    const members = [ownerAsMember, ...(activeClub.members || []).filter(m => m.role !== 'General Member' && m.id !== activeClub.ownerId)];
     const invites = activeClub.invites || [];
     const activityLog = activeClub.activityLog || [];
+
+    const handleUpdateMemberPosition = (memberId: string, position: string) => {
+        if (memberId === activeClub.ownerId) {
+            // Special handling for owner's position
+            onUpdateClub({
+                ...activeClub,
+                ownerPosition: position
+            } as any);
+        } else {
+            // Standard handling for core members
+            onUpdateClub({
+                ...activeClub,
+                members: activeClub.members?.map(m => 
+                    m.id === memberId ? { ...m, customPosition: position } : m
+                ) || []
+            });
+        }
+    };
 
     const handleRemoveConfirm = () => {
         if (!memberToRemove) return;
@@ -82,23 +111,25 @@ export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
         setMemberToRemove(null);
     };
 
-    const handleCopyLink = async (id: string) => {
+    const handleCopyLink = async (inviteId: string) => {
         try {
-            await navigator.clipboard.writeText(id);
-            setCopiedId(id);
+            const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://easy-club.vercel.app';
+            const fullLink = `${baseUrl}/join?token=${inviteId}`;
+            await navigator.clipboard.writeText(fullLink);
+            setCopiedId(inviteId);
             setTimeout(() => setCopiedId(null), 2000);
         } catch (err) {
             console.error("Failed to copy:", err);
         }
     };
 
-    const handleInvite = (e: React.FormEvent) => {
+    const handleInvite = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!inviteEmail) return;
+        if (!inviteEmail || !activeClub) return;
 
         const newInvite: TeamInvite = {
-            id: Math.random().toString(36).substr(2, 9),
-            email: inviteEmail,
+            id: `inv_${Math.random().toString(36).substring(2, 15)}`,
+            email: inviteEmail.toLowerCase(),
             role: inviteRole,
             status: 'pending',
             sentAt: new Date().toISOString()
@@ -106,7 +137,7 @@ export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
 
         onUpdateClub({
             ...activeClub,
-            invites: [...invites, newInvite]
+            invites: [...(activeClub.invites || []), newInvite]
         });
 
         setInviteEmail("");
@@ -242,36 +273,101 @@ export default function MyTeamView({ clubs, onUpdateClub }: MyTeamViewProps) {
                                     <p className="text-[10px] font-bold text-white uppercase tracking-widest">No core members yet. Send an invite to begin collaborating.</p>
                                 </div>
                             ) : (
-                                members.map((member: ClubMember) => (
-                                    <div key={member.id} className="bg-[#050505] border border-white/15 rounded-3xl p-8 flex items-center justify-between hover:border-gold-500/30 transition-all group shadow-xl">
-                                        <div className="flex items-center gap-6">
-                                            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center text-xl font-black text-signature-gradient border border-white/15 shadow-xl group-hover:scale-110 transition-transform">
-                                                {member.name.charAt(0)}
+                                    members.map((member: ClubMember) => (
+                                        <div key={member.id} className="bg-[#050505] border border-white/15 rounded-3xl p-8 flex flex-col gap-6 hover:border-gold-500/30 transition-all group shadow-xl">
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-6">
+                                                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center text-xl font-black text-signature-gradient border border-white/15 shadow-xl group-hover:scale-110 transition-transform">
+                                                        {member.name.charAt(0)}
+                                                    </div>
+                                                    <div>
+                                                        <div className="flex items-center gap-2">
+                                                            <h4 className="font-bold text-white tracking-tight">{member.name}</h4>
+                                                            {member.id === activeClub.ownerId && (
+                                                                <span className="text-[7px] bg-gold-500/10 text-gold-500 border border-gold-500/20 px-1.5 py-0.5 rounded font-black uppercase tracking-widest">Founder</span>
+                                                            )}
+                                                        </div>
+                                                        <div className="flex items-center gap-2 mt-1">
+                                                            <span className={`text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full border ${
+                                                                member.role === 'Senior Core' ? 'text-signature-gradient border-gold-400/30 bg-gold-400/5' :
+                                                                member.role === 'Junior Core' ? 'text-blue-400 border-blue-400/30 bg-blue-400/5' :
+                                                                'text-white border-white/15 bg-white/5'
+                                                            }`}>
+                                                                {member.role}
+                                                            </span>
+                                                            <span className="text-[9px] text-zinc-100 font-bold uppercase tracking-widest">{member.email}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    {member.id !== activeClub.ownerId && (
+                                                        <>
+                                                            <a href={`mailto:${member.email}`} className="p-2 text-zinc-200 hover:text-white hover:bg-white/5 rounded-xl transition-all" title="Send Email">
+                                                                <Mail className="w-4 h-4" />
+                                                            </a>
+                                                            <button onClick={() => setMemberToRemove(member.id)} className="p-2 text-zinc-200 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all" title="Remove Member">
+                                                                <X className="w-4 h-4" />
+                                                            </button>
+                                                        </>
+                                                    )}
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h4 className="font-bold text-white tracking-tight">{member.name}</h4>
-                                                <div className="flex items-center gap-2 mt-1">
-                                                    <span className={`text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full border ${
-                                                        member.role === 'Senior Core' ? 'text-signature-gradient border-gold-400/30 bg-gold-400/5' :
-                                                        member.role === 'Junior Core' ? 'text-blue-400 border-blue-400/30 bg-blue-400/5' :
-                                                        'text-white border-white/15 bg-white/5'
-                                                    }`}>
-                                                        {member.role}
-                                                    </span>
-                                                    <span className="text-[9px] text-zinc-100 font-bold uppercase tracking-widest">{member.email}</span>
+
+                                            {/* Position Management Area */}
+                                            <div className="pt-6 border-t border-white/5 flex flex-col gap-4">
+                                                <div className="flex items-center justify-between">
+                                                    <label className="text-[9px] font-black uppercase tracking-widest text-zinc-500">Designated Position</label>
+                                                    {member.customPosition && (
+                                                        <span className="text-[9px] font-bold text-gold-500 uppercase tracking-widest px-2 py-1 bg-gold-500/5 border border-gold-500/20 rounded-md">
+                                                            {member.customPosition}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <div className="relative group/select">
+                                                    <select
+                                                        value={member.customPosition || ""}
+                                                        onChange={(e) => {
+                                                            const val = e.target.value;
+                                                            if (val === "__new__") {
+                                                                const newPos = prompt("Enter Custom Position Name (e.g. Lead Researcher):");
+                                                                if (newPos) {
+                                                                    handleUpdateMemberPosition(member.id, newPos);
+                                                                }
+                                                            } else {
+                                                                handleUpdateMemberPosition(member.id, val);
+                                                            }
+                                                        }}
+                                                        className="w-full appearance-none bg-zinc-950 border border-white/10 rounded-xl py-3 pl-4 pr-10 text-[11px] font-bold text-white uppercase tracking-widest outline-none hover:border-gold-500/30 transition-all focus:border-gold-500"
+                                                    >
+                                                        <option value="">Unassigned Role</option>
+                                                        <optgroup label="Core Leadership" className="bg-black">
+                                                            <option value="Chairperson">Chairperson</option>
+                                                            <option value="Vice-Chairperson">Vice-Chairperson</option>
+                                                            <option value="Secretary">Secretary</option>
+                                                            <option value="Joint Secretary">Joint Secretary</option>
+                                                            <option value="Treasurer">Treasurer</option>
+                                                            <option value="Joint Treasurer">Joint Treasurer</option>
+                                                        </optgroup>
+                                                        <optgroup label="Technical Heads" className="bg-black">
+                                                            <option value="Tech Head">Tech Head</option>
+                                                            <option value="AI/ML Lead">AI/ML Lead</option>
+                                                            <option value="Web Dev Head">Web Dev Head</option>
+                                                            <option value="App Dev Lead">App Dev Lead</option>
+                                                            <option value="IOT Head">IOT Head</option>
+                                                        </optgroup>
+                                                        <optgroup label="Operational Heads" className="bg-black">
+                                                            <option value="Events Head">Events Head</option>
+                                                            <option value="Design Head">Design Head</option>
+                                                            <option value="Projects Head">Projects Head</option>
+                                                            <option value="PR/Outreach Head">PR/Outreach Head</option>
+                                                        </optgroup>
+                                                        <option value="__new__" className="text-gold-500 font-black">+ Create New Position</option>
+                                                    </select>
+                                                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3 h-3 text-zinc-500 pointer-events-none group-hover/select:text-gold-500 transition-colors" />
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <a href={`mailto:${member.email}`} className="p-2 text-zinc-200 hover:text-white hover:bg-white/5 rounded-xl transition-all" title="Send Email">
-                                                <Mail className="w-4 h-4" />
-                                            </a>
-                                            <button onClick={() => setMemberToRemove(member.id)} className="p-2 text-zinc-200 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all" title="Remove Member">
-                                                <X className="w-4 h-4" />
-                                            </button>
-                                        </div>
-                                    </div>
-                                ))
+                                    ))
                             )}
                         </div>
                     )}
