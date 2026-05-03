@@ -35,7 +35,7 @@ export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWor
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSending, setIsSending] = useState(false);
   // Restore from persisted state
-  const [outreachTemplate, setOutreachTemplate] = useState<string | null>(activeEvent?.config?.workspaceData?.outreach || null);
+  const [outreachTemplate, setOutreachTemplate] = useState<string | null>((activeEvent?.config?.workspaceData as any)?.outreach || null);
   const [copied, setCopied] = useState(false);
   
   const { startTask, finishTask } = useTasks();

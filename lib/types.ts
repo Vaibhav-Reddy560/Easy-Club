@@ -48,6 +48,7 @@ export interface EventConfig {
         content?: { long: string, short: string };
         design?: unknown;
         social?: unknown;
+        outreach?: string;
     };
     [key: string]: unknown;
 }
