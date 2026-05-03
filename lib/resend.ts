@@ -16,7 +16,11 @@ export async function sendInvitationEmail(to: string, subject: string, html: str
       html: html,
     });
 
-    return { success: true, id: data.id };
+    if (data.error) {
+      throw new Error(data.error.message);
+    }
+
+    return { success: true, id: data.data?.id };
   } catch (error) {
     console.error("[Resend] Email failed:", error);
     throw error;
