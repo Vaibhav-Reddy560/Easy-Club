@@ -34,7 +34,7 @@ export const WebGpuDesignEngine = forwardRef<any, WebGpuDesignEngineProps>(({
   // Check for WebGPU support on mount
   useEffect(() => {
     const checkGPU = async () => {
-      if (!navigator.gpu) {
+      if (!(navigator as any).gpu) {
         setGpuSupported(false);
         setLoadingStatus('error');
         setError("WebGPU not supported in this browser. Falling back to Cloud API.");
