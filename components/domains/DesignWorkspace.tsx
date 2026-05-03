@@ -26,6 +26,9 @@ interface VibeData {
   fontFamily: string;
   fontUrl: string;
   effectStyle: string;
+  imagePrompt?: string;
+  description?: string;
+  colors?: string[];
 }
 
 type DesignTab = "poster" | "banner" | "standee" | "certificate" | "forms-header";
@@ -292,11 +295,11 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
     setAiTitleImage(null);
 
     // ELITE PROMPT EXTRACTION
-    const bgPrompt = vibeData?.imagePrompt || 
+    const bgPrompt = (vibeData as any)?.imagePrompt || 
       `[MASTERPIECE] High-end abstract event poster for "${activeEvent.name}". 
        Vibe: ${vibeData?.vibe || "Premium"}. 
-       Concept: ${vibeData?.description || "Luxurious"}. 
-       Colors: ${vibeData?.colors?.join(", ") || "Gold, Charcoal"}. 
+       Concept: ${(vibeData as any)?.description || "Luxurious"}. 
+       Colors: ${(vibeData as any)?.colors?.join(", ") || "Gold, Charcoal"}. 
        Lighting: Cinematic, Ray-traced. Texture: 8k, Detailed. --no text, people, faces.`;
 
 
