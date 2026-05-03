@@ -323,48 +323,56 @@ export default function MyTeamView({ clubs, user, onUpdateClub }: MyTeamViewProp
                                                         </span>
                                                     )}
                                                 </div>
-                                                <div className="relative group/select">
-                                                    <select
-                                                        value={member.customPosition || ""}
-                                                        onChange={(e) => {
-                                                            const val = e.target.value;
-                                                            if (val === "__new__") {
-                                                                const newPos = prompt("Enter Custom Position Name (e.g. Lead Researcher):");
-                                                                if (newPos) {
-                                                                    handleUpdateMemberPosition(member.id, newPos);
+                                                
+                                                {/* Only the owner can change positions */}
+                                                {user?.uid === activeClub.ownerId ? (
+                                                    <div className="relative group/select">
+                                                        <select
+                                                            value={member.customPosition || ""}
+                                                            onChange={(e) => {
+                                                                const val = e.target.value;
+                                                                if (val === "__new__") {
+                                                                    const newPos = prompt("Enter Custom Position Name (e.g. Lead Researcher):");
+                                                                    if (newPos) {
+                                                                        handleUpdateMemberPosition(member.id, newPos);
+                                                                    }
+                                                                } else {
+                                                                    handleUpdateMemberPosition(member.id, val);
                                                                 }
-                                                            } else {
-                                                                handleUpdateMemberPosition(member.id, val);
-                                                            }
-                                                        }}
-                                                        className="w-full appearance-none bg-zinc-950 border border-white/10 rounded-xl py-3 pl-4 pr-10 text-[11px] font-bold text-white uppercase tracking-widest outline-none hover:border-gold-500/30 transition-all focus:border-gold-500"
-                                                    >
-                                                        <option value="">Unassigned Role</option>
-                                                        <optgroup label="Core Leadership" className="bg-black">
-                                                            <option value="Chairperson">Chairperson</option>
-                                                            <option value="Vice-Chairperson">Vice-Chairperson</option>
-                                                            <option value="Secretary">Secretary</option>
-                                                            <option value="Joint Secretary">Joint Secretary</option>
-                                                            <option value="Treasurer">Treasurer</option>
-                                                            <option value="Joint Treasurer">Joint Treasurer</option>
-                                                        </optgroup>
-                                                        <optgroup label="Technical Heads" className="bg-black">
-                                                            <option value="Tech Head">Tech Head</option>
-                                                            <option value="AI/ML Lead">AI/ML Lead</option>
-                                                            <option value="Web Dev Head">Web Dev Head</option>
-                                                            <option value="App Dev Lead">App Dev Lead</option>
-                                                            <option value="IOT Head">IOT Head</option>
-                                                        </optgroup>
-                                                        <optgroup label="Operational Heads" className="bg-black">
-                                                            <option value="Events Head">Events Head</option>
-                                                            <option value="Design Head">Design Head</option>
-                                                            <option value="Projects Head">Projects Head</option>
-                                                            <option value="PR/Outreach Head">PR/Outreach Head</option>
-                                                        </optgroup>
-                                                        <option value="__new__" className="text-gold-500 font-black">+ Create New Position</option>
-                                                    </select>
-                                                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3 h-3 text-zinc-500 pointer-events-none group-hover/select:text-gold-500 transition-colors" />
-                                                </div>
+                                                            }}
+                                                            className="w-full appearance-none bg-zinc-950 border border-white/10 rounded-xl py-3 pl-4 pr-10 text-[11px] font-bold text-white uppercase tracking-widest outline-none hover:border-gold-500/30 transition-all focus:border-gold-500"
+                                                        >
+                                                            <option value="">Unassigned Role</option>
+                                                            <optgroup label="Core Leadership" className="bg-black">
+                                                                <option value="Chairperson">Chairperson</option>
+                                                                <option value="Vice-Chairperson">Vice-Chairperson</option>
+                                                                <option value="Secretary">Secretary</option>
+                                                                <option value="Joint Secretary">Joint Secretary</option>
+                                                                <option value="Treasurer">Treasurer</option>
+                                                                <option value="Joint Treasurer">Joint Treasurer</option>
+                                                            </optgroup>
+                                                            <optgroup label="Technical Heads" className="bg-black">
+                                                                <option value="Tech Head">Tech Head</option>
+                                                                <option value="AI/ML Lead">AI/ML Lead</option>
+                                                                <option value="Web Dev Head">Web Dev Head</option>
+                                                                <option value="App Dev Lead">App Dev Lead</option>
+                                                                <option value="IOT Head">IOT Head</option>
+                                                            </optgroup>
+                                                            <optgroup label="Operational Heads" className="bg-black">
+                                                                <option value="Events Head">Events Head</option>
+                                                                <option value="Design Head">Design Head</option>
+                                                                <option value="Projects Head">Projects Head</option>
+                                                                <option value="PR/Outreach Head">PR/Outreach Head</option>
+                                                            </optgroup>
+                                                            <option value="__new__" className="text-gold-500 font-black">+ Create New Position</option>
+                                                        </select>
+                                                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3 h-3 text-zinc-500 pointer-events-none group-hover/select:text-gold-500 transition-colors" />
+                                                    </div>
+                                                ) : (
+                                                    <div className="py-3 px-4 bg-white/5 border border-white/5 rounded-xl text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
+                                                        {member.customPosition || "Title Unassigned by Founder"}
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     ))

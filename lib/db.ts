@@ -296,10 +296,15 @@ import {
             i.id === inviteId ? { ...i, status: 'accepted' as const } : i
         );
 
+        // Crucial: Update the denormalized memberEmails array so the user's dashboard can find this club
+        const memberEmails = updatedMembers.map(m => m.email.toLowerCase()).filter(Boolean);
+
         await setDoc(doc(db, CLUBS_COLLECTION, clubId), {
             ...targetClub,
             members: updatedMembers,
-            invites: updatedInvites
+            invites: updatedInvites,
+            memberEmails,
+            lastUpdated: new Date().toISOString()
         }, { merge: true });
 
         return { success: true, clubName: targetClub.name };
