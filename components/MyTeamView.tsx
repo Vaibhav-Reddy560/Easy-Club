@@ -71,7 +71,7 @@ export default function MyTeamView({ clubs, user, onUpdateClub }: MyTeamViewProp
     }
 
     const ownerAsMember: ClubMember = {
-        id: activeClub.ownerId,
+        id: activeClub.ownerId || "owner",
         name: user?.displayName || "Club Owner",
         email: user?.email || "",
         role: 'Senior Core',
