@@ -40,7 +40,7 @@ import MembershipView from "@/components/MembershipView";
 import MyTeamView from "@/components/MyTeamView";
 import MobileNav from "@/components/MobileNav";
 import LoginView from "@/components/LoginView";
-import { Club, ClubEvent, EventConfig, MemberRole, ActivityLogEvent, EventStatus, PostEventData } from "@/lib/types";
+import { Club, ClubEvent, EventConfig, MemberRole, ActivityLogEvent, EventStatus, PostEventData, ClubMember } from "@/lib/types";
 import { useAuth } from "@/lib/auth";
 import { signInWithGoogle, logout } from "@/lib/firebase";
 import { subscribeUserClubs, saveClub, deleteClubFromDb } from "@/lib/db";
