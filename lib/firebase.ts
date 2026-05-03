@@ -75,7 +75,7 @@ export const isOnline = async () => {
  */
 export const resetAuth = async () => {
     try {
-        await auth.signOut();
+        if (auth) await auth.signOut();
         window.localStorage.clear();
         window.sessionStorage.clear();
         window.location.reload();
