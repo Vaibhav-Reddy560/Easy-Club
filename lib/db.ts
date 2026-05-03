@@ -12,7 +12,8 @@ import {
     getDocsFromCache,
     getDocsFromServer
   } from "firebase/firestore";
-  import { db } from "./firebase";
+  import { db, auth } from "./firebase";
+  import { signOut } from "firebase/auth";
   import { Club, ScrapedClub, TeamInvite, ClubMember } from "./types";
   
   const CLUBS_COLLECTION = "clubs";
@@ -311,6 +312,21 @@ import {
         return { success: true, clubName: targetClub.name };
     } catch (error) {
         console.error("Error accepting invite:", error);
-        return { success: false, error: "Internal server error while processing invite" };
     }
+  }
+
+  export async function getClubMetadata(clubId: string): Promise<{ name: string } | null> {
+    if (!db) return null;
+    try {
+        const snapshot = await getDocs(query(collection(db, CLUBS_COLLECTION), where("id", "==", clubId)));
+        if (snapshot.empty) return null;
+        const data = snapshot.docs[0].data();
+        return { name: data.name };
+    } catch (e) {
+        return null;
+    }
+  }
+
+  export async function signOutUser() {
+    await signOut(auth);
   }
