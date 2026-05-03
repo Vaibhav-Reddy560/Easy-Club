@@ -77,10 +77,18 @@ export async function POST(req: Request) {
 
             const chatHistory = messages.map(m => `[${m.role.toUpperCase()}]: ${m.content}`).join("\n\n");
             
+            // Integrate Hugging Face Sentiment Analysis to adjust persona
+            const { analyzeSentiment } = await import("@/lib/huggingface");
+            const sentimentResult = await analyzeSentiment(latestMessage);
+            const sentimentTone = sentimentResult 
+                ? `The user's current tone is ${sentimentResult.label} (Confidence: ${(sentimentResult.score * 100).toFixed(0)}%).` 
+                : "";
+
             const prompt = `
             You are the Lead Event Architect.
             
             ${internetContext ? `BACKGROUND RESEARCH FOUND:\n${internetContext}` : ''}
+            ${sentimentTone ? `SENTIMENT ADVISORY: ${sentimentTone} Adjust your response style to match: if positive/excited, be an enthusiastic partner; if negative/frustrated, be a supportive and reassuring problem-solver; if neutral, stay focused on technical precision.` : ''}
 
             CONVERSATION CONTEXT:
             ${chatHistory}
@@ -95,6 +103,7 @@ export async function POST(req: Request) {
             Respond to the user. Keep the momentum. If they suggest an idea, refine it with "Architectural Detail" (e.g., adding a specific twist or scaling suggestion).
             Be brief, practical, and highly creative.
             `;
+
 
             const reply = await callGeminiSafe(prompt);
             

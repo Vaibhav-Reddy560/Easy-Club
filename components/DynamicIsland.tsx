@@ -14,15 +14,15 @@ import { useTasks, BackgroundTask } from "@/lib/TaskContext";
 
 interface DynamicIslandProps {
   isSaving?: boolean;
+  isSyncing?: boolean;
 }
 
-export default function DynamicIsland({ isSaving }: DynamicIslandProps) {
+export default function DynamicIsland({ isSaving, isSyncing }: DynamicIslandProps) {
   const { tasks } = useTasks();
   const [isHovered, setIsHovered] = useState(false);
   const activeTasks = tasks.filter(t => t.status === 'running');
-  const finishedTasks = tasks.filter(t => t.status !== 'running');
   
-  const hasGlobalActivity = isSaving || tasks.length > 0;
+  const hasGlobalActivity = isSaving || isSyncing || tasks.length > 0;
 
   if (!hasGlobalActivity && !isHovered) return null;
 
@@ -33,7 +33,7 @@ export default function DynamicIsland({ isSaving }: DynamicIslandProps) {
         onMouseLeave={() => setIsHovered(false)}
         initial={false}
         animate={{
-          width: isHovered ? 400 : (isSaving || activeTasks.length > 0 ? 240 : 180),
+          width: isHovered ? 400 : (isSaving || isSyncing || activeTasks.length > 0 ? 240 : 180),
           height: isHovered ? (tasks.length > 0 ? 120 + (tasks.length * 40) : 100) : 42,
           borderRadius: isHovered ? 32 : 100,
         }}
@@ -59,6 +59,11 @@ export default function DynamicIsland({ isSaving }: DynamicIslandProps) {
                   <div className="w-2 h-2 bg-gold-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
                   <span className="text-[10px] font-black uppercase tracking-[0.2em] text-signature-gradient">Synchronizing...</span>
                 </>
+              ) : isSyncing ? (
+                <>
+                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Background Sync...</span>
+                </>
               ) : activeTasks.length > 0 ? (
                 <>
                   <Loader2 className="w-3.5 h-3.5 text-gold-500 animate-spin" />
@@ -69,7 +74,10 @@ export default function DynamicIsland({ isSaving }: DynamicIslandProps) {
               ) : (
                 <>
                   <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">System Ready</span>
+                  <div className="flex flex-col items-start leading-none">
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">System Ready</span>
+                    <span className="text-[7px] font-bold uppercase tracking-[0.1em] text-gold-500/60 mt-0.5">Iron-Clad Disk Active</span>
+                  </div>
                 </>
               )}
             </motion.div>
@@ -90,16 +98,18 @@ export default function DynamicIsland({ isSaving }: DynamicIslandProps) {
                     <p className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest">Active Operations</p>
                   </div>
                 </div>
-                {isSaving && (
-                  <div className="flex items-center gap-2 px-3 py-1 bg-gold-500/5 border border-gold-500/20 rounded-full">
-                    <div className="w-1.5 h-1.5 bg-gold-500 rounded-full animate-ping" />
-                    <span className="text-[8px] font-black text-gold-500 uppercase tracking-widest">Cloud Syncing</span>
+                {(isSaving || isSyncing) && (
+                  <div className={`flex items-center gap-2 px-3 py-1 ${isSaving ? 'bg-gold-500/5 border-gold-500/20' : 'bg-blue-500/5 border-blue-500/20'} border rounded-full`}>
+                    <div className={`w-1.5 h-1.5 ${isSaving ? 'bg-gold-500' : 'bg-blue-500'} rounded-full animate-ping`} />
+                    <span className={`text-[8px] font-black ${isSaving ? 'text-gold-500' : 'text-blue-400'} uppercase tracking-widest`}>
+                      {isSaving ? 'Cloud Saving' : 'Cloud Fetch'}
+                    </span>
                   </div>
                 )}
               </div>
 
               <div className="flex-1 overflow-y-auto space-y-3 custom-scrollbar">
-                {tasks.length === 0 && !isSaving && (
+                {tasks.length === 0 && !isSaving && !isSyncing && (
                   <div className="py-4 text-center">
                     <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest italic">No background tasks</p>
                   </div>

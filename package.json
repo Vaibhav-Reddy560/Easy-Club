@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
+    "@huggingface/inference": "^4.13.15",
+    "@huggingface/transformers": "^3.8.1",
     "@supabase/supabase-js": "^2.89.0",
     "@swc/helpers": "^0.5.21",
     "autoprefixer": "^10.4.23",

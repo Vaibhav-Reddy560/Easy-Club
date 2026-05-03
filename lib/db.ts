@@ -38,14 +38,19 @@ import {
     let memberSyncing = userEmail ? true : false;
     
     const updateResults = (snapshot: any, isMember: boolean) => {
-      if (isMember) memberSyncing = snapshot.metadata.fromCache;
-      else ownerSyncing = snapshot.metadata.fromCache;
+      // If we got metadata from server, or it's no longer from cache, we are synced
+      const fromCache = snapshot.metadata.fromCache;
+      const hasPendingWrites = snapshot.metadata.hasPendingWrites;
+
+      if (isMember) memberSyncing = fromCache;
+      else ownerSyncing = fromCache;
 
       snapshot.docs.forEach((d: any) => {
         clubsMap.set(d.id, { ...d.data(), id: d.id } as Club);
       });
 
-      // We are "syncing" if either subscription is still purely from cache
+      // We are synced if both are no longer purely from cache, OR if we have pending writes (optimistic)
+      // Actually, if fromCache is true, it means we are still waiting for the server to confirm the latest snapshot.
       onUpdate(Array.from(clubsMap.values()), ownerSyncing || memberSyncing);
     };
 

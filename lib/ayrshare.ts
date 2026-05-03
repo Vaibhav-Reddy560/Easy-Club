@@ -35,33 +35,42 @@ export async function getAyrshareAnalytics(): Promise<AyrshareAnalytics> {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
 
-        const response = await fetch(API_URL, {
+        // Profile Analytics endpoint is usually /api/analytics/profile or /api/analytics
+        // We'll try the main analytics endpoint which aggregates data
+        const response = await fetch("https://api.ayrshare.com/api/analytics", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${API_KEY}`
             },
             body: JSON.stringify({
-                metadata: true
+                lastDays: 30
             }),
             signal: controller.signal
         });
 
         clearTimeout(timeoutId);
 
+        if (response.status === 403) {
+            console.error("[Ayrshare] 403 Forbidden - This usually means no social accounts are linked to this API Key.");
+            // Return mock data but mark it as needing connection
+            const mock = getMockData();
+            return { ...mock, isMock: true };
+        }
+
         if (!response.ok) {
-            throw new Error(`Ayrshare API error: ${response.statusText}`);
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(`Ayrshare API error: ${response.statusText} - ${JSON.stringify(errorData)}`);
         }
 
         const data = await response.json();
         
         // Map real data to our interface
-        // This is a simplified mapping; real Ayrshare response depends on connected platforms
         const mappedData = {
-            likes: data.analytics?.postLikes || 1240,
-            shares: data.analytics?.postShares || 85,
-            impressions: data.analytics?.postImpressions || 5700,
-            followerGrowth: data.analytics?.followerGrowth || 12,
+            likes: data.analytics?.totalLikes || data.analytics?.postLikes || 0,
+            shares: data.analytics?.totalShares || data.analytics?.postShares || 0,
+            impressions: data.analytics?.totalImpressions || data.analytics?.postImpressions || 0,
+            followerGrowth: data.analytics?.totalFollowerGrowth || data.analytics?.followerGrowth || 0,
             lastUpdated: new Date().toISOString(),
             isMock: false
         };

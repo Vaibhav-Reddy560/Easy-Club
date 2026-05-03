@@ -6,6 +6,43 @@ import {
     setCachedDiscovery
 } from "@/lib/discovery";
 import { validateRequest, ExploreClubsSchema } from "@/lib/validation";
+import { getEmbeddings } from "@/lib/huggingface";
+import { ScrapedClub } from "@/lib/types";
+
+function cosineSimilarity(vecA: number[], vecB: number[]): number {
+    let dotProduct = 0;
+    let normA = 0;
+    let normB = 0;
+    for (let i = 0; i < vecA.length; i++) {
+        dotProduct += vecA[i] * vecB[i];
+        normA += vecA[i] * vecA[i];
+        normB += vecB[i] * vecB[i];
+    }
+    return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+}
+
+async function semanticRank(clubs: ScrapedClub[], query: string): Promise<ScrapedClub[]> {
+    if (!query || clubs.length === 0) return clubs;
+
+    try {
+        const queryEmbedding = await getEmbeddings(query);
+        if (!queryEmbedding) return clubs;
+
+        const ranked = await Promise.all(
+            clubs.map(async (club) => {
+                const text = `${club.name} ${club.description} ${club.college}`.toLowerCase();
+                const emb = await getEmbeddings(text);
+                if (!emb) return { club, score: 0 };
+                return { club, score: cosineSimilarity(queryEmbedding, emb) };
+            })
+        );
+
+        return ranked.sort((a, b) => b.score - a.score).map(r => r.club);
+    } catch (e) {
+        console.error("[Semantic Rank Error]", e);
+        return clubs;
+    }
+}
 
 export async function POST(req: Request) {
     try {
@@ -18,23 +55,28 @@ export async function POST(req: Request) {
 
         if (!serperKey) throw new Error("SERPER_API_KEY is missing.");
 
-        // Check Cache first
         const cacheKey = `clubs_${category}_${type}_${location}`.toLowerCase().replace(/\s+/g, "_");
-        const cachedResults = await getCachedDiscovery<any[]>(cacheKey);
-        if (cachedResults) return NextResponse.json(cachedResults);
-
-        console.log(`[ExploreClubs v4] Fetching: ${type} Category: ${category} @ ${location}`);
+        const cachedResults = await getCachedDiscovery<ScrapedClub[]>(cacheKey);
         
-        const query = `${type} ${category} in ${location}`;
-        const results = await searchSerper(query, serperKey, 25);
-        if (!results || results.length === 0) return NextResponse.json([]);
+        let clubs: ScrapedClub[] = [];
 
-        const clubs = parseSerperResultsToClubs(results, location);
-        
-        // Save to cache
-        if (clubs.length > 0) await setCachedDiscovery(cacheKey, clubs);
+        if (cachedResults) {
+            clubs = cachedResults;
+        } else {
+            console.log(`[ExploreClubs v5] Fetching: ${type} @ ${location}`);
+            const query = `${type} club in ${location}`;
+            const results = await searchSerper(query, serperKey, 25);
+            if (results && results.length > 0) {
+                clubs = parseSerperResultsToClubs(results, location);
+                if (clubs.length > 0) await setCachedDiscovery(cacheKey, clubs);
+            }
+        }
 
-        return NextResponse.json(clubs);
+        // Apply Semantic Ranking
+        const searchQuery = `${type} ${category} ${location}`;
+        const rankedClubs = await semanticRank(clubs, searchQuery);
+
+        return NextResponse.json(rankedClubs);
 
     } catch (error: unknown) {
         const err = error as { message?: string };
@@ -42,3 +84,4 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: err.message }, { status: 500 });
     }
 }
+

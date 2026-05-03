@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { validateRequest, GenerateImageSchema } from "@/lib/validation";
+import { generateImageFromHF } from "@/lib/huggingface";
 
 // Fallback high-quality SVG themes
 const GRADIENT_THEMES: Record<string, { colors: string[]; patternType: string }> = {
@@ -76,36 +77,21 @@ export async function POST(req: Request) {
         }
         const { vibe, creativityLevel, dimensions } = body!;
 
-        // 1. Clean the prompt for the AI Image Model (Pollinations/Flux)
-        // We MUST remove hex codes, parentheses, and prefixes as they confuse the model
+        // 1. Preserve the full richness of the AI-suggested vibe
+        // We only remove boilerplate prefixes that don't add visual value
         let cleanVibe = (vibe || "")
-            .replace(/\(#[a-fA-F0-9]{3,6}\)/g, "") // remove (#ffffff) hex codes
-            .replace(/For "[^"]+":/g, "")           // remove "For HackathonX:"
-            .replace(/\([^)]+\)/g, "")              // remove all parenthetical text
-            .replace(/Color palette:/gi, "")        // remove "Color palette:"
-            .replace(/The mood should feel/gi, "") // remove "The mood should feel"
+            .replace(/For "[^"]+":/g, "")
             .trim();
 
-        // If cleaning made it too short, just use a generic but theme-matched prompt
         if (cleanVibe.length < 10) {
-            cleanVibe = "professional background, cinematic lighting, masterpiece, clean lines, high resolution";
+            cleanVibe = "premium professional event background, atmospheric lighting, ultra-high resolution, clean aesthetic";
         }
 
         const [wStr, hStr] = (dimensions || "1080x1350").split("x");
-        const w = parseInt(wStr) || 1080;
-        const h = parseInt(hStr) || 1350;
+        const width = parseInt(wStr) || 1080;
+        const height = parseInt(hStr) || 1350;
 
-        // 2. Return the Pollinations AI URL directly to the frontend
-        // This is MUCH more stable than fetching the image on the server and timing out
-        const seed = Math.floor(Math.random() * 1000000);
-        const model = creativityLevel >= 7 ? "flux" : "turbo";
-        const encodedPrompt = encodeURIComponent(`${cleanVibe}, background only, no text, no words, no letters, cinematic focus, sharp, 8k resolution`);
-        const pollinationUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?nologo=true&width=${w}&height=${h}&seed=${seed}&model=${model}`;
-
-        console.log(`[generate-image] Direct URL generation: ${pollinationUrl}`);
-
-        // We return the URL. The frontend will load it directly.
-        // We still provide a "fallback" SVG string just in case the frontend's image loading fails.
+        // 2. Determine Category for fallback
         let catKey = "default";
         const v = cleanVibe.toLowerCase();
         if (["tech", "hack", "comput", "circuit", "future", "digital", "modern"].some(k => v.includes(k))) catKey = "technical";
@@ -113,10 +99,30 @@ export async function POST(req: Request) {
         else if (["sport", "race", "compete", "sharp", "fast"].some(k => v.includes(k))) catKey = "competition";
         else if (["social", "warm", "friend", "commun", "soft"].some(k => v.includes(k))) catKey = "social";
 
+        console.log(`[HF-Generation] Starting Flux.1 session for vibe: ${cleanVibe.substring(0, 50)}...`);
+
+        // 3. Generate high-fidelity image using Hugging Face
+        // We pass the RAW vibe to FLUX so it sees the hex codes and specific imagery requests
+        const hfImage = await generateImageFromHF(
+            `${cleanVibe}. High-fidelity professional poster background, cinematic lighting, ultra-detailed, sharp focus, 8k resolution, clean composition, NO TEXT, NO WORDS.`,
+            { width, height }
+        );
+
+
+        if (!hfImage) {
+            console.warn("[HF-Generation] HF failed, returning high-quality SVG fallback");
+            return NextResponse.json({
+                image: generateRichSVG(width, height, catKey),
+                fallbackSvg: generateRichSVG(width, height, catKey),
+                engine: "fallback-svg",
+                warning: "AI generation unavailable, using vector fallback"
+            });
+        }
+
         return NextResponse.json({
-            image: pollinationUrl, // Direct URL
-            fallbackSvg: generateRichSVG(w, h, catKey),
-            engine: "pollinations"
+            image: hfImage, // This is the base64 string from FLUX
+            fallbackSvg: generateRichSVG(width, height, catKey),
+            engine: "huggingface-flux"
         });
 
     } catch (error: unknown) {
@@ -127,3 +133,4 @@ export async function POST(req: Request) {
         }, { status: 500 });
     }
 }
+

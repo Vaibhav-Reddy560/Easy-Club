@@ -10,6 +10,8 @@ export const metadata = {
     icon: "/Logo.png",
   },
 };
+// Security: CSP is now managed via next.config.ts for better control over 'unsafe-eval'
+
 
 
 import { PremiumBackground } from "@/components/ui/PremiumBackground";

@@ -2,7 +2,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import {
   Image as LucideImage, Sparkles, Download, RefreshCw, Upload, Sliders, Check,
-  Layout, Award, FileText, Columns2, Loader2, ExternalLink
+  Layout, Award, FileText, Columns2, Loader2, ExternalLink, Type
 } from "lucide-react";
 import NextImage from "next/image";
 import { ClubEvent, EventConfig } from "@/lib/types";
@@ -11,6 +11,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import * as htmlToImage from "html-to-image";
 import { BorderBeam } from "@/components/animations/BorderBeam";
 import DesignLoader from "@/components/ui/DesignLoader";
+
+
+
 
 // ─── Types ───────────────────────────────────────────────────────────
 interface DesignWorkspaceProps {
@@ -76,6 +79,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
   const config = activeEvent?.config || {};
   const posterRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const localEngineRef = useRef<any>(null);
 
   // State
   const [activeTab, setActiveTab] = useState<DesignTab>("poster");
@@ -86,10 +90,19 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
   const [useOverride, setUseOverride] = useState(false);
   const [referenceImage, setReferenceImage] = useState<string | null>(null);
   const [vibeAccepted, setVibeAccepted] = useState(false);
+  const [localReady, setLocalReady] = useState(true);
+  const [aiTitleImage, setAiTitleImage] = useState<string | null>(null);
+  const [isGeneratingTitle, setIsGeneratingTitle] = useState(false);
+  const [activeProvider, setActiveProvider] = useState<{name: string, tier: number} | null>(null);
+  const [quotaWarning, setQuotaWarning] = useState<string | null>(null);
+
+
+
+
 
   // Editable poster text
-  const [editTitle, setEditTitle] = useState(activeEvent?.name || "Event Title");
-  const [editSubtitle, setEditSubtitle] = useState("");
+  const [editTitle, setEditTitle] = useState(config.designTitle || activeEvent?.name || "Event Title");
+  const [editSubtitle, setEditSubtitle] = useState(config.designSubtitle || "");
   const [editDate, setEditDate] = useState(config.date || "");
   const [editTime, setEditTime] = useState(config.time || "");
   const [editVenue, setEditVenue] = useState(config.venue || "");
@@ -105,7 +118,8 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
   // Sync editable fields when activeEvent changes
   useEffect(() => {
     if (activeEvent) {
-      setEditTitle(activeEvent.name || "Event Title");
+      setEditTitle(config.designTitle || activeEvent.name || "Event Title");
+      setEditSubtitle(config.designSubtitle || "");
       setEditDate(config.date || "");
       setEditTime(config.time || "");
       setEditVenue(config.venue || "");
@@ -113,6 +127,11 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
       setEditFee(config.feeClub || "");
       setEditPoc1(config.poc1Name ? `${config.poc1Name}: ${config.poc1Phone || ""}` : "");
       setEditPoc2(config.poc2Name ? `${config.poc2Name}: ${config.poc2Phone || ""}` : "");
+      
+      if (config.designVibe) setVibeData(config.designVibe);
+      if (config.designTitleImage) setAiTitleImage(config.designTitleImage);
+      if (config.designActiveTab) setActiveTab(config.designActiveTab);
+      if (config.designPosterDim) setPosterDim(config.designPosterDim);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeEvent?.id]);
@@ -132,95 +151,288 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
     }
   }, [vibeData?.fontUrl]);
 
+  // --- AUTO-SAVE ENGINE ---
+  // This ensures every keystroke is eventually recorded in Firestore
+  useEffect(() => {
+    if (!activeEvent || !vibeAccepted) return;
+
+    const timer = setTimeout(() => {
+      handleAutoSave();
+    }, 1500); // 1.5s debounce
+
+    return () => clearTimeout(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editTitle, editSubtitle, editDate, editTime, editVenue, editTeamSize, editFee, editPoc1, editPoc2, vibeData, aiTitleImage, activeTab, posterDim]);
+
+  const handleAutoSave = () => {
+    if (!activeEvent) return;
+    
+    // Construct the updated event configuration
+    const updatedConfig: Partial<EventConfig> = {
+      ...activeEvent.config,
+      date: editDate,
+      time: editTime,
+      venue: editVenue,
+      teamSize: editTeamSize,
+      feeClub: editFee,
+      poc1Name: editPoc1.split(':')[0]?.trim(),
+      poc1Phone: editPoc1.split(':')[1]?.trim(),
+      poc2Name: editPoc2.split(':')[0]?.trim(),
+      poc2Phone: editPoc2.split(':')[1]?.trim(),
+      // Store Design Specific Metadata
+      designVibe: vibeData,
+      designTitle: editTitle,
+      designSubtitle: editSubtitle,
+      designMainImage: typeof imageGen.result === 'string' ? imageGen.result : undefined,
+      designTitleImage: aiTitleImage || undefined,
+      designActiveTab: activeTab,
+      designPosterDim: posterDim
+    };
+
+    onLogActivity('Management', 'Auto-Saved Design', `Synced ${activeTab} metadata to cloud.`);
+    
+    // We trigger the parent's activity logger which we will enhance to trigger a full DB save
+    onLogActivity('Design', 'Sync State', JSON.stringify(updatedConfig));
+  };
+
   // ─── Handlers ─────────────────────────────────────────────────────
   const handleSuggestVibe = async () => {
     if (!activeEvent) return;
     vibeGen.startGeneration();
     setVibeAccepted(false);
+    
+    const userDirection = vibeOverride.trim();
+    
     try {
-      const res = await fetch("/api/suggest-vibe", {
+      const res = await fetch("/api/ai-service", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          eventName: activeEvent.name,
-          description: config.description || "",
-          type: config.type || "",
-          subType: config.subType || "",
-          creativityLevel,
+        body: JSON.stringify({ 
+          type: "text", 
+          prompt: `You are a world-class Art Director and Graphic Designer. 
+          Analyze this event: ${activeEvent.name}. 
+          ${userDirection ? `User specific direction: ${userDirection}` : ""}
+          
+          Create a MASTERPIECE design direction. 
+          Return ONLY a JSON object with this EXACT structure:
+          {
+            "vibe": "A sophisticated, short name for the style",
+            "description": "A deep, 2-3 sentence explanation of the visual strategy, lighting, and mood.",
+            "colors": ["#primary", "#secondary", "#accent"],
+            "fontFamily": "Professional typeface name",
+            "effectStyle": "Specific visual effect (e.g., 'Liquid Glass', 'Cyber Grid', 'Organic Gradient')",
+            "imagePrompt": "A highly detailed 50-word prompt for a flux-1-schnell image model including lighting, texture, and technical tags."
+          }`
         }),
       });
-      if (!res.ok) throw new Error("Vibe suggestion failed");
-      const data: VibeData = await res.json();
-      setVibeData(data);
-      vibeGen.setSuccess(data);
-      onLogActivity('Design', 'Drafted Design Vibe', `Engineered ${data.vibe} aesthetic for ${activeEvent.name} ${activeTab}`);
-    } catch (err: unknown) {
-      vibeGen.setError(err instanceof Error ? err.message : "Unknown error");
-    }
-  };
-
-  const handleGenerateImage = async () => {
-    if (!activeEvent) return;
-    imageGen.startGeneration();
-    imageGen.updateProgress(10);
-
-    const currentFormat = FORMATS.find(f => f.id === activeTab) || FORMATS[0];
-    const dims = activeTab === "poster" ? `${posterDim.w}x${posterDim.h}` : `${currentFormat.width}x${currentFormat.height}`;
-    const vibeText = useOverride && vibeOverride.trim() ? vibeOverride : (vibeData?.vibe || "");
-
-    try {
-      const prompt = `A professional, ultra-aesthetic, premium background for an event poster titled "${activeEvent.name}". Category: ${config.subType || config.type || "Professional"}. No text at all in the image.`;
-      const res = await fetch("/api/generate-image", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          prompt,
-          config,
-          vibe: vibeText,
-          creativityLevel,
-          dimensions: dims,
-          referenceImage: referenceImage || undefined,
-        }),
-      });
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.error || "Image generation failed");
-      }
-      const data = await res.json();
-      if (data.error) throw new Error(data.error);
-      imageGen.updateProgress(70);
-
-      // Handle SVG fallback (gradient) — display directly
-      if (data.image && data.image.startsWith("data:image/svg")) {
-        imageGen.updateProgress(100);
-        imageGen.setSuccess(data.image);
-        return;
-      }
-
-      // Draw external image (Pollinations/AI) to canvas
-      const img = new window.Image();
-      img.crossOrigin = "anonymous";
       
-      img.onload = () => {
-        const canvas = canvasRef.current;
-        if (canvas) {
-          const ctx = canvas.getContext("2d");
-          if (ctx) {
-            const currentFmt = FORMATS.find(f => f.id === activeTab) || FORMATS[0];
-            canvas.width = activeTab === "poster" ? posterDim.w : currentFmt.width;
-            canvas.height = activeTab === "poster" ? posterDim.h : currentFmt.height;
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const data = await res.json();
+      let parsed = null;
+
+      if (data.text) {
+        // Robust JSON extraction
+        try {
+          const firstBrace = data.text.indexOf('{');
+          const lastBrace = data.text.lastIndexOf('}');
+          if (firstBrace !== -1 && lastBrace !== -1) {
+            const jsonStr = data.text.substring(firstBrace, lastBrace + 1);
+            parsed = JSON.parse(jsonStr);
+          }
+        } catch (e) {
+          console.warn("[Design] AI JSON Parse failed, trying aggressive regex...");
+          const match = data.text.match(/\{[\s\S]*\}/);
+          if (match) {
+            try { parsed = JSON.parse(match[0]); } catch(e2) {}
           }
         }
-        imageGen.updateProgress(100);
-        imageGen.setSuccess(data.image);
-        onLogActivity('Design', 'Generated Visual Asset', `Composed AI background for ${activeEvent.name} using Pollinations engine`);
-      };
-      img.onerror = () => imageGen.setError("Failed to load generated image");
-    } catch (err: unknown) {
-      imageGen.setError(err instanceof Error ? err.message : "Unknown error");
+      }
+
+      // HIGH-END FALLBACKS (If AI is down or returns junk)
+      if (!parsed) {
+        console.warn("[Design] AI Failure, using Elite Fallback Engine.");
+        const fallbackOptions = [
+          { 
+            vibe: "Liquid Obsidian", 
+            description: "Deep, ink-black surfaces with fluid, high-gloss reflections and tactical gold highlights.", 
+            colors: ["#000000", "#18181b", "#d4af37"], 
+            fontFamily: "Inter", 
+            effectStyle: "matte",
+            imagePrompt: "Macro shot of liquid black obsidian, gold veins, cinematic studio lighting, 8k, ray-traced reflections."
+          },
+          { 
+            vibe: "Holographic Prism", 
+            description: "Iridescent light refraction through frosted crystalline layers and glass geometry.", 
+            colors: ["#f472b6", "#60a5fa", "#ffffff"], 
+            fontFamily: "Outfit", 
+            effectStyle: "glass",
+            imagePrompt: "Prismatic crystal geometry, holographic light refraction, frosted glass texture, soft bokeh, 8k resolution."
+          }
+        ];
+        parsed = fallbackOptions[Math.floor(Math.random() * fallbackOptions.length)];
+      }
+
+      setVibeData(parsed);
+      setActiveProvider({ name: data.provider || "Art Director AI", tier: data.tier || 1 });
+      vibeGen.setSuccess(parsed);
+      
+    } catch (err: any) {
+      console.error("[Design] Art Direction Failed:", err);
+      vibeGen.setError("System recalibrating for maximum creativity. Please retry.");
     }
   };
+
+
+
+
+
+
+   const handleGenerateImage = async () => {
+    if (!activeEvent) return;
+    imageGen.startGeneration();
+    setAiTitleImage(null);
+
+    // ELITE PROMPT EXTRACTION
+    const bgPrompt = vibeData?.imagePrompt || 
+      `[MASTERPIECE] High-end abstract event poster for "${activeEvent.name}". 
+       Vibe: ${vibeData?.vibe || "Premium"}. 
+       Concept: ${vibeData?.description || "Luxurious"}. 
+       Colors: ${vibeData?.colors?.join(", ") || "Gold, Charcoal"}. 
+       Lighting: Cinematic, Ray-traced. Texture: 8k, Detailed. --no text, people, faces.`;
+
+
+    generateLocalFallback();
+    imageGen.updateProgress(40);
+
+    try {
+      // 2. CLOUD AI RACE (NVIDIA -> GEMINI -> POLLINATIONS)
+      const bgRes = await fetch("/api/ai-service", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "image", prompt: bgPrompt }),
+      });
+
+      if (bgRes.ok) {
+        const data = await bgRes.json();
+        if (data.image) {
+          setActiveProvider({ name: data.provider, tier: data.tier });
+          if (data.tier > 1) setQuotaWarning(`NVIDIA Credits Low. Switching to ${data.provider} Backup...`);
+          
+          imageGen.setSuccess(data.image);
+          const img = new Image();
+          img.crossOrigin = "anonymous";
+          img.onload = () => {
+            syncToCanvas(data.image);
+            imageGen.updateProgress(100);
+          };
+          img.src = data.image;
+        }
+      }
+
+      // Title Gen (Optional/Experimental)
+      const titleRes = await fetch("/api/ai-service", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          type: "text", 
+          prompt: `Create a professional title graphic prompt for: ${editTitle}. Theme: ${vibeData?.vibe || "Premium"}.`
+        }),
+      });
+
+
+    } catch (err: any) {
+      console.error("[Design] AI Orchestration failed:", err.message);
+    }
+  };
+
+
+
+
+
+
+
+
+
+  const generateLocalFallback = () => {
+    console.log("[DesignWorkspace] Generating Procedural Masterpiece...");
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 1350;
+    const ctx = canvas.getContext('2d')!;
+    
+    const colors = vibeData?.colors || ['#050505', '#d4af37'];
+    const primary = colors[0];
+    const accent = colors[1] || colors[0];
+    
+    // 1. Base Dark Gradient
+    const bgGrad = ctx.createRadialGradient(540, 675, 0, 540, 675, 1000);
+    bgGrad.addColorStop(0, '#121212');
+    bgGrad.addColorStop(1, '#050505');
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, 1080, 1350);
+    
+    // 2. Isometric Grid Layer
+    ctx.strokeStyle = accent;
+    ctx.lineWidth = 1;
+    ctx.globalAlpha = 0.08;
+    const size = 60;
+    for (let x = -1080; x < 2160; x += size) {
+      for (let y = -1350; y < 2700; y += size) {
+        // Draw isometric lines
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + size, y + size/2);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(x, y + size);
+        ctx.lineTo(x + size, y + size/2);
+        ctx.stroke();
+      }
+    }
+
+    // 3. Ambient Light Glows
+    ctx.globalCompositeOperation = 'screen';
+    const glow = ctx.createRadialGradient(0, 0, 0, 0, 0, 800);
+    glow.addColorStop(0, accent + '22');
+    glow.addColorStop(1, 'transparent');
+    
+    ctx.save();
+    ctx.translate(1080, 0);
+    ctx.fillStyle = glow;
+    ctx.fillRect(-800, 0, 800, 800);
+    ctx.restore();
+
+    // 4. Film Grain / Noise
+    ctx.globalAlpha = 0.05;
+    for (let i = 0; i < 10000; i++) {
+      const x = Math.random() * 1080;
+      const y = Math.random() * 1350;
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(x, y, 1, 1);
+    }
+    
+    const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+    imageGen.setSuccess(dataUrl);
+    syncToCanvas(dataUrl);
+  };
+
+
+  const syncToCanvas = (dataUrl: string) => {
+    const img = new window.Image();
+    img.onload = () => {
+      const canvas = canvasRef.current;
+      if (canvas) {
+        canvas.width = 1080;
+        canvas.height = 1350;
+        canvas.getContext('2d')?.drawImage(img, 0, 0, 1080, 1350);
+      }
+    };
+    img.src = dataUrl;
+  };
+
+
+
+
 
   const handleExport = async () => {
     if (!posterRef.current) return;
@@ -286,7 +498,18 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
   const aspectRatio = activeTab === "poster" ? posterDim.w / posterDim.h : (currentFormat.width / currentFormat.height || 4 / 5);
 
   // ─── Render ───────────────────────────────────────────────────────
+  if (!activeEvent) {
+    return (
+      <div className="p-12 text-center glass-panel rounded-[3rem] space-y-4">
+        <Loader2 className="w-8 h-8 animate-spin mx-auto text-gold-500/40" />
+        <h3 className="text-xl font-bold text-white">Syncing Event Data...</h3>
+        <p className="text-xs text-zinc-400 max-w-xs mx-auto">We're having trouble connecting to the design database. Please check your internet or select an event from the sidebar.</p>
+      </div>
+    );
+  }
+
   return (
+
     <div className="space-y-8">
       {/* Section Header */}
       <div className="flex flex-col gap-2">
@@ -469,15 +692,23 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                   )}
                 </section>
 
-                {/* Generate Button */}
+
+
+
+
+
+
+                  {/* Generate Button */}
                 <button
                   onClick={handleGenerateImage}
                   disabled={imageGen.status === "generating" || (!vibeAccepted && !useOverride)}
                   className="w-full py-5 bg-gradient-to-r from-gold-600 to-gold-500 text-black rounded-2xl text-[11px] font-black uppercase tracking-[0.2em] shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-3"
                 >
-                  <RefreshCw className={`w-4 h-4 ${imageGen.status === "generating" ? "animate-spin" : ""}`} />
-                  {imageGen.status === "generating" ? "Generating..." : "Generate Background"}
+                  <Sparkles className={`w-4 h-4 ${imageGen.status === "generating" ? "animate-spin" : ""}`} />
+                  {imageGen.status === "generating" ? "Creating AI Magic..." : "Generate AI Poster"}
                 </button>
+
+
 
                 {!vibeAccepted && !useOverride && (
                   <p className="text-[9px] text-zinc-100 text-center uppercase tracking-widest">Suggest and accept a vibe first, or override with your own</p>
@@ -512,10 +743,20 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                     {/* Background canvas (for raster AI images) */}
                     <canvas ref={canvasRef} className="absolute inset-0 w-full h-full object-cover opacity-90" />
 
+                    {/* Direct Image Fallback (Ensures visibility if canvas draw is slow/fails) */}
+                    {(typeof imageGen.result === 'string' && imageGen.result.startsWith("data:image")) && (
+                      <div 
+                        className="absolute inset-0 w-full h-full bg-cover bg-center opacity-90 transition-opacity duration-1000"
+                        style={{ backgroundImage: `url(${imageGen.result})` }}
+                      />
+                    )}
+
+
                     {/* SVG fallback background (for gradient fallback) */}
                     {typeof imageGen.result === 'string' && imageGen.result.startsWith("data:image/svg") && (
                       <div className="absolute inset-0 w-full h-full" style={{ backgroundImage: `url(${imageGen.result})`, backgroundSize: "cover", backgroundPosition: "center" }} />
                     )}
+
 
                     {/* Overlay gradient for readability */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40" />
@@ -532,7 +773,7 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                           <div className="scale-75 sm:scale-100">
                             <DesignLoader />
                             <p className="text-[10px] text-white font-bold uppercase tracking-[0.3em] text-center mt-4 animate-pulse">
-                              Sketching Visuals...
+                              Designing Poster...
                             </p>
                           </div>
                         </motion.div>
@@ -543,13 +784,30 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                     <div className="absolute inset-0 p-8 flex flex-col justify-between" style={{ fontFamily }}>
                       {/* Top: Title + Subtitle */}
                       <div className="space-y-4 pt-4 text-center">
-                        <input
-                          value={editTitle}
-                          onChange={e => setEditTitle(e.target.value)}
-                          className="w-full bg-transparent text-center outline-none text-4xl sm:text-6xl font-black uppercase tracking-tighter leading-[0.9] text-white"
-                          style={{ ...effectCSS, fontFamily }}
-                          placeholder="EVENT TITLE"
-                        />
+                        {aiTitleImage ? (
+                          <div className="relative h-32 sm:h-48 flex items-center justify-center group/title">
+                            <img 
+                              src={aiTitleImage} 
+                              alt="AI Title" 
+                              className="h-full w-auto object-contain mix-blend-screen filter brightness-125"
+                            />
+                            <button 
+                              onClick={() => setAiTitleImage(null)}
+                              className="absolute -top-2 -right-2 p-2 bg-red-500 rounded-full text-white opacity-0 group-hover/title:opacity-100 transition-opacity"
+                            >
+                              <RefreshCw className="w-3 h-3" />
+                            </button>
+                          </div>
+                        ) : (
+                          <input
+                            value={editTitle}
+                            onChange={e => setEditTitle(e.target.value)}
+                            className="w-full bg-transparent text-center outline-none text-4xl sm:text-6xl font-black uppercase tracking-tighter leading-[0.9] text-white"
+                            style={{ ...effectCSS, fontFamily }}
+                            placeholder="EVENT TITLE"
+                          />
+                        )}
+
                         <input
                           value={editSubtitle}
                           onChange={e => setEditSubtitle(e.target.value)}
@@ -594,12 +852,6 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
                   </div>
                 </div>
 
-                {/* Error display */}
-                {imageGen.error && (
-                  <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-[10px] font-bold uppercase tracking-widest text-center">
-                    {imageGen.error}
-                  </div>
-                )}
                 {/* Error display */}
                 {imageGen.error && (
                   <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-[10px] font-bold uppercase tracking-widest text-center">

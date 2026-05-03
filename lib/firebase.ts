@@ -3,9 +3,11 @@ import {
     getAuth, 
     GoogleAuthProvider, 
     signInWithPopup, 
-    signOut 
+    signOut,
+    setPersistence,
+    browserLocalPersistence
 } from "firebase/auth";
-import { getFirestore, initializeFirestore, persistentLocalCache, persistentMultipleTabManager, Firestore, Timestamp } from "firebase/firestore";
+import { getFirestore, Firestore, Timestamp } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -25,24 +27,19 @@ const app = (getApps().length > 0)
 
 const auth = app ? getAuth(app) : null;
 
-// Only enable IndexedDB persistence in the browser environment to avoid SSR crashes
-let db: Firestore | null = null;
-if (app) {
-  if (typeof window !== "undefined") {
-    try {
-      db = initializeFirestore(app, {
-        localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() })
-      });
-    } catch (e) {
-      console.warn("Failed to set up IndexedDB persistence", e);
-      db = getFirestore(app);
-    }
-  } else {
-    // Server-side rendering fallback
-    const { getFirestore } = require("firebase/firestore");
-    db = getFirestore(app);
-  }
+// Enable local persistence so user stays logged in across refreshes
+if (auth) {
+  setPersistence(auth, browserLocalPersistence).catch(console.error);
 }
+
+// Initialize Firestore with IRON-CLAD Persistent Local Cache
+import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from "firebase/firestore";
+
+const db = app ? initializeFirestore(app, {
+  localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() })
+}) : null;
+
+
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -62,6 +59,34 @@ export const signInWithGoogle = async () => {
 
 export const logout = () => auth && signOut(auth);
 
+// Add a safe export for the connection status and recovery
+export const isOnline = async () => {
+    try {
+        const response = await fetch("https://www.google.com/favicon.ico", { mode: "no-cors", cache: "no-store" });
+        return true;
+    } catch {
+        return false;
+    }
+};
+
+/**
+ * Emergency recovery for auth/internal-error
+ * Clears local storage and reloads if the auth state is corrupted
+ */
+export const resetAuth = async () => {
+    try {
+        await auth.signOut();
+        window.localStorage.clear();
+        window.sessionStorage.clear();
+        window.location.reload();
+    } catch (e) {
+        console.error("Auth reset failed:", e);
+    }
+};
+
 export { app, auth, Timestamp };
 export const firestore = db as Firestore;
+export const db_safe = db;
 export { firestore as db };
+
+

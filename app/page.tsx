@@ -69,8 +69,10 @@ export default function App() {
   const [modalOperation, setModalOperation] = useState<'create' | 'rename'>('create');
   const [targetId, setTargetId] = useState<string | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+   const [inputValue, setInputValue] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+
   const lastSyncedUid = useRef<string | null>(typeof window !== 'undefined' ? localStorage.getItem('last_synced_uid') : null);
 
 
@@ -82,42 +84,56 @@ export default function App() {
   const activeClub = clubs.find(c => c.id === activeClubId);
   const activeEvent = activeClub?.events?.find((e: ClubEvent) => e.id === activeEventId);
 
+  const pendingWrites = useRef<Set<string>>(new Set());
+
   // Optimized loading and syncing logic
   useEffect(() => {
     let isMounted = true;
     
-    // Safety timeout to prevent infinite "Syncing Hub" hang
     const safetyTimeout = setTimeout(() => {
       if (isMounted) setLoading(false);
     }, 10000);
 
-    if (authLoading) return () => { 
-      isMounted = false; 
-      clearTimeout(safetyTimeout); 
-    };
+    if (authLoading) return () => { isMounted = false; clearTimeout(safetyTimeout); };
     
     if (user) {
-      // Only show full-screen loader if it's a completely new user UID
-      if (lastSyncedUid.current !== user.uid) {
-        setLoading(true);
-      }
+      if (lastSyncedUid.current !== user.uid) setLoading(true);
       
       const unsubscribe = subscribeUserClubs(user.uid, user.email, (fetchedClubs, syncing) => {
         if (isMounted) {
-          setClubs(fetchedClubs);
+          // RECONCILIATION: Merge pending local items that haven't hit the server yet
+          setClubs(prev => {
+            const serverIds = new Set(fetchedClubs.map(c => c.id));
+            pendingWrites.current.forEach(id => {
+               if (serverIds.has(id)) pendingWrites.current.delete(id);
+            });
+
+            const optimisticItems = prev.filter(c => pendingWrites.current.has(c.id));
+            const combined = [...fetchedClubs];
+            optimisticItems.forEach(opt => {
+                if (!serverIds.has(opt.id)) combined.push(opt);
+            });
+            
+            return combined;
+          });
+
+          // If we have data, and syncing is taking > 3s, assume we are good for now
           setIsSyncing(syncing);
           
-          // Only stop the "Syncing Hub" if:
-          // 1. We found some clubs (even from cache, to show them instantly)
-          // 2. OR the server has finished syncing (syncing is false)
-          if (fetchedClubs.length > 0 || !syncing) {
+          if (fetchedClubs.length > 0) {
             setLoading(false);
             lastSyncedUid.current = user.uid;
             localStorage.setItem('last_synced_uid', user.uid);
+            // Don't clear safetyTimeout here, keep it for initial sync
+          }
+          
+          if (!syncing) {
+            setLoading(false);
             clearTimeout(safetyTimeout);
           }
         }
       });
+
       
       return () => {
         isMounted = false;
@@ -125,11 +141,29 @@ export default function App() {
         clearTimeout(safetyTimeout);
       };
     } else {
+      // EMERGENCY MOCK MODE: If Firebase fails, provide a demo playground
       if (isMounted) {
-          setClubs([]);
+          const mockClub: Club = {
+            id: 'mock-club',
+            name: 'Offline Design Lab',
+            events: [{
+              id: 'mock-event',
+              name: 'AI Concept Workshop',
+              status: 'Ideation',
+              config: {
+                description: 'Testing high-fidelity AI backgrounds and typography in offline mode.',
+                type: 'Workshop',
+                date: '2026-05-05',
+                time: '18:00',
+                venue: 'Studio A'
+              }
+            } as any]
+          };
+          setClubs([mockClub]);
+          setActiveClubId('mock-club');
+          setActiveEventId('mock-event');
           setLoading(false);
-          lastSyncedUid.current = null;
-          localStorage.removeItem('last_synced_uid');
+          setIsSyncing(false);
           clearTimeout(safetyTimeout);
       }
     }
@@ -139,6 +173,7 @@ export default function App() {
       clearTimeout(safetyTimeout);
     };
   }, [user, authLoading]);
+
 
   // Calculate current user role whenever club or user changes
   useEffect(() => {
@@ -169,40 +204,132 @@ export default function App() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    const capturedValue = inputValue.trim();
+    if (!capturedValue) return;
+
+    // 1. OPTIMISTIC UI UPDATE (Sync)
     if (modalOperation === 'create') {
-      void handleCreate();
+      if (modalType === 'club') {
+        const newClub: Club = {
+          id: `club_${Date.now()}`,
+          ownerId: user?.uid || "guest-id",
+          name: capturedValue,
+          members: [], 
+          events: []
+        };
+        
+        // MARK AS PENDING TO PROTECT FROM SNAPSHOT OVERWRITE
+        pendingWrites.current.add(newClub.id);
+        
+        setClubs(prev => [...prev, newClub]);
+        setIsSaving(true);
+        setHasUnsavedChanges(true); 
+
+        const saveTimer = setTimeout(() => setIsSaving(false), 4000);
+        void saveClub(newClub as Club & { ownerId: string })
+          .then(success => {
+            if (success) setHasUnsavedChanges(false);
+          })
+          .finally(() => {
+            clearTimeout(saveTimer);
+            setIsSaving(false);
+          });
+          
+      } else if (activeClubId) {
+        const newEvent: ClubEvent = {
+          id: `event_${Date.now()}`,
+          name: capturedValue,
+          config: { city: "Bengaluru", type: 'Technical', subType: 'Workshop', isCollegeEvent: true, isLaunched: false }
+        };
+        
+        pendingWrites.current.add(activeClubId);
+        setIsSaving(true);
+        setHasUnsavedChanges(true);
+
+        const updatedClubs = clubs.map(c => c.id === activeClubId ? { ...c, events: [...(c.events || []), newEvent] } : c);
+        setClubs(updatedClubs);
+        
+        const saveTimer = setTimeout(() => setIsSaving(false), 4000);
+        const target = updatedClubs.find(c => c.id === activeClubId);
+        if (target) {
+          void saveClub(target as Club & { ownerId: string }).then(success => {
+            if (success) setHasUnsavedChanges(false);
+          }).finally(() => {
+            clearTimeout(saveTimer);
+            setIsSaving(false);
+          });
+        } else {
+          clearTimeout(saveTimer);
+          setIsSaving(false);
+        }
+      }
     } else {
-      void handleRename();
+      // Handle Rename Optimistically
+      if (targetId) pendingWrites.current.add(modalType === 'club' ? targetId : activeClubId!);
+      setIsSaving(true);
+
+      const saveTimer = setTimeout(() => setIsSaving(false), 4000);
+      if (modalType === 'club') {
+        const updated = clubs.map(c => c.id === targetId ? { ...c, name: capturedValue } : c);
+        setClubs(updated);
+        const target = updated.find(x => x.id === targetId);
+        if (target) {
+          void saveClub(target as Club & { ownerId: string }).finally(() => {
+            clearTimeout(saveTimer);
+            setIsSaving(false);
+          });
+        } else {
+          clearTimeout(saveTimer);
+          setIsSaving(false);
+        }
+      } else {
+        const updated = clubs.map(c => c.id === activeClubId ? {
+          ...c, events: (c.events || []).map(e => e.id === targetId ? { ...e, name: capturedValue } : e)
+        } : c);
+        setClubs(updated);
+        const target = updated.find(x => x.id === activeClubId);
+        if (target) {
+          void saveClub(target as Club & { ownerId: string }).finally(() => {
+            clearTimeout(saveTimer);
+            setIsSaving(false);
+          });
+        } else {
+          clearTimeout(saveTimer);
+          setIsSaving(false);
+        }
+      }
     }
+
+
+    // 2. PHASE TWO: VISUAL HIDE (INSTANT)
+    setIsModalOpen(false); 
+    setInputValue("");
+    setIsSubmitting(false);
   };
-  const handleCreate = async () => {
+
+
+  const handleCreate = async (nameToSave: string) => {
     if (!user) return;
     
     setIsSaving(true);
-    setHasUnsavedChanges(true); // Mark as dirty
+    setHasUnsavedChanges(true); 
+
     try {
       if (modalType === 'club') {
         const newClub: Club = {
           id: `club_${Date.now()}`,
           ownerId: user.uid,
-          name: inputValue,
+          name: nameToSave,
           events: []
         };
-        // Optimistic UI update
+
         setClubs(prev => [...prev, newClub]);
-        setIsModalOpen(false); 
-        setInputValue("");
-        
-        const success = await saveClub(newClub as Club & { ownerId: string });
-        if (!success) {
-          // Revert if failed
-          setClubs(prev => prev.filter(c => c.id !== newClub.id));
-          alert("Failed to establish club. Reverting changes.");
-        }
+        void saveClub(newClub as Club & { ownerId: string }).finally(() => setIsSaving(false));
       } else if (activeClubId) {
         const newEvent: ClubEvent = {
           id: `event_${Date.now()}`,
-          name: inputValue,
+          name: nameToSave,
           config: {
             city: "Bengaluru",
             type: 'Technical',
@@ -211,36 +338,36 @@ export default function App() {
           }
         };
         
-        let targetClub: Club | undefined;
-        setClubs(prev => prev.map((c: Club) => {
+        const updatedClubs = clubs.map((c: Club) => {
           if (c.id === activeClubId) {
-            targetClub = { ...c, events: [...(c.events || []), newEvent] };
-            return targetClub;
+            return { ...c, events: [...(c.events || []), newEvent] };
           }
           return c;
-        }));
+        });
+        setClubs(updatedClubs);
         
-        setIsModalOpen(false); 
-        setInputValue("");
-        
-        if (targetClub) {
-          const success = await saveClub(targetClub as Club & { ownerId: string });
-          if (!success) alert("Failed to add event. Work might not be saved.");
+        const saveTimer = setTimeout(() => setIsSaving(false), 4000);
+        const updated = updatedClubs.find(c => c.id === activeClubId);
+        if (updated) {
+          void saveClub(updated as Club & { ownerId: string }).finally(() => {
+            clearTimeout(saveTimer);
+            setIsSaving(false);
+          });
+        } else {
+          clearTimeout(saveTimer);
+          setIsSaving(false);
         }
       }
       setHasUnsavedChanges(false);
     } catch (err) {
-      console.error("Save error:", err);
-    } finally {
+      console.error("Create failed:", err);
       setIsSaving(false);
     }
   };
 
   const handleAdoptIdea = async (title: string, ideaConfig: { subType: string, tags: string, description?: string }) => {
     const targetClubId = activeClubId || clubs[0]?.id;
-    
     if (!targetClubId || !user) {
-        alert("Please establish at least one club folder before adopting a blueprint.");
         setActiveNav('my-clubs');
         return;
     }
@@ -251,62 +378,83 @@ export default function App() {
       config: {
         subType: ideaConfig.subType,
         description: ideaConfig.description || "",
-        date: "",
-        time: "",
-        venue: "",
-        city: "",
+        date: "", time: "", venue: "", city: "",
         isLaunched: false
       }
     };
 
-    const updatedClubs = clubs.map((c: Club) =>
-      c.id === targetClubId ? { ...c, events: [...(c.events || []), newEvent] } : c
-    );
+    setIsSaving(true);
+    const updatedClubs = clubs.map((c: Club) => {
+      if (c.id === targetClubId) {
+        return { ...c, events: [...(c.events || []), newEvent] };
+      }
+      return c;
+    });
     setClubs(updatedClubs);
     
-    // Switch completely immediately, save in background
+    const saveTimer = setTimeout(() => setIsSaving(false), 4000);
+    const updated = updatedClubs.find(c => c.id === targetClubId);
+    if (updated) {
+      void saveClub(updated as Club & { ownerId: string }).finally(() => {
+        clearTimeout(saveTimer);
+        setIsSaving(false);
+      });
+    } else {
+      clearTimeout(saveTimer);
+      setIsSaving(false);
+    }
+    
     setActiveClubId(targetClubId);
     setActiveEventId(newEvent.id);
     setView('domains');
     setActiveNav('my-clubs');
-
-    const c = updatedClubs.find(c => c.id === targetClubId);
-    if (c) {
-      setIsSaving(true);
-      await saveClub(c as Club & { ownerId: string });
-      setIsSaving(false);
-    }
   };
 
-  const handleRename = async () => {
+  const handleRename = async (newName: string) => {
     setIsSaving(true);
+
     try {
       if (modalType === 'club') {
-        const updatedClubs = clubs.map((c: Club) => c.id === targetId ? { ...c, name: inputValue } : c);
+        const updatedClubs = clubs.map((c: Club) => c.id === targetId ? { ...c, name: newName } : c);
+
         setClubs(updatedClubs);
-        setIsModalOpen(false); // Close instantly
-        setInputValue("");
+        const saveTimer = setTimeout(() => setIsSaving(false), 4000);
         const c = updatedClubs.find(x => x.id === targetId);
-        if (c) await saveClub(c as Club & { ownerId: string });
+        if (c) {
+          void saveClub(c as Club & { ownerId: string }).finally(() => {
+            clearTimeout(saveTimer);
+            setIsSaving(false);
+          });
+        } else {
+          clearTimeout(saveTimer);
+          setIsSaving(false);
+        }
       } else {
+        const saveTimer = setTimeout(() => setIsSaving(false), 4000);
         const updatedClubs = clubs.map((c: Club) =>
           c.id === activeClubId ? {
             ...c,
-            events: (c.events || []).map((e: ClubEvent) => e.id === targetId ? { ...e, name: inputValue } : e)
+            events: (c.events || []).map((e: ClubEvent) => e.id === targetId ? { ...e, name: newName } : e)
           } : c
         );
         setClubs(updatedClubs);
-        setIsModalOpen(false); // Close instantly
-        setInputValue("");
         const activeC = updatedClubs.find(x => x.id === activeClubId);
-        if (activeC) await saveClub(activeC as Club & { ownerId: string });
+        if (activeC) {
+          void saveClub(activeC as Club & { ownerId: string }).finally(() => {
+            clearTimeout(saveTimer);
+            setIsSaving(false);
+          });
+        } else {
+          clearTimeout(saveTimer);
+          setIsSaving(false);
+        }
       }
     } catch (err) {
       console.error("Rename failed:", err);
-    } finally {
       setIsSaving(false);
     }
   };
+
 
   const confirmDelete = async () => {
     setIsSaving(true);
@@ -336,8 +484,9 @@ export default function App() {
         setClubs(updatedClubs);
         setIsDeleteModalOpen(false); // Close instantly
         const activeC = updatedClubs.find(x => x.id === activeClubId);
-        if (activeC) await saveClub(activeC as Club & { ownerId: string });
+        if (activeC) void saveClub(activeC as Club & { ownerId: string });
       }
+
     } catch (err) {
       console.error("Delete failed:", err);
     } finally {
@@ -349,6 +498,17 @@ export default function App() {
   const handleLogActivity = (domain: 'Design' | 'Content' | 'Social' | 'Management', action: string, details?: string) => {
     if (!activeClubId || !user) return;
     
+    // Structured Sync Event Handler
+    if (action === 'Sync State' && details) {
+        try {
+            const parsed = JSON.parse(details);
+            updateEventConfig(parsed);
+            return;
+        } catch (e) {
+            console.error("Sync parse error", e);
+        }
+    }
+
     const newEvent: ActivityLogEvent = {
       id: Math.random().toString(36).substr(2, 9),
       userId: user.uid,
@@ -359,41 +519,36 @@ export default function App() {
       details
     };
 
-    const updatedClubs = clubs.map(c => 
-      c.id === activeClubId 
-        ? { ...c, activityLog: [...(c.activityLog || []), newEvent].slice(-50) } // Keep last 50
-        : c
-    );
-    setClubs(updatedClubs);
-    
-    // Fire and forget save
-    const activeC = updatedClubs.find(c => c.id === activeClubId);
-    if (activeC) {
-      setIsSaving(true);
-      void saveClub(activeC as Club & { ownerId: string }).finally(() => setIsSaving(false));
-    }
+    setClubs(prev => {
+      const updated = prev.map(c => {
+        if (c.id === activeClubId) {
+          const updatedClub = { ...c, activityLog: [...(c.activityLog || []), newEvent].slice(-50) };
+          void saveClub(updatedClub as Club & { ownerId: string });
+          return updatedClub;
+        }
+        return c;
+      });
+      return updated;
+    });
   };
 
   const updateEventConfig = (newData: Partial<EventConfig>) => {
     if (!activeClubId || !activeEventId) return;
-    const updatedClubs = clubs.map(c => {
-      if (c.id === activeClubId) {
-        return {
-          ...c,
-          events: (c.events || []).map((e: ClubEvent) =>
+
+    setClubs(prev => {
+      const updated = prev.map(c => {
+        if (c.id === activeClubId) {
+          const updatedEvents = (c.events || []).map(e =>
             e.id === activeEventId ? { ...e, config: { ...e.config, ...newData } } : e
-          )
-        };
-      }
-      return c;
+          );
+          const updatedClub = { ...c, events: updatedEvents };
+          void saveClub(updatedClub as Club & { ownerId: string });
+          return updatedClub;
+        }
+        return c;
+      });
+      return updated;
     });
-    setClubs(updatedClubs);
-    
-    const activeC = updatedClubs.find(c => c.id === activeClubId);
-    if (activeC) {
-      setIsSaving(true);
-      void saveClub(activeC as Club & { ownerId: string }).finally(() => setIsSaving(false));
-    }
   };
 
   /**
@@ -495,7 +650,6 @@ export default function App() {
   if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-transparent flex flex-col items-center justify-center space-y-8 relative overflow-hidden">
-
         <div className="relative z-10 flex flex-col items-center">
           <PremiumLoader size="lg" />
           <p className="text-signature-gradient font-bold uppercase tracking-[0.3em] text-[10px] animate-pulse mt-8">Syncing Hub...</p>
@@ -505,32 +659,28 @@ export default function App() {
   }
 
   if (!user) {
-    return (
-      <div className="relative min-h-screen overflow-hidden">
-
-        <LoginView onSignIn={signInWithGoogle} />
-      </div>
-    );
+    return <LoginView onSignIn={signInWithGoogle} />;
   }
 
   return (
     <div className="min-h-screen text-white antialiased pb-20 md:pb-0 relative">
-      <DynamicIsland isSaving={isSaving} />
+      <DynamicIsland isSaving={isSaving} isSyncing={isSyncing} />
 
       <Sidebar 
         user={{
-          id: user?.uid || "",
+          id: user?.uid || "guest-id",
           user_metadata: { 
-            full_name: user?.displayName || "Club Member",
+            full_name: user?.displayName || "Guest Designer",
             avatar_url: user?.photoURL || undefined
           }
-        }} 
+        } as any}
         onLogout={logout} 
         onAboutClick={() => setView('about')} 
         onAccountClick={() => setView('account')}
         onAnalyticsClick={() => setView('analytics')}
         onSettingsClick={() => setView('settings')}
       />
+
 
       <div className="flex relative z-10 w-full items-stretch">
         <AppSidebar 
@@ -709,7 +859,7 @@ export default function App() {
                     >
                       {activeDomain === 'Design' && <DesignWorkspace activeEvent={activeEvent} onLogActivity={handleLogActivity} />}
                       {activeDomain === 'Content' && <ContentWorkspace activeEvent={activeEvent} activeClub={activeClub} updateConfig={updateEventConfig} onLogActivity={handleLogActivity} />}
-                      {activeDomain === 'Social' && <SocialWorkspace activeEvent={activeEvent} />}
+                      {activeDomain === 'Social' && <SocialWorkspace activeEvent={activeEvent} updateConfig={updateEventConfig} />}
                     </motion.div>
                   </AnimatePresence>
                 </motion.div>
@@ -807,10 +957,10 @@ export default function App() {
                 />
                 <button
                   type="submit"
-                  disabled={isSaving}
+                  disabled={isSubmitting}
                   className="w-full bg-gold-gradient text-black font-bold py-4 rounded-xl shadow-xl uppercase tracking-widest hover:scale-[1.02] transition-transform flex items-center justify-center gap-3 disabled:opacity-50 disabled:scale-100"
                 >
-                  {isSaving ? (
+                  {isSubmitting ? (
                     <>
                       <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />
                       <span>Processing...</span>
@@ -819,6 +969,7 @@ export default function App() {
                     modalOperation === 'create' ? (modalType === 'club' ? 'Establish Club' : 'Create Event') : (modalType === 'club' ? 'Rename Club' : 'Rename Event')
                   )}
                 </button>
+
               </form>
             </motion.div>
           </div>

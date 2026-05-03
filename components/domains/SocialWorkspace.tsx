@@ -21,6 +21,7 @@ import ResourceRadar from "../ResourceRadar";
 
 interface SocialWorkspaceProps {
   activeEvent: ClubEvent | undefined;
+  updateConfig: (newData: Partial<EventConfig>) => void;
 }
 
 interface Expert {
@@ -30,9 +31,11 @@ interface Expert {
   location: string;
 }
 
-export default function SocialWorkspace({ activeEvent }: SocialWorkspaceProps) {
+export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWorkspaceProps) {
   const [isGenerating, setIsGenerating] = useState(false);
-  const [outreachTemplate, setOutreachTemplate] = useState<string | null>(null);
+  const [isSending, setIsSending] = useState(false);
+  // Restore from persisted state
+  const [outreachTemplate, setOutreachTemplate] = useState<string | null>(activeEvent?.config?.workspaceData?.outreach || null);
   const [copied, setCopied] = useState(false);
   
   const { startTask, finishTask } = useTasks();
@@ -119,6 +122,15 @@ export default function SocialWorkspace({ activeEvent }: SocialWorkspaceProps) {
               });
               const data = await response.json();
               setOutreachTemplate(data.content);
+              
+              // Persist to Cloud
+              updateConfig({
+                workspaceData: {
+                  ...activeEvent.config.workspaceData,
+                  outreach: data.content
+                }
+              });
+              
               finishTask(taskId, true);
             } catch (err) {
               console.error(err);
@@ -169,10 +181,39 @@ export default function SocialWorkspace({ activeEvent }: SocialWorkspaceProps) {
                     setCopied(true);
                     setTimeout(() => setCopied(false), 2000);
                   }}
+                  className="flex-1 px-6 py-4 rounded-xl bg-zinc-900 border border-white/10 text-white text-[10px] font-black uppercase tracking-widest hover:border-gold-500 transition-all flex items-center justify-center gap-2"
+                >
+                  {copied ? <Check className="w-4 h-4 text-gold-500" /> : <Copy className="w-4 h-4" />}
+                  {copied ? "Copied" : "Copy Template"}
+                </button>
+                <button
+                  disabled={isSending}
+                  onClick={async () => {
+                    setIsSending(true);
+                    try {
+                      const response = await fetch("/api/send-invitation", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          email: "expert@example.com", // In real app, this would be from experts[0]
+                          subject: `Invitation to Speak: ${activeEvent?.name}`,
+                          content: outreachTemplate
+                        })
+                      });
+                      if (response.ok) {
+                        alert("Invitation sent successfully via Resend!");
+                        setOutreachTemplate(null);
+                      }
+                    } catch (err) {
+                      console.error(err);
+                    } finally {
+                      setIsSending(false);
+                    }
+                  }}
                   className="flex-1 px-6 py-4 rounded-xl bg-gold-500 text-black text-[10px] font-black uppercase tracking-widest hover:bg-gold-400 transition-all shadow-lg flex items-center justify-center gap-2"
                 >
-                  {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                  {copied ? "Copied to Buffer" : "Copy to Clipboard"}
+                  {isSending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Mail className="w-4 h-4" />}
+                  {isSending ? "Sending..." : "Send via Resend"}
                 </button>
               </div>
             </motion.div>

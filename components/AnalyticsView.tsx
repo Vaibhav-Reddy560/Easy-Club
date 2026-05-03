@@ -57,6 +57,15 @@ export default function AnalyticsView({ clubsCount, eventsCount, onBack }: Analy
     { label: "Activity Index", value: "B+", icon: Activity, color: "text-emerald-400", bg: "bg-emerald-500/5", border: "border-emerald-500/20" }
   ];
 
+  const [isSupabaseActive, setIsSupabaseActive] = useState(false);
+
+  useEffect(() => {
+    // Basic check for supabase connectivity
+    import("@/lib/supabase").then(({ supabase }) => {
+      setIsSupabaseActive(!!supabase);
+    });
+  }, []);
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 30 }} 
@@ -74,15 +83,23 @@ export default function AnalyticsView({ clubsCount, eventsCount, onBack }: Analy
           <span className="text-xs uppercase font-black tracking-[0.2em] text-white/60 group-hover:text-white transition-colors">Exit Command Center</span>
         </button>
 
-        <div className="flex items-center gap-3">
-            <div className="flex -space-x-2">
-                {[1,2,3].map(i => (
-                    <div key={i} className="w-8 h-8 rounded-full border-2 border-neutral-900 bg-neutral-800 flex items-center justify-center overflow-hidden">
-                        <div className="w-full h-full bg-gradient-to-br from-white/10 to-transparent" />
-                    </div>
-                ))}
+        <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-900 border border-white/10 rounded-xl">
+                <div className={`w-2 h-2 rounded-full ${isSupabaseActive ? 'bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-zinc-700'}`} />
+                <span className="text-[10px] font-black uppercase tracking-widest text-white/80">
+                    {isSupabaseActive ? "Supabase Connected" : "Supabase Pending"}
+                </span>
             </div>
-            <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">3 active admins</span>
+            <div className="flex items-center gap-3">
+                <div className="flex -space-x-2">
+                    {[1,2,3].map(i => (
+                        <div key={i} className="w-8 h-8 rounded-full border-2 border-neutral-900 bg-neutral-800 flex items-center justify-center overflow-hidden">
+                            <div className="w-full h-full bg-gradient-to-br from-white/10 to-transparent" />
+                        </div>
+                    ))}
+                </div>
+                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">3 active admins</span>
+            </div>
         </div>
       </div>
 

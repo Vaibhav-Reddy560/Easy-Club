@@ -59,18 +59,21 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
     const handleConnectSocial = async () => {
         setIsConnecting(true);
         try {
-            const response = await fetch("/api/social/connect");
+            const response = await fetch("/api/social-link");
             if (!response.ok) throw new Error("Connection protocol failed");
             const data = await response.json();
             
+            if (!data.token) throw new Error("No connectivity token received");
+
             // Open the Ayrshare Social Link window
             const width = 600;
             const height = 800;
             const left = window.screenX + (window.outerWidth - width) / 2;
             const top = window.screenY + (window.outerHeight - height) / 2;
             
+            const url = `https://social.ayrshare.com/${data.token}`;
             window.open(
-                data.url, 
+                url, 
                 'Ayrshare Social Link', 
                 `width=${width},height=${height},left=${left},top=${top}`
             );
@@ -78,7 +81,7 @@ export default function SocialTracker({ clubs }: SocialTrackerProps) {
         } catch (err: unknown) {
             console.error(err);
             const error = err as Error;
-            alert("Linking Failed: " + (error.message || "Unknown Error"));
+            alert("Linking Failed: " + (error.message || "Check your API keys"));
         } finally {
             setIsConnecting(false);
         }
