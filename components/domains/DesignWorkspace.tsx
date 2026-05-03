@@ -121,15 +121,15 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
   // Sync editable fields when activeEvent changes
   useEffect(() => {
     if (activeEvent) {
-      setEditTitle(config.designTitle || activeEvent.name || "Event Title");
-      setEditSubtitle(config.designSubtitle || "");
-      setEditDate(config.date || "");
-      setEditTime(config.time || "");
-      setEditVenue(config.venue || "");
-      setEditTeamSize(config.teamSize || "");
-      setEditFee(config.feeClub || "");
-      setEditPoc1(config.poc1Name ? `${config.poc1Name}: ${config.poc1Phone || ""}` : "");
-      setEditPoc2(config.poc2Name ? `${config.poc2Name}: ${config.poc2Phone || ""}` : "");
+      setEditTitle((config.designTitle as string) || activeEvent.name || "Event Title");
+      setEditSubtitle((config.designSubtitle as string) || "");
+      setEditDate((config.date as string) || "");
+      setEditTime((config.time as string) || "");
+      setEditVenue((config.venue as string) || "");
+      setEditTeamSize((config.teamSize as string) || "");
+      setEditFee((config.feeClub as string) || "");
+      setEditPoc1(config.poc1Name ? `${config.poc1Name as string}: ${config.poc1Phone as string || ""}` : "");
+      setEditPoc2(config.poc2Name ? `${config.poc2Name as string}: ${config.poc2Phone as string || ""}` : "");
       
       if (config.designVibe) setVibeData(config.designVibe as VibeData);
       if (config.designTitleImage) setAiTitleImage(config.designTitleImage as string);
