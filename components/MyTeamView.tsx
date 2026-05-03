@@ -70,10 +70,11 @@ export default function MyTeamView({ clubs, user, onUpdateClub }: MyTeamViewProp
         );
     }
 
+    const isOwner = user?.uid === activeClub.ownerId;
     const ownerAsMember: ClubMember = {
         id: activeClub.ownerId || "owner",
-        name: activeClub.ownerName || "Club Founder",
-        email: activeClub.ownerEmail || "",
+        name: isOwner ? (user?.displayName || activeClub.ownerName || "Club Founder") : (activeClub.ownerName || "Club Founder"),
+        email: isOwner ? (user?.email || activeClub.ownerEmail || "") : (activeClub.ownerEmail || ""),
         role: 'Senior Core',
         customPosition: (activeClub as any).ownerPosition || "Founder", 
         joinDate: activeClub.id.startsWith('club_') ? new Date(parseInt(activeClub.id.split('_')[1])).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
