@@ -187,17 +187,6 @@ export default function App() {
       setCurrentUserRole(memberMatch.role);
     } else {
       setCurrentUserRole('Admin');
-      
-      // AUTO-HEALING: If owner details are missing, patch them now
-      if (user.uid === activeClub.ownerId && (!activeClub.ownerName || !activeClub.ownerEmail)) {
-        console.log("[Repair] Patching missing owner metadata...");
-        const patchedClub = {
-          ...activeClub,
-          ownerName: user.displayName || "Club Founder",
-          ownerEmail: user.email || ""
-        };
-        void saveClub(patchedClub as Club & { ownerId: string });
-      }
     }
   }, [user, activeClub]);
 
