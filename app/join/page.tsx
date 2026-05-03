@@ -18,13 +18,14 @@ function JoinContent() {
     const [isProcessing, setIsProcessing] = useState(false);
 
     const inviteId = searchParams.get("token");
+    const targetClubId = searchParams.get("clubId");
 
     useEffect(() => {
         if (authLoading) return;
 
-        if (!inviteId) {
+        if (!inviteId || !targetClubId) {
             setStatus('error');
-            setError("Missing invitation token.");
+            setError("Invalid or incomplete invitation link.");
             return;
         }
 
@@ -43,7 +44,7 @@ function JoinContent() {
         setStatus('verifying');
 
         try {
-            const result = await verifyAndAcceptInvite(inviteId, {
+            const result = await verifyAndAcceptInvite(inviteId, targetClubId!, {
                 id: user.uid,
                 email: user.email || "",
                 name: user.displayName || "New Member"

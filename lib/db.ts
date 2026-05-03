@@ -253,28 +253,22 @@ import {
   /**
    * Verifies an invite token and adds the user to the club.
    */
-  export async function verifyAndAcceptInvite(inviteId: string, user: { id: string, email: string, name: string }): Promise<{ success: boolean, clubName?: string, error?: string }> {
+  export async function verifyAndAcceptInvite(inviteId: string, clubId: string, user: { id: string, email: string, name: string }): Promise<{ success: boolean, clubName?: string, error?: string }> {
     if (!db) return { success: false, error: "Database not initialized" };
     
     try {
-        // Find the club that has this invite ID
-        const q = query(collection(db, CLUBS_COLLECTION));
-        const snapshot = await getDocs(q);
+        // Direct document lookup is faster and avoids permission issues with collection scanning
+        const clubRef = doc(db, CLUBS_COLLECTION, clubId);
+        const snapshot = await getDocs(query(collection(db, CLUBS_COLLECTION), where("id", "==", clubId)));
         
-        let targetClub: Club | null = null;
-        let targetInvite: TeamInvite | null = null;
-        
-        for (const d of snapshot.docs) {
-            const data = d.data() as Club;
-            const invite = data.invites?.find(i => i.id === inviteId);
-            if (invite) {
-                targetClub = data;
-                targetInvite = invite;
-                break;
-            }
+        if (snapshot.empty) {
+            return { success: false, error: "Club not found" };
         }
 
-        if (!targetClub || !targetInvite) {
+        const targetClub = snapshot.docs[0].data() as Club;
+        const targetInvite = targetClub.invites?.find(i => i.id === inviteId);
+
+        if (!targetInvite) {
             return { success: false, error: "Invalid or expired invitation link" };
         }
 
@@ -302,7 +296,7 @@ import {
             i.id === inviteId ? { ...i, status: 'accepted' as const } : i
         );
 
-        await setDoc(doc(db, CLUBS_COLLECTION, targetClub.id), {
+        await setDoc(doc(db, CLUBS_COLLECTION, clubId), {
             ...targetClub,
             members: updatedMembers,
             invites: updatedInvites

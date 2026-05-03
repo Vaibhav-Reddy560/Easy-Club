@@ -114,7 +114,7 @@ export default function MyTeamView({ clubs, user, onUpdateClub }: MyTeamViewProp
     const handleCopyLink = async (inviteId: string) => {
         try {
             const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://easy-club.vercel.app';
-            const fullLink = `${baseUrl}/join?token=${inviteId}`;
+            const fullLink = `${baseUrl}/join?clubId=${activeClub.id}&token=${inviteId}`;
             await navigator.clipboard.writeText(fullLink);
             setCopiedId(inviteId);
             setTimeout(() => setCopiedId(null), 2000);
