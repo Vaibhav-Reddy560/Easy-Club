@@ -129,9 +129,9 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
       setEditPoc2(config.poc2Name ? `${config.poc2Name}: ${config.poc2Phone || ""}` : "");
       
       if (config.designVibe) setVibeData(config.designVibe as VibeData);
-      if (config.designTitleImage) setAiTitleImage(config.designTitleImage);
-      if (config.designActiveTab) setActiveTab(config.designActiveTab);
-      if (config.designPosterDim) setPosterDim(config.designPosterDim);
+      if (config.designTitleImage) setAiTitleImage(config.designTitleImage as string);
+      if (config.designActiveTab) setActiveTab(config.designActiveTab as DesignTab);
+      if (config.designPosterDim) setPosterDim(config.designPosterDim as any);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeEvent?.id]);
