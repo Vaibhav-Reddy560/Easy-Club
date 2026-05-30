@@ -38,12 +38,12 @@ export default function LoginView({ onSignIn }: LoginViewProps) {
         className="relative w-full max-w-md z-10"
       >
         {/* Main Login Card */}
-        <div className="glass-panel rounded-[3rem] p-12 relative overflow-hidden group shadow-[0_0_50px_-12px_rgba(255,165,0,0.1)]">
+        <div className="glass-panel rounded-[3rem] px-12 py-8 relative overflow-hidden group shadow-[0_0_50px_-12px_rgba(255,165,0,0.1)]">
           <BorderBeam size={400} duration={15} delay={2} />
           
-          <div className="relative z-10 space-y-12">
+          <div className="relative z-10 space-y-8">
             {/* Logo & Header Section */}
-            <div className="text-center space-y-8">
+            <div className="text-center space-y-6">
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
