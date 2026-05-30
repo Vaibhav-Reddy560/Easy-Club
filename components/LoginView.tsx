@@ -4,7 +4,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { BorderBeam } from "./animations/BorderBeam";
-import { BorderBeam } from "./animations/BorderBeam";
 
 import { resetAuth } from "@/lib/firebase";
 
@@ -61,11 +60,11 @@ export default function LoginView({ onSignIn }: LoginViewProps) {
                    />
                 </div>
                 
-                <div className="space-y-5">
+                <div className="space-y-8">
                   <h1 className="text-6xl md:text-7xl font-normal text-signature-gradient tracking-wide font-airstream leading-[1.2] py-2 px-4 whitespace-nowrap">
                     Easy Club
                   </h1>
-                  <p className="text-zinc-300 text-[11px] font-black uppercase tracking-[0.35em]">
+                  <p className="text-zinc-300 text-[11px] font-black uppercase tracking-[0.3em]">
                     Club operations made easy.
                   </p>
                 </div>
