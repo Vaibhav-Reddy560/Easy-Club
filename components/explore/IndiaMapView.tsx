@@ -135,23 +135,30 @@ export default function IndiaMapView({
   }, []);
 
   // --- Drag to pan ---
-  const handleDragStart = useCallback((e: React.MouseEvent) => {
+  const handleDragStart = useCallback((e: React.MouseEvent | React.TouchEvent) => {
     if (!isZoomed) return;
-    e.preventDefault();
-    setIsDragging(true);
-    dragStart.current = { x: e.clientX, y: e.clientY, panX: pan.x, panY: pan.y };
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    dragStart.current = { x: clientX, y: clientY, panX: pan.x, panY: pan.y };
   }, [isZoomed, pan]);
 
-  const handleDragMove = useCallback((e: React.MouseEvent) => {
-    if (!isDragging) return;
-    const dx = e.clientX - dragStart.current.x;
-    const dy = e.clientY - dragStart.current.y;
-    setPan({ x: dragStart.current.panX + dx, y: dragStart.current.panY + dy });
-    setHoveredCity(null);
-  }, [isDragging]);
+  const handleDragMove = useCallback((e: React.MouseEvent | React.TouchEvent) => {
+    if (!dragStart.current.x) return;
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    const dx = clientX - dragStart.current.x;
+    const dy = clientY - dragStart.current.y;
+    
+    // Only consider it a drag if moved more than 5px
+    if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+      setIsDragging(true);
+      setPan({ x: dragStart.current.panX + dx, y: dragStart.current.panY + dy });
+      setHoveredCity(null);
+    }
+  }, []);
 
   const handleDragEnd = useCallback(() => {
-    // Small delay so the click event on a city doesn't fire after drag
+    dragStart.current.x = 0; // reset
     setTimeout(() => setIsDragging(false), 50);
   }, []);
 
@@ -160,13 +167,16 @@ export default function IndiaMapView({
       ref={mapRef}
       className="relative w-full overflow-hidden rounded-[2rem]"
       style={{
-        touchAction: isZoomed ? "none" : "pan-y",
+        touchAction: "pan-y",
         cursor: isZoomed ? (isDragging ? "grabbing" : "grab") : "default",
       }}
       onMouseDown={handleDragStart}
       onMouseMove={handleDragMove}
       onMouseUp={handleDragEnd}
       onMouseLeave={() => { handleDragEnd(); setHoveredCity(null); }}
+      onTouchStart={handleDragStart}
+      onTouchMove={handleDragMove}
+      onTouchEnd={handleDragEnd}
     >
       {/* Ambient background glows */}
       <div className="absolute inset-0 pointer-events-none">

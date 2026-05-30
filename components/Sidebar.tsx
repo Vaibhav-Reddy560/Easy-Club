@@ -48,13 +48,13 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
         </div>
 
         <div className="flex gap-4 md:gap-8 items-center">
-          <div className="hidden sm:flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <button
                 onClick={onAboutClick}
-                className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/5 border border-white/5 hover:border-gold-500/30 hover:bg-white/10 transition-all group overflow-hidden relative"
+                className="flex items-center gap-2.5 p-3 sm:px-5 sm:py-2.5 rounded-full bg-white/5 border border-white/5 hover:border-gold-500/30 hover:bg-white/10 transition-all group overflow-hidden relative"
               >
                 <Info className="w-4 h-4 text-white group-hover:text-gold-400 transition-colors relative z-10" />
-                <span className="text-[9px] font-black uppercase tracking-widest text-white/70 group-hover:text-white transition-colors relative z-10">About the app</span>
+                <span className="hidden sm:inline text-[9px] font-black uppercase tracking-widest text-white/70 group-hover:text-white transition-colors relative z-10">About the app</span>
                 <div className="absolute inset-0 bg-gradient-to-tr from-gold-500/0 to-gold-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
               </button>
 

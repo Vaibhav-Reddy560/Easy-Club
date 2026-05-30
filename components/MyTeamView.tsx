@@ -1195,31 +1195,31 @@ export default function MyTeamView({ clubs, user, onUpdateClub, defaultSelection
 
                     {activeTab === 'activity' && (
                         <div className="bg-[#050505] border border-white/15 rounded-[2.5rem] shadow-2xl overflow-hidden">
-                            <div className="p-8 border-b border-white/5 flex items-center justify-between">
-                                <div>
-                                    <h3 className="text-xl font-normal font-astronomus text-white uppercase tracking-tighter">Activity Watchtower</h3>
+                            <div className="p-6 md:p-8 border-b border-white/5 flex flex-col gap-4">
+                                <h3 className="text-xl font-normal font-astronomus text-white uppercase tracking-tighter whitespace-nowrap">Activity Watchtower</h3>
+                                <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
                                     <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-widest">Real-time collaborative operation logs</p>
-                                </div>
-                                <div className="flex items-center gap-4">
-                                    <div className="bg-zinc-950 border border-white/5 rounded-xl flex items-center p-1">
-                                        {(['today', '7d', '30d', 'all'] as const).map((range) => (
-                                            <button
-                                                key={range}
-                                                onClick={() => setActivityTimeRange(range)}
-                                                className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${activityTimeRange === range ? 'bg-white text-black shadow-lg' : 'text-zinc-500 hover:text-white'}`}
-                                            >
-                                                {range}
-                                            </button>
-                                        ))}
-                                    </div>
-                                    <div className="p-2 bg-zinc-950 border border-white/5 rounded-xl flex items-center gap-2 px-4 group">
-                                        <Search className="w-4 h-4 text-white group-focus-within:text-gold-500 transition-colors" />
-                                        <input 
-                                            value={searchQuery}
-                                            onChange={(e) => setSearchQuery(e.target.value)}
-                                            className="bg-transparent outline-none text-xs text-white placeholder:text-zinc-700 w-40" 
-                                            placeholder={isGlobal ? "Search all clubs..." : "Filter actions..."} 
-                                        />
+                                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                                        <div className="bg-zinc-950 border border-white/5 rounded-xl flex items-center p-1 w-full sm:w-auto overflow-x-auto custom-scrollbar">
+                                            {(['today', '7d', '30d', 'all'] as const).map((range) => (
+                                                <button
+                                                    key={range}
+                                                    onClick={() => setActivityTimeRange(range)}
+                                                    className={`flex-1 sm:flex-none px-4 py-2 sm:px-3 sm:py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activityTimeRange === range ? 'bg-white text-black shadow-lg' : 'text-zinc-500 hover:text-white'}`}
+                                                >
+                                                    {range}
+                                                </button>
+                                            ))}
+                                        </div>
+                                        <div className="p-2 bg-zinc-950 border border-white/5 rounded-xl flex items-center gap-2 px-4 group w-full sm:w-auto">
+                                            <Search className="w-4 h-4 text-white group-focus-within:text-gold-500 transition-colors shrink-0" />
+                                            <input 
+                                                value={searchQuery}
+                                                onChange={(e) => setSearchQuery(e.target.value)}
+                                                className="bg-transparent outline-none text-xs text-white placeholder:text-zinc-700 w-full sm:w-40" 
+                                                placeholder={isGlobal ? "Search all clubs..." : "Filter actions..."} 
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>

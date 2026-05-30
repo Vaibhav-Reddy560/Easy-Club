@@ -616,7 +616,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
           )}
         </div>
         
-        <div className="flex justify-between items-center pt-2">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center pt-2 gap-4">
           {(configMode === 'test-based' || configMode === 'fee-based') && selectedClubId ? (
             <div className="flex flex-col gap-2">
               <span className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">
@@ -641,7 +641,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
           
           <button
             onClick={handleSaveConfig}
-            className="px-6 py-3 bg-white/5 hover:bg-gold-500/20 text-white hover:brightness-110 rounded-xl text-[11px] font-bold uppercase tracking-widest border border-transparent hover:border-gold-500/30 transition-all flex items-center gap-2"
+            className="px-6 py-3 bg-white/5 hover:bg-gold-500/20 text-white hover:brightness-110 rounded-xl text-[11px] font-bold uppercase tracking-widest border border-transparent hover:border-gold-500/30 transition-all flex items-center justify-center w-full md:w-auto gap-2"
           >
             <Save className="w-4 h-4" /> Save Configuration
           </button>
@@ -676,7 +676,8 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
       <div className="w-full">
         {activeTab === 'recruitment-pool' && (
           <div className="bg-[#050505] border border-white/15 rounded-[2rem] overflow-hidden">
-            <table className="w-full text-left text-sm">
+            <div className="overflow-x-auto custom-scrollbar">
+              <table className="w-full text-left text-sm whitespace-nowrap min-w-[800px]">
               <thead className="bg-black shadow-inner text-[10px] font-black uppercase tracking-widest text-signature-gradient border-b border-white/5">
                 <tr>
                   <th className="px-8 py-5">Member</th>
@@ -842,6 +843,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                 )}
               </tbody>
             </table>
+            </div>
           </div>
         )}
 
@@ -922,13 +924,13 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
         {activeTab === 'jc-selection' && (
           <div className="space-y-10">
             {/* Admin/Founder Controls */}
-            <div className="bg-[#050505] border border-white/15 rounded-[2.5rem] p-10 space-y-8">
-              <div className="flex justify-between items-start">
+            <div className="bg-[#050505] border border-white/15 rounded-[2.5rem] p-6 md:p-10 space-y-8">
+              <div className="flex flex-col xl:flex-row justify-between items-start gap-6">
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">JC Selection Protocol</h3>
                   <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-widest">Vote and recruit your JC's</p>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex flex-wrap gap-4">
                     <div className="bg-black border border-white/10 rounded-xl px-4 py-2 flex items-center gap-3">
                         <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Max JC Intake</span>
                         <input 
@@ -975,11 +977,11 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
 
               {/* Voting Dashboard for SCs */}
               <div className="space-y-6">
-                <div className="flex justify-between items-end">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
                     <h4 className="text-[11px] font-black uppercase tracking-widest text-signature-gradient">Applications Received ({activeClub?.jcApplications?.length || 0})</h4>
                     <button 
                         onClick={handleFinalizeJC}
-                        className="px-6 py-3 bg-gold-gradient text-black font-black uppercase tracking-widest text-[10px] rounded-xl hover:scale-[1.02] transition-transform flex items-center gap-2"
+                        className="w-full sm:w-auto justify-center px-6 py-3 bg-gold-gradient text-black font-black uppercase tracking-widest text-[10px] rounded-xl hover:scale-[1.02] transition-transform flex items-center gap-2"
                     >
                         <Trophy className="w-3.5 h-3.5" /> Finalize Selection (Top {maxJC})
                     </button>

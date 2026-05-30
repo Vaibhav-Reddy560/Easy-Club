@@ -231,7 +231,7 @@ export default function ClubGrid({ items, onItemClick, onRename, onDelete, onAdd
         variants={container} 
         initial="hidden" 
         animate="show" 
-        className="grid grid-cols-2 md:grid-cols-6 gap-y-12 gap-x-6"
+        className="grid grid-cols-2 md:grid-cols-6 gap-y-6 md:gap-y-12 gap-x-4 md:gap-x-6"
       >
         <Magnetic strength={0.2} className="w-32">
           <motion.div variants={itemVariants} onClick={onAddClick} className="group flex flex-col items-center gap-3 p-4 w-full cursor-pointer">
