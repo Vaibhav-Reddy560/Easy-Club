@@ -62,7 +62,7 @@ export default function LoginView({ onSignIn }: LoginViewProps) {
                 </div>
                 
                 <div className="space-y-2">
-                  <h1 className="text-7xl md:text-8xl font-normal text-signature-gradient tracking-wide font-airstream leading-[1.2] py-2 px-4">
+                  <h1 className="text-6xl md:text-7xl font-normal text-signature-gradient tracking-wide font-airstream leading-[1.2] py-2 px-4 whitespace-nowrap">
                     Easy Club
                   </h1>
                   <p className="text-zinc-300 text-[10px] font-black uppercase tracking-[0.3em]">
