@@ -14,8 +14,12 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Content-Security-Policy",
-            value: "default-src 'self' https://*.firebaseio.com https://*.googleapis.com https://*.firebaseapp.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.firebaseapp.com https://apis.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.gstatic.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: *; connect-src 'self' *; frame-src 'self' https://*.firebaseapp.com https://*.firebaseio.com;",
+            value: "default-src 'self' https://*.firebaseio.com https://*.googleapis.com https://*.firebaseapp.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://*.firebaseapp.com https://apis.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.gstatic.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: *; connect-src 'self' *; frame-src 'self' https://*.firebaseapp.com https://*.firebaseio.com https://auth.easyclub.in https://accounts.google.com https://apis.google.com;",
           },
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin-allow-popups"
+          }
         ],
       },
     ];
