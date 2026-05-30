@@ -17,10 +17,11 @@ import {
     X,
     Trash2,
     Loader2,
-    CheckCircle2
+    CheckCircle2,
+    ChevronDown
 } from "lucide-react";
 import PremiumLoader from "@/components/ui/PremiumLoader";
-import { Club, Sponsor, SponsorStage } from "@/lib/types";
+import { Club, Sponsor, SponsorStage, SponsorTier, SponsorDeliverable } from "@/lib/types";
 import { useTasks } from "@/lib/TaskContext";
 import { exportToDocx } from "@/lib/export-utils";
 
@@ -30,6 +31,7 @@ interface SponsorshipManagerProps {
 }
 
 const STAGES: SponsorStage[] = ['Prospecting', 'Contacted', 'Negotiating', 'Closed'];
+const TIERS: SponsorTier[] = ['Title', 'Platinum', 'Gold', 'Silver', 'In-Kind', 'Custom'];
 
 const STAGE_COLORS: Record<SponsorStage, string> = {
     Prospecting: 'bg-blue-500/10 border-blue-500/20 text-blue-400',
@@ -50,20 +52,28 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
     const [isAddingLead, setIsAddingLead] = useState(false);
     const [isGeneratingDeck, setIsGeneratingDeck] = useState(false);
     const [deckSuccess, setDeckSuccess] = useState(false);
+    const [selectedSponsorId, setSelectedSponsorId] = useState<string | null>(null);
     const { startTask, finishTask } = useTasks();
 
     // New lead form state
     const [newCompany, setNewCompany] = useState('');
     const [newCategory, setNewCategory] = useState('Technical');
+    const [newTier, setNewTier] = useState<SponsorTier>('Custom');
     const [newValue, setNewValue] = useState('');
     const [newStage, setNewStage] = useState<SponsorStage>('Prospecting');
     const [newNotes, setNewNotes] = useState('');
+    const [newPocName, setNewPocName] = useState('');
+    const [newPocEmail, setNewPocEmail] = useState('');
+    const [newPocPhone, setNewPocPhone] = useState('');
+
+    const [isGeneratingMOU, setIsGeneratingMOU] = useState(false);
 
     const currentClub = clubs.find(c => c.id === selectedClubId);
     const sponsors = currentClub?.sponsors || [];
 
     // Derived stats from real data
     const totalRevenue = sponsors.filter(s => s.stage === 'Closed').reduce((acc, s) => acc + s.value, 0);
+    const cashCollected = sponsors.reduce((acc, s) => acc + (s.amountPaid || 0), 0);
     const pipelineValue = sponsors.filter(s => s.stage !== 'Closed').reduce((acc, s) => acc + s.value, 0);
     const activePartners = sponsors.filter(s => s.stage === 'Closed').length;
 
@@ -76,10 +86,16 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
             id: Date.now().toString(),
             company: newCompany.trim(),
             category: newCategory,
+            tier: newTier,
             value: parseInt(newValue.replace(/[^0-9]/g, ''), 10) || 0,
+            amountPaid: 0,
             stage: newStage,
             addedAt: new Date().toISOString(),
             notes: newNotes.trim() || undefined,
+            pocName: newPocName.trim() || undefined,
+            pocEmail: newPocEmail.trim() || undefined,
+            pocPhone: newPocPhone.trim() || undefined,
+            deliverables: [],
         };
 
         const updatedClub: Club = {
@@ -92,9 +108,13 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
         // Reset form
         setNewCompany('');
         setNewCategory('Technical');
+        setNewTier('Custom');
         setNewValue('');
         setNewStage('Prospecting');
         setNewNotes('');
+        setNewPocName('');
+        setNewPocEmail('');
+        setNewPocPhone('');
         setIsAddingLead(false);
     };
 
@@ -114,6 +134,43 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
         if (!currentClub) return;
         const updatedClub = { ...currentClub, sponsors: sponsors.filter(s => s.id !== sponsorId) };
         onUpdateClub(updatedClub);
+    };
+
+    const handleGenerateMOU = async (sponsor: Sponsor) => {
+        if (!currentClub) return;
+        setIsGeneratingMOU(true);
+        const taskId = `mou-${sponsor.id}-${Date.now()}`;
+        startTask(taskId, `Drafting MOU for ${sponsor.company}`);
+
+        try {
+            const event = sponsor.eventId ? currentClub.events?.find(e => e.id === sponsor.eventId) : undefined;
+            const res = await fetch('/api/generate-mou', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ club: currentClub, sponsor, event }),
+            });
+
+            if (!res.ok) throw new Error("Failed to generate MOU");
+            
+            const data = await res.json();
+            
+            // Export to DOCX
+            const filename = `${currentClub.name.replace(/\s+/g, '_')}_MOU_${sponsor.company.replace(/\s+/g, '_')}`;
+            const blob = await exportToDocx(filename, data.content);
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${filename}.docx`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            finishTask(taskId, true);
+        } catch (error) {
+            console.error(error);
+            finishTask(taskId, false);
+        } finally {
+            setIsGeneratingMOU(false);
+        }
     };
 
     const handleGenerateDeck = async () => {
@@ -180,22 +237,22 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                 <div>
                     <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter py-2">
                         Funding X Sponsorship
-                    </h2>    <p className="text-zinc-100 text-[10px] mt-1 uppercase font-bold tracking-[0.2em]">Raise funds and grow your treasury</p>
+                    </h2>
+                    <p className="text-zinc-100 text-[11px] mt-1 font-bold tracking-[0.2em] uppercase">Raise funds and grow your treasury</p>
                 </div>
 
-                <div className="flex gap-2 p-1 bg-black rounded-2xl border border-white/15">
-                    {clubs.map((c) => (
-                        <button
-                            key={c.id}
-                            onClick={() => setSelectedClubId(c.id)}
-                            className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all ${selectedClubId === c.id
-                                ? "bg-gold-500 text-black shadow-gold-glow"
-                                : "text-white"
-                                }`}
-                        >
-                            {c.name}
-                        </button>
-                    ))}
+                <div className="relative group min-w-[250px]">
+                    <select
+                        value={selectedClubId || ""}
+                        onChange={(e) => setSelectedClubId(e.target.value)}
+                        className="w-full appearance-none bg-[#0a0a0a] border border-white/10 rounded-2xl py-4 pl-6 pr-12 text-[11px] font-black text-white uppercase tracking-widest outline-none hover:border-gold-500/50 transition-colors focus:border-gold-500 cursor-pointer"
+                    >
+                        <option value="" disabled className="bg-black text-white">Select a Club</option>
+                        {clubs.map((club) => (
+                            <option key={club.id} value={club.id} className="bg-black text-white">{club.name}</option>
+                        ))}
+                    </select>
+                    <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50 pointer-events-none group-hover:text-gold-500 transition-colors" />
                 </div>
             </header>
 
@@ -203,9 +260,9 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
                     { label: "Revenue Closed", val: formatINR(totalRevenue), sub: `${activePartners} deal${activePartners !== 1 ? 's' : ''} closed`, icon: IndianRupee, color: "text-green-400" },
+                    { label: "Cash Collected", val: formatINR(cashCollected), sub: "Actual received", icon: Banknote, color: "text-emerald-400" },
                     { label: "Pipeline Value", val: formatINR(pipelineValue), sub: "Weighted potential", icon: TrendingUp, color: "text-gold-400" },
-                    { label: "Active Partners", val: String(activePartners), sub: "Closed partnerships", icon: Building2, color: "text-purple-400" },
-                    { label: "Total Leads", val: String(sponsors.length), sub: "Across all stages", icon: Target, color: "text-blue-400" },
+                    { label: "Active Deals", val: String(sponsors.length), sub: "Across all stages", icon: Target, color: "text-blue-400" },
                 ].map((stat, i) => (
                     <div key={i} className="p-8 bg-[#050505] border border-white/15 rounded-[2rem] group hover:border-gold-500/20 transition-all shadow-xl">
                         <stat.icon className={`w-5 h-5 mb-4 ${stat.color}`} />
@@ -234,7 +291,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                     {/* Stage Summary */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {pipelineByStage.map((p) => (
-                            <div key={p.stage} className="p-6 bg-black/40 border border-white/5 rounded-3xl space-y-3 hover:border-white/10 transition-all">
+                            <div key={p.stage} className="p-6 bg-black/60 border-2 border-white/15 rounded-3xl space-y-3 hover:border-white/30 hover:bg-black transition-all shadow-lg">
                                 <div className="flex items-center gap-2">
                                     <div className={`w-1.5 h-1.5 rounded-full ${STAGE_DOT[p.stage]}`} />
                                     <span className="text-[10px] font-black uppercase text-white tracking-tighter">{p.stage}</span>
@@ -260,7 +317,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                 <thead className="bg-white/5 text-white text-[10px] font-black uppercase tracking-widest">
                                     <tr>
                                         <th className="px-8 py-4">Company</th>
-                                        <th className="px-8 py-4">Category</th>
+                                        <th className="px-8 py-4">Tier</th>
                                         <th className="px-8 py-4">Value</th>
                                         <th className="px-8 py-4">Stage</th>
                                         <th className="px-8 py-4">Actions</th>
@@ -268,20 +325,24 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                 </thead>
                                 <tbody className="divide-y divide-white/5">
                                     {sponsors.map((deal) => (
-                                        <tr key={deal.id} className="hover:bg-white/5 transition-all group">
+                                        <tr key={deal.id} onClick={() => setSelectedSponsorId(deal.id)} className="hover:bg-white/5 transition-all group cursor-pointer">
                                             <td className="px-8 py-6 font-bold text-sm">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-white/15 flex items-center justify-center">
-                                                        <Building2 className="w-4 h-4 text-white/50" />
+                                                    <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-white/15 flex items-center justify-center group-hover:border-gold-500/50 transition-colors">
+                                                        <Building2 className="w-4 h-4 text-white/50 group-hover:text-gold-500 transition-colors" />
                                                     </div>
                                                     <div>
                                                         <p>{deal.company}</p>
-                                                        {deal.notes && <p className="text-[9px] text-zinc-100 font-normal line-clamp-1">{deal.notes}</p>}
+                                                        {deal.pocName ? (
+                                                            <p className="text-[9px] text-zinc-400 font-normal mt-0.5">{deal.pocName}</p>
+                                                        ) : deal.notes && (
+                                                            <p className="text-[9px] text-zinc-400 font-normal line-clamp-1 mt-0.5">{deal.notes}</p>
+                                                        )}
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="px-8 py-6">
-                                                <span className="text-[10px] font-bold text-white uppercase tracking-tight">{deal.category}</span>
+                                                <span className="text-[10px] font-bold text-white uppercase tracking-tight">{deal.tier || 'Custom'}</span>
                                             </td>
                                             <td className="px-8 py-6 font-bold text-white">{formatINR(deal.value)}</td>
                                             <td className="px-8 py-6">
@@ -293,7 +354,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                                 <div className="flex items-center gap-2">
                                                     {deal.stage !== 'Closed' && (
                                                         <button
-                                                            onClick={() => handleAdvanceStage(deal.id)}
+                                                            onClick={(e) => { e.stopPropagation(); handleAdvanceStage(deal.id); }}
                                                             title={`Advance to ${STAGES[STAGES.indexOf(deal.stage) + 1]}`}
                                                             className="p-2 text-white hover:text-gold-500 transition-colors rounded-lg hover:bg-white/5"
                                                         >
@@ -301,7 +362,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                                         </button>
                                                     )}
                                                     <button
-                                                        onClick={() => handleDeleteLead(deal.id)}
+                                                        onClick={(e) => { e.stopPropagation(); handleDeleteLead(deal.id); }}
                                                         title="Remove lead"
                                                         className="p-2 text-white/60 hover:text-red-500 transition-colors rounded-lg hover:bg-red-500/5"
                                                     >
@@ -415,7 +476,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                 </button>
                             </div>
 
-                            <div className="space-y-4">
+                            <div className="space-y-4 max-h-[60vh] overflow-y-auto custom-scrollbar pr-2">
                                 <div>
                                     <label className="text-[10px] font-black uppercase tracking-widest text-white mb-2 block">Company Name *</label>
                                     <input
@@ -449,27 +510,79 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                                         />
                                     </div>
                                 </div>
-                                <div>
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-white mb-2 block">Stage</label>
-                                    <div className="flex gap-2 p-1 bg-black border border-white/15 rounded-2xl">
-                                        {STAGES.map(s => (
-                                            <button
-                                                key={s}
-                                                onClick={() => setNewStage(s)}
-                                                className={`flex-1 py-2 rounded-xl text-[9px] font-black uppercase tracking-tighter transition-all ${newStage === s ? 'bg-gold-500 text-black' : 'text-white hover:text-white'}`}
+                                
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-white mb-2 block">Sponsor Tier</label>
+                                        <div className="relative group">
+                                            <select
+                                                value={newTier}
+                                                onChange={e => setNewTier(e.target.value as SponsorTier)}
+                                                className="w-full appearance-none bg-black border border-white/15 rounded-2xl px-4 py-3 pr-10 text-sm text-white focus:border-gold-500/50 outline-none transition-all cursor-pointer"
                                             >
-                                                {s}
-                                            </button>
-                                        ))}
+                                                {TIERS.map(t => <option key={t} value={t}>{t}</option>)}
+                                            </select>
+                                            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-white mb-2 block">Stage</label>
+                                        <div className="relative group">
+                                            <select
+                                                value={newStage}
+                                                onChange={e => setNewStage(e.target.value as SponsorStage)}
+                                                className="w-full appearance-none bg-black border border-white/15 rounded-2xl px-4 py-3 pr-10 text-sm text-white focus:border-gold-500/50 outline-none transition-all cursor-pointer"
+                                            >
+                                                {STAGES.map(s => <option key={s} value={s}>{s}</option>)}
+                                            </select>
+                                            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
+                                        </div>
                                     </div>
                                 </div>
+
+                                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-4">
+                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-signature-gradient">Point of Contact (CRM)</h4>
+                                    <div>
+                                        <label className="text-[9px] font-bold uppercase tracking-widest text-zinc-400 mb-1 block">POC Name</label>
+                                        <input
+                                            type="text"
+                                            value={newPocName}
+                                            onChange={e => setNewPocName(e.target.value)}
+                                            placeholder="Jane Doe"
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:border-gold-500/50 outline-none transition-all"
+                                        />
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="text-[9px] font-bold uppercase tracking-widest text-zinc-400 mb-1 block">POC Email</label>
+                                            <input
+                                                type="email"
+                                                value={newPocEmail}
+                                                onChange={e => setNewPocEmail(e.target.value)}
+                                                placeholder="jane@company.com"
+                                                className="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:border-gold-500/50 outline-none transition-all"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="text-[9px] font-bold uppercase tracking-widest text-zinc-400 mb-1 block">POC Phone</label>
+                                            <input
+                                                type="tel"
+                                                value={newPocPhone}
+                                                onChange={e => setNewPocPhone(e.target.value)}
+                                                placeholder="+91..."
+                                                className="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:border-gold-500/50 outline-none transition-all"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div>
                                     <label className="text-[10px] font-black uppercase tracking-widest text-white mb-2 block">Notes (optional)</label>
                                     <input
                                         type="text"
                                         value={newNotes}
                                         onChange={e => setNewNotes(e.target.value)}
-                                        placeholder="Any context, contact name, etc."
+                                        placeholder="Any context..."
                                         className="w-full bg-black border border-white/15 rounded-2xl px-4 py-3 text-sm text-white focus:border-gold-500/50 outline-none transition-all"
                                     />
                                 </div>
@@ -494,6 +607,232 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                     </div>
                 )}
             </AnimatePresence>
+
+            {/* Sponsor CRM Detail Modal */}
+            <AnimatePresence>
+                {selectedSponsorId && (
+                    <div className="fixed inset-0 z-[100] flex justify-end bg-black/60 backdrop-blur-sm" onClick={() => setSelectedSponsorId(null)}>
+                        <motion.div
+                            initial={{ x: '100%' }}
+                            animate={{ x: 0 }}
+                            exit={{ x: '100%' }}
+                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                            onClick={e => e.stopPropagation()}
+                            className="w-full max-w-xl h-full bg-[#0a0a0a] border-l border-white/10 p-8 overflow-y-auto custom-scrollbar flex flex-col"
+                        >
+                            {(() => {
+                                const sponsor = sponsors.find(s => s.id === selectedSponsorId);
+                                if (!sponsor) return null;
+                                return (
+                                    <div className="space-y-8 flex-1">
+                                        <div className="flex items-start justify-between">
+                                            <div>
+                                                <div className="flex items-center gap-3 mb-2">
+                                                    <span className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-tighter border ${STAGE_COLORS[sponsor.stage]}`}>
+                                                        {sponsor.stage}
+                                                    </span>
+                                                    <span className="text-[10px] font-bold text-white uppercase tracking-widest">{sponsor.tier || 'Custom'} Tier</span>
+                                                </div>
+                                                <h3 className="text-3xl font-bold text-white">{sponsor.company}</h3>
+                                                <p className="text-xs text-zinc-400 mt-1">{sponsor.category}</p>
+                                            </div>
+                                            <button onClick={() => setSelectedSponsorId(null)} className="p-2 bg-white/5 rounded-full hover:bg-white/10 text-white transition-colors">
+                                                <X className="w-5 h-5" />
+                                            </button>
+                                        </div>
+
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="p-4 rounded-2xl bg-black border border-white/10">
+                                                <p className="text-[9px] font-black uppercase tracking-widest text-zinc-500 mb-1">Deal Value</p>
+                                                <p className="text-xl font-bold text-white font-destrubia">{formatINR(sponsor.value)}</p>
+                                            </div>
+                                            <div className="p-4 rounded-2xl bg-black border border-gold-500/20">
+                                                <p className="text-[9px] font-black uppercase tracking-widest text-gold-500 mb-1">Amount Received</p>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-xl font-bold text-white font-destrubia">₹</span>
+                                                    <input 
+                                                        type="number"
+                                                        value={sponsor.amountPaid || 0}
+                                                        onChange={(e) => {
+                                                            const val = parseInt(e.target.value, 10) || 0;
+                                                            const updated = { ...sponsor, amountPaid: val };
+                                                            const updatedClub = { ...currentClub, sponsors: sponsors.map(s => s.id === sponsor.id ? updated : s) };
+                                                            if (currentClub) onUpdateClub(updatedClub as Club);
+                                                        }}
+                                                        className="w-full bg-transparent text-xl font-bold text-white font-destrubia outline-none"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            <h4 className="text-[10px] font-black uppercase tracking-widest text-signature-gradient">Point of Contact</h4>
+                                            <div className="p-6 rounded-3xl bg-white/5 border border-white/10 space-y-4">
+                                                <div>
+                                                    <label className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 mb-1 block">Name</label>
+                                                    <input 
+                                                        type="text" 
+                                                        value={sponsor.pocName || ''}
+                                                        onChange={(e) => {
+                                                            const updated = { ...sponsor, pocName: e.target.value };
+                                                            const updatedClub = { ...currentClub, sponsors: sponsors.map(s => s.id === sponsor.id ? updated : s) };
+                                                            if (currentClub) onUpdateClub(updatedClub as Club);
+                                                        }}
+                                                        className="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-2 text-sm text-white outline-none focus:border-gold-500/30"
+                                                        placeholder="Add POC Name"
+                                                    />
+                                                </div>
+                                                <div className="grid grid-cols-2 gap-4">
+                                                    <div>
+                                                        <label className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 mb-1 block">Email</label>
+                                                        <input 
+                                                            type="email" 
+                                                            value={sponsor.pocEmail || ''}
+                                                            onChange={(e) => {
+                                                                const updated = { ...sponsor, pocEmail: e.target.value };
+                                                                const updatedClub = { ...currentClub, sponsors: sponsors.map(s => s.id === sponsor.id ? updated : s) };
+                                                                if (currentClub) onUpdateClub(updatedClub as Club);
+                                                            }}
+                                                            className="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-2 text-sm text-white outline-none focus:border-gold-500/30"
+                                                            placeholder="Add Email"
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <label className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 mb-1 block">Phone</label>
+                                                        <input 
+                                                            type="tel" 
+                                                            value={sponsor.pocPhone || ''}
+                                                            onChange={(e) => {
+                                                                const updated = { ...sponsor, pocPhone: e.target.value };
+                                                                const updatedClub = { ...currentClub, sponsors: sponsors.map(s => s.id === sponsor.id ? updated : s) };
+                                                                if (currentClub) onUpdateClub(updatedClub as Club);
+                                                            }}
+                                                            className="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-2 text-sm text-white outline-none focus:border-gold-500/30"
+                                                            placeholder="Add Phone"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            <div className="flex items-center justify-between">
+                                                <h4 className="text-[10px] font-black uppercase tracking-widest text-white">Deliverables Checklist</h4>
+                                                <button 
+                                                    onClick={() => {
+                                                        const newDeliverable = { id: Date.now().toString(), text: "New Deliverable", completed: false };
+                                                        const updated = { ...sponsor, deliverables: [...(sponsor.deliverables || []), newDeliverable] };
+                                                        const updatedClub = { ...currentClub, sponsors: sponsors.map(s => s.id === sponsor.id ? updated : s) };
+                                                        if (currentClub) onUpdateClub(updatedClub as Club);
+                                                    }}
+                                                    className="text-[9px] font-bold text-gold-500 uppercase tracking-widest hover:underline flex items-center gap-1"
+                                                >
+                                                    <Plus className="w-3 h-3" /> Add Item
+                                                </button>
+                                            </div>
+                                            <div className="space-y-2">
+                                                {(!sponsor.deliverables || sponsor.deliverables.length === 0) && (
+                                                    <p className="text-xs text-zinc-500 italic py-4">No deliverables added yet. Add items promised to the sponsor to track fulfillment.</p>
+                                                )}
+                                                {sponsor.deliverables?.map(del => (
+                                                    <div key={del.id} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 group">
+                                                        <button 
+                                                            onClick={() => {
+                                                                const updatedDels = sponsor.deliverables!.map(d => d.id === del.id ? { ...d, completed: !d.completed } : d);
+                                                                const updated = { ...sponsor, deliverables: updatedDels };
+                                                                const updatedClub = { ...currentClub, sponsors: sponsors.map(s => s.id === sponsor.id ? updated : s) };
+                                                                if (currentClub) onUpdateClub(updatedClub as Club);
+                                                            }}
+                                                            className={`w-5 h-5 rounded flex items-center justify-center shrink-0 border transition-all ${del.completed ? 'bg-green-500 border-green-500 text-black' : 'border-white/20 hover:border-white/40 text-transparent'}`}
+                                                        >
+                                                            <CheckCircle2 className="w-3 h-3" />
+                                                        </button>
+                                                        <input 
+                                                            type="text"
+                                                            value={del.text}
+                                                            onChange={(e) => {
+                                                                const updatedDels = sponsor.deliverables!.map(d => d.id === del.id ? { ...d, text: e.target.value } : d);
+                                                                const updated = { ...sponsor, deliverables: updatedDels };
+                                                                const updatedClub = { ...currentClub, sponsors: sponsors.map(s => s.id === sponsor.id ? updated : s) };
+                                                                if (currentClub) onUpdateClub(updatedClub as Club);
+                                                            }}
+                                                            className={`flex-1 bg-transparent text-sm outline-none ${del.completed ? 'text-zinc-500 line-through' : 'text-white'}`}
+                                                        />
+                                                        <button 
+                                                            onClick={() => {
+                                                                const updatedDels = sponsor.deliverables!.filter(d => d.id !== del.id);
+                                                                const updated = { ...sponsor, deliverables: updatedDels };
+                                                                const updatedClub = { ...currentClub, sponsors: sponsors.map(s => s.id === sponsor.id ? updated : s) };
+                                                                if (currentClub) onUpdateClub(updatedClub as Club);
+                                                            }}
+                                                            className="text-white/20 hover:text-red-500 transition-colors"
+                                                        >
+                                                            <Trash2 className="w-4 h-4" />
+                                                        </button>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-4 pt-4 border-t border-white/5">
+                                            <h4 className="text-[10px] font-black uppercase tracking-widest text-signature-gradient">Formal Agreement</h4>
+                                            
+                                            <div className="space-y-2">
+                                                <label className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 block">Link to Event (Optional)</label>
+                                                <div className="relative group">
+                                                    <select
+                                                        value={sponsor.eventId || ""}
+                                                        onChange={(e) => {
+                                                            const updated = { ...sponsor, eventId: e.target.value || undefined };
+                                                            const updatedClub = { ...currentClub, sponsors: sponsors.map(s => s.id === sponsor.id ? updated : s) };
+                                                            if (currentClub) onUpdateClub(updatedClub as Club);
+                                                        }}
+                                                        className="w-full appearance-none bg-black/40 border border-white/5 rounded-xl px-4 py-3 pr-10 text-sm text-white focus:border-gold-500/30 outline-none transition-all cursor-pointer"
+                                                    >
+                                                        <option value="">General Club Sponsorship</option>
+                                                        {currentClub?.events?.map(ev => (
+                                                            <option key={ev.id} value={ev.id}>{(ev.config as any)?.name || 'Unnamed Event'}</option>
+                                                        ))}
+                                                    </select>
+                                                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
+                                                </div>
+                                            </div>
+
+                                            <button
+                                                onClick={() => handleGenerateMOU(sponsor)}
+                                                disabled={isGeneratingMOU}
+                                                className="w-full py-4 bg-gold-500 text-black rounded-xl text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xl shadow-gold-500/10 disabled:opacity-60"
+                                            >
+                                                {isGeneratingMOU ? (
+                                                    <><PremiumLoader size="sm" dotCount={3} className="mr-1" /> Drafting MOU...</>
+                                                ) : (
+                                                    <><FileText className="w-4 h-4" /> Generate Formal MOU</>
+                                                )}
+                                            </button>
+
+                                            {sponsor.stage !== 'Closed' && (
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        const updated = { ...sponsor, stage: 'Closed' as SponsorStage };
+                                                        const updatedClub = { ...currentClub, sponsors: sponsors.map(s => s.id === sponsor.id ? updated : s) };
+                                                        if (currentClub) onUpdateClub(updatedClub as Club);
+                                                    }}
+                                                    className="w-full py-4 bg-green-500/10 text-green-400 border border-green-500/20 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-green-500 hover:text-black transition-all flex items-center justify-center gap-2"
+                                                >
+                                                    <CheckCircle2 className="w-4 h-4" /> Mark as Funding Received
+                                                </button>
+                                            )}
+                                        </div>
+
+                                    </div>
+                                );
+                            })()}
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
+
         </motion.div>
     );
 }

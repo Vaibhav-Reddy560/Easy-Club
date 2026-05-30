@@ -1,0 +1,302 @@
+[
+  {
+    "id": "del-race-001",
+    "name": "AXLR8R Formula Racing",
+    "organization": "IIT Delhi",
+    "category": "Racing",
+    "description": "IIT Delhi's premier Formula Student team, designing and building open-wheel electric race cars for international competitions.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/axlr8r.formula.racing",
+      "website": "https://automobileclub.iitd.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "2006",
+    "keyEvents": ["Formula Bharat", "Formula Student Germany"]
+  },
+  {
+    "id": "del-race-002",
+    "name": "Team Defianz Racing",
+    "organization": "DTU",
+    "category": "Racing",
+    "description": "DTU's flagship Formula Student team, specializing in high-performance combustion and electric race cars.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/teamdefianzdtu",
+      "website": "https://teamdefianzdtusdc.com"
+    },
+    "approxMemberCount": "70+",
+    "founded": "2003",
+    "keyEvents": ["Formula Student UK", "Formula Bharat"]
+  },
+  {
+    "id": "del-race-003",
+    "name": "Bullet Hawk Racing",
+    "organization": "NSUT",
+    "category": "Racing",
+    "description": "The official Formula Student team of NSUT, dedicated to automotive excellence and engineering innovation.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/bullethawkracing",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2010",
+    "keyEvents": ["Formula Bharat", "Technical Workshops"]
+  },
+  {
+    "id": "del-race-004",
+    "name": "Team Aious",
+    "organization": "IGDTUW",
+    "category": "Racing",
+    "description": "India's first all-women Formula Student team from IGDTUW, breaking barriers in the automotive world.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/teamaious.igdtuw",
+      "website": "https://aiousformulastudent.com"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2018",
+    "keyEvents": ["Formula Bharat", "Women in Engineering Summits"]
+  },
+  {
+    "id": "del-race-005",
+    "name": "Team Zeall",
+    "organization": "MAIT",
+    "category": "Racing",
+    "description": "MAIT's flagship racing team, participating in SAE Supra and other national automotive competitions.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/team_zeall_mait",
+      "website": "https://mait.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "2012",
+    "keyEvents": ["Supra SAE India", "Go-Karting Challenges"]
+  },
+  {
+    "id": "del-race-006",
+    "name": "Invictus Racing",
+    "organization": "MSIT",
+    "category": "Racing",
+    "description": "MSIT's technical team dedicated to designing and fabricating Formula-style vehicles.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/invictus_msit",
+      "website": "https://msit.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2014",
+    "keyEvents": ["SAE India Events", "Auto-Expos"]
+  },
+  {
+    "id": "del-race-007",
+    "name": "BPIT Motorsports",
+    "organization": "BPIT",
+    "category": "Racing",
+    "description": "BPIT's official automotive and racing team, focusing on student-built race vehicles.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/bpit_motorsports",
+      "website": "https://bpitindia.com"
+    },
+    "approxMemberCount": "35+",
+    "founded": "2015",
+    "keyEvents": ["National Racing Events", "Tech Fests"]
+  },
+  {
+    "id": "del-race-008",
+    "name": "Team Inferno",
+    "organization": "GTBIT",
+    "category": "Racing",
+    "description": "GTBIT's racing team, passionate about engineering and building efficient race cars.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/inferno_gtbit",
+      "website": "https://gtbit.ac.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "2013",
+    "keyEvents": ["SAE Baja", "Go-Karting"]
+  },
+  {
+    "id": "del-race-009",
+    "name": "Vroom VIPS",
+    "organization": "VIPS",
+    "category": "Racing",
+    "description": "The automotive enthusiast club of VIPS, organizing rallies, talks, and technical sessions.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/vroom_vips",
+      "website": "https://vips.edu"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2016",
+    "keyEvents": ["Auto Talks", "Street Rallies"]
+  },
+  {
+    "id": "del-race-010",
+    "name": "IITD Automobile Club",
+    "organization": "IIT Delhi",
+    "category": "Racing",
+    "description": "A hub for automobile enthusiasts at IIT Delhi, focusing on broader automotive technology and research.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/automotive_iitd",
+      "website": "https://automobileclub.iitd.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "2005",
+    "keyEvents": ["Auto Expo Visits", "Engine Workshops"]
+  },
+  {
+    "id": "del-race-011",
+    "name": "Team Shaurya",
+    "organization": "DTU",
+    "category": "Racing",
+    "description": "DTU's supermileage team, focusing on high fuel-efficiency vehicles for Shell Eco-marathon.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/team_shaurya_dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2011",
+    "keyEvents": ["Shell Eco-marathon Asia", "Efficiency Trials"]
+  },
+  {
+    "id": "del-race-012",
+    "name": "Team Phoenix",
+    "organization": "NSUT",
+    "category": "Racing",
+    "description": "NSUT's solar car team, pioneering sustainable automotive solutions in student racing.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/team_phoenix_nsut",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "2013",
+    "keyEvents": ["Solar Car Challenges", "Green Tech Expos"]
+  },
+  {
+    "id": "del-race-013",
+    "name": "Formula Student Delhi",
+    "organization": "Delhi-Wide",
+    "category": "Racing",
+    "description": "A collaborative platform for various Formula Student teams in Delhi to share knowledge and resources.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/formulastudent_delhi",
+      "website": "https://formulabharat.com"
+    },
+    "approxMemberCount": "500+",
+    "founded": "2015",
+    "keyEvents": ["Delhi FSAE Meet", "Networking Sessions"]
+  },
+  {
+    "id": "del-race-014",
+    "name": "Team Supermileage",
+    "organization": "DTU",
+    "category": "Racing",
+    "description": "Dedicated to building the world's most fuel-efficient vehicles at DTU.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/team_supermileage_dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2008",
+    "keyEvents": ["Shell Eco-marathon", "Eco-Drives"]
+  },
+  {
+    "id": "del-race-015",
+    "name": "Team Effit",
+    "organization": "DTU",
+    "category": "Racing",
+    "description": "Focusing on electric mobility and efficient transportation solutions at DTU.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/team_effit_dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "2016",
+    "keyEvents": ["EV Challenges", "Sustainability Talks"]
+  },
+  {
+    "id": "del-race-016",
+    "name": "Team Inferno BPIT",
+    "organization": "BPIT",
+    "category": "Racing",
+    "description": "BPIT's dedicated team for national-level racing competitions and vehicle fabrication.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/team_inferno_bpit",
+      "website": "https://bpitindia.com"
+    },
+    "approxMemberCount": "30+",
+    "founded": "2017",
+    "keyEvents": ["SAE India Events", "Technical Seminars"]
+  },
+  {
+    "id": "del-race-017",
+    "name": "Team Torq",
+    "organization": "MAIT",
+    "category": "Racing",
+    "description": "Focusing on the technical aspects of torque and vehicle dynamics for racing in MAIT.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/team_torq_mait",
+      "website": "https://mait.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2015",
+    "keyEvents": ["Vehicle Dynamics Workshops", "Racing Contests"]
+  },
+  {
+    "id": "del-race-018",
+    "name": "Team Kratos",
+    "organization": "MSIT",
+    "category": "Racing",
+    "description": "MSIT's second major racing team focusing on go-karting and engine efficiency.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/team_kratos_msit",
+      "website": "https://msit.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "2016",
+    "keyEvents": ["Go-Kart Challenges", "Automotive Design"]
+  },
+  {
+    "id": "del-race-019",
+    "name": "Team Hyperion",
+    "organization": "NSUT",
+    "category": "Racing",
+    "description": "NSUT's team for high-end automotive design and electric vehicle prototyping.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/team_hyperion_nsut",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2014",
+    "keyEvents": ["EV Summits", "National Competitions"]
+  },
+  {
+    "id": "del-race-020",
+    "name": "NSUT Motorsports",
+    "organization": "NSUT",
+    "category": "Racing",
+    "description": "The central hub for all motorsports activity at NSUT, coordinating between various racing teams.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/nsut_motorsports",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "150+",
+    "founded": "2012",
+    "keyEvents": ["Motorsports Day", "Exhibitions"]
+  }
+]

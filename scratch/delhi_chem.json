@@ -1,0 +1,302 @@
+[
+  {
+    "id": "del-chem-001",
+    "name": "Rasayanatva",
+    "organization": "Hansraj College",
+    "category": "Chemistry",
+    "description": "The Chemistry Society of Hansraj College, dedicated to exploring the chemical world through experiments and seminars.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/rasayanatva",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1990",
+    "keyEvents": ["Annual Chemistry Fest", "National Seminars"]
+  },
+  {
+    "id": "del-chem-002",
+    "name": "Rasgandhayan",
+    "organization": "Gargi College",
+    "category": "Chemistry",
+    "description": "The official Chemistry society of Gargi College, promoting chemical sciences and research among students.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/rasgandhayan",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "1995",
+    "keyEvents": ["Swar-Gargi Chemistry Events", "Science Day Showcases"]
+  },
+  {
+    "id": "del-chem-003",
+    "name": "Chemsoc Stephens",
+    "organization": "St. Stephen's College",
+    "category": "Chemistry",
+    "description": "St. Stephen's Chemistry Society, home to the academic journal 'OXYGEN' and focused on deep chemical research.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chemsoc.stephens",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "70+",
+    "founded": "1980",
+    "keyEvents": ["OXYGEN Journal Launch", "Inter-College Quizzes"]
+  },
+  {
+    "id": "del-chem-004",
+    "name": "Chemsoc Hindu",
+    "organization": "Hindu College",
+    "category": "Chemistry",
+    "description": "One of the oldest chemistry societies in Delhi University, known for its academic excellence and fests.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chemsoc.hindu",
+      "website": "https://hinducollege.ac.in"
+    },
+    "approxMemberCount": "90+",
+    "founded": "1975",
+    "keyEvents": ["Annual Fest", "Chemistry Symposiums"]
+  },
+  {
+    "id": "del-chem-005",
+    "name": "Chemsoc Miranda",
+    "organization": "Miranda House",
+    "category": "Chemistry",
+    "description": "The Chemistry society of Miranda House, empowering women in the field of chemical sciences and laboratory research.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chemsoc.miranda",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "85+",
+    "founded": "1990",
+    "keyEvents": ["Science Fest Participation", "Workshops"]
+  },
+  {
+    "id": "del-chem-006",
+    "name": "Chemsoc LSR",
+    "organization": "LSR",
+    "category": "Chemistry",
+    "description": "Promoting chemical education and environmental awareness through the lens of chemistry at LSR.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chemsoc.lsr",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "1992",
+    "keyEvents": ["Green Chemistry Seminars", "Quiz Competitions"]
+  },
+  {
+    "id": "del-chem-007",
+    "name": "Chemsoc Ramjas",
+    "organization": "Ramjas College",
+    "category": "Chemistry",
+    "description": "The Chemistry society of Ramjas College, active in organizing university-level science exhibitions.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chemsoc.ramjas",
+      "website": "https://ramjas.du.ac.in"
+    },
+    "approxMemberCount": "75+",
+    "founded": "1985",
+    "keyEvents": ["Ramjas Science Week", "Chemical Quizzes"]
+  },
+  {
+    "id": "del-chem-008",
+    "name": "Chemsoc Venky",
+    "organization": "Sri Venkateswara College",
+    "category": "Chemistry",
+    "description": "Venky's hub for chemistry enthusiasts, focusing on practical applications and industrial chemistry.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chemsoc.venky",
+      "website": "https://svc.ac.in"
+    },
+    "approxMemberCount": "70+",
+    "founded": "1995",
+    "keyEvents": ["Nexus Chemistry Corner", "Lab Tours"]
+  },
+  {
+    "id": "del-chem-009",
+    "name": "Chemsoc SRCC",
+    "organization": "SRCC",
+    "category": "Chemistry",
+    "description": "While SRCC focuses on commerce, this society explores the chemical and industrial side of business and commodities.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chemsoc.srcc",
+      "website": "https://srcc.edu"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2010",
+    "keyEvents": ["Industrial Commodity Talks", "Quizzes"]
+  },
+  {
+    "id": "del-chem-010",
+    "name": "Chemsoc KMC",
+    "organization": "Kirori Mal College",
+    "category": "Chemistry",
+    "description": "KMC's Chemistry society, active in chemical research and promoting scientific temper.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chemsoc.kmc",
+      "website": "https://kmc.du.ac.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "1988",
+    "keyEvents": ["Annual Production", "Chemical Symposiums"]
+  },
+  {
+    "id": "del-chem-011",
+    "name": "Chemsoc ARSD",
+    "organization": "ARSD College",
+    "category": "Chemistry",
+    "description": "ARSD's chemistry hub, known for participating in university-wide science fests.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chemsoc.arsd",
+      "website": "https://arsdcollege.ac.in"
+    },
+    "approxMemberCount": "65+",
+    "founded": "2000",
+    "keyEvents": ["National Science Day Events", "Quizzes"]
+  },
+  {
+    "id": "del-chem-012",
+    "name": "Chemsoc Shivaji",
+    "organization": "Shivaji College",
+    "category": "Chemistry",
+    "description": "The Chemistry society of Shivaji College, promoting laboratory excellence and research interest.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chemsoc.shivaji",
+      "website": "https://shivajicollege.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "1998",
+    "keyEvents": ["Spectra Chemistry Events", "Lab Workshops"]
+  },
+  {
+    "id": "del-chem-013",
+    "name": "Chemsoc DDU",
+    "organization": "Deen Dayal Upadhyaya College",
+    "category": "Chemistry",
+    "description": "Focusing on chemical innovations and scientific outreach in the DDU community.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chemsoc.ddu",
+      "website": "https://dducollegedu.ac.in"
+    },
+    "approxMemberCount": "70+",
+    "founded": "2005",
+    "keyEvents": ["Annual Fest", "Science Exhibitions"]
+  },
+  {
+    "id": "del-chem-014",
+    "name": "Chemsoc JMI",
+    "organization": "Jamia Millia Islamia",
+    "category": "Chemistry",
+    "description": "JMI's hub for chemical sciences, active in post-graduate and research collaborations.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chemsoc.jmi",
+      "website": "https://jmi.ac.in"
+    },
+    "approxMemberCount": "120+",
+    "founded": "1980",
+    "keyEvents": ["International Conferences", "Seminars"]
+  },
+  {
+    "id": "del-chem-015",
+    "name": "Chemsoc KNC",
+    "organization": "Kamala Nehru College",
+    "category": "Chemistry",
+    "description": "The Chemistry society of KNC, promoting women's excellence in experimental sciences.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chemsoc.knc",
+      "website": "https://knc.edu.in"
+    },
+    "approxMemberCount": "55+",
+    "founded": "1995",
+    "keyEvents": ["Inter-College Quizzes", "Workshops"]
+  },
+  {
+    "id": "del-chem-016",
+    "name": "Chemsoc Maitreyi",
+    "organization": "Maitreyi College",
+    "category": "Chemistry",
+    "description": "Promoting chemical education and green laboratory practices at Maitreyi.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chemsoc.maitreyi",
+      "website": "https://maitreyi.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "2000",
+    "keyEvents": ["Science Day Corner", "Seminars"]
+  },
+  {
+    "id": "del-chem-017",
+    "name": "Chemsoc IITD",
+    "organization": "IIT Delhi",
+    "category": "Chemistry",
+    "description": "The Chemistry student body of IIT Delhi, facilitating advanced research discussions and industry visits.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chemsoc.iitd",
+      "website": "https://chemistry.iitd.ac.in"
+    },
+    "approxMemberCount": "150+",
+    "founded": "1970",
+    "keyEvents": ["Industry Interaction Sessions", "Symposiums"]
+  },
+  {
+    "id": "del-chem-018",
+    "name": "Chemsoc DTU",
+    "organization": "DTU",
+    "category": "Chemistry",
+    "description": "The departmental society for Applied Chemistry at DTU, connecting engineering with chemical sciences.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chemsoc.dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1990",
+    "keyEvents": ["Technical Paper Presentations", "Engifest Events"]
+  },
+  {
+    "id": "del-chem-019",
+    "name": "Chemsoc NSUT",
+    "organization": "NSUT",
+    "category": "Chemistry",
+    "description": "NSUT's chemistry hub, promoting research in sustainable chemistry and nanotechnology.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chemsoc.nsut",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "2005",
+    "keyEvents": ["Innovision Science Events", "Workshops"]
+  },
+  {
+    "id": "del-chem-020",
+    "name": "Chemsoc Rajdhani",
+    "organization": "Rajdhani College",
+    "category": "Chemistry",
+    "description": "Rajdhani College's chemistry society, promoting academic rigor and scientific curiosity.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chemsoc.rajdhani",
+      "website": "https://rajdhanicollege.ac.in"
+    },
+    "approxMemberCount": "65+",
+    "founded": "1995",
+    "keyEvents": ["Annual Science Fest", "Quizzes"]
+  }
+]

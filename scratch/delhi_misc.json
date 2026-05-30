@@ -1,0 +1,302 @@
+[
+  {
+    "id": "del-fash-001",
+    "name": "Inaayat",
+    "organization": "Hansraj College",
+    "category": "Fashion",
+    "description": "The fashion society of Hansraj College, known for its creative themes and high-fashion ramp walks.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/inaayat_hansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2010",
+    "keyEvents": ["Annual Fashion Show", "Inter-College Ramp Walk"]
+  },
+  {
+    "id": "del-fash-002",
+    "name": "Demeanor",
+    "organization": "SRCC",
+    "category": "Fashion",
+    "description": "SRCC's premier fashion society, setting trends with professional-grade choreography and design.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/demeanorsrcc",
+      "website": "https://srcc.edu"
+    },
+    "approxMemberCount": "45+",
+    "founded": "2008",
+    "keyEvents": ["Demeanor Night", "Crossroads Fashion Show"]
+  },
+  {
+    "id": "del-fash-003",
+    "name": "Malang",
+    "organization": "Kirori Mal College",
+    "category": "Fashion",
+    "description": "KMC's fashion society, blending traditional aesthetics with modern runway trends.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/malang_kmc",
+      "website": "https://kmc.du.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "2012",
+    "keyEvents": ["Annual Ramp Walk", "Styling Workshops"]
+  },
+  {
+    "id": "del-fash-004",
+    "name": "Fashion Crew Miranda",
+    "organization": "Miranda House",
+    "category": "Fashion",
+    "description": "Empowering women through fashion and self-expression at Miranda House.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/fashioncrew_miranda",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2011",
+    "keyEvents": ["Annual Showcase", "Trend Seminars"]
+  },
+  {
+    "id": "del-fash-005",
+    "name": "Panache",
+    "organization": "DTU",
+    "category": "Fashion",
+    "description": "The fashion society of DTU, bringing glamour and style to the engineering campus.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/panache_dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2005",
+    "keyEvents": ["Engifest Fashion Show", "Model Hunts"]
+  },
+  {
+    "id": "del-fash-006",
+    "name": "Clitch",
+    "organization": "NSUT",
+    "category": "Fashion",
+    "description": "NSUT's official fashion society, known for its edgy themes and bold ramp presence.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/clitch_nsut",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "2008",
+    "keyEvents": ["Moksha Ramp Walk", "Fashion Photography"]
+  },
+  {
+    "id": "del-fash-007",
+    "name": "Fashion Society IITD",
+    "organization": "IIT Delhi",
+    "category": "Fashion",
+    "description": "The fashion hub of IIT Delhi, merging engineering precision with artistic design.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/fashion_iitd",
+      "website": "https://brca.iitd.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "2000",
+    "keyEvents": ["Rendezvous Fashion Night", "Design Workshops"]
+  },
+  {
+    "id": "del-fash-008",
+    "name": "Iris Gargi",
+    "organization": "Gargi College",
+    "category": "Fashion",
+    "description": "Gargi's fashion society, celebrating diversity and creative styling on the runway.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/iris_gargi",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2010",
+    "keyEvents": ["Reverie Fashion Show", "Makeup Workshops"]
+  },
+  {
+    "id": "del-quiz-009",
+    "name": "Quiz Club Stephens",
+    "organization": "St. Stephen's College",
+    "category": "Quiz",
+    "description": "One of the most active and competitive quiz clubs in the Delhi circuit.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/quiz_stephens",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "50+",
+    "founded": "1970",
+    "keyEvents": ["Annual Open Quiz", "Inter-College Meets"]
+  },
+  {
+    "id": "del-quiz-010",
+    "name": "Illuminati Quiz Club",
+    "organization": "Hansraj College",
+    "category": "Quiz",
+    "description": "Hansraj's premier quizzing society, known for its diverse and challenging quiz formats.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/illuminati_hansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "1998",
+    "keyEvents": ["Annual Quiz Fest", "Weekly Quizzes"]
+  },
+  {
+    "id": "del-quiz-011",
+    "name": "Quizzito",
+    "organization": "Gargi College",
+    "category": "Quiz",
+    "description": "The quizzing society of Gargi, fostering a spirit of inquiry and knowledge.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/quizzito_gargi",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "2005",
+    "keyEvents": ["Reverie Quizzes", "Intra-College Leagues"]
+  },
+  {
+    "id": "del-quiz-012",
+    "name": "Quiz Club IITD",
+    "organization": "IIT Delhi",
+    "category": "Quiz",
+    "description": "The center for quizzing at IIT Delhi, hosting national-level open quizzes.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/quiz_iitd",
+      "website": "https://brca.iitd.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1980",
+    "keyEvents": ["Rendezvous Open Quiz", "Tech Quizzes"]
+  },
+  {
+    "id": "del-quiz-013",
+    "name": "Quiz Club DTU",
+    "organization": "DTU",
+    "category": "Quiz",
+    "description": "Fostering a culture of curiosity and competition among the students of DTU.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/quiz_dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "1995",
+    "keyEvents": ["Engifest Quizzes", "General Quizzes"]
+  },
+  {
+    "id": "del-envi-014",
+    "name": "Avni",
+    "organization": "Gargi College",
+    "category": "Environment",
+    "description": "Gargi's environment society, dedicated to sustainable living and conservation.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/avni_gargi",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2010",
+    "keyEvents": ["Plantation Drives", "Eco-Fest"]
+  },
+  {
+    "id": "del-envi-015",
+    "name": "Prakriti",
+    "organization": "Hansraj College",
+    "category": "Environment",
+    "description": "Hansraj's environment society, working towards a greener and cleaner campus.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/prakriti_hansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "1995",
+    "keyEvents": ["Eco-Exhibitions", "Recycling Campaigns"]
+  },
+  {
+    "id": "del-envi-016",
+    "name": "Green Society Stephens",
+    "organization": "St. Stephen's College",
+    "category": "Environment",
+    "description": "Promoting environmental awareness and sustainable practices at St. Stephen's.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/green.stephens",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2012",
+    "keyEvents": ["Sustainability Talks", "Campus Cleaning"]
+  },
+  {
+    "id": "del-soci-017",
+    "name": "Enactus Stephens",
+    "organization": "St. Stephen's College",
+    "category": "Social Service",
+    "description": "The Enactus chapter of St. Stephen's, focusing on social entrepreneurship and community projects.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/enactus.stephens",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "60+",
+    "founded": "2014",
+    "keyEvents": ["Social Impact Projects", "Annual Meet"]
+  },
+  {
+    "id": "del-soci-018",
+    "name": "Vivre Hindu",
+    "organization": "Hindu College",
+    "category": "Photography",
+    "description": "The photography society of Hindu College, capturing the essence of campus and life.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/vivre_hindu",
+      "website": "https://hinducollege.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1990",
+    "keyEvents": ["Annual Exhibition", "Photo Walks"]
+  },
+  {
+    "id": "del-envi-019",
+    "name": "Ecois LSR",
+    "organization": "LSR",
+    "category": "Environment",
+    "description": "The environment society of LSR, advocating for climate justice and eco-friendly practices.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ecois_lsr",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "70+",
+    "founded": "2005",
+    "keyEvents": ["Climate Awareness Weeks", "Eco-Fest"]
+  },
+  {
+    "id": "del-fash-020",
+    "name": "LSR Fashion Society",
+    "organization": "LSR",
+    "category": "Fashion",
+    "description": "The official fashion society of Lady Shri Ram College, known for its creative and empowering themes.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/lsr.fashionsoc",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2010",
+    "keyEvents": ["Annual Fashion Show", "Styling Workshops"]
+  }
+]

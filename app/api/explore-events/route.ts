@@ -23,8 +23,10 @@ export async function POST(req: Request) {
         const cachedResults = await getCachedDiscovery<any[]>(cacheKey);
         if (cachedResults) return NextResponse.json(cachedResults);
 
-        const query = `upcoming ${type} event ${location} 2025 college university`;
-        const results = await searchSerper(query, serperKey, 20);
+        // Refined Search for Events
+        const query = `upcoming ${type} events in ${location} 2026 official calendar university organization`;
+        
+        const results = await searchSerper(query, serperKey, 25);
         
         const events = parseSerperResultsToEvents(results, location);
 

@@ -1,0 +1,302 @@
+[
+  {
+    "id": "del-dance-001",
+    "name": "Choreo Soc",
+    "organization": "St. Stephen's College",
+    "category": "Dance",
+    "description": "The Choreography Society of St. Stephen's College, specializing in contemporary and thematic choreography.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/choreo_stephens",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "30+",
+    "founded": "1990",
+    "keyEvents": ["Annual Production", "Inter-College Competitions"]
+  },
+  {
+    "id": "del-dance-002",
+    "name": "Oorja",
+    "organization": "Hansraj College",
+    "category": "Dance",
+    "description": "The Western Dance Society of Hansraj College, known for its high-energy performances and street dance styles.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/oorja.hrc",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1995",
+    "keyEvents": ["Nexus", "Street Dance Battles"]
+  },
+  {
+    "id": "del-dance-003",
+    "name": "Tanz",
+    "organization": "Miranda House",
+    "category": "Dance",
+    "description": "The Western Dance Society of Miranda House, one of the top female dance crews in Delhi University.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/tanz.mirandahouse",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1992",
+    "keyEvents": ["Tempest", "Choreography Competitions"]
+  },
+  {
+    "id": "del-dance-004",
+    "name": "Panache",
+    "organization": "SRCC",
+    "category": "Dance",
+    "description": "The Western Dance Society of SRCC, consistent winners in the DU dance circuit with their versatile routines.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/panache.srcc",
+      "website": "https://srcc.edu"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2000",
+    "keyEvents": ["Crossroads", "Dance Offs"]
+  },
+  {
+    "id": "del-dance-005",
+    "name": "Verve",
+    "organization": "Sri Venkateswara College",
+    "category": "Dance",
+    "description": "The Western Dance Society of SVC, specializing in hip-hop, popping, and urban dance styles.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/verve_dancecrew",
+      "website": "https://svc.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "2002",
+    "keyEvents": ["Nexus", "Street Soul"]
+  },
+  {
+    "id": "del-dance-006",
+    "name": "Misba",
+    "organization": "SGGSCC",
+    "category": "Dance",
+    "description": "The Western Dance Society of SGGSCC, legendary for their precision and competitive spirit in DU.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/misba.sggscc",
+      "website": "https://sggscc.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1998",
+    "keyEvents": ["Annual Production", "DU Dance Circuit"]
+  },
+  {
+    "id": "del-dance-007",
+    "name": "Crescendo",
+    "organization": "SSCBS",
+    "category": "Dance",
+    "description": "The Western Dance Society of SSCBS, known for their unique storytelling and technical dance skills.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/crescendo.sscbs",
+      "website": "https://sscbs.du.ac.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "2005",
+    "keyEvents": ["Manthan", "Dance Battles"]
+  },
+  {
+    "id": "del-dance-008",
+    "name": "Zest",
+    "organization": "Jesus & Mary College",
+    "category": "Dance",
+    "description": "The Western Dance Society of JMC, known for their grace, power, and innovative choreography.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/zest.jmc",
+      "website": "https://jmc.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1995",
+    "keyEvents": ["Montage", "Choreography Events"]
+  },
+  {
+    "id": "del-dance-009",
+    "name": "Vayam",
+    "organization": "LSR",
+    "category": "Dance",
+    "description": "The Western Dance Society of LSR, celebrating femininity and strength through modern dance.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/vayam.lsr",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1990",
+    "keyEvents": ["Tarang", "Inter-College Fests"]
+  },
+  {
+    "id": "del-dance-010",
+    "name": "Sensation",
+    "organization": "Kirori Mal College",
+    "category": "Dance",
+    "description": "The Western Dance Society of KMC, a prominent crew in the university's cultural scene.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/sensation.kmc",
+      "website": "https://kmc.du.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1998",
+    "keyEvents": ["Renaissance", "Dance Competitions"]
+  },
+  {
+    "id": "del-dance-011",
+    "name": "Nazaakat",
+    "organization": "Hindu College",
+    "category": "Dance",
+    "description": "The Indian Dance Society of Hindu College, promoting classical and folk dance forms.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/nazaakat.hindu",
+      "website": "https://hinducollege.ac.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "1990",
+    "keyEvents": ["Mecca", "Classical Showcases"]
+  },
+  {
+    "id": "del-dance-012",
+    "name": "Srijan",
+    "organization": "Dyal Singh College",
+    "category": "Dance",
+    "description": "The Western Dance Society of DSC, active in both competitive and experimental dance scenes.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/srijan.dsc",
+      "website": "https://dsc.du.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "2000",
+    "keyEvents": ["Priydarshini", "Dance Fests"]
+  },
+  {
+    "id": "del-dance-013",
+    "name": "Mudra",
+    "organization": "Ramjas College",
+    "category": "Dance",
+    "description": "The Indian Dance Society of Ramjas, specializing in Bharatanatyam, Kathak, and other classical forms.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/mudra.ramjas",
+      "website": "https://ramjas.du.ac.in"
+    },
+    "approxMemberCount": "25+",
+    "founded": "1995",
+    "keyEvents": ["Mosaic", "Classical Evenings"]
+  },
+  {
+    "id": "del-dance-014",
+    "name": "Guroor",
+    "organization": "Shiv Nadar University",
+    "category": "Dance",
+    "description": "The official dance society of SNU, bringing together diverse dance styles under one umbrella.",
+    "location": "Delhi-NCR",
+    "links": {
+      "instagram": "https://instagram.com/guroor.snu",
+      "website": "https://snu.edu.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2012",
+    "keyEvents": ["Breeze", "Dance Productions"]
+  },
+  {
+    "id": "del-dance-015",
+    "name": "Dhoom",
+    "organization": "DTU",
+    "category": "Dance",
+    "description": "The official dance society of DTU, performing high-energy routines across various genres.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/dhoom.dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "1995",
+    "keyEvents": ["Engifest", "Dance Offs"]
+  },
+  {
+    "id": "del-dance-016",
+    "name": "Mirage",
+    "organization": "NSUT",
+    "category": "Dance",
+    "description": "NSUT's award-winning western dance crew, known for their synchronized urban and street routines.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/miragedancecrew.nsut",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "2005",
+    "keyEvents": ["Moksha", "Street Battles"]
+  },
+  {
+    "id": "del-dance-017",
+    "name": "Capriccio",
+    "organization": "Sri Venkateswara College",
+    "category": "Dance",
+    "description": "The Choreography Society of SVC, focusing on meaningful and artistic movement.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/capriccio.venky",
+      "website": "https://svc.ac.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "1998",
+    "keyEvents": ["Nexus", "Artistic Showcases"]
+  },
+  {
+    "id": "del-dance-018",
+    "name": "Galore",
+    "organization": "Maitreyi College",
+    "category": "Dance",
+    "description": "The Western Dance Society of Maitreyi College, known for their expressive and dynamic performances.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/galore.maitreyi",
+      "website": "https://maitreyi.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "2000",
+    "keyEvents": ["Rhapsody", "Dance Fests"]
+  },
+  {
+    "id": "del-dance-019",
+    "name": "Inara",
+    "organization": "Hansraj College",
+    "category": "Dance",
+    "description": "The Indian Dance Society of Hansraj College, promoting the rich heritage of Indian classical and folk dance.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/inara.hrc",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "2005",
+    "keyEvents": ["Classical Evenings", "Folk Fests"]
+  },
+  {
+    "id": "del-dance-020",
+    "name": "Lascya",
+    "organization": "Jesus & Mary College",
+    "category": "Dance",
+    "description": "The Indian Classical Dance Society of JMC, focusing on the traditional 'Lasya' style of grace and beauty.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/lascya.jmc",
+      "website": "https://jmc.ac.in"
+    },
+    "approxMemberCount": "25+",
+    "founded": "2000",
+    "keyEvents": ["Classical Recitals", "Inter-College Events"]
+  }
+]

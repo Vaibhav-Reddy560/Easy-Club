@@ -15,6 +15,7 @@ export const metadata = {
 
 
 import { PremiumBackground } from "@/components/ui/PremiumBackground";
+import ClientInit from "@/components/ClientInit";
 
 export default function RootLayout({
   children,
@@ -24,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${localAirstream.variable} ${localAstronomus.variable} ${localDymaxion.variable} ${localDestrubia.variable} font-destrubia antialiased selection:bg-gold-500/30 overflow-x-hidden`}
+        className={`${localAirstream.variable} ${localAstronomus.variable} ${localDymaxion.variable} ${localDestrubia.variable} font-destrubia antialiased selection:bg-gold-500/30 overflow-x-clip`}
       >
         <ThemeProvider
           attribute="class"
@@ -33,6 +34,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <PremiumBackground />
+          <ClientInit />
           <TaskProvider>
             {children}
           </TaskProvider>

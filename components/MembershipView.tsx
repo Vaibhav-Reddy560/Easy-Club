@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Shield, UserPlus, Check, ChevronDown, UserCheck, X, Users, Settings, Upload, Save, FileSpreadsheet } from "lucide-react";
-import { Club, ClubMember, MemberRole, RecruitmentBasis, MembershipConfig, Question } from "@/lib/types";
-import { saveClub } from "@/lib/db";
+import { Shield, UserPlus, Check, ChevronDown, UserCheck, X, Users, Settings, Upload, Save, FileSpreadsheet, Vote, ClipboardList, Info, Trophy, Copy, Plus, TrendingUp } from "lucide-react";
+import { Club, ClubMember, MemberRole, RecruitmentBasis, MembershipConfig, Question, Skill, SkillLevel, JCApplication, JCSelectionConfig } from "@/lib/types";
+import { saveClub, updateMemberSkills } from "@/lib/db";
 
 interface MembershipViewProps {
   clubs: Club[];
@@ -13,13 +13,33 @@ interface MembershipViewProps {
 
 export default function MembershipView({ clubs, onUpdateClub }: MembershipViewProps) {
   const [selectedClubId, setSelectedClubId] = useState<string | null>(clubs[0]?.id || null);
-  const [activeTab, setActiveTab] = useState<'recruitment-pool' | 'new-recruit'>('recruitment-pool');
+  const [activeTab, setActiveTab] = useState<'recruitment-pool' | 'new-recruit' | 'jc-selection'>('recruitment-pool');
+
+  // User detection for JC Application
+  const [userEmail, setUserEmail] = useState("");
+  React.useEffect(() => {
+    // In a real app, this would come from auth. For now we use a simple input or state
+    // For this UI, we'll let members enter their email to "Apply"
+  }, []);
+
+  // JC Selection State
+  const [isApplying, setIsApplying] = useState(false);
+  const [jcSkillDetails, setJcSkillDetails] = useState("");
+  const [jcExperience, setJcExperience] = useState("");
+  const [jcReason, setJcReason] = useState("");
+  const [jcIdeas, setJcIdeas] = useState("");
+  
+  const [maxJC, setMaxJC] = useState(5);
+  const [isJCOpen, setIsJCOpen] = useState(false);
 
   // Form State
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newBasis, setNewBasis] = useState<RecruitmentBasis>('Fee Paid');
   const [newTestDetails, setNewTestDetails] = useState("");
+  const [isAddingSkill, setIsAddingSkill] = useState<string | null>(null);
+  const [newSkill, setNewSkill] = useState("");
+  const [newSkillLevel, setNewSkillLevel] = useState<SkillLevel>('Beginner');
 
   const activeClub = clubs.find((c: Club) => c.id === selectedClubId);
   const members = activeClub?.members || [];
@@ -27,6 +47,8 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
   // Configuration State
   const [configMode, setConfigMode] = useState<'fee-based' | 'test-based'>('fee-based');
   const [feeAmount, setFeeAmount] = useState<number>(0);
+  const [razorpayKeyId, setRazorpayKeyId] = useState<string>('');
+  const [razorpayKeySecret, setRazorpayKeySecret] = useState<string>('');
   
   // Test Builder State
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -45,6 +67,8 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
     if (activeClub?.membershipConfig) {
       setConfigMode(activeClub.membershipConfig.mode);
       setFeeAmount(activeClub.membershipConfig.feeAmount || 0);
+      setRazorpayKeyId(activeClub.membershipConfig.razorpayKeyId || '');
+      setRazorpayKeySecret(activeClub.membershipConfig.razorpayKeySecret || '');
       
       const testDetails = activeClub.membershipConfig.testDetails;
       if (testDetails) {
@@ -61,13 +85,20 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
     } else {
       setConfigMode('fee-based');
       setFeeAmount(0);
+      setRazorpayKeyId('');
+      setRazorpayKeySecret('');
       setQuestions([]);
       setPassPercentage(60);
       setTimeLimitMinutes(20);
       setNewBasis('Fee Paid');
       setNewTestDetails("");
     }
-  }, [activeClub?.id, activeClub?.membershipConfig]);
+
+    if (activeClub?.jcSelectionConfig) {
+      setMaxJC(activeClub.jcSelectionConfig.maxJC);
+      setIsJCOpen(activeClub.jcSelectionConfig.isRecruitmentOpen);
+    }
+  }, [activeClub?.id, activeClub?.membershipConfig, activeClub?.jcSelectionConfig]);
 
   const handleUpdateActiveClub = async (updatedClubFn: (c: Club) => Club) => {
     if (!selectedClubId) return;
@@ -90,7 +121,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
       role: 'General Member',
       joinDate: new Date().toISOString().split('T')[0],
       basis: newBasis,
-      testDetails: newBasis === 'Test Passed' ? newTestDetails : undefined
+      ...(newBasis === 'Test Passed' ? { testDetails: newTestDetails } : {})
     };
     handleUpdateActiveClub((c: Club) => ({
       ...c,
@@ -122,19 +153,64 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
     }));
   };
 
-  const handleSaveConfig = () => {
+  const handleAddSkill = async (memberId: string) => {
+    if (!newSkill.trim() || !activeClub) return;
+    const member = members.find(m => m.id === memberId);
+    const newSkillObj: Skill = { name: newSkill.trim(), level: newSkillLevel };
+    const updatedSkills = [...(member?.skills || []), newSkillObj];
+    
+    // Update local state first for instant feedback
     handleUpdateActiveClub((c: Club) => ({
       ...c,
-      membershipConfig: {
-        mode: configMode,
-        feeAmount: configMode === 'fee-based' ? feeAmount : undefined,
-        testDetails: configMode === 'test-based' ? {
+      members: (c.members || []).map(m => m.id === memberId ? { ...m, skills: updatedSkills } : m)
+    }));
+
+    // Persist to DB
+    await updateMemberSkills(activeClub.id, memberId, updatedSkills);
+    
+    setNewSkill("");
+    setNewSkillLevel('Beginner');
+    setIsAddingSkill(null);
+  };
+
+  const handleRemoveSkill = async (memberId: string, skillName: string) => {
+    if (!activeClub) return;
+    const member = members.find(m => m.id === memberId);
+    const updatedSkills = (member?.skills || []).filter(s => {
+      const name = typeof s === 'string' ? s : s.name;
+      return name !== skillName;
+    });
+
+    handleUpdateActiveClub((c: Club) => ({
+      ...c,
+      members: (c.members || []).map(m => m.id === memberId ? { ...m, skills: updatedSkills } : m)
+    }));
+
+    await updateMemberSkills(activeClub.id, memberId, updatedSkills);
+  };
+
+  const handleSaveConfig = () => {
+    handleUpdateActiveClub((c: Club) => {
+      const config: any = { mode: configMode };
+
+      if (configMode === 'fee-based') {
+        config.feeAmount = feeAmount || 0;
+        config.razorpayKeyId = razorpayKeyId || '';
+        config.razorpayKeySecret = razorpayKeySecret || '';
+        config.testDetails = null;
+      } else {
+        config.feeAmount = null;
+        config.razorpayKeyId = null;
+        config.razorpayKeySecret = null;
+        config.testDetails = {
           questions,
           passPercentage,
           timeLimitMinutes
-        } : undefined
+        };
       }
-    }));
+
+      return { ...c, membershipConfig: config };
+    });
   };
 
   const handleAddQuestion = () => {
@@ -163,6 +239,99 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
     setQuestions(questions.filter(q => q.id !== id));
   };
 
+  const handleApplyForJC = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!activeClub || !userEmail) return;
+
+    // Link with existing member
+    const member = activeClub.members?.find(m => m.email.toLowerCase() === userEmail.toLowerCase());
+    if (!member) {
+        alert("Email not found in club registry. Please use the email you registered with.");
+        return;
+    }
+
+    // Check if already applied
+    if (activeClub.jcApplications?.some(app => app.memberEmail === userEmail)) {
+        alert("You have already applied for the Junior Core.");
+        return;
+    }
+
+    const application: JCApplication = {
+        id: `app_${Math.random().toString(36).substr(2, 9)}`,
+        memberId: member.id,
+        memberName: member.name,
+        memberEmail: member.email,
+        skills: jcSkillDetails,
+        experience: jcExperience,
+        reason: jcReason,
+        ideas: jcIdeas,
+        appliedAt: new Date().toISOString(),
+        votes: []
+    };
+
+    handleUpdateActiveClub((c) => ({
+        ...c,
+        jcApplications: [...(c.jcApplications || []), application]
+    }));
+
+    setIsApplying(false);
+    setJcSkillDetails("");
+    setJcExperience("");
+    setJcReason("");
+    setJcIdeas("");
+    alert("Application submitted successfully!");
+  };
+
+  const handleToggleVote = (appId: string) => {
+    // In a real app, we'd get the current user ID. 
+    // We'll simulate voting as an SC (Senior Core)
+    const currentSCId = "SC_USER_123"; // This should be dynamic
+
+    handleUpdateActiveClub((c) => ({
+        ...c,
+        jcApplications: (c.jcApplications || []).map(app => {
+            if (app.id === appId) {
+                const hasVoted = app.votes.includes(currentSCId);
+                return {
+                    ...app,
+                    votes: hasVoted ? app.votes.filter(id => id !== currentSCId) : [...app.votes, currentSCId]
+                };
+            }
+            return app;
+        })
+    }));
+  };
+
+  const handleFinalizeJC = () => {
+    if (!activeClub) return;
+    
+    // Sort by votes and take top maxJC
+    const sortedApps = [...(activeClub.jcApplications || [])].sort((a, b) => b.votes.length - a.votes.length);
+    const topApps = sortedApps.slice(0, maxJC);
+    const topMemberEmails = topApps.map(app => app.memberEmail);
+
+    handleUpdateActiveClub((c) => ({
+        ...c,
+        members: (c.members || []).map(m => 
+            topMemberEmails.includes(m.email) ? { ...m, role: 'Junior Core' as MemberRole } : m
+        ),
+        jcSelectionConfig: { ...c.jcSelectionConfig!, isRecruitmentOpen: false }
+    }));
+    
+    setIsJCOpen(false);
+    alert(`Selection finalized! ${topApps.length} members promoted to Junior Core.`);
+  };
+
+  const handleUpdateJCConfig = () => {
+    handleUpdateActiveClub((c) => ({
+        ...c,
+        jcSelectionConfig: {
+            maxJC,
+            isRecruitmentOpen: isJCOpen
+        }
+    }));
+  };
+
   if (!clubs || clubs.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-32 text-center">
@@ -179,7 +348,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
           <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter py-2">Membership X Recruitment</h2>
-          <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-[0.2em] mt-1">
+          <p className="text-zinc-100 text-[11px] mt-1 font-bold tracking-[0.2em] uppercase">
             Selective onboarding & pipeline management
           </p>
         </div>
@@ -188,10 +357,11 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
           <select
             value={selectedClubId || ""}
             onChange={(e) => setSelectedClubId(e.target.value)}
-            className="w-full appearance-none bg-zinc-900 border border-white/15 rounded-2xl py-4 pl-6 pr-12 text-sm font-bold text-white uppercase tracking-widest outline-none hover:border-gold-500/50 transition-colors focus:border-gold-500"
+            className="w-full appearance-none bg-[#0a0a0a] border border-white/10 rounded-2xl py-4 pl-6 pr-12 text-[11px] font-black text-white uppercase tracking-widest outline-none hover:border-gold-500/50 transition-colors focus:border-gold-500 cursor-pointer"
           >
+            <option value="" disabled className="bg-black text-white">Select a Club</option>
             {clubs.map((club) => (
-              <option key={club.id} value={club.id}>{club.name}</option>
+              <option key={club.id} value={club.id} className="bg-black text-white">{club.name}</option>
             ))}
           </select>
           <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-white pointer-events-none group-hover:text-gold-500 transition-colors" />
@@ -201,7 +371,7 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
       {/* Membership Configuration */}
       <div className="bg-[#050505] border border-white/15 rounded-[2.5rem] p-10 space-y-8">
         <div>
-          <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2"><Settings className="w-5 h-5 text-gold-500" /> Membership Configuration</h3>
+          <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">Membership Configuration</h3>
           <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-widest">Set rules for onboarding new members</p>
         </div>
         
@@ -224,15 +394,42 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
         
         <div className="space-y-5">
           {configMode === 'fee-based' ? (
-            <div>
-              <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Membership Fee (INR)</label>
-              <input
-                type="number"
-                value={feeAmount}
-                onChange={e => setFeeAmount(parseInt(e.target.value) || 0)}
-                className="w-full bg-black shadow-inner border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
-                placeholder="e.g. 500"
-              />
+            <div className="space-y-4">
+              <div>
+                <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Membership Fee (INR)</label>
+                <input
+                  type="number"
+                  value={feeAmount}
+                  onChange={e => setFeeAmount(parseInt(e.target.value) || 0)}
+                  className="w-full bg-black shadow-inner border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors"
+                  placeholder="e.g. 500"
+                />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Razorpay Key ID</label>
+                  <input
+                    type="text"
+                    value={razorpayKeyId}
+                    onChange={e => setRazorpayKeyId(e.target.value)}
+                    className="w-full bg-black shadow-inner border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors font-mono"
+                    placeholder="rzp_test_..."
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-white mb-2">Razorpay Key Secret</label>
+                  <input
+                    type="password"
+                    value={razorpayKeySecret}
+                    onChange={e => setRazorpayKeySecret(e.target.value)}
+                    className="w-full bg-black shadow-inner border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:border-gold-500 outline-none transition-colors font-mono"
+                    placeholder="Secret Key"
+                  />
+                </div>
+              </div>
+              <p className="text-xs text-zinc-500">
+                To collect payments directly into your account, generate API keys from your Razorpay Dashboard (Settings &gt; API Keys) and enter them here.
+              </p>
             </div>
           ) : (
             <div className="space-y-8">
@@ -420,20 +617,25 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
         </div>
         
         <div className="flex justify-between items-center pt-2">
-          {configMode === 'test-based' && selectedClubId ? (
-            <div className="flex items-center gap-4">
-              <span className="text-[10px] text-zinc-400 font-mono tracking-wider border border-white/15 bg-black shadow-inner px-3 py-2 rounded-lg select-all">
-                {typeof window !== 'undefined' ? `${window.location.origin}/club/${selectedClubId}/test` : `/club/${selectedClubId}/test`}
+          {(configMode === 'test-based' || configMode === 'fee-based') && selectedClubId ? (
+            <div className="flex flex-col gap-2">
+              <span className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">
+                {configMode === 'test-based' ? 'Test Link' : 'Payment Link'}
               </span>
-              <button 
-                onClick={() => {
-                  navigator.clipboard.writeText(`${window.location.origin}/club/${selectedClubId}/test`);
-                  alert("Test link copied!");
-                }}
-                className="text-[10px] font-bold text-gold-500 uppercase tracking-widest hover:text-gold-400 transition-colors"
-              >
-                Copy Link
-              </button>
+              <div className="flex items-center gap-4">
+                <span className="text-[10px] text-zinc-400 font-mono tracking-wider border border-white/15 bg-black shadow-inner px-3 py-2 rounded-lg select-all">
+                  {typeof window !== 'undefined' ? `${window.location.origin}/club/${selectedClubId}/${configMode === 'test-based' ? 'test' : 'join'}` : `/club/${selectedClubId}/${configMode === 'test-based' ? 'test' : 'join'}`}
+                </span>
+                <button 
+                  onClick={() => {
+                    navigator.clipboard.writeText(`${window.location.origin}/club/${selectedClubId}/${configMode === 'test-based' ? 'test' : 'join'}`);
+                    alert(`${configMode === 'test-based' ? 'Test' : 'Payment'} link copied!`);
+                  }}
+                  className="text-[10px] font-bold text-gold-500 uppercase tracking-widest hover:text-gold-400 transition-colors"
+                >
+                  Copy Link
+                </button>
+              </div>
             </div>
           ) : <div></div>}
           
@@ -462,10 +664,16 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
         >
           New Recruitment
         </button>
+        <button
+          onClick={() => setActiveTab('jc-selection')}
+          className={`pb-4 px-2 text-[11px] font-bold uppercase tracking-widest border-b-2 transition-all ${activeTab === 'jc-selection' ? 'text-signature-gradient border-gold-500' : 'text-white border-transparent hover:text-white'}`}
+        >
+          JC Selection Hub
+        </button>
       </div>
 
       {/* Content */}
-      <div className="min-h-[500px]">
+      <div className="w-full">
         {activeTab === 'recruitment-pool' && (
           <div className="bg-[#050505] border border-white/15 rounded-[2rem] overflow-hidden">
             <table className="w-full text-left text-sm">
@@ -474,60 +682,162 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                   <th className="px-8 py-5">Member</th>
                   <th className="px-8 py-5">Role</th>
                   <th className="px-8 py-5">Verification</th>
+                  <th className="px-8 py-5">Skills</th>
                   <th className="px-8 py-5">Date Joined</th>
-                  <th className="px-8 py-5 text-right">Actions</th>
+                  <th className="px-8 py-5 text-center">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
-                {members.filter((m: ClubMember) => m.role === 'General Member').length === 0 ? (
+                {members.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="py-20 text-center text-white uppercase tracking-widest font-bold text-[10px]">
+                    <td colSpan={6} className="py-20 text-center text-white uppercase tracking-widest font-bold text-[10px]">
                       No members in roster. Recruit first.
                     </td>
                   </tr>
                 ) : (
-                  members
-                    .filter((m: ClubMember) => m.role === 'General Member')
-                    .map((member: ClubMember) => (
-                    <tr key={member.id} className="hover:bg-white/[0.02] transition-colors group">
-                      <td className="px-8 py-6">
-                        <p className="font-bold text-white mb-1">{member.name}</p>
-                        <p className="text-[10px] text-zinc-100 uppercase tracking-wider">{member.email}</p>
-                      </td>
-                      <td className="px-8 py-6">
-                        <span className="inline-flex px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest bg-white/5 text-white border border-white/15">
-                          {member.role}
-                        </span>
-                      </td>
-                      <td className="px-8 py-6">
-                        <div className="flex items-center gap-2">
-                          <Check className="w-3 h-3 text-green-500" />
-                          <span className="text-[10px] font-bold text-white uppercase tracking-widest">
-                            {member.basis}
+                  members.map((member: ClubMember) => (
+                    <React.Fragment key={member.id}>
+                      <tr className="hover:bg-white/[0.02] transition-colors group">
+                        <td className="px-8 py-6">
+                          <p className="font-bold text-white mb-1">{member.name}</p>
+                          <p className="text-[10px] text-zinc-100 uppercase tracking-wider">{member.email}</p>
+                        </td>
+                        <td className="px-8 py-6">
+                          <span className="inline-flex px-4 py-2 bg-white/5 rounded-lg text-[9px] font-bold uppercase tracking-widest border border-transparent text-white">
+                            {member.role}
                           </span>
-                        </div>
-                      </td>
-                      <td className="px-8 py-6 text-[11px] text-zinc-100 font-mono">
-                        {member.joinDate}
-                      </td>
-                      <td className="px-8 py-6 text-right">
-                        <div className="flex items-center justify-end gap-3 opacity-50 group-hover:opacity-100 transition-opacity">
-                          <button
-                            onClick={() => handlePromote(member.id, 'General Member')}
-                            className="px-4 py-2 bg-white/5 hover:bg-gold-500/20 text-white hover:brightness-110 rounded-lg text-[9px] font-bold uppercase tracking-widest border border-transparent hover:border-gold-500/30 transition-all"
-                          >
-                            Promote to Core Team
-                          </button>
-                          <button
-                            onClick={() => handleRemove(member.id)}
-                            className="p-2 text-white hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
-                            title="Remove Member"
-                          >
-                            <X className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
+                        </td>
+                        <td className="px-8 py-6">
+                          <div className="flex items-center gap-2">
+                            <Check className="w-3 h-3 text-green-500" />
+                            <span className="text-[10px] font-bold text-white uppercase tracking-widest">
+                              {member.basis}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="px-8 py-6">
+                          <div className="flex flex-wrap gap-1.5 max-w-[250px]">
+                            {(member.skills || []).map((skill, idx) => {
+                              const sName = typeof skill === 'string' ? skill : skill.name;
+                              const sLevel = typeof skill === 'string' ? 'Beginner' : skill.level;
+                              return (
+                                <div key={idx} className="flex justify-between items-start p-2.5 rounded-xl border border-gold-500/20 bg-gold-500/10 text-gold-500 group/skill w-36">
+                                  <div className="flex flex-col gap-1.5 min-w-0">
+                                    <span className="text-[10px] font-bold leading-tight break-words pr-2 tracking-wider">
+                                      {sName}
+                                    </span>
+                                    <span className={`self-start text-[7px] px-1.5 py-0.5 rounded-sm font-black uppercase tracking-widest ${
+                                      sLevel === 'Expert' ? 'bg-gold-500 text-black' : 
+                                      sLevel === 'Proficient' ? 'bg-white/10 text-white' : 
+                                      'bg-white/5 text-zinc-400'
+                                    }`}>
+                                      {sLevel}
+                                    </span>
+                                  </div>
+                                  <button onClick={() => handleRemoveSkill(member.id, sName)} className="hover:text-white transition-colors mt-0.5 shrink-0 opacity-50 hover:opacity-100">
+                                    <X className="w-3 h-3" />
+                                  </button>
+                                </div>
+                              );
+                            })}
+                            
+                            {isAddingSkill !== member.id && (
+                              <button 
+                                type="button"
+                                onClick={() => setIsAddingSkill(member.id)}
+                                className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-white/5 border border-white/10 text-zinc-400 hover:text-white hover:bg-white/10 transition-all"
+                              >
+                                <Plus className="w-3 h-3" />
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                        <td className="px-8 py-6 text-[11px] text-zinc-100 font-mono whitespace-nowrap">
+                          {member.joinDate.split('T')[0].split('-').reverse().join('-')}
+                        </td>
+                        <td className="px-8 py-6 text-center">
+                          <div className="flex items-center justify-center gap-3 opacity-50 group-hover:opacity-100 transition-opacity">
+                            <button
+                              onClick={() => handlePromote(member.id, 'General Member')}
+                              className="px-4 py-2 bg-white/5 hover:bg-gold-500/20 text-white hover:brightness-110 rounded-lg text-[9px] font-bold uppercase tracking-widest border border-transparent hover:border-gold-500/30 transition-all"
+                            >
+                              Promote to Core Team
+                            </button>
+                            <button
+                              onClick={() => handleRemove(member.id)}
+                              className="p-2 text-white hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
+                              title="Remove Member"
+                            >
+                              <X className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                      {isAddingSkill === member.id && (
+                        <tr className="bg-white/[0.02]">
+                          <td colSpan={6} className="px-8 py-6 border-t border-white/5">
+                            <div className="flex flex-col gap-4 p-6 bg-[#121212] border border-white/10 rounded-2xl w-full max-w-md shadow-2xl mx-auto">
+                              <h4 className="text-sm font-destrubia text-white tracking-widest text-center">Add skills of {member.name}</h4>
+                              
+                              <div>
+                                <input 
+                                  autoFocus
+                                  value={newSkill}
+                                  onChange={e => setNewSkill(e.target.value)}
+                                  onKeyDown={e => e.key === 'Enter' && handleAddSkill(member.id)}
+                                  className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-gold-500 transition-colors mb-4"
+                                  placeholder="e.g. Web Design"
+                                />
+                                
+                                <div className="flex flex-col gap-2">
+                                  <div className="flex justify-between items-center text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
+                                    <span>Proficiency:</span>
+                                    <span className={
+                                      newSkillLevel === 'Expert' ? 'text-gold-500' :
+                                      newSkillLevel === 'Proficient' ? 'text-white' : 'text-zinc-500'
+                                    }>{newSkillLevel}</span>
+                                  </div>
+                                  <input 
+                                    type="range" 
+                                    min="0" 
+                                    max="2" 
+                                    step="1"
+                                    value={newSkillLevel === 'Beginner' ? 0 : newSkillLevel === 'Proficient' ? 1 : 2}
+                                    onChange={(e) => {
+                                      const val = parseInt(e.target.value);
+                                      setNewSkillLevel(val === 0 ? 'Beginner' : val === 1 ? 'Proficient' : 'Expert');
+                                    }}
+                                    className="w-full accent-gold-500"
+                                  />
+                                  <div className="flex justify-between text-[10px] font-black tracking-widest text-zinc-500 uppercase mt-2">
+                                    <span>Beginner</span>
+                                    <span>Proficient</span>
+                                    <span>Expert</span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="flex gap-2 mt-2">
+                                <button 
+                                  type="button"
+                                  onClick={() => handleAddSkill(member.id)}
+                                  className="flex-1 bg-gold-gradient text-black py-3 rounded-xl text-xs font-black uppercase tracking-widest hover:scale-[1.02] transition-transform shadow-lg"
+                                >
+                                  Add Skill
+                                </button>
+                                <button 
+                                  type="button"
+                                  onClick={() => setIsAddingSkill(null)}
+                                  className="px-4 py-3 bg-white/5 text-white/70 rounded-xl hover:bg-white/10 hover:text-white transition-colors"
+                                >
+                                  <X className="w-5 h-5" />
+                                </button>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </React.Fragment>
                   ))
                 )}
               </tbody>
@@ -606,23 +916,187 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                 </button>
               </div>
             </form>
+          </div>
+        )}
 
-            {/* Core Promotion Info panel */}
-            <div className="bg-[#0a0a0a] border border-white/15 border-dashed rounded-[2.5rem] p-10 flex flex-col justify-center items-center text-center">
-              <Shield className="w-16 h-16 text-white mb-6" />
-              <h4 className="text-xl font-bold text-white mb-4">Core Team Hierarchy</h4>
-              <p className="text-sm text-zinc-100 leading-relaxed max-w-sm mb-8">
-                The Club Core is composed of driven individuals who manage the club. Recruit members first, then promote exceptional candidates to the <strong className="text-signature-gradient font-bold">Core Team</strong> from the Member Directory to grant management access.
-              </p>
-              <button 
-                onClick={() => setActiveTab('recruitment-pool')}
-                className="px-6 py-3 border border-white/15 rounded-full text-[10px] font-bold uppercase tracking-widest text-white hover:text-white hover:bg-white/5 transition-all"
-              >
-                Go to Recruitment Pool
-              </button>
+        {activeTab === 'jc-selection' && (
+          <div className="space-y-10">
+            {/* Admin/Founder Controls */}
+            <div className="bg-[#050505] border border-white/15 rounded-[2.5rem] p-10 space-y-8">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">JC Selection Protocol</h3>
+                  <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-widest">Vote and recruit your JC's</p>
+                </div>
+                <div className="flex gap-4">
+                    <div className="bg-black border border-white/10 rounded-xl px-4 py-2 flex items-center gap-3">
+                        <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Max JC Intake</span>
+                        <input 
+                            type="number" 
+                            value={maxJC} 
+                            onChange={e => setMaxJC(parseInt(e.target.value) || 0)}
+                            className="w-12 bg-transparent text-white font-bold text-sm text-center outline-none"
+                        />
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <div className="flex flex-col">
+                            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Status</span>
+                            <span className={`text-xs font-black uppercase ${isJCOpen ? 'text-green-500' : 'text-red-500'}`}>
+                                {isJCOpen ? 'Open' : 'Closed'}
+                            </span>
+                        </div>
+                        <button
+                            onClick={() => {
+                                const newState = !isJCOpen;
+                                setIsJCOpen(newState);
+                                handleUpdateActiveClub(c => ({
+                                    ...c,
+                                    jcSelectionConfig: { maxJC, isRecruitmentOpen: newState }
+                                }));
+                            }}
+                            className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${isJCOpen ? 'bg-red-500/10 text-red-500 border border-red-500/30' : 'bg-green-500/10 text-green-500 border border-green-500/30'}`}
+                        >
+                            {isJCOpen ? 'Close Applications' : 'Open Applications'}
+                        </button>
+                    </div>
+                    <button
+                        onClick={() => {
+                          navigator.clipboard.writeText(`${window.location.origin}/club/${selectedClubId}/jc-apply`);
+                          alert("JC Application link copied!");
+                        }}
+                        className="p-3 bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-xl transition-all"
+                        title="Copy JC Application Link"
+                    >
+                        <Copy className="w-4 h-4" />
+                    </button>
+                    <button onClick={handleUpdateJCConfig} className="p-3 bg-white/5 rounded-xl hover:bg-white/10 border border-white/10"><Save className="w-4 h-4 text-white" /></button>
+                </div>
+              </div>
+
+              {/* Voting Dashboard for SCs */}
+              <div className="space-y-6">
+                <div className="flex justify-between items-end">
+                    <h4 className="text-[11px] font-black uppercase tracking-widest text-signature-gradient">Applications Received ({activeClub?.jcApplications?.length || 0})</h4>
+                    <button 
+                        onClick={handleFinalizeJC}
+                        className="px-6 py-3 bg-gold-gradient text-black font-black uppercase tracking-widest text-[10px] rounded-xl hover:scale-[1.02] transition-transform flex items-center gap-2"
+                    >
+                        <Trophy className="w-3.5 h-3.5" /> Finalize Selection (Top {maxJC})
+                    </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {(activeClub?.jcApplications || []).map(app => (
+                        <div key={app.id} className="bg-black border border-white/10 rounded-3xl p-8 relative group overflow-hidden">
+                            <div className="absolute top-0 right-0 p-6 flex flex-col items-center gap-1">
+                                <button 
+                                    onClick={() => handleToggleVote(app.id)}
+                                    className={`p-3 rounded-full transition-all ${app.votes.includes("SC_USER_123") ? 'bg-gold-500 text-black shadow-gold-glow scale-110' : 'bg-white/5 text-zinc-500 hover:bg-white/10'}`}
+                                >
+                                    <Vote className="w-5 h-5" />
+                                </button>
+                                <span className="text-[10px] font-black text-white">{app.votes.length} Votes</span>
+                            </div>
+
+                            <div className="mb-6">
+                                <h5 className="text-lg font-bold text-white">{app.memberName}</h5>
+                                <p className="text-[9px] text-zinc-500 uppercase tracking-widest">{app.memberEmail}</p>
+                            </div>
+
+                            <div className="space-y-4">
+                                <div>
+                                    <span className="text-[8px] font-black uppercase text-gold-500 tracking-widest block mb-1">Key Skills</span>
+                                    <p className="text-[11px] text-zinc-100 leading-relaxed">{app.skills}</p>
+                                </div>
+                                <div>
+                                    <span className="text-[8px] font-black uppercase text-gold-500 tracking-widest block mb-1">Experience</span>
+                                    <p className="text-[11px] text-zinc-100 leading-relaxed">{app.experience}</p>
+                                </div>
+                                <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
+                                    <span className="text-[8px] font-black uppercase text-zinc-400 tracking-widest block mb-2">Proposal for Improvements</span>
+                                    <p className="text-[11px] text-zinc-300 italic leading-relaxed">"{app.ideas}"</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                    {(activeClub?.jcApplications || []).length === 0 && (
+                        <div className="col-span-full py-16 text-center bg-black/40 border border-dashed border-white/10 rounded-3xl">
+                            <ClipboardList className="w-10 h-10 text-white/20 mx-auto mb-4" />
+                            <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">No applications received yet</p>
+                        </div>
+                    )}
+                </div>
+              </div>
             </div>
           </div>
         )}
+      </div>
+
+      {/* Membership Growth Analytical Graph */}
+      <div className="bg-[#050505] border border-white/15 rounded-[2.5rem] p-10 relative overflow-hidden">
+        <div className="flex justify-between items-end mb-12">
+            <div>
+                <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-3">
+                    <TrendingUp className="w-6 h-6 text-gold-500" />
+                    Membership Growth
+                </h3>
+                <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">New members acquired over the last 6 months</p>
+            </div>
+            <div className="text-right">
+                <span className="text-3xl font-destrubia text-white">
+                    {activeClub?.members?.length || 0}
+                </span>
+                <span className="block text-[9px] font-black uppercase tracking-widest text-gold-500 mt-1">Total Members</span>
+            </div>
+        </div>
+
+        <div className="h-48 flex items-end justify-between gap-4 relative">
+            {/* Background grid lines */}
+            <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
+                {[0, 1, 2, 3].map(i => (
+                    <div key={i} className="w-full border-t border-white/10 border-dashed" />
+                ))}
+            </div>
+
+            {/* Bars */}
+            {(() => {
+                const members = activeClub?.members || [];
+                const months = Array.from({length: 6}, (_, i) => {
+                    const d = new Date();
+                    d.setMonth(d.getMonth() - (5 - i));
+                    return d.toLocaleString('default', { month: 'short', year: 'numeric' });
+                });
+                
+                const data = months.map(month => {
+                    const count = members.filter(m => {
+                        if(!m.joinDate) return false;
+                        const d = new Date(m.joinDate);
+                        return d.toLocaleString('default', { month: 'short', year: 'numeric' }) === month;
+                    }).length;
+                    return { month: month.split(' ')[0], count };
+                });
+                
+                const maxCount = Math.max(...data.map(d => d.count), 5); // At least 5 to avoid completely filled bars for 1 member
+
+                return data.map((d, i) => (
+                    <div key={i} className="flex-1 flex flex-col items-center justify-end h-full gap-4 z-10 group">
+                        <div className="w-full relative flex justify-center items-end h-[150px]">
+                            <motion.div 
+                                initial={{ height: 0 }}
+                                animate={{ height: `${(d.count / maxCount) * 100}%` }}
+                                transition={{ duration: 1, delay: i * 0.1, type: 'spring' }}
+                                className="w-12 bg-gradient-to-t from-gold-500/20 to-gold-500 rounded-t-xl group-hover:brightness-125 transition-all relative"
+                            >
+                                <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-black text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                                    {d.count}
+                                </span>
+                            </motion.div>
+                        </div>
+                        <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">{d.month}</span>
+                    </div>
+                ));
+            })()}
+        </div>
       </div>
     </div>
   );

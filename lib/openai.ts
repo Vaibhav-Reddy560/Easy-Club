@@ -1,8 +1,10 @@
+import { getCustomKeys } from "./gemini";
 
-export async function callOpenAIJSON<T>(prompt: string, model: string = "gpt-4o-mini"): Promise<T | null> {
-    const apiKey = process.env.OPENAI_API_KEY;
+export async function callOpenAIJSON<T>(prompt: string, model: string = "gpt-4o-mini", systemPrompt?: string): Promise<T | null> {
+    const { openaiKey } = await getCustomKeys();
+    const apiKey = openaiKey || process.env.OPENAI_API_KEY;
     if (!apiKey) {
-        console.error("OPENAI_API_KEY is missing. Falling back to Gemini or raw data.");
+        console.error("OPENAI_API_KEY is missing.");
         return null;
     }
 
@@ -16,7 +18,7 @@ export async function callOpenAIJSON<T>(prompt: string, model: string = "gpt-4o-
             body: JSON.stringify({
                 model,
                 messages: [
-                    { role: "system", content: "You are a helpful assistant that returns ONLY valid JSON." },
+                    { role: "system", content: systemPrompt || "You are a helpful assistant that returns ONLY valid JSON." },
                     { role: "user", content: prompt }
                 ],
                 response_format: { type: "json_object" }
@@ -26,7 +28,7 @@ export async function callOpenAIJSON<T>(prompt: string, model: string = "gpt-4o-
         if (!response.ok) {
             const error = await response.json();
             console.error("OpenAI API Error:", error);
-            return null;
+            throw new Error(`OpenAI API Error: ${response.status}`);
         }
 
         const data = await response.json();
@@ -34,6 +36,6 @@ export async function callOpenAIJSON<T>(prompt: string, model: string = "gpt-4o-
         return JSON.parse(content) as T;
     } catch (e) {
         console.error("OpenAI request failed:", e);
-        return null;
+        throw e;
     }
 }

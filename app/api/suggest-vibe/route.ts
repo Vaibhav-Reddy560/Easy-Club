@@ -55,39 +55,50 @@ export async function POST(req: Request) {
     else if (creativityLevel >= 2) effectStyle = "shadow-depth";
 
     // Try Gemini API with retry, fallback to local template
-    let vibe: string;
+    let vibeDescription = FALLBACK_VIBES[category];
+    let unsplashKeyword = category;
+    let colors = ["#111111", "#F59E0B", "#FFFFFF"];
 
     try {
       const creativityAdj = creativityLevel >= 7 ? "bold, daring, and highly creative" : creativityLevel >= 4 ? "professional and polished" : "clean and minimal";
 
-      const prompt = `You are an expert graphic designer. Based on this event, suggest a short visual direction (3-4 sentences max) for a poster design:
+      const prompt = `You are an expert graphic designer. Based on this event, suggest a visual direction for a poster design:
 
 Event Name: "${eventName || 'Unnamed Event'}"
 Description: "${description || 'No description provided'}"
 Type: ${type || 'General'} / ${subType || 'Workshop'}
 Creative Direction: ${creativityAdj}
 
-Describe:
-1. The color palette (specific hex colors or color names)
-2. The overall mood/atmosphere
-3. What kind of background imagery would work
-
-Be concise and specific. Do NOT include markdown formatting. Just plain text paragraphs.`;
+Provide your response strictly in the following JSON format:
+{
+  "unsplashKeyword": "a single, specific 2-3 word keyword to search Unsplash for a background image (e.g. 'minimalist architecture', 'neon cyberpunk', 'abstract flow')",
+  "colors": ["#primaryHex", "#secondaryHex", "#accentHex"],
+  "vibeDescription": "A short 2 sentence description of the mood and atmosphere."
+}`;
 
       const result = await callGeminiSafe(prompt);
-      vibe = result || FALLBACK_VIBES[category];
+      if (result) {
+        try {
+          const parsed = JSON.parse(result.replace(/```json|```/g, '').trim());
+          if (parsed.unsplashKeyword) unsplashKeyword = parsed.unsplashKeyword;
+          if (parsed.colors && Array.isArray(parsed.colors)) colors = parsed.colors;
+          if (parsed.vibeDescription) vibeDescription = parsed.vibeDescription;
+        } catch (e) {
+          console.error("Failed to parse Gemini JSON:", e);
+          vibeDescription = result;
+        }
+      }
     } catch {
-      // API completely unavailable — use smart local fallback
       console.log("Gemini API unavailable, using local vibe fallback for category:", category);
-      vibe = FALLBACK_VIBES[category];
-      // Personalize the fallback slightly
       if (eventName) {
-        vibe = `For "${eventName}": ` + vibe;
+        vibeDescription = `For "${eventName}": ` + vibeDescription;
       }
     }
 
     return NextResponse.json({
-      vibe,
+      vibe: vibeDescription,
+      unsplashKeyword,
+      colors,
       fontFamily: selectedFont,
       fontUrl,
       effectStyle,

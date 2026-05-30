@@ -1,0 +1,302 @@
+[
+  {
+    "id": "del-deba-001",
+    "name": "The Debating Society",
+    "organization": "St. Stephen's College",
+    "category": "Debating",
+    "description": "The oldest and most prestigious debating society in India, known for the Mukarji Memorial Debate and high-level parliamentary debating.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/stephens.debating",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "50+",
+    "founded": "1881",
+    "keyEvents": ["Mukarji Memorial Debate", "St. Stephen's PD"]
+  },
+  {
+    "id": "del-deba-002",
+    "name": "The Debating Society Hindu",
+    "organization": "Hindu College",
+    "category": "Debating",
+    "description": "Hindu College's premier debating body, active in the international debating circuit and host of the Premchand Memorial Debate.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/hindu.debsoc",
+      "website": "https://hinducollege.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "1990",
+    "keyEvents": ["Premchand Memorial Debate", "Hindu PD"]
+  },
+  {
+    "id": "del-deba-003",
+    "name": "Hansraj Debating Society",
+    "organization": "Hansraj College",
+    "category": "Debating",
+    "description": "A highly competitive society at Hansraj, focusing on parliamentary and conventional debating formats.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/hansraj.debsoc",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "55+",
+    "founded": "1992",
+    "keyEvents": ["Annual Parliamentary Debate", "Freshers' Debate"]
+  },
+  {
+    "id": "del-deba-004",
+    "name": "Debsoc Miranda",
+    "organization": "Miranda House",
+    "category": "Debating",
+    "description": "The debating society of Miranda House, empowering women through argumentation and critical thinking.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/debsoc.miranda",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "1995",
+    "keyEvents": ["Miranda House PD", "Inter-College Tournaments"]
+  },
+  {
+    "id": "del-deba-005",
+    "name": "Debsoc Ramjas",
+    "organization": "Ramjas College",
+    "category": "Debating",
+    "description": "The official debating society of Ramjas, known for its inclusive atmosphere and competitive breaks.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ramjas.debsoc",
+      "website": "https://ramjas.du.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "1995",
+    "keyEvents": ["Ramjas PD", "Workshop Series"]
+  },
+  {
+    "id": "del-deba-006",
+    "name": "LSR EDS",
+    "organization": "LSR",
+    "category": "Debating",
+    "description": "The English Debating Society of LSR, a powerhouse in the national debating circuit.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/lsr.eds",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "1985",
+    "keyEvents": ["Annual Parliamentary Debate", "Tarang Debates"]
+  },
+  {
+    "id": "del-deba-007",
+    "name": "Gargi EDS",
+    "organization": "Gargi College",
+    "category": "Debating",
+    "description": "The English Debating Society of Gargi, promoting critical discourse and competitive excellence.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/gargi.eds",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1995",
+    "keyEvents": ["Reverie Debates", "Intra-College Mock Debates"]
+  },
+  {
+    "id": "del-deba-008",
+    "name": "Debsoc SVC",
+    "organization": "Sri Venkateswara College",
+    "category": "Debating",
+    "description": "Venky's debating society, active in both conventional and parliamentary formats in Delhi.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/debsoc_svc",
+      "website": "https://svc.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "1998",
+    "keyEvents": ["Nexus Debates", "Annual PD"]
+  },
+  {
+    "id": "del-deba-009",
+    "name": "Debsoc SRCC",
+    "organization": "SRCC",
+    "category": "Debating",
+    "description": "The Debating Society of SRCC, consistently ranked among the top collegiate debating bodies in the country.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/debsocsrcc",
+      "website": "https://debsocsrcc.com"
+    },
+    "approxMemberCount": "60+",
+    "founded": "1990",
+    "keyEvents": ["SRCC PD", "Crossroads Debates"]
+  },
+  {
+    "id": "del-deba-010",
+    "name": "Debsoc KMC",
+    "organization": "Kirori Mal College",
+    "category": "Debating",
+    "description": "KMC's debating society, known for its strong arguments and academic depth.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/debsoc_kmc",
+      "website": "https://kmc.du.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "1992",
+    "keyEvents": ["Annual Parliamentary Debate", "Inter-College Meets"]
+  },
+  {
+    "id": "del-deba-011",
+    "name": "Debating IITD",
+    "organization": "IIT Delhi",
+    "category": "Debating",
+    "description": "The debating society of IIT Delhi, known for its logical and data-driven approach to complex motions.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/debating.iitd",
+      "website": "https://brca.iitd.ac.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "2000",
+    "keyEvents": ["Rendezvous PD", "Astro-Politics Debates"]
+  },
+  {
+    "id": "del-deba-012",
+    "name": "Debsoc DTU",
+    "organization": "DTU",
+    "category": "Debating",
+    "description": "The official debating society of DTU, fostering a culture of public speaking and structured argumentation.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/debsoc.dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1995",
+    "keyEvents": ["Annual Parliamentary Debate", "Engifest Debates"]
+  },
+  {
+    "id": "del-deba-013",
+    "name": "Debsoc NSUT",
+    "organization": "NSUT",
+    "category": "Debating",
+    "description": "NSUT's debating society, active in national level tournaments and workshops.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/debsoc.nsut",
+      "website": "https://debsocnsut.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "2005",
+    "keyEvents": ["Annual Parliamentary Debate", "Moksha Debates"]
+  },
+  {
+    "id": "del-deba-014",
+    "name": "Debsoc ARSD",
+    "organization": "ARSD College",
+    "category": "Debating",
+    "description": "ARSD's debating hub, active in the DU circuit and known for its bilingual debates.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/debsoc.arsd",
+      "website": "https://arsdcollege.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2000",
+    "keyEvents": ["Annual Parliamentary Debate", "Quizzes"]
+  },
+  {
+    "id": "del-deba-015",
+    "name": "Debsoc Shivaji",
+    "organization": "Shivaji College",
+    "category": "Debating",
+    "description": "The debating society of Shivaji College, promoting social discourse and public speaking.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/debsoc.shivaji",
+      "website": "https://shivajicollege.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2005",
+    "keyEvents": ["Spectra Debates", "Intra-College Meets"]
+  },
+  {
+    "id": "del-deba-016",
+    "name": "Debsoc DDU",
+    "organization": "DDU College",
+    "category": "Debating",
+    "description": "Focusing on contemporary issues and structured debate formats at DDU College.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/debsoc.ddu",
+      "website": "https://dducollegedu.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "2008",
+    "keyEvents": ["Annual PD", "Inter-College Competitions"]
+  },
+  {
+    "id": "del-deba-017",
+    "name": "Debsoc JMI",
+    "organization": "Jamia Millia Islamia",
+    "category": "Debating",
+    "description": "JMI's debating society, known for its critical inquiry and diverse perspectives.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/debsoc_jmi",
+      "website": "https://jmi.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1980",
+    "keyEvents": ["National Parliamentary Debate", "Seminars"]
+  },
+  {
+    "id": "del-deba-018",
+    "name": "Debsoc KNC",
+    "organization": "Kamala Nehru College",
+    "category": "Debating",
+    "description": "KNC's debating society, empowering students to voice their opinions on social and political issues.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/debsoc.knc",
+      "website": "https://knc.edu.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1995",
+    "keyEvents": ["Annual PD", "Bilingual Debates"]
+  },
+  {
+    "id": "del-deba-019",
+    "name": "Debsoc Maitreyi",
+    "organization": "Maitreyi College",
+    "category": "Debating",
+    "description": "Maitreyi's society for promoting critical thinking and competitive debating skills.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/debsoc.maitreyi",
+      "website": "https://maitreyi.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "2000",
+    "keyEvents": ["Science Day Debates", "Annual PD"]
+  },
+  {
+    "id": "del-deba-020",
+    "name": "Debsoc Rajdhani",
+    "organization": "Rajdhani College",
+    "category": "Debating",
+    "description": "The debating society of Rajdhani College, fostering a culture of healthy discussion and public discourse.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/debsoc_rajdhani",
+      "website": "https://rajdhanicollege.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1995",
+    "keyEvents": ["Annual Parliamentary Debate", "Quizzes"]
+  }
+]

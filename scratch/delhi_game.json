@@ -1,0 +1,302 @@
+[
+  {
+    "id": "del-game-001",
+    "name": "Arcade",
+    "organization": "Hansraj College",
+    "category": "Gaming",
+    "description": "One of Delhi University's first official esports and gaming societies, promoting competitive gaming and esports career awareness.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/arcade_hansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2023",
+    "keyEvents": ["Valorant Tournaments", "Esports Workshops"]
+  },
+  {
+    "id": "del-game-002",
+    "name": "CompSoc",
+    "organization": "St. Stephen's College",
+    "category": "Gaming",
+    "description": "The Computer Science Society of St. Stephen's, host of 'GAMEface', one of the largest collegiate gaming tournaments in Delhi.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/compsoc.ssc",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "80+",
+    "founded": "1995",
+    "keyEvents": ["GAMEface", "Cybercept"]
+  },
+  {
+    "id": "del-game-003",
+    "name": "IGDA IIITD",
+    "organization": "IIIT Delhi",
+    "category": "Gaming",
+    "description": "The student chapter of the International Game Developers Association at IIIT-Delhi, focusing on both game development and competitive play.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/igda_iiitd",
+      "website": "https://iiitd.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "2015",
+    "keyEvents": ["Game Jams", "Esports Experience Zones"]
+  },
+  {
+    "id": "del-game-004",
+    "name": "IGT NSUT",
+    "organization": "NSUT",
+    "category": "Gaming",
+    "description": "The Indian Game Theory Society at NSUT, exploring the intersection of gaming, strategy, and technical skills.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/igt.nsut",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "2018",
+    "keyEvents": ["Gaming Nights", "Strategy Workshops"]
+  },
+  {
+    "id": "del-game-005",
+    "name": "CMS Gaming",
+    "organization": "SRCC",
+    "category": "Gaming",
+    "description": "The tech-wing of the Computers and Mathematics Society at SRCC, organizing annual esports events at Crossroads.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/cms.srcc",
+      "website": "https://cmssrcc.com"
+    },
+    "approxMemberCount": "70+",
+    "founded": "1990",
+    "keyEvents": ["Crossroads Esports", "Tech Quizzes"]
+  },
+  {
+    "id": "del-game-006",
+    "name": "Encrypt",
+    "organization": "CVS",
+    "category": "Gaming",
+    "description": "The technical and gaming society of College of Vocational Studies, known for high-octane gaming fests.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/encrypt_cvs",
+      "website": "https://cvs.edu.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2010",
+    "keyEvents": ["Technophilia", "Esports Tournaments"]
+  },
+  {
+    "id": "del-game-007",
+    "name": "Rektt",
+    "organization": "MSI",
+    "category": "Gaming",
+    "description": "A dedicated gaming society at Maharaja Surajmal Institute, focusing on building a professional esports community.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/rekttmsi",
+      "website": "https://msijanakpuri.com"
+    },
+    "approxMemberCount": "45+",
+    "founded": "2020",
+    "keyEvents": ["Gaming Meetups", "Inter-College Tournaments"]
+  },
+  {
+    "id": "del-game-008",
+    "name": "Esports DTU",
+    "organization": "DTU",
+    "category": "Gaming",
+    "description": "The esports wing of DTU, organizing large-scale gaming tournaments during Engifest.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/esports_dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "120+",
+    "founded": "2015",
+    "keyEvents": ["Engifest Gaming Fest", "Valorant Cups"]
+  },
+  {
+    "id": "del-game-009",
+    "name": "Gaming Club IITD",
+    "organization": "IIT Delhi",
+    "category": "Gaming",
+    "description": "The central gaming hub at IIT Delhi, facilitating inter-hostel and inter-college esports competitions.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/gaming_iitd",
+      "website": "https://brca.iitd.ac.in"
+    },
+    "approxMemberCount": "200+",
+    "founded": "1980",
+    "keyEvents": ["Rendezvous Gaming", "Hostel Leagues"]
+  },
+  {
+    "id": "del-game-010",
+    "name": "Valiant Gaming",
+    "organization": "JIMS Kalkaji",
+    "category": "Gaming",
+    "description": "The official gaming club of JIMS Kalkaji, organizing annual inter-college esports battles.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/valiant.jims",
+      "website": "https://jimskalkaji.com"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2018",
+    "keyEvents": ["Gaming Carnivals", "Streamer Sessions"]
+  },
+  {
+    "id": "del-game-011",
+    "name": "Cyborn",
+    "organization": "SPA Delhi",
+    "category": "Gaming",
+    "description": "The niche gaming society at the School of Planning and Architecture, exploring game design and digital art.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/cyborn_spa",
+      "website": "https://spa.ac.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "2012",
+    "keyEvents": ["Design Jams", "Gaming Meetups"]
+  },
+  {
+    "id": "del-game-012",
+    "name": "Gaming Club Venky",
+    "organization": "Sri Venkateswara College",
+    "category": "Gaming",
+    "description": "Venky's hub for casual and competitive gamers, organizing pop-up tournaments.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/gaming_venky",
+      "website": "https://svc.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2019",
+    "keyEvents": ["Nexus Gaming Events", "FIFA Tournaments"]
+  },
+  {
+    "id": "del-game-013",
+    "name": "Gaming Club KMC",
+    "organization": "Kirori Mal College",
+    "category": "Gaming",
+    "description": "KMC's community for esports enthusiasts and strategy game fans.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/gaming_kmc",
+      "website": "https://kmc.du.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "2020",
+    "keyEvents": ["Renaissance Gaming", "Strategy Nights"]
+  },
+  {
+    "id": "del-game-014",
+    "name": "Gaming Club Hindu",
+    "organization": "Hindu College",
+    "category": "Gaming",
+    "description": "Hindu College's esports wing, hosting tournaments for mobile and PC games.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/gaming_hindu",
+      "website": "https://hinducollege.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2018",
+    "keyEvents": ["Mecca Esports", "BGMI Tournaments"]
+  },
+  {
+    "id": "del-game-015",
+    "name": "Gaming Club Ramjas",
+    "organization": "Ramjas College",
+    "category": "Gaming",
+    "description": "The official gaming community of Ramjas College, active in the DU esports circuit.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/gaming_ramjas",
+      "website": "https://ramjas.du.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "2019",
+    "keyEvents": ["Ramjas Gaming Fest", "Community Play"]
+  },
+  {
+    "id": "del-game-016",
+    "name": "Gaming Club LSR",
+    "organization": "LSR",
+    "category": "Gaming",
+    "description": "Promoting gaming and esports among women at LSR, with a focus on strategy and simulation games.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/gaming_lsr",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "2021",
+    "keyEvents": ["Women in Gaming Talks", "Casual Tournaments"]
+  },
+  {
+    "id": "del-game-017",
+    "name": "Gaming Club Miranda",
+    "organization": "Miranda House",
+    "category": "Gaming",
+    "description": "Miranda House's community for gamers, exploring the creative and competitive aspects of video games.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/gaming_mh",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "2021",
+    "keyEvents": ["Tempest Gaming", "Interactive Sessions"]
+  },
+  {
+    "id": "del-game-018",
+    "name": "Gaming Club Gargi",
+    "organization": "Gargi College",
+    "category": "Gaming",
+    "description": "Gargi College's hub for mobile and PC gaming enthusiasts.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/gaming_gargi",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2020",
+    "keyEvents": ["Reverie Esports", "Gaming Nights"]
+  },
+  {
+    "id": "del-game-019",
+    "name": "Gaming Club KNC",
+    "organization": "Kamala Nehru College",
+    "category": "Gaming",
+    "description": "The gaming society of KNC, fostering a inclusive environment for gamers.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/gaming_knc",
+      "website": "https://knc.edu.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "2021",
+    "keyEvents": ["Inter-College Tournaments", "Gaming Meetups"]
+  },
+  {
+    "id": "del-game-020",
+    "name": "Gaming Club Maitreyi",
+    "organization": "Maitreyi College",
+    "category": "Gaming",
+    "description": "Maitreyi's society for exploring competitive esports and game design.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/gaming_maitreyi",
+      "website": "https://maitreyi.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "2021",
+    "keyEvents": ["Annual Gaming Event", "Workshops"]
+  }
+]

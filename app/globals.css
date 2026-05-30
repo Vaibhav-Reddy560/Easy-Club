@@ -5,6 +5,7 @@
 html {
   background-color: #050505;
   scroll-behavior: smooth;
+  overscroll-behavior: none;
 }
 
 body {
@@ -13,9 +14,16 @@ body {
   overflow-x: hidden;
   position: relative;
   background-color: transparent !important;
+  overscroll-behavior: none;
 }
 
 @layer utilities {
+  .border-gradient {
+    border: 1px solid transparent;
+    background: linear-gradient(#111, #111) padding-box,
+                linear-gradient(180deg, #FF8800 0%, #FF9D00 18%, #FFB405 36%, #FFBF44 49%, #F99A00 63%, #AE7102 100%) border-box;
+  }
+
   .bg-premium-pattern {
     @apply bg-transparent;
   }
@@ -86,4 +94,21 @@ body {
 [class*="rounded"][class*="bg-neutral"],
 [class*="rounded"][class*="bg-black"] {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+}
+
+/* Custom premium scrollbar for Top Cities list */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(234, 179, 8, 0.3);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(234, 179, 8, 0.5);
 }

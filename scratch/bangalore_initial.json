@@ -1,0 +1,146 @@
+[
+  {
+    "id": "blr-001",
+    "name": "Rangmanch (Dramatics)",
+    "organization": "IISc Bangalore",
+    "category": "Theatre/Acting",
+    "description": "The official dramatics society of IISc, producing high-quality stage plays and promoting theatrical arts on campus.",
+    "location": "Bangalore",
+    "links": {
+      "instagram": "https://instagram.com/rangmanch_iisc"
+    },
+    "approxMemberCount": "60+",
+    "founded": "1980",
+    "keyEvents": ["Annual Stage Play", "Inter-collegiate Dramatics"]
+  },
+  {
+    "id": "blr-002",
+    "name": "Rhythmica (Music Club)",
+    "organization": "IISc Bangalore",
+    "category": "Music",
+    "description": "The central music body of IISc, featuring classical, fusion, and contemporary musical performances.",
+    "location": "Bangalore",
+    "links": {
+      "instagram": "https://instagram.com/rhythmica_iisc"
+    },
+    "approxMemberCount": "80+",
+    "founded": "1985",
+    "keyEvents": ["Gymkhana Melodies", "Unplugged Sessions"]
+  },
+  {
+    "id": "blr-003",
+    "name": "HackerSpace",
+    "organization": "PES University",
+    "category": "Coding",
+    "description": "The primary development and open-source community at PES University, fostering a culture of building and innovation.",
+    "location": "Bangalore",
+    "links": {
+      "website": "https://pes.edu/hackerspace",
+      "instagram": "https://instagram.com/hackerspace.pesu"
+    },
+    "approxMemberCount": "300+",
+    "founded": "2015",
+    "keyEvents": ["PES Hackathon", "Workshops"]
+  },
+  {
+    "id": "blr-004",
+    "name": "Equinox (Space Club)",
+    "organization": "PES University",
+    "category": "Astronomy/Space",
+    "description": "Dedicated to space science and satellite technology, including the design and launch of student satellites.",
+    "location": "Bangalore",
+    "links": {
+      "instagram": "https://instagram.com/equinox_pesu"
+    },
+    "approxMemberCount": "120+",
+    "founded": "2012",
+    "keyEvents": ["Satellite Projects", "Stargazing"]
+  },
+  {
+    "id": "blr-005",
+    "name": "Ashwa Racing",
+    "organization": "RVCE Bangalore",
+    "category": "Racing",
+    "description": "India's premier student-led formula racing team, building combustion and electric race cars from scratch.",
+    "location": "Bangalore",
+    "links": {
+      "website": "https://ashwaracing.com",
+      "instagram": "https://instagram.com/ashwaracing"
+    },
+    "approxMemberCount": "70+",
+    "founded": "2003",
+    "keyEvents": ["Formula Bharat", "FS Germany"]
+  },
+  {
+    "id": "blr-006",
+    "name": "RAAG (Youth and Cultural Club)",
+    "organization": "RVCE Bangalore",
+    "category": "Cultural",
+    "description": "The main cultural umbrella of RVCE, coordinating all inter-collegiate fests and cultural activities.",
+    "location": "Bangalore",
+    "links": {
+      "instagram": "https://instagram.com/raag_rvce"
+    },
+    "approxMemberCount": "150+",
+    "founded": "1990",
+    "keyEvents": ["8th Mile", "Cultural Week"]
+  },
+  {
+    "id": "blr-007",
+    "name": "CSA (Centre for Social Action)",
+    "organization": "Christ University",
+    "category": "Social Service",
+    "description": "The social wing of Christ University, leading community development, rural outreach, and environmental projects.",
+    "location": "Bangalore",
+    "links": {
+      "website": "https://christuniversity.in/csa",
+      "instagram": "https://instagram.com/csa_christ"
+    },
+    "approxMemberCount": "1000+",
+    "founded": "1999",
+    "keyEvents": ["Rural Exposure", "Social Advocacy"]
+  },
+  {
+    "id": "blr-008",
+    "name": "Debating Society",
+    "organization": "Christ University",
+    "category": "Debating",
+    "description": "A prestigious society for intellectual debate and public speaking, representing Christ University at international MUNs.",
+    "location": "Bangalore",
+    "links": {
+      "instagram": "https://instagram.com/debsoc_christ"
+    },
+    "approxMemberCount": "100+",
+    "founded": "2005",
+    "keyEvents": ["Christ PD", "National MUN"]
+  },
+  {
+    "id": "blr-009",
+    "name": "Jatayu (Unmanned Aerial Vehicles)",
+    "organization": "RVCE Bangalore",
+    "category": "Robotics",
+    "description": "Technical team specializing in the development of autonomous UAVs for surveillance and research.",
+    "location": "Bangalore",
+    "links": {
+      "website": "https://teamjatayu.com",
+      "instagram": "https://instagram.com/team_jatayu"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2008",
+    "keyEvents": ["SAE Aero Design", "UAV Challenges"]
+  },
+  {
+    "id": "blr-010",
+    "name": "Nautanki",
+    "organization": "PES University",
+    "category": "Theatre/Acting",
+    "description": "The official theatre society of PES University, known for its creative and socially relevant productions.",
+    "location": "Bangalore",
+    "links": {
+      "instagram": "https://instagram.com/nautanki_pesu"
+    },
+    "approxMemberCount": "90+",
+    "founded": "2010",
+    "keyEvents": ["Annual Production", "Street Drama"]
+  }
+]

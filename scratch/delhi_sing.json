@@ -1,0 +1,302 @@
+[
+  {
+    "id": "del-sing-001",
+    "name": "Musoc",
+    "organization": "Kirori Mal College",
+    "category": "Singing",
+    "description": "The Music Society of KMC, one of the most celebrated collegiate music groups in India, producing world-class musicians.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/musoc.kmc",
+      "website": "https://kmc.du.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "1960",
+    "keyEvents": ["Annual Production", "Inter-College Wins"]
+  },
+  {
+    "id": "del-sing-002",
+    "name": "Dhwani",
+    "organization": "LSR",
+    "category": "Singing",
+    "description": "The Indian Music Society of Lady Shri Ram College, focusing on classical, semi-classical, and light music.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/dhwani.lsr",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1970",
+    "keyEvents": ["Annual Classical Meet", "Tarang"]
+  },
+  {
+    "id": "del-sing-003",
+    "name": "Western Music Society LSR",
+    "organization": "LSR",
+    "category": "Singing",
+    "description": "LSR's Western Music Society, known for their vocal arrangements and a cappella performances.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/wms.lsr",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1985",
+    "keyEvents": ["A Cappella Battles", "Jazz Nights"]
+  },
+  {
+    "id": "del-sing-004",
+    "name": "Madhurima",
+    "organization": "DTU",
+    "category": "Singing",
+    "description": "The official music society of DTU, bringing together instrumentalists and vocalists across genres.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/madhurima.dtu",
+      "website": "https://madhurimadtu.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1990",
+    "keyEvents": ["Engifest Concerts", "Music Workshops"]
+  },
+  {
+    "id": "del-sing-005",
+    "name": "Alaap",
+    "organization": "Sri Venkateswara College",
+    "category": "Singing",
+    "description": "The Indian Music Society of SVC, specializing in Hindustani classical and folk music.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/alaap.svc",
+      "website": "https://svc.ac.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "1995",
+    "keyEvents": ["Nexus", "Classical Recitals"]
+  },
+  {
+    "id": "del-sing-006",
+    "name": "Crescendo",
+    "organization": "NSUT",
+    "category": "Singing",
+    "description": "The official music society of NSUT, fostering talent in vocals and instrumental music.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/crescendo_nsut",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "2005",
+    "keyEvents": ["Moksha Performances", "Jam Sessions"]
+  },
+  {
+    "id": "del-sing-007",
+    "name": "Swaranjali",
+    "organization": "Hansraj College",
+    "category": "Singing",
+    "description": "The Music Society of Hansraj College, promoting Indian and Western music through peer learning.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/swaranjali.hrc",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "1980",
+    "keyEvents": ["Annual Production", "Music Fests"]
+  },
+  {
+    "id": "del-sing-008",
+    "name": "Music Soc Stephens",
+    "organization": "St. Stephen's College",
+    "category": "Singing",
+    "description": "The music society of St. Stephen's, focusing on classical music and choral singing.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/musicsoc_stephens",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1920",
+    "keyEvents": ["Choral Evenings", "Music Salons"]
+  },
+  {
+    "id": "del-sing-009",
+    "name": "Geetanjali",
+    "organization": "Miranda House",
+    "category": "Singing",
+    "description": "The Indian Music Society of Miranda House, promoting cultural heritage through song.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/geetanjali.mh",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1990",
+    "keyEvents": ["Swar-Sangam", "Classical Meets"]
+  },
+  {
+    "id": "del-sing-010",
+    "name": "Orpheus",
+    "organization": "Miranda House",
+    "category": "Singing",
+    "description": "The Western Music Society of Miranda House, active in the DU a cappella circuit.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/orpheus.mh",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "1992",
+    "keyEvents": ["Vocal Showcases", "Inter-College Competitions"]
+  },
+  {
+    "id": "del-sing-011",
+    "name": "Catharsis",
+    "organization": "SRCC",
+    "category": "Singing",
+    "description": "The Western Music Society of SRCC, known for their powerful vocalists and band performances.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/catharsis.srcc",
+      "website": "https://srcc.edu"
+    },
+    "approxMemberCount": "35+",
+    "founded": "2005",
+    "keyEvents": ["Crossroads Band Slam", "Unplugged Sessions"]
+  },
+  {
+    "id": "del-sing-012",
+    "name": "Aarohan",
+    "organization": "SRCC",
+    "category": "Singing",
+    "description": "The Indian Music Society of SRCC, promoting classical and semi-classical music genres.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/aarohan.srcc",
+      "website": "https://srcc.edu"
+    },
+    "approxMemberCount": "30+",
+    "founded": "2008",
+    "keyEvents": ["Swar-Lahari", "Annual Concert"]
+  },
+  {
+    "id": "del-sing-013",
+    "name": "Music Club IITD",
+    "organization": "IIT Delhi",
+    "category": "Singing",
+    "description": "The central hub for all musicians at IIT Delhi, from classical vocalists to rock bands.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/musicclub.iitd",
+      "website": "https://brca.iitd.ac.in"
+    },
+    "approxMemberCount": "150+",
+    "founded": "1970",
+    "keyEvents": ["Rendezvous Music Events", "Jam Sessions"]
+  },
+  {
+    "id": "del-sing-014",
+    "name": "Dhwani Hindu",
+    "organization": "Hindu College",
+    "category": "Singing",
+    "description": "The prestigious music society of Hindu College, active in both Indian and Western circuits.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/dhwani.hindu",
+      "website": "https://hinducollege.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1980",
+    "keyEvents": ["Mecca Concerts", "Music Symposiums"]
+  },
+  {
+    "id": "del-sing-015",
+    "name": "Chorus",
+    "organization": "Ramjas College",
+    "category": "Singing",
+    "description": "The music society of Ramjas, known for their vocal harmony and diverse repertoire.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chorus.ramjas",
+      "website": "https://ramjas.du.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1992",
+    "keyEvents": ["Ramjas Music Fest", "Group Song Contests"]
+  },
+  {
+    "id": "del-sing-016",
+    "name": "Samranjani",
+    "organization": "Gargi College",
+    "category": "Singing",
+    "description": "The Indian Music Society of Gargi College, dedicated to Hindustani classical music.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/samranjani.gargi",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "1995",
+    "keyEvents": ["Reverie Showcases", "Swar-Utsav"]
+  },
+  {
+    "id": "del-sing-017",
+    "name": "Euphony",
+    "organization": "Gargi College",
+    "category": "Singing",
+    "description": "The Western Music Society of Gargi College, focusing on pop, rock, and jazz vocals.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/euphony.gargi",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "1998",
+    "keyEvents": ["A Cappella Nights", "Battle of Bands"]
+  },
+  {
+    "id": "del-sing-018",
+    "name": "Minstrel",
+    "organization": "Jesus & Mary College",
+    "category": "Singing",
+    "description": "The Western Music Society of JMC, known for their exceptional vocal arrangements.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/minstrel.jmc",
+      "website": "https://jmc.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1995",
+    "keyEvents": ["Montage Concerts", "Vocal Workshops"]
+  },
+  {
+    "id": "del-sing-019",
+    "name": "Rachna",
+    "organization": "ARSD College",
+    "category": "Singing",
+    "description": "The cultural music society of ARSD, promoting musical talent through inter-college fests.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/rachna.arsd",
+      "website": "https://arsdcollege.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2000",
+    "keyEvents": ["Annual Music Fest", "Jam Sessions"]
+  },
+  {
+    "id": "del-sing-020",
+    "name": "Saarang",
+    "organization": "Shivaji College",
+    "category": "Singing",
+    "description": "The Music Society of Shivaji College, creating a platform for aspiring singers and musicians.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/saarang.shivaji",
+      "website": "https://shivajicollege.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1998",
+    "keyEvents": ["Spectra Music Events", "Solo Singing Contests"]
+  }
+]

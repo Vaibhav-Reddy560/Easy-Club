@@ -22,16 +22,27 @@ interface SettingsViewProps {
 
 export default function SettingsView({ onBack }: SettingsViewProps) {
   const [aiModel, setAiModel] = useState("gemini-2.0-pro");
-  const [brandColor, setBrandColor] = useState("#FAA41A");
-  const [animations, setAnimations] = useState(true);
-  const [density, setDensity] = useState("stable");
+  const [geminiKey, setGeminiKey] = useState("");
+  const [openaiKey, setOpenaiKey] = useState("");
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      setGeminiKey(localStorage.getItem("custom_gemini_api_key") || "");
+      setOpenaiKey(localStorage.getItem("custom_openai_api_key") || "");
+    }
+  }, []);
+
   const handleSave = () => {
     setSaving(true);
-    // Simulate a secure protocol write
     setTimeout(() => {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("custom_gemini_api_key", geminiKey);
+        localStorage.setItem("custom_openai_api_key", openaiKey);
+        document.cookie = `custom_gemini_api_key=${geminiKey}; path=/; max-age=31536000`;
+        document.cookie = `custom_openai_api_key=${openaiKey}; path=/; max-age=31536000`;
+      }
       setSaving(false);
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
@@ -41,39 +52,21 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
   type SettingsOption = 
     | { type: "select" | "segments"; label: string; value: string; options: string[]; onChange: (v: string) => void }
     | { type: "toggle"; label: string; value: string | boolean; enabled: boolean; onChange: () => void }
-    | { type: "badge" | "text" | "color"; label: string; value: string | boolean; onChange?: (v: string) => void };
+    | { type: "badge" | "text" | "color"; label: string; value: string | boolean; onChange?: (v: string) => void }
+    | { type: "input"; label: string; value: string; placeholder?: string; isSecret?: boolean; onChange: (v: string) => void };
 
   const sections: { id: string; title: string; icon: React.ElementType; description: string; options: SettingsOption[] }[] = [
     {
       id: "ai",
       title: "AI Orchestration",
       icon: Cpu,
-      description: "Configure intelligence thresholds for generation tasks.",
+      description: "Configure intelligence thresholds and private credentials for generation tasks.",
       options: [
         { label: "Active Model", value: aiModel, type: "select", options: ["Gemini 2.0 Pro", "Gemini 1.5 Flash", "Gemini Ultra"], onChange: (v: string) => setAiModel(v.toLowerCase().replace(/ /g, '-')) },
+        { label: "Gemini API Key", value: geminiKey, type: "input", placeholder: "AIzaSy...", isSecret: true, onChange: setGeminiKey },
+        { label: "OpenAI API Key (Fallback)", value: openaiKey, type: "input", placeholder: "sk-proj-...", isSecret: true, onChange: setOpenaiKey },
         { label: "Creativity bias", value: "High", type: "badge" },
         { label: "Token Optimization", value: "Active", type: "toggle", enabled: true, onChange: () => {} }
-      ]
-    },
-    {
-      id: "brand",
-      title: "Brand Identity",
-      icon: Palette,
-      description: "Manage global design tokens and organization colors.",
-      options: [
-        { label: "Primary Accent", value: brandColor, type: "color", onChange: setBrandColor },
-        { label: "Logo Variant", value: "Airstream Gold", type: "text" },
-        { label: "Asset Resolution", value: "4K High-Res", type: "badge" }
-      ]
-    },
-    {
-      id: "interface",
-      title: "Interface Control",
-      icon: Eye,
-      description: "Customize the visual density and responsive behavior.",
-      options: [
-        { label: "UI Density", value: density, type: "segments", options: ["Compact", "Stable", "Relaxed"], onChange: (v: string) => setDensity(v.toLowerCase()) },
-        { label: "Dynamic Animations", value: animations, type: "toggle", enabled: animations, onChange: () => setAnimations(!animations) }
       ]
     }
   ];
@@ -118,11 +111,11 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
         </div>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {sections.map((section, idx) => (
+      <div className="grid grid-cols-1 gap-8">
+        {sections.map((section) => (
           <div 
             key={section.id} 
-            className={`bg-[#050505] border border-white/10 rounded-[2.5rem] p-8 overflow-hidden relative group shadow-xl ${idx === 0 ? 'md:col-span-2' : ''}`}
+            className="bg-[#050505] border border-white/10 rounded-[2.5rem] p-8 overflow-hidden relative group shadow-xl"
           >
             <div className="absolute top-0 right-0 w-64 h-64 bg-gold-500/5 blur-[100px] -mr-32 -mt-32 transition-opacity opacity-50 group-hover:opacity-100" />
             
@@ -137,11 +130,21 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
                 </div>
               </div>
 
-              <div className={`grid gap-4 ${idx === 0 ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1'}`}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {section.options.map((opt, i) => (
-                  <div key={i} className="bg-black/40 border border-white/5 rounded-2xl p-5 hover:border-white/10 transition-all">
+                  <div key={i} className={`bg-black/40 border border-white/5 rounded-2xl p-5 hover:border-white/10 transition-all ${opt.type === "input" ? "md:col-span-2" : ""}`}>
                     <p className="text-[9px] font-bold text-white uppercase tracking-widest mb-3">{opt.label}</p>
                     
+                    {opt.type === "input" && (
+                      <input
+                        type={opt.isSecret ? "password" : "text"}
+                        value={opt.value as string}
+                        placeholder={opt.placeholder}
+                        onChange={e => opt.onChange?.(e.target.value)}
+                        className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-gold-500 transition-colors font-mono"
+                      />
+                    )}
+
                     {opt.type === "select" && (
                       <div className="flex flex-wrap gap-2">
                          {opt.options?.map(o => (
@@ -205,11 +208,10 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
           </div>
         ))}
 
-        <div className="md:col-span-2 flex items-center justify-center gap-12 py-10 opacity-30 grayscale hover:grayscale-0 transition-all duration-700">
+        <div className="flex items-center justify-center gap-12 py-10 opacity-30 grayscale hover:grayscale-0 transition-all duration-700">
            <Zap className="w-8 h-8 text-gold-500" />
            <Sparkles className="w-8 h-8 text-blue-500" />
            <Cpu className="w-8 h-8 text-purple-500" />
-           <Palette className="w-8 h-8 text-green-500" />
         </div>
       </div>
     </motion.div>

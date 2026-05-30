@@ -81,7 +81,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="space-y-12"
+            className="space-y-6"
         >
             <header className="border-b border-white/5 pb-8">
                 <div className="flex justify-between items-end">
@@ -92,9 +92,9 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                         </h2>
                         <p className="text-zinc-100 text-[10px] mt-1 uppercase font-bold tracking-[0.2em]">Popular Event Blueprints in the Market</p>
                     </div>
-                    <div className="hidden md:flex items-center gap-2 text-[10px] font-bold uppercase tracking-tighter bg-gold-500/5 px-4 py-2 rounded-full border border-gold-500/10">
-                        <Sparkles className="w-3 h-3 text-gold-500 flex-shrink-0" /> 
-                        <span className="text-signature-gradient">Real-time Trend Extraction</span>
+                    <div className="hidden md:flex items-center gap-2 text-[11px] font-black uppercase tracking-widest bg-black px-5 py-2.5 rounded-full border border-white/10 shadow-lg">
+                        <Sparkles className="w-4 h-4 text-gold-500 flex-shrink-0 animate-pulse" /> 
+                        <span className="text-white">Real-Time Trend Extraction</span>
                     </div>
                 </div>
             </header>
@@ -164,7 +164,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                                     <div className="flex justify-between items-start">
                                         <div className="flex gap-2">
                                             {idea.tags.map(t => (
-                                                <span key={t} className="px-3 py-1 bg-black/40 border border-white/5 text-[8px] font-black uppercase tracking-tighter text-signature-gradient rounded-lg">
+                                                <span key={t} className="px-3 py-1 bg-black/40 border border-white/5 text-[9px] font-black uppercase tracking-widest text-signature-gradient rounded-lg">
                                                     {t}
                                                 </span>
                                             ))}
@@ -187,7 +187,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                                         </div>
                                         <div className="space-y-1 text-right">
                                             <p className="text-[8px] text-white font-black uppercase tracking-widest">Est. Reach</p>
-                                            <p className="text-xs font-bold text-white font-astronomus tracking-tighter" style={{ fontFamily: 'var(--font-astronomus), sans-serif !important' }}>{idea.reach}</p>
+                                            <p className="text-xs text-white font-destrubia tracking-tighter" style={{ fontFamily: 'var(--font-destrubia), sans-serif !important' }}>{idea.reach}</p>
                                         </div>
                                     </div>
 
@@ -200,7 +200,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                                             <div className="flex items-center gap-2 text-[9px] font-black text-signature-gradient uppercase tracking-widest">
                                                 <Target className="w-3 h-3" /> Market Reference
                                             </div>
-                                            <div className="p-4 bg-black/60 border border-white/15 rounded-2xl text-[11px] text-zinc-100 italic leading-relaxed">
+                                            <div className="p-4 bg-black/60 border border-white/15 rounded-2xl text-xs text-zinc-100 italic leading-relaxed">
                                                 &quot;{idea.references}&quot;
                                             </div>
                                         </div>
@@ -209,7 +209,7 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
                                             <div className="flex items-center gap-2 text-[9px] font-black text-blue-400 uppercase tracking-widest">
                                                 <Info className="w-3 h-3" /> Why It&apos;s Trending
                                             </div>
-                                            <p className="text-[11px] text-white font-bold leading-relaxed">
+                                            <p className="text-xs text-zinc-300 leading-relaxed tracking-wide">
                                                 {idea.whyTrending}
                                             </p>
                                         </div>

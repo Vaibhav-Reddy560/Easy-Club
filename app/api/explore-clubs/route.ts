@@ -1,87 +1,28 @@
 import { NextResponse } from "next/server";
-import {
-    searchSerper,
-    parseSerperResultsToClubs,
-    getCachedDiscovery,
-    setCachedDiscovery
-} from "@/lib/discovery";
+import { intelligentClubDiscovery } from "@/lib/discovery";
 import { validateRequest, ExploreClubsSchema } from "@/lib/validation";
-import { getEmbeddings } from "@/lib/huggingface";
-import { ScrapedClub } from "@/lib/types";
-
-function cosineSimilarity(vecA: number[], vecB: number[]): number {
-    let dotProduct = 0;
-    let normA = 0;
-    let normB = 0;
-    for (let i = 0; i < vecA.length; i++) {
-        dotProduct += vecA[i] * vecB[i];
-        normA += vecA[i] * vecA[i];
-        normB += vecB[i] * vecB[i];
-    }
-    return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
-}
-
-async function semanticRank(clubs: ScrapedClub[], query: string): Promise<ScrapedClub[]> {
-    if (!query || clubs.length === 0) return clubs;
-
-    try {
-        const queryEmbedding = await getEmbeddings(query);
-        if (!queryEmbedding) return clubs;
-
-        const ranked = await Promise.all(
-            clubs.map(async (club) => {
-                const text = `${club.name} ${club.description} ${club.college}`.toLowerCase();
-                const emb = await getEmbeddings(text);
-                if (!emb) return { club, score: 0 };
-                return { club, score: cosineSimilarity(queryEmbedding, emb) };
-            })
-        );
-
-        return ranked.sort((a, b) => b.score - a.score).map(r => r.club);
-    } catch (e) {
-        console.error("[Semantic Rank Error]", e);
-        return clubs;
-    }
-}
 
 export async function POST(req: Request) {
+    console.log("[ExploreClubs] API Route Hit (Local-First Architecture)");
     try {
         const { data: body, error: validationErr } = await validateRequest(req, ExploreClubsSchema);
-        if (validationErr) {
-            return NextResponse.json({ error: validationErr }, { status: 400 });
-        }
+        if (validationErr) return NextResponse.json({ error: validationErr }, { status: 400 });
+
         const { type, category, location } = body!;
-        const serperKey = process.env.SERPER_API_KEY;
 
-        if (!serperKey) throw new Error("SERPER_API_KEY is missing.");
+        // 100% local discovery — reads from compiled JSON database
+        const finalClubs = await intelligentClubDiscovery(category, type, location);
 
-        const cacheKey = `clubs_${category}_${type}_${location}`.toLowerCase().replace(/\s+/g, "_");
-        const cachedResults = await getCachedDiscovery<ScrapedClub[]>(cacheKey);
-        
-        let clubs: ScrapedClub[] = [];
-
-        if (cachedResults) {
-            clubs = cachedResults;
-        } else {
-            console.log(`[ExploreClubs v5] Fetching: ${type} @ ${location}`);
-            const query = `${type} club in ${location}`;
-            const results = await searchSerper(query, serperKey, 25);
-            if (results && results.length > 0) {
-                clubs = parseSerperResultsToClubs(results, location);
-                if (clubs.length > 0) await setCachedDiscovery(cacheKey, clubs);
-            }
+        if (!finalClubs || finalClubs.length === 0) {
+            console.warn("[Discovery] No clubs found in local database for this query.");
+            return NextResponse.json([]);
         }
 
-        // Apply Semantic Ranking
-        const searchQuery = `${type} ${category} ${location}`;
-        const rankedClubs = await semanticRank(clubs, searchQuery);
+        console.log(`[Discovery] Successfully returning ${finalClubs.length} local clubs.`);
+        return NextResponse.json(finalClubs);
 
-        return NextResponse.json(rankedClubs);
-
-    } catch (error: unknown) {
-        const err = error as { message?: string };
-        console.error("Explore Clubs API Error:", err);
-        return NextResponse.json({ error: err.message }, { status: 500 });
+    } catch (error: any) {
+        console.error("[ExploreClubs] Fatal Error:", error);
+        return NextResponse.json({ error: "Discovery failed." }, { status: 500 });
     }
 }
-

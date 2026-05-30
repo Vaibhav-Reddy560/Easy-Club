@@ -1,0 +1,302 @@
+[
+  {
+    "id": "del-art-001",
+    "name": "Fine Arts Society",
+    "organization": "St. Stephen's College",
+    "category": "Fine Arts",
+    "description": "The creative hub of St. Stephen's, promoting painting, sculpting, and diverse visual arts through exhibitions and workshops.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/fas_stephens",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1940",
+    "keyEvents": ["Annual Art Exhibition", "Painting Workshops"]
+  },
+  {
+    "id": "del-art-002",
+    "name": "Kalakriti",
+    "organization": "Hansraj College",
+    "category": "Fine Arts",
+    "description": "Hansraj's fine arts society, known for its stunning mural projects and creative workshops.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/kalakriti_hansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "1995",
+    "keyEvents": ["Annual Exhibition", "Wall Painting Events"]
+  },
+  {
+    "id": "del-art-003",
+    "name": "Hive",
+    "organization": "LSR",
+    "category": "Fine Arts",
+    "description": "LSR's creative beehive, celebrating artistic expression through digital and traditional media.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/hive.lsr",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "1990",
+    "keyEvents": ["Hive Art Week", "Tarang Exhibitions"]
+  },
+  {
+    "id": "del-art-004",
+    "name": "Hues",
+    "organization": "Gargi College",
+    "category": "Fine Arts",
+    "description": "Gargi's society for fine arts, exploring color and form through competitive and collaborative art.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/hues_gargi",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1998",
+    "keyEvents": ["Reverie Art Displays", "Sketching Workshops"]
+  },
+  {
+    "id": "del-art-005",
+    "name": "FAS SRCC",
+    "organization": "SRCC",
+    "category": "Fine Arts",
+    "description": "The Fine Arts Society of SRCC, bringing aesthetic balance to the life of commerce students.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/fas_srcc",
+      "website": "https://srcc.edu"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1998",
+    "keyEvents": ["Annual Exhibition", "Creative Workshops"]
+  },
+  {
+    "id": "del-art-006",
+    "name": "FAPS Fine Arts",
+    "organization": "Kirori Mal College",
+    "category": "Fine Arts",
+    "description": "The fine arts wing of FAPS KMC, focusing on traditional Indian art and contemporary visual forms.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/fapskmc",
+      "website": "https://fapskmc.com"
+    },
+    "approxMemberCount": "45+",
+    "founded": "1992",
+    "keyEvents": ["Annual Art Fest", "Calligraphy Workshops"]
+  },
+  {
+    "id": "del-art-007",
+    "name": "Fine Arts Club IITD",
+    "organization": "IIT Delhi",
+    "category": "Fine Arts",
+    "description": "The premier fine arts body at IIT Delhi, promoting digital painting and creative engineering arts.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/finearts_iitd",
+      "website": "https://brca.iitd.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1975",
+    "keyEvents": ["Rendezvous Art Exhibition", "Pencil Sketching Jams"]
+  },
+  {
+    "id": "del-art-008",
+    "name": "Fine Arts DTU",
+    "organization": "DTU",
+    "category": "Fine Arts",
+    "description": "DTU's creative outlet for visual artists, known for its large-scale murals and festive decorations.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/finearts_dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "120+",
+    "founded": "1990",
+    "keyEvents": ["Engifest Art Walls", "Sketching Contests"]
+  },
+  {
+    "id": "del-art-009",
+    "name": "Adva",
+    "organization": "Miranda House",
+    "category": "Fine Arts",
+    "description": "The fine arts society of Miranda House, fostering artistic leadership among women.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/adva_miranda",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "1995",
+    "keyEvents": ["Annual Exhibition", "Craft Workshops"]
+  },
+  {
+    "id": "del-art-010",
+    "name": "Fine Arts Venky",
+    "organization": "Sri Venkateswara College",
+    "category": "Fine Arts",
+    "description": "The fine arts association of Venky, promoting artistic talent and cultural visual heritage.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/finearts_venky",
+      "website": "https://svc.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "1998",
+    "keyEvents": ["Nexus Art Pavilion", "Portrait Sessions"]
+  },
+  {
+    "id": "del-art-011",
+    "name": "Ostraca",
+    "organization": "Hansraj College",
+    "category": "Creative Writing",
+    "description": "The creative writing society of Hansraj, providing a platform for poets and prose writers.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ostraca_hansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2010",
+    "keyEvents": ["Annual Anthology Launch", "Poetry Slams"]
+  },
+  {
+    "id": "del-art-012",
+    "name": "Wordcraft",
+    "organization": "Ramjas College",
+    "category": "Creative Writing",
+    "description": "Ramjas's hub for creative writing and literary discussion, hosting one of DU's top literary fests.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/wordcraft_ramjas",
+      "website": "https://wordcraftramjas.com"
+    },
+    "approxMemberCount": "45+",
+    "founded": "1995",
+    "keyEvents": ["Annual Literary Fest", "Writing Workshops"]
+  },
+  {
+    "id": "del-art-013",
+    "name": "Expressions",
+    "organization": "LSR",
+    "category": "Creative Writing",
+    "description": "The English creative writing society of LSR, celebrating literary expression and powerful narratives.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/expressions.lsr",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1985",
+    "keyEvents": ["Poetry Slams", "Journal Publication"]
+  },
+  {
+    "id": "del-art-014",
+    "name": "Quilluminati",
+    "organization": "Gargi College",
+    "category": "Creative Writing",
+    "description": "Gargi's creative writing society, fostering a secret (and not so secret) society of writers.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/quilluminati.gargi",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "2005",
+    "keyEvents": ["Writing Retreats", "Monthly Anthologies"]
+  },
+  {
+    "id": "del-art-015",
+    "name": "ELS SRCC",
+    "organization": "SRCC",
+    "category": "Creative Writing",
+    "description": "The English Literary Society of SRCC, promoting high-level literary analysis and creative prose.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/els_srcc",
+      "website": "https://srcc.edu"
+    },
+    "approxMemberCount": "45+",
+    "founded": "1990",
+    "keyEvents": ["Literature Weeks", "Writing Contests"]
+  },
+  {
+    "id": "del-art-016",
+    "name": "LitSoc IITD",
+    "organization": "IIT Delhi",
+    "category": "Creative Writing",
+    "description": "The Literary Society of IIT Delhi, fostering a culture of reading and creative writing in a tech-driven environment.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/litsoc_iitd",
+      "website": "https://brca.iitd.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1975",
+    "keyEvents": ["Rendezvous Lit Fest", "Creative Writing Jams"]
+  },
+  {
+    "id": "del-art-017",
+    "name": "LitSoc DTU",
+    "organization": "DTU",
+    "category": "Creative Writing",
+    "description": "The literary society of DTU, bringing a world of words to future engineers.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/litsoc_dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "1995",
+    "keyEvents": ["Engifest Lit Events", "Spoken Word Evenings"]
+  },
+  {
+    "id": "del-art-018",
+    "name": "LitSoc NSUT",
+    "organization": "NSUT",
+    "category": "Creative Writing",
+    "description": "NSUT's hub for creative writing, promoting poetry, prose, and literary criticism.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/litsoc_nsut",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "70+",
+    "founded": "2005",
+    "keyEvents": ["Innovision Lit Corner", "Writing Contests"]
+  },
+  {
+    "id": "del-art-019",
+    "name": "Ariel",
+    "organization": "Miranda House",
+    "category": "Creative Writing",
+    "description": "The English creative writing society of Miranda House, exploring feminist and contemporary literature.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ariel_miranda",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1998",
+    "keyEvents": ["Poetry Slams", "Literary Discussions"]
+  },
+  {
+    "id": "del-art-020",
+    "name": "Fine Arts NSUT",
+    "organization": "NSUT",
+    "category": "Fine Arts",
+    "description": "The fine arts society of NSUT, promoting digital and traditional arts among students.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/finearts_nsut",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "2008",
+    "keyEvents": ["Moksha Art Village", "Wall Painting"]
+  }
+]

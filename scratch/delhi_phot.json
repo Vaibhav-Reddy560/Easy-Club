@@ -1,0 +1,302 @@
+[
+  {
+    "id": "del-phot-001",
+    "name": "The Photographic Society",
+    "organization": "St. Stephen's College",
+    "category": "Photography/Film",
+    "description": "One of the oldest and most prestigious photography societies in India, focusing on the art of visual storytelling and film photography.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/photsoc.ssc",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1940",
+    "keyEvents": ["Annual Exhibition", "Photo Walks"]
+  },
+  {
+    "id": "del-phot-002",
+    "name": "Vivre",
+    "organization": "Hindu College",
+    "category": "Photography/Film",
+    "description": "The Film and Photography Society of Hindu College, capturing the essence of campus life and beyond.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/vivre.hindu",
+      "website": "https://hinducollege.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "1992",
+    "keyEvents": ["Annual Fest", "Film Screenings"]
+  },
+  {
+    "id": "del-phot-003",
+    "name": "Pixels",
+    "organization": "Hansraj College",
+    "category": "Photography/Film",
+    "description": "The official photography society of Hansraj College, known for its creative visual projects and workshops.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/pixels.hansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "1995",
+    "keyEvents": ["Pixels Annual Exhibition", "Photography Workshops"]
+  },
+  {
+    "id": "del-phot-004",
+    "name": "Snapit",
+    "organization": "Miranda House",
+    "category": "Photography/Film",
+    "description": "Miranda House's photography society, empowering women photographers through technical workshops and exhibitions.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/snapit.miranda",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1998",
+    "keyEvents": ["Annual Exhibition", "Photo Contests"]
+  },
+  {
+    "id": "del-phot-005",
+    "name": "Projekt",
+    "organization": "LSR",
+    "category": "Photography/Film",
+    "description": "The Film and Photography Society of LSR, focusing on cinematic art and digital photography.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/projektlsr",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "1990",
+    "keyEvents": ["Film Screenings", "Photography Weeks"]
+  },
+  {
+    "id": "del-phot-006",
+    "name": "Iris",
+    "organization": "Gargi College",
+    "category": "Photography/Film",
+    "description": "Gargi College's photography society, celebrating the beauty of perspectives through the lens.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/irisgargi",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1998",
+    "keyEvents": ["Reverie Exhibitions", "Photo Walks"]
+  },
+  {
+    "id": "del-phot-007",
+    "name": "Glass Eye",
+    "organization": "Gargi College",
+    "category": "Photography/Film",
+    "description": "The Film Society of Gargi College, focusing on world cinema and independent filmmaking.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/glasseye.gargi",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "2000",
+    "keyEvents": ["Film Festivals", "Screenwriting Workshops"]
+  },
+  {
+    "id": "del-phot-008",
+    "name": "Effulgence",
+    "organization": "Sri Venkateswara College",
+    "category": "Photography/Film",
+    "description": "The Film and Photography Society of SVC, known for their cinematic storytelling and documentary projects.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/effulgence_svc",
+      "website": "https://svc.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "1995",
+    "keyEvents": ["Nexus Film Screenings", "Photo Exhibitions"]
+  },
+  {
+    "id": "del-phot-009",
+    "name": "Click",
+    "organization": "SRCC",
+    "category": "Photography/Film",
+    "description": "SRCC's hub for photographers and filmmakers, providing a platform for visual creativity.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/clicksrcc",
+      "website": "https://clicksrcc.studio"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2005",
+    "keyEvents": ["Histrionica Photography", "Workshops"]
+  },
+  {
+    "id": "del-phot-010",
+    "name": "FAPS Photography",
+    "organization": "Kirori Mal College",
+    "category": "Photography/Film",
+    "description": "The Fine Arts and Photography Society of KMC, merging visual arts with photographic excellence.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/fapskmc",
+      "website": "https://fapskmc.com"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1992",
+    "keyEvents": ["Annual Exhibition", "Creative Workshops"]
+  },
+  {
+    "id": "del-phot-011",
+    "name": "Montage",
+    "organization": "Kirori Mal College",
+    "category": "Photography/Film",
+    "description": "The Film Society of KMC, dedicated to the appreciation and creation of meaningful cinema.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/montagekmc",
+      "website": "https://kmc.du.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1990",
+    "keyEvents": ["Annual Film Fest", "Cine Sessions"]
+  },
+  {
+    "id": "del-phot-012",
+    "name": "PFC IITD",
+    "organization": "IIT Delhi",
+    "category": "Photography/Film",
+    "description": "The Photography and Films Club of IIT Delhi, the premier technical hub for visual artists.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/pfc.iitd",
+      "website": "https://brca.iitd.ac.in"
+    },
+    "approxMemberCount": "120+",
+    "founded": "1975",
+    "keyEvents": ["Rendezvous Photography", "Short Film Contests"]
+  },
+  {
+    "id": "del-phot-013",
+    "name": "Parchhayi",
+    "organization": "DTU",
+    "category": "Photography/Film",
+    "description": "The official photography society of DTU, capturing the spirit of engineering through the lens.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/parchhayidtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "2005",
+    "keyEvents": ["Engifest Coverage", "Photo Exhibitions"]
+  },
+  {
+    "id": "del-phot-014",
+    "name": "Junoon",
+    "organization": "NSUT",
+    "category": "Photography/Film",
+    "description": "The photography and videography club of NSUT, providing professional-grade media coverage and creative projects.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/junoonnsut",
+      "website": "https://junoonnsut.com"
+    },
+    "approxMemberCount": "80+",
+    "founded": "2010",
+    "keyEvents": ["Innovision Coverage", "Film Making Workshops"]
+  },
+  {
+    "id": "del-phot-015",
+    "name": "Focus",
+    "organization": "Ramjas College",
+    "category": "Photography/Film",
+    "description": "The Film and Photography Society of Ramjas, known for their artistic and social documentary work.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/focus.ramjas",
+      "website": "https://ramjas.du.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1995",
+    "keyEvents": ["Annual Photo Exhibition", "Photo Walks"]
+  },
+  {
+    "id": "del-phot-016",
+    "name": "Chakshush",
+    "organization": "ARSD College",
+    "category": "Photography/Film",
+    "description": "The Photography Society of ARSD, capturing moments and narratives in and around Delhi.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/chakshush.arsd",
+      "website": "https://arsdcollege.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "2000",
+    "keyEvents": ["Photography Weeks", "Exhibitions"]
+  },
+  {
+    "id": "del-phot-017",
+    "name": "Shutterbugs",
+    "organization": "Shivaji College",
+    "category": "Photography/Film",
+    "description": "Shivaji College's hub for aspiring photographers, promoting diverse visual perspectives.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/shutterbugs.shivaji",
+      "website": "https://shivajicollege.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2005",
+    "keyEvents": ["Spectra Coverage", "Photo Contests"]
+  },
+  {
+    "id": "del-phot-018",
+    "name": "Vivid",
+    "organization": "DDU College",
+    "category": "Photography/Film",
+    "description": "The Film and Photography Society of DDU, exploring modern cinematic techniques and digital photography.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/vivid.ddu",
+      "website": "https://dducollegedu.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "2008",
+    "keyEvents": ["Annual Exhibition", "Workshops"]
+  },
+  {
+    "id": "del-phot-019",
+    "name": "Cine Club SSC",
+    "organization": "St. Stephen's College",
+    "category": "Photography/Film",
+    "description": "Focusing on the cinematic arts and fostering a culture of film appreciation and creation at St. Stephen's.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/cineclubssc",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "30+",
+    "founded": "1950",
+    "keyEvents": ["Film Screenings", "Cinematography Talks"]
+  },
+  {
+    "id": "del-phot-020",
+    "name": "Photography Soc JMI",
+    "organization": "Jamia Millia Islamia",
+    "category": "Photography/Film",
+    "description": "JMI's hub for visual storytelling, active in capturing social and cultural narratives.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/jmi_photography",
+      "website": "https://jmi.ac.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "1985",
+    "keyEvents": ["Annual Exhibition", "Street Photography Walks"]
+  }
+]

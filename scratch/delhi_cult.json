@@ -1,0 +1,302 @@
+[
+  {
+    "id": "del-dram-001",
+    "name": "The Players",
+    "organization": "Kirori Mal College",
+    "category": "Drama",
+    "description": "KMC's legendary dramatics society, one of the most prestigious in India, known for producing world-class theatre actors.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/theplayers.kmc",
+      "website": "https://kmc.du.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "1958",
+    "keyEvents": ["Annual Production", "Street Play Fest"]
+  },
+  {
+    "id": "del-dram-002",
+    "name": "Ibtida",
+    "organization": "Hindu College",
+    "category": "Drama",
+    "description": "The dramatics society of Hindu College, founded by Imtiaz Ali, known for its creative excellence and street plays.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ibtida.hindu",
+      "website": "https://hinducollege.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "1990",
+    "keyEvents": ["Annual Stage Production", "Medina Street Play"]
+  },
+  {
+    "id": "del-dram-003",
+    "name": "Shunya",
+    "organization": "Ramjas College",
+    "category": "Drama",
+    "description": "Ramjas's premier dramatics society, exploring experimental and socially relevant theatre.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/shunya.ramjas",
+      "website": "https://ramjas.du.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "1995",
+    "keyEvents": ["Annual Fest", "Street Play Tournaments"]
+  },
+  {
+    "id": "del-dram-004",
+    "name": "Anukriti",
+    "organization": "Miranda House",
+    "category": "Drama",
+    "description": "The Hindi dramatics society of Miranda House, fostering women's leadership in theatre.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/anukriti.miranda",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1990",
+    "keyEvents": ["Annual Stage Play", "Street Plays"]
+  },
+  {
+    "id": "del-dram-005",
+    "name": "Upstage",
+    "organization": "Gargi College",
+    "category": "Drama",
+    "description": "Gargi's dramatics society, active in the DU theatre circuit with impactful stage and street performances.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/upstage.gargi",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1995",
+    "keyEvents": ["Annual Production", "Street Play Comp"]
+  },
+  {
+    "id": "del-danc-006",
+    "name": "Sensation",
+    "organization": "Kirori Mal College",
+    "category": "Dance",
+    "description": "KMC's western dance society, known for high-octane choreography and national level wins.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/sensation_kmc",
+      "website": "https://kmc.du.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1998",
+    "keyEvents": ["Annual Dance Fest", "Group Dance Competitions"]
+  },
+  {
+    "id": "del-danc-007",
+    "name": "Nazakat",
+    "organization": "Gargi College",
+    "category": "Dance",
+    "description": "The Indian dance society of Gargi, specializing in folk and classical dance forms.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/nazakat_gargi",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "1995",
+    "keyEvents": ["Reverie Folk Dance", "Inter-College Meets"]
+  },
+  {
+    "id": "del-danc-008",
+    "name": "Mridang",
+    "organization": "Miranda House",
+    "category": "Dance",
+    "description": "Miranda House's Indian dance society, promoting classical and folk dance heritage.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/mridang_miranda",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "1990",
+    "keyEvents": ["Annual Performance", "Classical Dance Solo"]
+  },
+  {
+    "id": "del-danc-009",
+    "name": "Abhivyakti",
+    "organization": "Hansraj College",
+    "category": "Dance",
+    "description": "Hansraj's folk dance society, known for its energetic and culturally rich performances.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/abhivyakti.hansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1995",
+    "keyEvents": ["Folk Dance Comp", "Cultural Showcase"]
+  },
+  {
+    "id": "del-musi-010",
+    "name": "Musoc",
+    "organization": "Kirori Mal College",
+    "category": "Music",
+    "description": "The music society of KMC, a breeding ground for professional musicians in the DU circuit.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/musoc_kmc",
+      "website": "https://kmc.du.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "1960",
+    "keyEvents": ["Annual Concert", "Band Competitions"]
+  },
+  {
+    "id": "del-musi-011",
+    "name": "Geetanjali",
+    "organization": "Miranda House",
+    "category": "Music",
+    "description": "The Indian music society of Miranda House, focusing on Hindustani classical and semi-classical music.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/geetanjali_miranda",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "1985",
+    "keyEvents": ["Swarotsav", "Classical Solo Comp"]
+  },
+  {
+    "id": "del-musi-012",
+    "name": "Backbeat",
+    "organization": "Ramjas College",
+    "category": "Music",
+    "description": "The music society of Ramjas, known for its versatile musicians and rocking performances.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/backbeat_ramjas",
+      "website": "https://ramjas.du.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1995",
+    "keyEvents": ["Annual Music Fest", "Battle of Bands"]
+  },
+  {
+    "id": "del-musi-013",
+    "name": "Samranjini",
+    "organization": "Gargi College",
+    "category": "Music",
+    "description": "Gargi's Indian music society, known for its soulful melodies and choral arrangements.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/samranjini_gargi",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1995",
+    "keyEvents": ["Reverie Music", "Classical Choir"]
+  },
+  {
+    "id": "del-musi-014",
+    "name": "Swaranjali",
+    "organization": "Hansraj College",
+    "category": "Music",
+    "description": "The music society of Hansraj, promoting Indian and Western music talent.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/swaranjali_hansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "1995",
+    "keyEvents": ["Annual Music Meet", "Swar-Sandhya"]
+  },
+  {
+    "id": "del-musi-015",
+    "name": "Cadence",
+    "organization": "DTU",
+    "category": "Music",
+    "description": "The western music society of DTU, rocking the stage at major technical fests.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/cadence_dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2000",
+    "keyEvents": ["Engifest Concert", "Acoustic Nights"]
+  },
+  {
+    "id": "del-danc-016",
+    "name": "Mirage",
+    "organization": "NSUT",
+    "category": "Dance",
+    "description": "The western dance crew of NSUT, bringing urban and hip-hop culture to the campus.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/mirage_nsut",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2005",
+    "keyEvents": ["Moksha Dance Fest", "Choreography Show"]
+  },
+  {
+    "id": "del-cult-017",
+    "name": "SPIC MACAY IITD",
+    "organization": "IIT Delhi",
+    "category": "Cultural",
+    "description": "Promoting Indian classical music and culture among the youth at IIT Delhi.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/spicmacay_iitd",
+      "website": "https://brca.iitd.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1977",
+    "keyEvents": ["Classical Concerts", "Heritage Walks"]
+  },
+  {
+    "id": "del-dram-018",
+    "name": "Dramatics Society IITD",
+    "organization": "IIT Delhi",
+    "category": "Drama",
+    "description": "The official theatre body of IIT Delhi, known for high-quality productions and technical theatre skills.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/dramatics_iitd",
+      "website": "https://brca.iitd.ac.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "1970",
+    "keyEvents": ["Annual Production", "Rendezvous Drama"]
+  },
+  {
+    "id": "del-danc-019",
+    "name": "Dance Society IITD",
+    "organization": "IIT Delhi",
+    "category": "Dance",
+    "description": "Promoting western and classical dance talent at IIT Delhi.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/dance_iitd",
+      "website": "https://brca.iitd.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1975",
+    "keyEvents": ["Rendezvous Dance", "In-Sync Show"]
+  },
+  {
+    "id": "del-musi-020",
+    "name": "Music Society IITD",
+    "organization": "IIT Delhi",
+    "category": "Music",
+    "description": "The musical heart of IIT Delhi, fostering talent in classical, semi-classical, and rock music.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/music_iitd",
+      "website": "https://brca.iitd.ac.in"
+    },
+    "approxMemberCount": "120+",
+    "founded": "1975",
+    "keyEvents": ["Rendezvous Concert", "Acoustic Jams"]
+  }
+]

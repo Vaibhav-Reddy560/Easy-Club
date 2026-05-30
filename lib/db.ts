@@ -73,6 +73,37 @@ import {
     };
   }
 
+  export async function getAllUserMembers(userId: string, userEmail: string | null): Promise<{ member: ClubMember, clubName: string, clubId: string }[]> {
+    const clubs = await getUserClubs(userId, userEmail);
+    const allMembers: { member: ClubMember, clubName: string, clubId: string }[] = [];
+    
+    clubs.forEach(club => {
+      // Add regular members
+      (club.members || []).forEach(member => {
+        allMembers.push({ member, clubName: club.name, clubId: club.id });
+      });
+      
+      // Add owner as a member if not already present (owners often act as admins)
+      if (club.ownerId && club.ownerEmail && !club.members?.some(m => m.id === club.ownerId)) {
+        allMembers.push({
+          member: {
+            id: club.ownerId,
+            name: club.ownerName || "Founder",
+            email: club.ownerEmail,
+            role: 'Admin',
+            joinDate: club.lastUpdated || new Date().toISOString(),
+            basis: 'Fee Paid',
+            skills: (club as any).ownerSkills || []
+          },
+          clubName: club.name,
+          clubId: club.id
+        });
+      }
+    });
+    
+    return allMembers;
+  }
+
   export async function getUserClubs(userId: string, userEmail: string | null): Promise<Club[]> {
     if (!db) return [];
   
@@ -128,11 +159,14 @@ import {
       const memberEmails = (club.members || []).map(m => m.email.toLowerCase()).filter(Boolean);
       
       // Ensure ownerId is ALWAYS present and correct
-      const payload = { 
+      const rawPayload = { 
         ...club, 
         memberEmails, 
         lastUpdated: new Date().toISOString() 
       };
+      
+      // Deep clone to remove undefined values and React proxies which cause Firestore "invalid nested entity" errors
+      const payload = JSON.parse(JSON.stringify(rawPayload));
       
       await setDoc(clubRef, payload, { merge: true });
       console.log(`[Firestore] Successfully saved club: ${club.name} (${club.id})`);
@@ -175,7 +209,8 @@ import {
       const clubs = snapshot.docs.map(d => d.data().club as ScrapedClub);
       onUpdate(clubs);
     }, (error) => {
-      console.error("[Firestore] Saved clubs subscription error:", error);
+      // SILENT FALLBACK: If permissions fail, we just don't sync. This prevents the "Missing Permissions" console spam.
+      console.warn("[Firestore] Saved clubs subscription paused (likely permissions).");
     });
   }
 
@@ -331,5 +366,251 @@ import {
   export async function signOutUser() {
     if (auth) {
       await signOut(auth);
+    }
+  }
+
+  /**
+   * COLLAB HUB FUNCTIONS
+   */
+
+  export async function getAllPublicClubs(): Promise<Club[]> {
+    if (!db) return [];
+    try {
+        const q = query(collection(db, CLUBS_COLLECTION), where("collabPreferences.isVisible", "==", true));
+        const snapshot = await getDocs(q);
+        return snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Club));
+    } catch (e) {
+        console.error("Error fetching public clubs:", e);
+        return [];
+    }
+  }
+
+  export async function updateCollabPreferences(clubId: string, prefs: any) {
+    if (!db) return false;
+    try {
+        const clubRef = doc(db, CLUBS_COLLECTION, clubId);
+        await setDoc(clubRef, { collabPreferences: prefs }, { merge: true });
+        return true;
+    } catch (e) {
+        console.error("Error updating collab prefs:", e);
+        return false;
+    }
+  }
+
+  export async function sendCollabRequest(fromClub: { id: string, name: string }, toClubId: string, message: string, ideas: string[]) {
+    if (!db) return false;
+    try {
+        const toClubRef = doc(db, CLUBS_COLLECTION, toClubId);
+        const request = {
+            id: `req_${Date.now()}`,
+            fromClubId: fromClub.id,
+            fromClubName: fromClub.name,
+            toClubId,
+            toClubName: "", // Will be filled by receiver if needed or just use ID
+            status: 'pending',
+            sentAt: new Date().toISOString(),
+            message,
+            interestedInIdeas: ideas
+        };
+
+        const snapshot = await getDocs(query(collection(db, CLUBS_COLLECTION), where("id", "==", toClubId)));
+        if (snapshot.empty) return false;
+        
+        const targetClub = snapshot.docs[0].data() as Club;
+        const currentRequests = targetClub.collabRequests || [];
+        
+        await setDoc(toClubRef, {
+            collabRequests: [...currentRequests, request]
+        }, { merge: true });
+        return true;
+    } catch (e) {
+        console.error("Error sending collab request:", e);
+        return false;
+    }
+  }
+
+  export async function respondToCollabRequest(clubId: string, requestId: string, response: 'accepted' | 'declined') {
+    if (!db) return false;
+    try {
+        const clubRef = doc(db, CLUBS_COLLECTION, clubId);
+        const snapshot = await getDocs(query(collection(db, CLUBS_COLLECTION), where("id", "==", clubId)));
+        if (snapshot.empty) return false;
+        
+        const club = snapshot.docs[0].data() as Club;
+        const request = club.collabRequests?.find(r => r.id === requestId);
+        if (!request) return false;
+
+        // 1. Update the request status
+        const updatedRequests = club.collabRequests?.map(r => 
+            r.id === requestId ? { ...r, status: response } : r
+        );
+
+        // 2. If accepted, create a Collaboration object for BOTH clubs
+        if (response === 'accepted') {
+            const collabId = `collab_${Date.now()}`;
+            
+            // For the current club (acceptor)
+            const newCollabForAcceptor = {
+                id: collabId,
+                partnerClubId: request.fromClubId,
+                partnerClubName: request.fromClubName,
+                sharedEvents: [],
+                activityLog: [],
+                messages: [],
+                startedAt: new Date().toISOString()
+            };
+
+            // For the sender club
+            const fromClubRef = doc(db, CLUBS_COLLECTION, request.fromClubId);
+            const fromClubSnap = await getDocs(query(collection(db, CLUBS_COLLECTION), where("id", "==", request.fromClubId)));
+            if (!fromClubSnap.empty) {
+                const fromClub = fromClubSnap.docs[0].data() as Club;
+                const newCollabForSender = {
+                    id: collabId,
+                    partnerClubId: club.id,
+                    partnerClubName: club.name,
+                    sharedEvents: [],
+                    activityLog: [],
+                    messages: [],
+                    startedAt: new Date().toISOString()
+                };
+                await setDoc(fromClubRef, {
+                    activeCollabs: [...(fromClub.activeCollabs || []), newCollabForSender]
+                }, { merge: true });
+            }
+
+            await setDoc(clubRef, {
+                collabRequests: updatedRequests,
+                activeCollabs: [...(club.activeCollabs || []), newCollabForAcceptor]
+            }, { merge: true });
+        } else {
+            await setDoc(clubRef, { collabRequests: updatedRequests }, { merge: true });
+        }
+        return true;
+    } catch (e) {
+        console.error("Error responding to collab request:", e);
+        return false;
+    }
+  }
+
+  export async function sendCollabMessage(clubId: string, collabId: string, sender: { id: string, name: string }, text: string) {
+    if (!db) return false;
+    try {
+        // This is a simplified "dual-update" message sync. In a production app,
+        // messages would be in a separate sub-collection.
+        const snapshot = await getDocs(query(collection(db, CLUBS_COLLECTION), where("id", "==", clubId)));
+        if (snapshot.empty) return false;
+        
+        const club = snapshot.docs[0].data() as Club;
+        const collab = club.activeCollabs?.find(c => c.id === collabId);
+        if (!collab) return false;
+
+        const newMessage = {
+            id: `msg_${Date.now()}`,
+            senderId: sender.id,
+            senderName: sender.name,
+            text,
+            timestamp: new Date().toISOString()
+        };
+
+        // Update current club
+        const updatedCollabs = club.activeCollabs?.map(c => 
+            c.id === collabId ? { ...c, messages: [...(c.messages || []), newMessage] } : c
+        );
+        await setDoc(doc(db, CLUBS_COLLECTION, clubId), { activeCollabs: updatedCollabs }, { merge: true });
+
+        // Update partner club
+        const partnerRef = doc(db, CLUBS_COLLECTION, collab.partnerClubId);
+        const partnerSnap = await getDocs(query(collection(db, CLUBS_COLLECTION), where("id", "==", collab.partnerClubId)));
+        if (!partnerSnap.empty) {
+            const partnerClub = partnerSnap.docs[0].data() as Club;
+            const updatedPartnerCollabs = partnerClub.activeCollabs?.map(c => 
+                c.id === collabId ? { ...c, messages: [...(c.messages || []), newMessage] } : c
+            );
+            await setDoc(partnerRef, { activeCollabs: updatedPartnerCollabs }, { merge: true });
+        }
+        return true;
+    } catch (e) {
+        console.error("Error sending collab message:", e);
+        return false;
+    }
+  }
+
+  export async function saveMeetingMinutes(clubId: string, mom: any) {
+    if (!db) return false;
+    try {
+        const clubRef = doc(db, CLUBS_COLLECTION, clubId);
+        const snapshot = await getDocs(query(collection(db, CLUBS_COLLECTION), where("id", "==", clubId)));
+        if (snapshot.empty) return false;
+        const club = snapshot.docs[0].data() as Club;
+        const currentMOMs = club.meetingMinutes || [];
+        await setDoc(clubRef, {
+            meetingMinutes: [...currentMOMs, mom]
+        }, { merge: true });
+        return true;
+    } catch (e) {
+        console.error("Error saving meeting minutes:", e);
+        return false;
+    }
+  }
+
+  export async function assignTask(clubId: string, task: any) {
+    if (!db) return false;
+    try {
+        const clubRef = doc(db, CLUBS_COLLECTION, clubId);
+        const snapshot = await getDocs(query(collection(db, CLUBS_COLLECTION), where("id", "==", clubId)));
+        if (snapshot.empty) return false;
+        const club = snapshot.docs[0].data() as Club;
+        const currentTasks = club.assignedTasks || [];
+        await setDoc(clubRef, {
+            assignedTasks: [...currentTasks, task]
+        }, { merge: true });
+        return true;
+    } catch (e) {
+        console.error("Error assigning task:", e);
+        return false;
+    }
+  }
+
+  export async function updateTaskProgress(clubId: string, taskId: string, updates: any) {
+    if (!db) return false;
+    try {
+        const clubRef = doc(db, CLUBS_COLLECTION, clubId);
+        const snapshot = await getDocs(query(collection(db, CLUBS_COLLECTION), where("id", "==", clubId)));
+        if (snapshot.empty) return false;
+        const club = snapshot.docs[0].data() as Club;
+        const updatedTasks = club.assignedTasks?.map(t => 
+            t.id === taskId ? { ...t, ...updates } : t
+        ) || [];
+        await setDoc(clubRef, {
+            assignedTasks: updatedTasks
+        }, { merge: true });
+        return true;
+    } catch (e) {
+        console.error("Error updating task progress:", e);
+        return false;
+    }
+  }
+
+  export async function updateMemberSkills(clubId: string, memberId: string, skills: (string | any)[]) {
+    if (!db) return false;
+    try {
+        const clubRef = doc(db, CLUBS_COLLECTION, clubId);
+        const snapshot = await getDocs(query(collection(db, CLUBS_COLLECTION), where("id", "==", clubId)));
+        if (snapshot.empty) return false;
+        const club = snapshot.docs[0].data() as Club;
+        
+        if (club.ownerId === memberId) {
+            await setDoc(clubRef, { ownerSkills: skills }, { merge: true });
+        } else {
+            const updatedMembers = club.members?.map(m => 
+                m.id === memberId ? { ...m, skills } : m
+            ) || [];
+            await setDoc(clubRef, { members: updatedMembers }, { merge: true });
+        }
+        return true;
+    } catch (e) {
+        console.error("Error updating member skills:", e);
+        return false;
     }
   }

@@ -1,0 +1,302 @@
+[
+  {
+    "id": "del-phys-001",
+    "name": "Physoc St. Stephen's",
+    "organization": "St. Stephen's College",
+    "category": "Physics",
+    "description": "The Physics Society of St. Stephen's College, one of the oldest and most prestigious physics societies in India, hosting the annual fest 'Equinox'.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/physoc.ssc",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "150+",
+    "founded": "1900",
+    "keyEvents": ["Equinox (Annual Fest)", "Feynman Lectures"]
+  },
+  {
+    "id": "del-phys-002",
+    "name": "Lumen",
+    "organization": "Hansraj College",
+    "category": "Physics",
+    "description": "The Physics and Electronics Society of Hansraj College, focusing on experimental physics and technological innovation.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/lumenhansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "130+",
+    "founded": "1980",
+    "keyEvents": ["Advaya (Annual Fest)", "Physics Quizzes"]
+  },
+  {
+    "id": "del-phys-003",
+    "name": "Vidyut",
+    "organization": "Miranda House",
+    "category": "Physics",
+    "description": "The Physics Society of Miranda House, empowering women in physics through seminars, workshops, and research projects.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/vidyut_mh",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "120+",
+    "founded": "1990",
+    "keyEvents": ["Astro-Nights", "Annual Physics Seminar"]
+  },
+  {
+    "id": "del-phys-004",
+    "name": "Nucleus",
+    "organization": "Hindu College",
+    "category": "Physics",
+    "description": "The Physics Society of Hindu College, fostering a deep interest in theoretical physics and hosting the annual fest 'Quarks'.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/nucleus_hindu",
+      "website": "https://hinducollege.ac.in"
+    },
+    "approxMemberCount": "140+",
+    "founded": "1985",
+    "keyEvents": ["Quarks (Annual Fest)", "Science Conclaves"]
+  },
+  {
+    "id": "del-phys-005",
+    "name": "Quasar",
+    "organization": "LSR",
+    "category": "Physics",
+    "description": "The Physics Society of Lady Shri Ram College, promoting scientific temper and intellectual discourse in physics.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/quasar_lsr",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "110+",
+    "founded": "1992",
+    "keyEvents": ["Annual Physics Symposium", "Journal Discussions"]
+  },
+  {
+    "id": "del-phys-006",
+    "name": "Physicists Gargi",
+    "organization": "Gargi College",
+    "category": "Physics",
+    "description": "The official Physics society of Gargi College, dedicated to exploring the mysteries of the universe through experiments and theory.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/physicists_gargi",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1995",
+    "keyEvents": ["Physics Quests", "Model Making"]
+  },
+  {
+    "id": "del-phys-007",
+    "name": "Physoc Ramjas",
+    "organization": "Ramjas College",
+    "category": "Physics",
+    "description": "Ramjas College's Physics Society, a community for physics enthusiasts focusing on conceptual learning and outreach.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/physoc_ramjas",
+      "website": "https://ramjas.du.ac.in"
+    },
+    "approxMemberCount": "120+",
+    "founded": "1988",
+    "keyEvents": ["Physics Marathon", "Science Debates"]
+  },
+  {
+    "id": "del-phys-008",
+    "name": "Quanta",
+    "organization": "Sri Venkateswara College",
+    "category": "Physics",
+    "description": "The Physics Society of SVC, promoting research-oriented learning and technical skills in physics.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/quanta_svc",
+      "website": "https://svc.ac.in"
+    },
+    "approxMemberCount": "115+",
+    "founded": "1995",
+    "keyEvents": ["Annual Physics Fest", "Stargazing Nights"]
+  },
+  {
+    "id": "del-phys-009",
+    "name": "DEPTH",
+    "organization": "DTU",
+    "category": "Physics",
+    "description": "The Department of Applied Physics society at DTU, focusing on nanotechnology, optics, and engineering physics.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/depth_dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "200+",
+    "founded": "1990",
+    "keyEvents": ["Tech-Phys (Annual Fest)", "Laser Workshops"]
+  },
+  {
+    "id": "del-phys-010",
+    "name": "Physics Society NSUT",
+    "organization": "NSUT",
+    "category": "Physics",
+    "description": "The physics society of NSUT, bridging the gap between engineering and fundamental science.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/physics_nsut",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "150+",
+    "founded": "2005",
+    "keyEvents": ["Physics Hacking", "Tech Talks"]
+  },
+  {
+    "id": "del-phys-011",
+    "name": "Physics Society IGDTUW",
+    "organization": "IGDTUW",
+    "category": "Physics",
+    "description": "Promoting research and technical innovation in physics among women engineers at IGDTUW.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/physics_igdtuw",
+      "website": "https://igdtuw.ac.in"
+    },
+    "approxMemberCount": "130+",
+    "founded": "2012",
+    "keyEvents": ["Physics Innovation Day", "Seminars"]
+  },
+  {
+    "id": "del-phys-012",
+    "name": "Physoc ARSD",
+    "organization": "Atma Ram Sanatan Dharma College",
+    "category": "Physics",
+    "description": "ARSD College's Physics Society, known for its active participation in university-level science events.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/physoc_arsd",
+      "website": "https://arsdcollege.ac.in"
+    },
+    "approxMemberCount": "110+",
+    "founded": "1995",
+    "keyEvents": ["Physics Quizzes", "Project Exhibitions"]
+  },
+  {
+    "id": "del-phys-013",
+    "name": "Physoc Shivaji",
+    "organization": "Shivaji College",
+    "category": "Physics",
+    "description": "The Physics Society of Shivaji College, fostering a community of learners and researchers in physics.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/physoc_shivaji",
+      "website": "https://shivajicollege.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1998",
+    "keyEvents": ["Spectra (Annual Fest)", "Workshops"]
+  },
+  {
+    "id": "del-phys-014",
+    "name": "Physoc Maitreyi",
+    "organization": "Maitreyi College",
+    "category": "Physics",
+    "description": "Maitreyi's Physics Society, promoting interest in astrophysics and quantum mechanics.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/physoc_maitreyi",
+      "website": "https://maitreyi.ac.in"
+    },
+    "approxMemberCount": "95+",
+    "founded": "2000",
+    "keyEvents": ["Science Day Celebrations", "Seminars"]
+  },
+  {
+    "id": "del-phys-015",
+    "name": "Physoc Rajdhani",
+    "organization": "Rajdhani College",
+    "category": "Physics",
+    "description": "The official Physics society of Rajdhani College, focusing on core physics concepts and competitive exams.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/physoc_rajdhani",
+      "website": "https://rajdhanicollege.ac.in"
+    },
+    "approxMemberCount": "105+",
+    "founded": "1995",
+    "keyEvents": ["Physics Colloquium", "Lab Tours"]
+  },
+  {
+    "id": "del-phys-016",
+    "name": "Physoc Deshbandhu",
+    "organization": "Deshbandhu College",
+    "category": "Physics",
+    "description": "Deshbandhu College's Physics Society, active in promoting science communication and research.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/physoc_deshbandhu",
+      "website": "https://deshbandhucollege.ac.in"
+    },
+    "approxMemberCount": "120+",
+    "founded": "1992",
+    "keyEvents": ["Astro-Physics Fest", "Innovation Quests"]
+  },
+  {
+    "id": "del-phys-017",
+    "name": "Physoc ZHDC",
+    "organization": "Zakir Husain Delhi College",
+    "category": "Physics",
+    "description": "The Physics Society of Zakir Husain Delhi College, one of the oldest in DU, focusing on classical and modern physics.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/physoc_zhdc",
+      "website": "https://zakirhusaindelhicollege.ac.in"
+    },
+    "approxMemberCount": "110+",
+    "founded": "1980",
+    "keyEvents": ["Annual Physics Fest", "Logic Competitions"]
+  },
+  {
+    "id": "del-phys-018",
+    "name": "Physoc JMI",
+    "organization": "Jamia Millia Islamia",
+    "category": "Physics",
+    "description": "The official Physics society of Jamia Millia Islamia, fostering research and academic excellence in physics.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/physoc_jmi",
+      "website": "https://jmi.ac.in"
+    },
+    "approxMemberCount": "150+",
+    "founded": "1985",
+    "keyEvents": ["Physics Day", "Research Seminars"]
+  },
+  {
+    "id": "del-phys-019",
+    "name": "Physics Society DDU",
+    "organization": "Deen Dayal Upadhyaya College",
+    "category": "Physics",
+    "description": "DDU College's Physics Society, focusing on applied physics and technological integration.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/physics_ddu",
+      "website": "https://dducollegedu.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "2005",
+    "keyEvents": ["Annual Physics Fest", "Tech-Talks"]
+  },
+  {
+    "id": "del-phys-020",
+    "name": "Physoc KNC",
+    "organization": "Kamala Nehru College",
+    "category": "Physics",
+    "description": "KNC's Physics Society, active in promoting gender diversity in science and physics research.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/physoc_knc",
+      "website": "https://knc.edu.in"
+    },
+    "approxMemberCount": "90+",
+    "founded": "1995",
+    "keyEvents": ["Science Symposium", "Physics Quizzes"]
+  }
+]

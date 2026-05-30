@@ -1,0 +1,148 @@
+[
+  {
+    "id": "mum-001",
+    "name": "Social Service League (SSL)",
+    "organization": "St. Xavier's College, Mumbai",
+    "category": "Social Service",
+    "description": "One of Mumbai's oldest student-run social service organizations, focusing on blood drives, rural camps, and educational outreach.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://xaviers.edu/ssl",
+      "instagram": "https://instagram.com/ssl_xaviers"
+    },
+    "approxMemberCount": "300+",
+    "founded": "1951",
+    "keyEvents": ["Project Care", "Rural Work Camp"]
+  },
+  {
+    "id": "mum-002",
+    "name": "Indian Music Group (IMG)",
+    "organization": "St. Xavier's College, Mumbai",
+    "category": "Music",
+    "description": "A premier student body dedicated to promoting Indian Classical Music through concerts and its annual fest, Janfest.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://indianmusicgroup.org",
+      "instagram": "https://instagram.com/img_xaviers"
+    },
+    "approxMemberCount": "150+",
+    "founded": "1973",
+    "keyEvents": ["Janfest", "Virasaat"]
+  },
+  {
+    "id": "mum-003",
+    "name": "WnCC (Web and Coding Club)",
+    "organization": "IIT Bombay",
+    "category": "Coding",
+    "description": "The hub for software development, open source, and competitive programming at IIT Bombay.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://wncc-iitb.org",
+      "instagram": "https://instagram.com/wncc.iitb"
+    },
+    "approxMemberCount": "500+",
+    "founded": "2010",
+    "keyEvents": ["IITB Hackathon", "Code-in-Quarantine"]
+  },
+  {
+    "id": "mum-004",
+    "name": "IIT Bombay Racing",
+    "organization": "IIT Bombay",
+    "category": "Racing",
+    "description": "India's premier Formula Student team, designing and building electric race cars for international competitions.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iitbracing.org",
+      "instagram": "https://instagram.com/iitbombayracing"
+    },
+    "approxMemberCount": "80+",
+    "founded": "2007",
+    "keyEvents": ["Formula Student UK", "Formula Bharat"]
+  },
+  {
+    "id": "mum-005",
+    "name": "Fourth Wall (Dramatics)",
+    "organization": "IIT Bombay",
+    "category": "Theatre/Acting",
+    "description": "The dramatics club of IIT Bombay, known for high-quality stage plays, street plays, and mono-acts.",
+    "location": "Mumbai",
+    "links": {
+      "instagram": "https://instagram.com/fourthwall.iitb"
+    },
+    "approxMemberCount": "120+",
+    "founded": "1990",
+    "keyEvents": ["Main Stage", "Street Play"]
+  },
+  {
+    "id": "mum-006",
+    "name": "InSync (Dance Club)",
+    "organization": "IIT Bombay",
+    "category": "Dance",
+    "description": "The official dance club of IIT Bombay, covering diverse styles from Hip-Hop to Contemporary.",
+    "location": "Mumbai",
+    "links": {
+      "instagram": "https://instagram.com/insync.iitb"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1995",
+    "keyEvents": ["Insync Show", "Dance Extravaganza"]
+  },
+  {
+    "id": "mum-007",
+    "name": "Team Shunya",
+    "organization": "IIT Bombay",
+    "category": "Sustainability",
+    "description": "A student team dedicated to building sustainable, net-zero-energy houses for global competitions.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://teamshunya.in",
+      "instagram": "https://instagram.com/teamshunya"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2012",
+    "keyEvents": ["Solar Decathlon", "Green Build"]
+  },
+  {
+    "id": "mum-008",
+    "name": "ERC (Electronics and Robotics Club)",
+    "organization": "IIT Bombay",
+    "category": "Robotics",
+    "description": "Fostering interest in electronics, robotics, and hardware among students through projects and workshops.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://erc-iitb.org",
+      "instagram": "https://instagram.com/erc.iitb"
+    },
+    "approxMemberCount": "200+",
+    "founded": "2005",
+    "keyEvents": ["XLR8", "Robocon"]
+  },
+  {
+    "id": "mum-009",
+    "name": "Montage",
+    "organization": "ASMSOC, NMIMS",
+    "category": "Cultural",
+    "description": "The apex cultural club of Anil Surendra Modi School of Commerce, managing all major events and sub-committees.",
+    "location": "Mumbai",
+    "links": {
+      "instagram": "https://instagram.com/montagenmims"
+    },
+    "approxMemberCount": "250+",
+    "founded": "2007",
+    "keyEvents": ["Vaayu", "Cultural Nights"]
+  },
+  {
+    "id": "mum-010",
+    "name": "The Debating Society",
+    "organization": "NMIMS Mumbai",
+    "category": "Debating",
+    "description": "The debating hub of NMIMS, participating in parliamentary debates and MUNs across India.",
+    "location": "Mumbai",
+    "links": {
+      "instagram": "https://instagram.com/debsocnmims"
+    },
+    "approxMemberCount": "120+",
+    "founded": "2010",
+    "keyEvents": ["NMIMS PD", "MUN"]
+  }
+]

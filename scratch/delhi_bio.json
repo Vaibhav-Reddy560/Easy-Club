@@ -1,0 +1,302 @@
+[
+  {
+    "id": "del-bio-001",
+    "name": "iGEM IIT Delhi",
+    "organization": "IIT Delhi",
+    "category": "Bio",
+    "description": "The premier student-led synthetic biology and genetic engineering club at IIT Delhi, representing the institute at the international iGEM competition.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/igem_iitdelhi",
+      "website": "https://igem.org/Team:IIT_Delhi"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2014",
+    "keyEvents": ["Synthetic Biology Workshops", "iGEM Competition Presentation"]
+  },
+  {
+    "id": "del-bio-002",
+    "name": "BETA (The Biotech Society)",
+    "organization": "IIT Delhi",
+    "category": "Bio",
+    "description": "The official departmental society of Biotechnology at IIT Delhi, focusing on research, industry-academia interaction, and skill development.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/beta_iitd",
+      "website": "https://iitd.ac.in"
+    },
+    "approxMemberCount": "150+",
+    "founded": "2010",
+    "keyEvents": ["Biotech Conclave", "Technical Sessions"]
+  },
+  {
+    "id": "del-bio-003",
+    "name": "BioSoc DTU",
+    "organization": "DTU",
+    "category": "Bio",
+    "description": "The official biotechnological society of DTU, dedicated to fostering innovation and research in biological sciences and engineering.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/biosoc_dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "200+",
+    "founded": "1990",
+    "keyEvents": ["Bio-Summit", "Genome Editing Workshops"]
+  },
+  {
+    "id": "del-bio-004",
+    "name": "Synapse",
+    "organization": "Miranda House",
+    "category": "Bio",
+    "description": "The Biological Sciences Society of Miranda House, known for its vibrant academic and research-oriented activities in Life Sciences.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/synapse_mh",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "120+",
+    "founded": "1995",
+    "keyEvents": ["Impulse (Annual Fest)", "Bio-Research Seminars"]
+  },
+  {
+    "id": "del-bio-005",
+    "name": "Botanique",
+    "organization": "Hansraj College",
+    "category": "Bio",
+    "description": "The Botanical Society of Hansraj College, promoting the study of plant sciences and environmental conservation.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/botanique_hrc",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1980",
+    "keyEvents": ["Flora (Annual Fest)", "Nature Walks"]
+  },
+  {
+    "id": "del-bio-006",
+    "name": "Transposon",
+    "organization": "Hansraj College",
+    "category": "Bio",
+    "description": "The Life Sciences Society of Hansraj College, focusing on interdisciplinary research and modern biological advancements.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/transposon.hrc",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "110+",
+    "founded": "1992",
+    "keyEvents": ["Life Science Conclave", "Scientific Writing Workshops"]
+  },
+  {
+    "id": "del-bio-007",
+    "name": "Srijan",
+    "organization": "Hindu College",
+    "category": "Bio",
+    "description": "The Biotechnology Society of Hindu College, fostering a culture of scientific inquiry and technological application in biology.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/srijan.hindu",
+      "website": "https://hinducollege.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "2000",
+    "keyEvents": ["Srijan Summit", "Biotech Workshops"]
+  },
+  {
+    "id": "del-bio-008",
+    "name": "Zoological Society",
+    "organization": "Hindu College",
+    "category": "Bio",
+    "description": "A prestigious society for Zoology enthusiasts at Hindu College, organizing seminars and wildlife outreach programs.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/zoology_hindu",
+      "website": "https://hinducollege.ac.in"
+    },
+    "approxMemberCount": "90+",
+    "founded": "1985",
+    "keyEvents": ["Fauna Fest", "WildLife Photography Contests"]
+  },
+  {
+    "id": "del-bio-009",
+    "name": "Biotech Society NSUT",
+    "organization": "NSUT",
+    "category": "Bio",
+    "description": "The official biotechnology society of Netaji Subhas University of Technology, focusing on bio-engineering and automation.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/biotech.nsut",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "150+",
+    "founded": "2005",
+    "keyEvents": ["Bio-Hackathon", "Industrial Visits"]
+  },
+  {
+    "id": "del-bio-010",
+    "name": "Biosoc IGDTUW",
+    "organization": "IGDTUW",
+    "category": "Bio",
+    "description": "A society dedicated to biotechnology at Indira Gandhi Delhi Technical University for Women, empowering women in bio-research.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/biotech.igdtuw",
+      "website": "https://igdtuw.ac.in"
+    },
+    "approxMemberCount": "130+",
+    "founded": "2012",
+    "keyEvents": ["Bio-Innovate", "Mentorship Sessions"]
+  },
+  {
+    "id": "del-bio-011",
+    "name": "Evolvere",
+    "organization": "Sri Venkateswara College",
+    "category": "Bio",
+    "description": "The Biotechnology Society of Sri Venkateswara College, known for its academic rigor and annual bio-fests.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/evolvere_svc",
+      "website": "https://svc.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1998",
+    "keyEvents": ["Annual Bio-Conclave", "Poster Presentations"]
+  },
+  {
+    "id": "del-bio-012",
+    "name": "Adhibhuta",
+    "organization": "Sri Venkateswara College",
+    "category": "Bio",
+    "description": "The Zoology Society of Sri Venkateswara College, focusing on animal sciences and conservation research.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/adhibhuta_svc",
+      "website": "https://svc.ac.in"
+    },
+    "approxMemberCount": "90+",
+    "founded": "1995",
+    "keyEvents": ["Zoology Workshops", "Field Trips"]
+  },
+  {
+    "id": "del-bio-013",
+    "name": "Phytomics",
+    "organization": "Bhaskaracharya College",
+    "category": "Bio",
+    "description": "The Botanical Society of Bhaskaracharya College of Applied Sciences, specializing in plant biology and research.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/phytomics.bcas",
+      "website": "https://bcas.du.ac.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "2000",
+    "keyEvents": ["Bio-Graphics", "Plantation Drives"]
+  },
+  {
+    "id": "del-bio-014",
+    "name": "Zoological Society DBC",
+    "organization": "Deshbandhu College",
+    "category": "Bio",
+    "description": "Deshbandhu College's society for Zoology, hosting the famous annual festival CHIMAERA.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/zoologicalsociety.dbc",
+      "website": "https://deshbandhucollege.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1990",
+    "keyEvents": ["CHIMAERA", "Expert Lectures"]
+  },
+  {
+    "id": "del-bio-015",
+    "name": "Botanical Society DBC",
+    "organization": "Deshbandhu College",
+    "category": "Bio",
+    "description": "The Botanical Society of Deshbandhu College, focusing on horticulture and botanical research.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/botanicalsociety.dbc",
+      "website": "https://deshbandhucollege.ac.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "1992",
+    "keyEvents": ["Petals (Annual Magazine)", "Botany Quizzes"]
+  },
+  {
+    "id": "del-bio-016",
+    "name": "Biotech ANDC",
+    "organization": "Acharya Narendra Dev College",
+    "category": "Bio",
+    "description": "The Biotechnology society of ANDC, active in research publications and science outreach.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/biotech.andc",
+      "website": "https://andcollege.du.ac.in"
+    },
+    "approxMemberCount": "120+",
+    "founded": "1995",
+    "keyEvents": ["Research Conclave", "Innovation Summits"]
+  },
+  {
+    "id": "del-bio-017",
+    "name": "Life Sciences Maitreyi",
+    "organization": "Maitreyi College",
+    "category": "Bio",
+    "description": "Departmental society for Life Sciences at Maitreyi College, fostering research in modern biology.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/lifesciences.maitreyi",
+      "website": "https://maitreyi.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1998",
+    "keyEvents": ["Bio-Confluence", "Lab Workshops"]
+  },
+  {
+    "id": "del-bio-018",
+    "name": "Koshika",
+    "organization": "Daulat Ram College",
+    "category": "Bio",
+    "description": "The Zoology society of Daulat Ram College, dedicated to the study of cellular biology and animal life.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/koshika.drc",
+      "website": "https://dr.du.ac.in"
+    },
+    "approxMemberCount": "110+",
+    "founded": "1990",
+    "keyEvents": ["Koshika Fest", "Seminars"]
+  },
+  {
+    "id": "del-bio-019",
+    "name": "Vasundhara",
+    "organization": "Daulat Ram College",
+    "category": "Bio",
+    "description": "The Botanical Society of Daulat Ram College, focusing on ecology and plant physiology.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/vasundhara.drc",
+      "website": "https://dr.du.ac.in"
+    },
+    "approxMemberCount": "90+",
+    "founded": "1992",
+    "keyEvents": ["Eco-Week", "Plantation Drives"]
+  },
+  {
+    "id": "del-bio-020",
+    "name": "Nargis",
+    "organization": "Zakir Husain Delhi College",
+    "category": "Bio",
+    "description": "The prestigious Botanical Society of Zakir Husain Delhi College, active in research and botanical tours.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/nargis.zhdc",
+      "website": "https://zakirhusaindelhicollege.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1980",
+    "keyEvents": ["Botanical Exhibitions", "Science Quizzes"]
+  }
+]

@@ -8,6 +8,7 @@ import PremiumLoader from "@/components/ui/PremiumLoader";
 
 interface IdeationBrainstormProps {
     clubs: Club[];
+    selectedClubId: string;
     onAdopt?: (title: string, config: { subType: string, tags: string, description?: string }) => void;
 }
 
@@ -83,8 +84,7 @@ const ChatInput = React.memo(({ onSend, disabled }: { onSend: (val: string) => v
 ChatInput.displayName = "ChatInput";
 
 
-export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstormProps) {
-    const [selectedClubId, setSelectedClubId] = useState<string>(clubs[0]?.id || "");
+export default function IdeationBrainstorm({ clubs, selectedClubId, onAdopt }: IdeationBrainstormProps) {
     const [selectedCategory, setSelectedCategory] = useState<string>(CLUB_TYPES[0]);
     
     const [started, setStarted] = useState(false);
@@ -226,21 +226,7 @@ export default function IdeationBrainstorm({ clubs, onAdopt }: IdeationBrainstor
 
                     <div className="space-y-6 text-left">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-100 ml-2">Target Club</label>
-                                <select 
-                                    value={selectedClubId} 
-                                    onChange={(e) => setSelectedClubId(e.target.value)}
-                                    className="w-full p-4 bg-black/40 border border-white/15 rounded-2xl text-white text-sm focus:outline-none focus:border-gold-500/50 appearance-none backdrop-blur-md cursor-pointer hover:border-white/20 transition-all"
-                                >
-                                    {clubs.map(c => (
-                                        <option key={c.id} value={c.id}>{c.name}</option>
-                                    ))}
-                                    {clubs.length === 0 && <option value="">No Clubs Found</option>}
-                                </select>
-                            </div>
-
-                            <div className="space-y-2">
+                            <div className="space-y-2 lg:col-span-2">
                                 <label className="text-[10px] font-black uppercase tracking-widest text-zinc-100 ml-2">Primary Field</label>
                                 <select 
                                     value={selectedCategory} 

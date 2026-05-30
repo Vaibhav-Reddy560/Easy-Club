@@ -1,0 +1,302 @@
+[
+  {
+    "id": "del-come-001",
+    "name": "Humour Society SRCC",
+    "organization": "SRCC",
+    "category": "Comedy",
+    "description": "SRCC's dedicated society for stand-up comedy, improv, and digital sketches. Known for hosting some of the best open mics in DU.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/srcc_humoursociety",
+      "website": "https://srcc.edu"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2015",
+    "keyEvents": ["Annual Open Mic", "Humour Night"]
+  },
+  {
+    "id": "del-come-002",
+    "name": "The Comedy Society IITD",
+    "organization": "IIT Delhi",
+    "category": "Comedy",
+    "description": "Bringing the best of stand-up and improv to the engineering community at IIT Delhi.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/comedy.iitd",
+      "website": "https://brca.iitd.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "2016",
+    "keyEvents": ["Rendezvous Comedy Night", "Weekly Open Mics"]
+  },
+  {
+    "id": "del-come-003",
+    "name": "The Jesters",
+    "organization": "Hansraj College",
+    "category": "Comedy",
+    "description": "Hansraj's premier comedy and performance society, specializing in satire and situational comedy.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/thejesters_hansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "2017",
+    "keyEvents": ["Annual Comedy Show", "Standup Battles"]
+  },
+  {
+    "id": "del-come-004",
+    "name": "Laughter Club LSR",
+    "organization": "LSR",
+    "category": "Comedy",
+    "description": "LSR's hub for comedy and wit, promoting female voices in the stand-up and improv circuit.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/laughterclub.lsr",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "2018",
+    "keyEvents": ["Laughter Riot", "Improv Workshops"]
+  },
+  {
+    "id": "del-come-005",
+    "name": "DTU Improv",
+    "organization": "DTU",
+    "category": "Comedy",
+    "description": "The improvisation and stand-up wing of DTU, known for its quick wit and high-energy performances.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/dtu_improv",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "2017",
+    "keyEvents": ["Engifest Comedy Stage", "Improv Nights"]
+  },
+  {
+    "id": "del-come-006",
+    "name": "NSUT Comedy",
+    "organization": "NSUT",
+    "category": "Comedy",
+    "description": "Promoting the art of comedy and performance at NSUT through regular meetups and shows.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/nsut_comedy",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2018",
+    "keyEvents": ["Moksha Comedy Stage", "Open Mics"]
+  },
+  {
+    "id": "del-come-007",
+    "name": "Humor Society Hindu",
+    "organization": "Hindu College",
+    "category": "Comedy",
+    "description": "Hindu College's platform for budding comedians and satirists.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/humorsociety.hindu",
+      "website": "https://hinducollege.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "2016",
+    "keyEvents": ["Annual Open Mic", "Roast Sessions"]
+  },
+  {
+    "id": "del-come-008",
+    "name": "Standup Miranda House",
+    "organization": "Miranda House",
+    "category": "Comedy",
+    "description": "The stand-up and sketch comedy group of Miranda House, empowering student voices through humor.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/standup.mirandahouse",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "2017",
+    "keyEvents": ["Annual Comedy Show", "Writing Workshops"]
+  },
+  {
+    "id": "del-come-009",
+    "name": "KMC Comedy",
+    "organization": "Kirori Mal College",
+    "category": "Comedy",
+    "description": "Promoting stand-up and performance comedy at Kirori Mal College.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/kmc_comedy",
+      "website": "https://kmc.du.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "2018",
+    "keyEvents": ["Annual Open Mic", "Improv Jams"]
+  },
+  {
+    "id": "del-come-010",
+    "name": "Ramjas Humour",
+    "organization": "Ramjas College",
+    "category": "Comedy",
+    "description": "The society for humour and comedy at Ramjas, fostering creative expression through satire.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ramjas_humour",
+      "website": "https://ramjas.du.ac.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "2018",
+    "keyEvents": ["Comedy Night", "Standup Competition"]
+  },
+  {
+    "id": "del-lite-011",
+    "name": "ELS St. Stephen's",
+    "organization": "St. Stephen's College",
+    "category": "Literary",
+    "description": "The English Literary Society of St. Stephen's, one of the oldest literary bodies in the country.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/els_stephens",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "50+",
+    "founded": "1910",
+    "keyEvents": ["Literary Fest", "Poetry Readings"]
+  },
+  {
+    "id": "del-lite-012",
+    "name": "ELS Hindu",
+    "organization": "Hindu College",
+    "category": "Literary",
+    "description": "The English Literary Society of Hindu College, fostering a deep love for literature and critical analysis.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/els_hindu",
+      "website": "https://hinducollege.ac.in"
+    },
+    "approxMemberCount": "55+",
+    "founded": "1920",
+    "keyEvents": ["Annual Lit Fest", "Author Talks"]
+  },
+  {
+    "id": "del-lite-013",
+    "name": "ELS Hansraj",
+    "organization": "Hansraj College",
+    "category": "Literary",
+    "description": "Hansraj's English Literary Society, active in conducting academic seminars and literary events.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/els_hansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "1950",
+    "keyEvents": ["Literary Fest", "Book Launches"]
+  },
+  {
+    "id": "del-lite-014",
+    "name": "ELS Miranda House",
+    "organization": "Miranda House",
+    "category": "Literary",
+    "description": "The English Literary Society of Miranda House, exploring diverse voices in literature.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/els_miranda",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "1948",
+    "keyEvents": ["Annual Symposium", "Writing Contests"]
+  },
+  {
+    "id": "del-lite-015",
+    "name": "ELS LSR",
+    "organization": "LSR",
+    "category": "Literary",
+    "description": "The English Literary Society of Lady Shri Ram College, a hub for literary discourse and academic excellence.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/els.lsr",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "1956",
+    "keyEvents": ["Literary Festival", "Paper Presentations"]
+  },
+  {
+    "id": "del-lite-016",
+    "name": "ELS SRCC",
+    "organization": "SRCC",
+    "category": "Literary",
+    "description": "The English Literary Society of SRCC, blending commerce with the world of letters.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/els_srcc",
+      "website": "https://srcc.edu"
+    },
+    "approxMemberCount": "50+",
+    "founded": "1930",
+    "keyEvents": ["Zephyr Lit Fest", "Book Reviews"]
+  },
+  {
+    "id": "del-lite-017",
+    "name": "LitSoc IIT Delhi",
+    "organization": "IIT Delhi",
+    "category": "Literary",
+    "description": "The official literary society of IIT Delhi, known for its creative and critical activities.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/litsoc_iitd",
+      "website": "https://brca.iitd.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1975",
+    "keyEvents": ["Literary Night", "Writing Workshops"]
+  },
+  {
+    "id": "del-lite-018",
+    "name": "LitSoc DTU",
+    "organization": "DTU",
+    "category": "Literary",
+    "description": "Promoting literary culture and public speaking among the engineering students of DTU.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/litsoc_dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "1995",
+    "keyEvents": ["Lit Events", "Poetry Jams"]
+  },
+  {
+    "id": "del-lite-019",
+    "name": "LitSoc NSUT",
+    "organization": "NSUT",
+    "category": "Literary",
+    "description": "The literary hub of NSUT, fostering creativity and critical thinking.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/litsoc_nsut",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "70+",
+    "founded": "2005",
+    "keyEvents": ["Annual Lit Fest", "Creative Writing"]
+  },
+  {
+    "id": "del-lite-020",
+    "name": "Wordcraft Literary",
+    "organization": "Ramjas College",
+    "category": "Literary",
+    "description": "The literary society of Ramjas, known for its deep engagement with contemporary texts.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/wordcraft_ramjas",
+      "website": "https://wordcraftramjas.com"
+    },
+    "approxMemberCount": "45+",
+    "founded": "1995",
+    "keyEvents": ["Wordcraft Fest", "Literary Meets"]
+  }
+]

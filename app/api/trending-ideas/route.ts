@@ -53,7 +53,7 @@ export async function POST(req: Request) {
             1. NO COMMON NAMES: Do NOT use common suffixes or prefixes like "Arena", "League", "Innovation Day", "Workshop", "Express", "Expo", "Summit", or "Pulse" for every item. Every name must be completely distinct in structure.
             2. UNIQUE METADATA: Every single blueprint must have a COMPLETELY UNIQUE "references" and "whyTrending" field. Do not repeat justifications across items.
             3. REAL & SPECIFIC REFERENCES: References should cite specific successful events at real universities (e.g., "Inspired by IIT Bombay's Techfest 2023") or industry milestones.
-            4. PUNCHY TITLES: Use creative, industry-aligned titles (e.g., "The Binary Breakdown", "Formula-G Campus Challenge", "Vocal-Edge Solo Sessions").
+            4. PUNCHY TITLES: Use creative, industry-aligned titles. CRITICAL RULE: Titles MUST be extremely concise, strictly a MAXIMUM of 4 words (ideally 2-3 words).
 
             EACH BLUEPRINT FORMAT:
             {

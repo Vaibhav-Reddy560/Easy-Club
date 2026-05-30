@@ -82,17 +82,7 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                             <div className="w-12 h-12 bg-gold-500/10 rounded-2xl flex items-center justify-center border border-gold-500/20 shadow-[0_0_25px_rgba(245,158,11,0.08)]">
                                 <Users className="w-6 h-6 text-gold-500" />
                             </div>
-                            <h1 
-                                className="text-3xl font-black uppercase tracking-[-0.02em] font-astronomus whitespace-nowrap"
-                                style={{
-                                    background: 'linear-gradient(180deg, #FF8800 0%, #FF9D00 18%, #FFB405 36%, #FFBF44 49%, #F99A00 63%, #AE7102 100%)',
-                                    WebkitBackgroundClip: 'text',
-                                    WebkitTextFillColor: 'transparent',
-                                    backgroundClip: 'text',
-                                    color: 'transparent',
-                                    display: 'inline-block'
-                                }}
-                            >
+                            <h1 className="text-3xl uppercase tracking-[-0.02em] font-astronomus whitespace-nowrap text-signature-gradient">
                                 Suggested Experts
                             </h1>
                         </div>
@@ -106,7 +96,7 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                                         value={domain}
                                         onChange={(e) => setDomain(e.target.value)}
                                         placeholder="Domain"
-                                        className="w-full pl-11 pr-5 py-3.5 bg-black/40 border border-white/20 rounded-2xl text-xs font-bold text-white placeholder:text-white/60 focus:border-gold-500/50 outline-none transition-all"
+                                        className="w-full h-12 pl-11 pr-5 bg-black/40 border border-white/20 rounded-2xl text-xs font-bold text-white placeholder:text-white/60 focus:border-gold-500/50 outline-none transition-all"
                                     />
                                 </div>
                                 <div className="relative group w-full sm:w-40">
@@ -116,14 +106,14 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                                         value={location}
                                         onChange={(e) => setLocation(e.target.value)}
                                         placeholder="Loc"
-                                        className="w-full pl-11 pr-5 py-3.5 bg-black/40 border border-white/20 rounded-2xl text-xs font-bold text-white placeholder:text-white/60 focus:border-gold-500/50 outline-none transition-all"
+                                        className="w-full h-12 pl-11 pr-5 bg-black/40 border border-white/20 rounded-2xl text-xs font-bold text-white placeholder:text-white/60 focus:border-gold-500/50 outline-none transition-all"
                                     />
                                 </div>
                             </div>
                             <button
                                 onClick={handleSearch}
                                 disabled={loading}
-                                className="w-full sm:w-auto px-10 py-4 bg-gold-500 hover:bg-gold-400 disabled:bg-zinc-800 text-black font-black uppercase tracking-[0.2em] text-[10px] rounded-2xl transition-all shadow-xl shadow-gold-500/10 flex items-center justify-center gap-3 active:scale-95"
+                                className="w-full sm:w-auto h-12 px-10 bg-gold-500 hover:bg-gold-400 disabled:bg-zinc-800 text-black font-black uppercase tracking-[0.2em] text-[10px] rounded-2xl transition-all shadow-xl shadow-gold-500/10 flex items-center justify-center gap-3 active:scale-95"
                             >
                                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
                                 Find People

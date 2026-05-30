@@ -1,0 +1,302 @@
+[
+  {
+    "id": "del-soci-001",
+    "name": "Social Service League",
+    "organization": "St. Stephen's College",
+    "category": "Social Service",
+    "description": "The oldest and largest society of St. Stephen's College, dedicated to grassroots social service and community development.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ssl_stephens",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "200+",
+    "founded": "1912",
+    "keyEvents": ["Blood Donation Camp", "Evening Classes for Staff Children"]
+  },
+  {
+    "id": "del-soci-002",
+    "name": "Enactus Hansraj",
+    "organization": "Hansraj College",
+    "category": "Social Service",
+    "description": "A student-led community of Hansraj focusing on social entrepreneurship to create a sustainable impact.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/enactushansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "2010",
+    "keyEvents": ["Project Mithaas", "Project Vriddhi"]
+  },
+  {
+    "id": "del-soci-003",
+    "name": "Enactus SRCC",
+    "organization": "SRCC",
+    "category": "Social Service",
+    "description": "One of the most successful Enactus chapters globally, focusing on large-scale social business models.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/enactus.srcc",
+      "website": "https://srcc.edu"
+    },
+    "approxMemberCount": "100+",
+    "founded": "2007",
+    "keyEvents": ["Project Asbah", "Project Virasat"]
+  },
+  {
+    "id": "del-soci-004",
+    "name": "NSS IITD",
+    "organization": "IIT Delhi",
+    "category": "Social Service",
+    "description": "The National Service Scheme unit of IIT Delhi, working on education, health, and environment projects.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/nss.iitd",
+      "website": "https://nss.iitd.ac.in"
+    },
+    "approxMemberCount": "500+",
+    "founded": "1969",
+    "keyEvents": ["Aarohan", "Kaizen Fest"]
+  },
+  {
+    "id": "del-soci-005",
+    "name": "NSS NSUT",
+    "organization": "NSUT",
+    "category": "Social Service",
+    "description": "The NSS cell at NSUT, facilitating blood donation drives and literacy programs.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/nss_nsut",
+      "website": "https://nss-nsut.vercel.app"
+    },
+    "approxMemberCount": "300+",
+    "founded": "1985",
+    "keyEvents": ["Blood Donation Camps", "Cleanliness Drives"]
+  },
+  {
+    "id": "del-soci-006",
+    "name": "Enactus Hindu",
+    "organization": "Hindu College",
+    "category": "Social Service",
+    "description": "Hindu College's social entrepreneurship wing, dedicated to empowering marginalized communities.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/enactus.hindu",
+      "website": "https://hinducollege.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "2012",
+    "keyEvents": ["Social Impact Projects", "Annual Meet"]
+  },
+  {
+    "id": "del-soci-007",
+    "name": "Rotaract Hansraj",
+    "organization": "Hansraj College",
+    "category": "Social Service",
+    "description": "The Rotaract Club of Hansraj College, part of the international Rotary network focusing on community service.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/rotaracthansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "120+",
+    "founded": "1990",
+    "keyEvents": ["Polio Awareness", "Educational Drives"]
+  },
+  {
+    "id": "del-soci-008",
+    "name": "AIESEC Delhi University",
+    "organization": "University-Wide",
+    "category": "Social Service",
+    "description": "The largest student-run organization providing global social impact internships and leadership experiences.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/aiesecindelhiuniversity",
+      "website": "https://aiesec.in"
+    },
+    "approxMemberCount": "400+",
+    "founded": "1981",
+    "keyEvents": ["Global Volunteer Program", "Youth Speak Forum"]
+  },
+  {
+    "id": "del-soci-009",
+    "name": "Enactus Miranda House",
+    "organization": "Miranda House",
+    "category": "Social Service",
+    "description": "Empowering women through social entrepreneurship and sustainable business initiatives.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/enactus_miranda",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "70+",
+    "founded": "2011",
+    "keyEvents": ["Project Dhara", "Project Ikshana"]
+  },
+  {
+    "id": "del-soci-010",
+    "name": "Enactus LSR",
+    "organization": "LSR",
+    "category": "Social Service",
+    "description": "LSR's social entrepreneurship hub, known for high-impact projects and community engagement.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/enactuslsr",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "2012",
+    "keyEvents": ["Project Utthaan", "Social B-Plan Competitions"]
+  },
+  {
+    "id": "del-soci-011",
+    "name": "CDF Miranda",
+    "organization": "Miranda House",
+    "category": "Social Service",
+    "description": "Connecting Dreams Foundation at Miranda House, focusing on digital literacy and empowerment projects.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/cdf_miranda",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2015",
+    "keyEvents": ["Project Dream Library", "Digital Literacy Camps"]
+  },
+  {
+    "id": "del-soci-012",
+    "name": "Rotaract SRCC",
+    "organization": "SRCC",
+    "category": "Social Service",
+    "description": "SRCC's Rotaract wing, executing diverse social welfare activities across Delhi.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/rotaract.srcc",
+      "website": "https://srcc.edu"
+    },
+    "approxMemberCount": "150+",
+    "founded": "1995",
+    "keyEvents": ["Annual Blood Donation Drive", "Project Muskaan"]
+  },
+  {
+    "id": "del-soci-013",
+    "name": "NSS SRCC",
+    "organization": "SRCC",
+    "category": "Social Service",
+    "description": "The National Service Scheme unit of SRCC, known for its extensive social outreach and literacy programs.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/nss_srcc",
+      "website": "https://nsssrcc.org"
+    },
+    "approxMemberCount": "200+",
+    "founded": "1969",
+    "keyEvents": ["Blood Donation Camp", "Cleanliness Drive"]
+  },
+  {
+    "id": "del-soci-014",
+    "name": "Enactus IITD",
+    "organization": "IIT Delhi",
+    "category": "Social Service",
+    "description": "IIT Delhi's chapter of Enactus, leveraging technology for social good and entrepreneurship.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/enactus.iitd",
+      "website": "https://iitd.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "2013",
+    "keyEvents": ["Project Nirmalya", "Project Titli"]
+  },
+  {
+    "id": "del-soci-015",
+    "name": "NSS DTU",
+    "organization": "DTU",
+    "category": "Social Service",
+    "description": "The NSS unit of DTU, focusing on rural development and primary education support.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/nss_dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "400+",
+    "founded": "1970",
+    "keyEvents": ["Shramdaan", "Rural Immersion Camps"]
+  },
+  {
+    "id": "del-soci-016",
+    "name": "Enactus DTU",
+    "organization": "DTU",
+    "category": "Social Service",
+    "description": "The Enactus team at DTU, merging technical innovation with social entrepreneurship.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/enactus_dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "2014",
+    "keyEvents": ["Project Srijan", "Project Shuddhi"]
+  },
+  {
+    "id": "del-soci-017",
+    "name": "Rotaract Hindu",
+    "organization": "Hindu College",
+    "category": "Social Service",
+    "description": "The Rotaract Club of Hindu College, focusing on youth leadership and community service.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/rotaract.hindu",
+      "website": "https://hinducollege.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1992",
+    "keyEvents": ["Blood Donation Camps", "Project Udaan"]
+  },
+  {
+    "id": "del-soci-018",
+    "name": "NSS LSR",
+    "organization": "LSR",
+    "category": "Social Service",
+    "description": "The NSS unit of LSR, active in women's empowerment and literacy projects.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/nss_lsr",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "250+",
+    "founded": "1969",
+    "keyEvents": ["Literacy Classes", "Environmental Awareness"]
+  },
+  {
+    "id": "del-soci-019",
+    "name": "CDF Hansraj",
+    "organization": "Hansraj College",
+    "category": "Social Service",
+    "description": "Connecting Dreams Foundation Hansraj, working towards achieving sustainable development goals.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/cdf_hansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "2016",
+    "keyEvents": ["Project Dream Schools", "Skill Development Workshops"]
+  },
+  {
+    "id": "del-soci-020",
+    "name": "Enactus KMC",
+    "organization": "Kirori Mal College",
+    "category": "Social Service",
+    "description": "KMC's social entrepreneurship society, focusing on innovative solutions for community challenges.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/enactus.kmc",
+      "website": "https://kmc.du.ac.in"
+    },
+    "approxMemberCount": "70+",
+    "founded": "2012",
+    "keyEvents": ["Project Syahi", "Project Umang"]
+  }
+]

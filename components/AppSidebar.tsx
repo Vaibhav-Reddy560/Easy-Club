@@ -1,23 +1,24 @@
 "use client";
 
 import React from "react";
-import { Globe, Trophy, Folder, ChartBar, Banknote, Users, Shield, Zap } from "lucide-react";
+import { Globe, Folder, ChartBar, Banknote, Users, Shield, Zap, Handshake, BrainCircuit } from "lucide-react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { MemberRole } from "@/lib/types";
 import { useRef } from "react";
 
-export type NavSection = 'explore-clubs' | 'explore-events' | 'my-clubs' | 'my-team' | 'membership' | 'ideation' | 'social-tracker' | 'sponsorship';
+
+export type NavSection = 'explore-clubs' | 'explore-events' | 'collab-hub' | 'my-clubs' | 'my-team' | 'membership' | 'ideation' | 'social-tracker' | 'sponsorship';
 
 interface AppSidebarProps {
     activeSection: NavSection;
-    onSectionChange: (section: NavSection) => void;
+    onSectionChange: (section: NavSection, isGlobal?: boolean) => void;
     userRole?: MemberRole;
 }
 
 interface SidebarItemProps {
     section: any;
     isActive: boolean;
-    onSectionChange: (id: NavSection) => void;
+    onSectionChange: (id: NavSection, isGlobal?: boolean) => void;
     mouseY: any;
 }
 
@@ -36,7 +37,7 @@ function SidebarItem({ section, isActive, onSectionChange, mouseY }: SidebarItem
         <motion.button
             ref={ref}
             style={{ scale: scaleSync }}
-            onClick={() => onSectionChange(section.id)}
+            onClick={() => onSectionChange(section.id, section.isGlobal)}
             className={`w-full flex flex-row flex-nowrap items-center gap-4 px-4 py-2.5 rounded-2xl transition-all duration-300 group relative ${isActive
                 ? 'bg-[#0f0f0f] border border-gold-500/50'
                 : 'bg-[#050505] text-white hover:bg-[#0f0f0f] border border-white/15'
@@ -63,13 +64,13 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
             items: [
                 { id: 'my-team' as NavSection, label: 'My Team', icon: Shield },
                 { id: 'my-clubs' as NavSection, label: 'My Clubs', icon: Folder },
+                { id: 'collab-hub' as NavSection, label: 'Collab Hub', icon: Handshake },
             ]
         },
         {
             title: "Explore",
             items: [
                 { id: 'explore-clubs' as NavSection, label: 'Explore Clubs', icon: Globe },
-                { id: 'explore-events' as NavSection, label: 'Explore Events', icon: Trophy },
                 { id: 'ideation' as NavSection, label: 'Event Ideation', icon: Zap },
             ]
         },
@@ -89,7 +90,7 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
         <aside 
             onMouseMove={(e) => mouseY.set(e.clientY)}
             onMouseLeave={() => mouseY.set(Infinity)}
-            className="hidden md:flex w-80 flex-col pt-8 pl-8 pr-8 border-r border-white/15 bg-black/35 sticky top-20 h-full min-h-[calc(100vh-5rem)] overflow-y-auto overflow-x-hidden pb-8 custom-scrollbar"
+            className="hidden md:flex w-[340px] shrink-0 flex-col pt-8 pl-6 md:pl-10 md:pr-10 pr-6 border-r border-white/15 bg-black/35 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto overflow-x-hidden pb-8 custom-scrollbar"
         >
             <div className="space-y-8">
                 {groupedSections.map((group) => {
@@ -118,6 +119,7 @@ export default function AppSidebar({ activeSection, onSectionChange, userRole = 
                     );
                 })}
             </div>
+
         </aside>
     );
 }

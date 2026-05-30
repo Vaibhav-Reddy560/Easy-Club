@@ -23,6 +23,7 @@ export interface EventConfig {
     description?: string;
     date?: string;
     time?: string;
+    endTime?: string;
     venue?: string;
     city?: string;
     regLink?: string;
@@ -39,6 +40,7 @@ export interface EventConfig {
     brochureLink?: string;
     feeClub?: string;
     feeNonClub?: string;
+    prizePool?: string;
     isLaunched?: boolean;
     status?: EventStatus;
     postponedTo?: string;
@@ -46,7 +48,9 @@ export interface EventConfig {
     report?: EventReport;
     workspaceData?: {
         content?: { long: string, short: string };
-        design?: unknown;
+        letters?: Record<string, string>;
+        sheet?: any[];
+        design?: Record<string, any>;
         social?: unknown;
         outreach?: string;
     };
@@ -57,18 +61,55 @@ export interface ClubEvent {
     id: string;
     name: string;
     config: EventConfig;
+    attendees?: {
+        email: string;
+        markedAt: string;
+        source: 'QR' | 'Manual';
+    }[];
 }
 
 export type SponsorStage = 'Prospecting' | 'Contacted' | 'Negotiating' | 'Closed';
+export type SponsorTier = 'Title' | 'Platinum' | 'Gold' | 'Silver' | 'In-Kind' | 'Custom';
+
+export interface SponsorDeliverable {
+    id: string;
+    text: string;
+    completed: boolean;
+}
 
 export interface Sponsor {
     id: string;
     company: string;
     category: string;
+    tier?: SponsorTier;
     value: number; // in INR
+    amountPaid?: number; // in INR
     stage: SponsorStage;
     addedAt: string;
     notes?: string;
+    pocName?: string;
+    pocEmail?: string;
+    pocPhone?: string;
+    deliverables?: SponsorDeliverable[];
+    eventId?: string;
+}
+
+export interface JCApplication {
+    id: string;
+    memberId: string;
+    memberName: string;
+    memberEmail: string;
+    skills: string;
+    experience: string;
+    reason: string;
+    ideas: string;
+    appliedAt: string;
+    votes: string[]; // List of SC member IDs who voted
+}
+
+export interface JCSelectionConfig {
+    maxJC: number;
+    isRecruitmentOpen: boolean;
 }
 
 export type MemberRole = 'Admin' | 'Senior Core' | 'Junior Core' | 'General Member';
@@ -92,6 +133,13 @@ export interface ActivityLogEvent {
     details?: string;
 }
 
+export type SkillLevel = 'Beginner' | 'Proficient' | 'Expert';
+
+export interface Skill {
+    name: string;
+    level: SkillLevel;
+}
+
 export interface ClubMember {
     id: string;
     name: string;
@@ -101,6 +149,7 @@ export interface ClubMember {
     joinDate: string;
     basis: RecruitmentBasis;
     testDetails?: string;
+    skills?: (string | Skill)[]; // Support both legacy string array and new Skill object array
 }
 
 export interface Question {
@@ -127,6 +176,8 @@ export interface TestAttempt {
 export interface MembershipConfig {
     mode: 'fee-based' | 'test-based';
     feeAmount?: number;
+    razorpayKeyId?: string;
+    razorpayKeySecret?: string;
     testDetails?: {
         questions: Question[];
         passPercentage: number;
@@ -134,12 +185,88 @@ export interface MembershipConfig {
     };
 }
 
+export interface Message {
+    id: string;
+    senderId: string;
+    senderName: string;
+    text: string;
+    timestamp: string;
+}
+
+export type CollabRequestStatus = 'pending' | 'accepted' | 'declined';
+
+export interface CollabRequest {
+    id: string;
+    fromClubId: string;
+    fromClubName: string;
+    toClubId: string;
+    toClubName: string;
+    status: CollabRequestStatus;
+    sentAt: string;
+    message?: string;
+    interestedInIdeas?: string[];
+}
+
+export interface Collaboration {
+    id: string;
+    partnerClubId: string;
+    partnerClubName: string;
+    sharedEvents: string[]; // event IDs
+    activityLog: ActivityLogEvent[];
+    messages: Message[];
+    startedAt: string;
+}
+
+export interface CollabPreferences {
+    isVisible: boolean;
+    categories: string[];
+    interestedIdeas: string[];
+}
+
+export interface MeetingMinutes {
+    id: string;
+    date: string;
+    startTime: string;
+    endTime: string;
+    attendees: string[]; // Member IDs
+    eventId: string;
+    keyTopics: string;
+    progressNotes: string;
+    rating: number; // 1-5
+    createdBy: string; // Member Name
+    createdById: string;
+    createdAt: string;
+}
+
+export interface AssignedTask {
+    id: string;
+    title: string;
+    description: string;
+    assigneeId: string; // JC ID
+    assigneeName: string;
+    assignerId: string; // SC ID
+    assignerName: string;
+    eventId: string;
+    domain: 'Design' | 'Content' | 'Social' | 'Management';
+    deadline: string;
+    status: 'Assigned' | 'In Progress' | 'Review Required' | 'Completed';
+    progressValue: number; // 0-100
+    externalLink?: string; // Google Docs, Figma etc.
+    scFeedback?: string;
+    createdAt: string;
+}
+
 export interface Club {
     id: string;
     ownerId?: string;
     ownerName?: string;
     ownerEmail?: string;
+    founderId?: string;
+    founderName?: string;
+    founderEmail?: string;
     name: string;
+    description?: string;
+    lastUpdated?: string;
     events: ClubEvent[];
     members?: ClubMember[];
     membershipConfig?: MembershipConfig;
@@ -153,6 +280,14 @@ export interface Club {
             platformName: string;
         };
     };
+    collabPreferences?: CollabPreferences;
+    collabRequests?: CollabRequest[];
+    activeCollabs?: Collaboration[];
+    meetingMinutes?: MeetingMinutes[]; // Added
+    assignedTasks?: AssignedTask[]; // Added
+    jcApplications?: JCApplication[]; // Added
+    jcSelectionConfig?: JCSelectionConfig; // Added
+    ayrshareApiKey?: string;
 }
 
 export interface UserMetadata {

@@ -125,7 +125,7 @@ function JoinContent() {
                                 </div>
                             </div>
 
-                            <h1 className="text-3xl font-astronomus text-white uppercase tracking-tighter mb-3">You're Invited!</h1>
+                            <h1 className="text-3xl font-destrubia text-white uppercase tracking-tighter mb-3">You're Invited!</h1>
                             <p className="text-zinc-400 text-sm mb-8 leading-relaxed">
                                 You have been invited to join the core team of <span className="text-gold-500 font-bold">{clubName || "a club"}</span>.
                             </p>

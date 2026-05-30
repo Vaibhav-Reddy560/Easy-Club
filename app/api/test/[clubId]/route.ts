@@ -16,7 +16,18 @@ export async function GET(request: Request, { params }: { params: Promise<{ club
     }
 
     const clubRef = doc(db, 'clubs', clubId);
-    const clubSnap = await getDoc(clubRef);
+    
+    let clubSnap;
+    try {
+      clubSnap = await getDoc(clubRef);
+    } catch (e: any) {
+      if (e.code === 'permission-denied') {
+        return NextResponse.json({ 
+          error: 'Firebase Security Rules are blocking access to the test. Please go to your Firebase Console -> Firestore Database -> Rules, and add: allow read: if resource.data.membershipConfig.mode == "test-based"; inside the match /clubs/{clubId} block.' 
+        }, { status: 403 });
+      }
+      throw e;
+    }
 
     if (!clubSnap.exists()) {
       return NextResponse.json({ error: 'Club not found' }, { status: 404 });

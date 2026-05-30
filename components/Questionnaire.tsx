@@ -15,6 +15,64 @@ interface QuestionnaireProps {
 export default function Questionnaire({ activeEvent, activeEventId, updateConfig, onBack, onProceed }: QuestionnaireProps) {
   const config = activeEvent?.config || {};
 
+  const [isGeneratingForm, setIsGeneratingForm] = React.useState(false);
+  const [formMessage, setFormMessage] = React.useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  const handleAutoCreate = async () => {
+    if (isGeneratingForm) return;
+    setIsGeneratingForm(true);
+    setFormMessage(null);
+
+    try {
+      const response = await fetch("/api/create-google-form", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          eventName: activeEvent?.name || "Easy Club Event",
+          description: config.description || "Register for our upcoming event!",
+          teamSize: config.teamSize,
+          tracks: config.subType === 'Hackathon' ? config.tracks : undefined,
+          isCollegeEvent: config.isCollegeEvent
+        })
+      });
+
+      if (!response.ok) throw new Error("Automation request failed");
+      const result = await response.json();
+
+      updateConfig({
+        regLink: result.registrationFormLink,
+        responseSheetLink: result.responseSheetLink,
+        editFormLink: result.editFormLink,
+      });
+
+      setFormMessage({
+        type: "success",
+        text: result.isSandbox
+          ? "Form Created in Sandbox Mode! Run live by defining Apps Script URL."
+          : "Google Form & linked Sheet created successfully!"
+      });
+    } catch (err: any) {
+      console.error(err);
+      setFormMessage({
+        type: "error",
+        text: err.message || "Failed to automate Form creation"
+      });
+    } finally {
+      setIsGeneratingForm(false);
+    }
+  };
+
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>, key: string) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        updateConfig({ [key + 'Base64']: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const technicalSubTypes = ["Hackathon", "Workshop", "Conference", "Competition", "Talk", "Peer Learning"];
   const socialSubTypes = ["Stand up", "Fitness", "Cooking", "Charity"];
 
@@ -27,8 +85,8 @@ export default function Questionnaire({ activeEvent, activeEventId, updateConfig
       <div className="w-full max-w-5xl glass-panel rounded-[3rem] p-8 md:p-12 space-y-12">
         <header className="border-b border-white/5 pb-8 flex justify-between items-end">
           <div>
-            <h2 className="text-3xl font-astronomus text-signature-gradient tracking-tight">{activeEvent?.name}</h2>
-            <p className="text-signature-gradient font-medium">Define the core blueprint...</p>
+            <h2 className="text-4xl md:text-5xl font-astronomus text-signature-gradient tracking-tight mb-2">{activeEvent?.name}</h2>
+            <p className="text-white font-medium">Define the core blueprint...</p>
           </div>
         </header>
 
@@ -115,8 +173,12 @@ export default function Questionnaire({ activeEvent, activeEventId, updateConfig
                 <input type="date" className="w-full bg-black border border-zinc-800 rounded-xl p-4 text-sm focus:border-gold-500/50 outline-none text-white" value={config.date || ""} onChange={(e) => updateConfig({ date: e.target.value })} />
               </div>
               <div className="space-y-1">
-                <span className="text-[9px] text-white font-bold uppercase tracking-[0.2em] ml-1">Time</span>
+                <span className="text-[9px] text-white font-bold uppercase tracking-[0.2em] ml-1">Start Time</span>
                 <input type="time" className="w-full bg-black border border-zinc-800 rounded-xl p-4 text-sm focus:border-gold-500/50 outline-none text-white" value={config.time || ""} onChange={(e) => updateConfig({ time: e.target.value })} />
+              </div>
+              <div className="space-y-1">
+                <span className="text-[9px] text-white font-bold uppercase tracking-[0.2em] ml-1">End Time</span>
+                <input type="time" className="w-full bg-black border border-zinc-800 rounded-xl p-4 text-sm focus:border-gold-500/50 outline-none text-white" value={config.endTime || ""} onChange={(e) => updateConfig({ endTime: e.target.value })} />
               </div>
             </div>
 
@@ -136,6 +198,16 @@ export default function Questionnaire({ activeEvent, activeEventId, updateConfig
                   onChange={(e) => updateConfig({ feeNonClub: e.target.value })}
                 />
               </div>
+            </div>
+
+            <div className="space-y-1">
+              <span className="text-[10px] text-white font-bold uppercase tracking-[0.2em] ml-1">Prize Pool (Optional)</span>
+              <input
+                placeholder="e.g. ₹3000"
+                className="w-full bg-black border border-zinc-800 rounded-xl p-4 text-sm focus:border-gold-500/50 outline-none text-white"
+                value={config.prizePool || ""}
+                onChange={(e) => updateConfig({ prizePool: e.target.value })}
+              />
             </div>
           </div>
 
@@ -168,8 +240,46 @@ export default function Questionnaire({ activeEvent, activeEventId, updateConfig
                   <input placeholder="e.g. IEEE Week 2025, Open Source Week" className="w-full bg-black border border-zinc-800 rounded-xl p-4 text-sm focus:border-gold-500/50 outline-none placeholder:text-white/20" value={config.occasion || ""} onChange={(e) => updateConfig({ occasion: e.target.value })} />
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[9px] text-white font-bold uppercase tracking-[0.2em] ml-1">Registration Link</span>
-                  <input placeholder="https://forms.gle/..." className="w-full bg-black border border-zinc-800 rounded-xl p-4 text-sm focus:border-gold-500/50 outline-none placeholder:text-white/20" value={config.regLink || ""} onChange={(e) => updateConfig({ regLink: e.target.value })} />
+                  <div className="flex justify-between items-center ml-1">
+                    <span className="text-[9px] text-white font-bold uppercase tracking-[0.2em]">Registration Link</span>
+                    <button
+                      type="button"
+                      onClick={handleAutoCreate}
+                      disabled={isGeneratingForm}
+                      className="text-[9px] font-black uppercase tracking-wider text-gold-400 hover:text-gold-300 disabled:opacity-50 transition-all cursor-pointer flex items-center gap-1.5"
+                    >
+                      {isGeneratingForm ? (
+                        <>
+                          <span className="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse" />
+                          Creating...
+                        </>
+                      ) : (
+                        "✨ Auto-Create Form"
+                      )}
+                    </button>
+                  </div>
+                  <input
+                    placeholder="https://forms.gle/..."
+                    className="w-full bg-black border border-zinc-800 rounded-xl p-4 text-sm focus:border-gold-500/50 outline-none placeholder:text-white/20"
+                    value={config.regLink || ""}
+                    onChange={(e) => updateConfig({ regLink: e.target.value })}
+                  />
+                  {formMessage && (
+                    <p className={`text-[9px] font-bold uppercase tracking-wider mt-1.5 ml-1 ${formMessage.type === "error" ? "text-red-500" : "text-green-500"}`}>
+                      {formMessage.text}
+                    </p>
+                  )}
+                  {!!config.responseSheetLink && (
+                    <a
+                      href={config.responseSheetLink as string}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 mt-2 ml-1 text-[9px] font-bold uppercase tracking-wider text-emerald-400 hover:text-emerald-300 transition-colors"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      View Responses Sheet ↗
+                    </a>
+                  )}
                 </div>
               </div>
               <div className="space-y-4">
@@ -226,18 +336,27 @@ export default function Questionnaire({ activeEvent, activeEventId, updateConfig
               )}
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-6 border-t border-white/5">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-6 pt-6 border-t border-white/5">
                {[
                 { label: 'Club Logo', key: 'logoClub' },
                 { label: config.isCollegeEvent ? 'College Logo' : 'Org Logo', key: 'logoMain' },
                 { label: config.isCollegeEvent ? 'Collab Clubs Logo' : 'Collab Orgs Logo', key: 'logoCollab' },
-                { label: 'Extra Assets Logo', key: 'logoExtra' }
+                { label: 'Extra Assets Logo', key: 'logoExtra' },
+                { label: 'Extra Assets Logo 2', key: 'logoExtra2' }
               ].map(asset => (
-                <div key={asset.key} className="flex flex-col gap-2">
-                  <div className="aspect-square bg-black border-2 border-dashed border-zinc-800 rounded-3xl flex flex-col items-center justify-center p-6 gap-2 hover:border-gold-500/40 cursor-pointer group transition-all relative overflow-hidden">
+                <label key={asset.key} className="flex flex-col gap-2 cursor-pointer">
+                  <div className="aspect-square bg-black border-2 border-dashed border-zinc-800 rounded-3xl flex flex-col items-center justify-center p-6 gap-2 hover:border-gold-500/40 group transition-all relative overflow-hidden">
+                    {(config as any)[asset.key + 'Base64'] ? (
+                      <img src={(config as any)[asset.key + 'Base64']} className="w-full h-full object-contain" alt={asset.label} />
+                    ) : (
+                      <>
+                        <Upload className="w-6 h-6 text-zinc-500 group-hover:text-gold-500 transition-colors" />
                         <h5 className="font-bold text-[10px] uppercase text-white group-hover:text-signature-gradient transition-colors tracking-[0.2em] text-center leading-relaxed">{asset.label}</h5>
+                      </>
+                    )}
                   </div>
-                </div>
+                  <input type="file" className="hidden" accept="image/png, image/jpeg, image/svg+xml" onChange={(e) => handleLogoUpload(e, asset.key)} />
+                </label>
               ))}
             </div>
           </div>

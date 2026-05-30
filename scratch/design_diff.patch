@@ -1,0 +1,1369 @@
+diff --git a/components/domains/DesignWorkspace.tsx b/components/domains/DesignWorkspace.tsx
+index 1dbd61f..6282db4 100644
+--- a/components/domains/DesignWorkspace.tsx
++++ b/components/domains/DesignWorkspace.tsx
+@@ -2,7 +2,8 @@
+ import React, { useRef, useState, useEffect } from "react";
+ import {
+   Image as LucideImage, Sparkles, Download, RefreshCw, Upload, Sliders, Check,
+-  Layout, Award, FileText, Columns2, Loader2, ExternalLink, Type
++  Layout, Award, FileText, Columns2, Loader2, ExternalLink, Type,
++  LayoutGrid, ChevronDown, AlignLeft, AlignCenter, AlignRight, AlignVerticalSpaceAround, AlignHorizontalSpaceAround, Eye, EyeOff, Droplets, Plus, Minus, ChevronLeft
+ } from "lucide-react";
+ import NextImage from "next/image";
+ import { ClubEvent, EventConfig } from "@/lib/types";
+@@ -11,6 +12,7 @@ import { motion, AnimatePresence } from "framer-motion";
+ import * as htmlToImage from "html-to-image";
+ import { BorderBeam } from "@/components/animations/BorderBeam";
+ import DesignLoader from "@/components/ui/DesignLoader";
++import AutoFitText from "@/components/ui/AutoFitText";
+ 
+ 
+ 
+@@ -18,17 +20,31 @@ import DesignLoader from "@/components/ui/DesignLoader";
+ // ─── Types ───────────────────────────────────────────────────────────
+ interface DesignWorkspaceProps {
+   activeEvent: ClubEvent | undefined;
++  updateConfig: (newData: Partial<EventConfig>) => void;
+   onLogActivity: (domain: 'Design' | 'Content' | 'Social' | 'Management', action: string, details?: string) => void;
++  onClose?: () => void;
+ }
+ 
+ interface VibeData {
+   vibe: string;
+-  fontFamily: string;
+-  fontUrl: string;
+-  effectStyle: string;
+-  imagePrompt?: string;
+   description?: string;
+   colors?: string[];
++  titleFont: string;
++  bodyFont: string;
++  fontUrl?: string;
++  fontFamily?: string;
++  effectStyle: string;
++  unsplashQuery?: string;
++  exposure?: number;
++  contrast?: number;
++  saturation?: number;
++  temperature?: number;
++  tint?: number;
++  layerBlur?: number;
++  grainOpacity?: number;
++  gradientStart?: string;
++  gradientEnd?: string;
++  gradientOpacity?: number;
+ }
+ 
+ type DesignTab = "poster" | "banner" | "standee" | "certificate" | "forms-header";
+@@ -58,6 +74,14 @@ const POSTER_DIMS = [
+   { label: "A3 Print", dim: "3508×4961", w: 3508, h: 4961 },
+ ];
+ 
++const ARTBOARD_POSITIONS = {
++  poster: { x: 100, y: 100, w: 540, h: 675 },
++  banner: { x: 800, y: 100, w: 1200, h: 1500 },
++  standee: { x: 2200, y: 100, w: 450, h: 750 },
++  "forms-header": { x: 100, y: 1800, w: 800, h: 200 },
++  certificate: { x: 1000, y: 1800, w: 1123, h: 794 }
++};
++
+ const EFFECT_CSS: Record<string, React.CSSProperties> = {
+   "shadow": { textShadow: "2px 4px 12px rgba(0,0,0,0.8)" },
+   "shadow-depth": { textShadow: "3px 3px 0px rgba(0,0,0,0.9), 6px 6px 0px rgba(0,0,0,0.4)" },
+@@ -77,15 +101,61 @@ function getCertificateUrl(subType?: string): string {
+   return templates[subType || ""] || "https://www.canva.com/certificates/templates/?query=event+certificate";
+ }
+ 
++type Layer = "header" | "title" | "tagline" | "details" | "tags" | "footer" | "background";
++
++function FigmaBox({ isSelected }: { isSelected: boolean }) {
++  if (!isSelected) return null;
++  return (
++    <div className="absolute inset-0 pointer-events-none border border-[#0d99ff] z-50">
++      <div className="absolute -top-1 -left-1 w-2 h-2 bg-white border border-[#0d99ff]" />
++      <div className="absolute -top-1 -right-1 w-2 h-2 bg-white border border-[#0d99ff]" />
++      <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-white border border-[#0d99ff]" />
++      <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-white border border-[#0d99ff]" />
++    </div>
++  );
++}
++
+ // ─── Component ───────────────────────────────────────────────────────
+-export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWorkspaceProps) {
++export default function DesignWorkspace({ activeEvent, updateConfig, onLogActivity, onClose }: DesignWorkspaceProps) {
+   const config = activeEvent?.config || {};
+   const posterRef = useRef<HTMLDivElement>(null);
+   const canvasRef = useRef<HTMLCanvasElement>(null);
+   const localEngineRef = useRef<any>(null);
+ 
++  const canvasContainerRef = useRef<HTMLDivElement>(null);
++
+   // State
++  const [zoom, setZoom] = useState(1);
++  const [isPanning, setIsPanning] = useState(false);
++  const [pan, setPan] = useState({ x: 0, y: 0 });
++  const handleFitToView = () => { setZoom(1); setPan({ x: 0, y: 0 }); };
++  
++  const handleCanvasWheel = (e: React.WheelEvent) => {
++    if (e.ctrlKey || e.metaKey) {
++      e.preventDefault();
++      const zoomSensitivity = 0.005;
++      setZoom(prev => Math.max(0.1, Math.min(2, prev - e.deltaY * zoomSensitivity)));
++    } else {
++      setPan(prev => ({ x: prev.x - e.deltaX, y: prev.y - e.deltaY }));
++    }
++  };
++
++  const handleCanvasMouseDown = (e: React.MouseEvent) => {
++    if (e.button === 1 || e.button === 0) {
++      setIsPanning(true);
++    }
++  };
++
++  const handleCanvasMouseMove = (e: React.MouseEvent) => {
++    if (isPanning) {
++      setPan(prev => ({ x: prev.x + e.movementX, y: prev.y + e.movementY }));
++    }
++  };
++
++  const handleCanvasMouseUp = () => setIsPanning(false);
++  const [selectedLayer, setSelectedLayer] = useState<Layer | null>("background");
+   const [activeTab, setActiveTab] = useState<DesignTab>("poster");
++  const [selectedArtboard, setSelectedArtboard] = useState<DesignTab>("poster");
+   const [posterDim, setPosterDim] = useState(POSTER_DIMS[0]);
+   const [creativityLevel, setCreativityLevel] = useState(5);
+   const [vibeData, setVibeData] = useState<VibeData | null>(null);
+@@ -99,6 +169,49 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
+   const [activeProvider, setActiveProvider] = useState<{name: string, tier: number} | null>(null);
+   const [quotaWarning, setQuotaWarning] = useState<string | null>(null);
+ 
++  // --- Image Edit State ---
++  const [exposure, setExposure] = useState<number>(100);
++  const [contrast, setContrast] = useState<number>(100);
++  const [saturation, setSaturation] = useState<number>(100);
++  const [temperature, setTemperature] = useState<number>(0);
++  const [tint, setTint] = useState<number>(0);
++  const [layerBlur, setLayerBlur] = useState<number>(0);
++  const [grainOpacity, setGrainOpacity] = useState<number>(0);
++  
++  // --- Overlay State ---
++  const [gradientStart, setGradientStart] = useState<string>("#000000");
++  const [gradientEnd, setGradientEnd] = useState<string>("#121212");
++  const [gradientOpacity, setGradientOpacity] = useState<number>(50);
++  const [gradientType, setGradientType] = useState<'linear' | 'radial'>('linear');
++  const [gradientAngle, setGradientAngle] = useState<number>(135);
++
++  // --- Text Style State ---
++  const [titleFont, setTitleFont] = useState<string>('Inter');
++  const [titleBold, setTitleBold] = useState<boolean>(true);
++  const [textAlign, setTextAlign] = useState<'left' | 'center' | 'right'>('center');
++  const [textLineHeight, setTextLineHeight] = useState<string>("1.2");
++  const [textLetterSpacing, setTextLetterSpacing] = useState<number>(0);
++  
++  // --- Text Effect State ---
++  const [textGradientStart, setTextGradientStart] = useState<string>("#FFFFFF");
++  const [textGradientEnd, setTextGradientEnd] = useState<string>("#FFFFFF");
++  const [textGradientType, setTextGradientType] = useState<'linear'|'radial'>('linear');
++  const [textGradientAngle, setTextGradientAngle] = useState<number>(180);
++  const [textStrokeWidth, setTextStrokeWidth] = useState<number>(0);
++  const [textStrokeColor, setTextStrokeColor] = useState<string>("#000000");
++  const [strokePosition, setStrokePosition] = useState<'Outside' | 'Inside' | 'Center'>('Outside');
++  const [textBackdropBlur, setTextBackdropBlur] = useState<number>(0);
++  
++  const [textShadowX, setTextShadowX] = useState<number>(0);
++  const [textShadowY, setTextShadowY] = useState<number>(8);
++  const [textShadowBlur, setTextShadowBlur] = useState<number>(8);
++  const [textShadowColor, setTextShadowColor] = useState<string>("#000000");
++  const [textShadowOpacity, setTextShadowOpacity] = useState<number>(50);
++
++  // --- Details/Tags State ---
++  const [labelsBold, setLabelsBold] = useState<boolean>(true);
++  const [labelsUppercase, setLabelsUppercase] = useState<boolean>(true);
++
+ 
+ 
+ 
+@@ -106,11 +219,13 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
+   // Editable poster text
+   const [editTitle, setEditTitle] = useState<string>(config.designTitle as string || activeEvent?.name || "Event Title");
+   const [editSubtitle, setEditSubtitle] = useState<string>(config.designSubtitle as string || "");
++  const [editIntro, setEditIntro] = useState<string>(config.designIntro as string || "");
+   const [editDate, setEditDate] = useState<string>(config.date as string || "");
+   const [editTime, setEditTime] = useState<string>(config.time as string || "");
+   const [editVenue, setEditVenue] = useState<string>(config.venue as string || "");
+   const [editTeamSize, setEditTeamSize] = useState<string>(config.teamSize as string || "");
+   const [editFee, setEditFee] = useState<string>(config.feeClub as string || "");
++  const [editPrizePool, setEditPrizePool] = useState<string>(config.prizePool as string || "");
+   const [editPoc1, setEditPoc1] = useState<string>(config.poc1Name ? `${config.poc1Name}: ${config.poc1Phone || ""}` : "");
+   const [editPoc2, setEditPoc2] = useState<string>(config.poc2Name ? `${config.poc2Name}: ${config.poc2Phone || ""}` : "");
+ 
+@@ -498,374 +613,854 @@ export default function DesignWorkspace({ activeEvent, onLogActivity }: DesignWo
+   const currentFormat = FORMATS.find(f => f.id === activeTab)!;
+   const effectCSS = vibeData ? (EFFECT_CSS[vibeData.effectStyle] || EFFECT_CSS["shadow"]) : EFFECT_CSS["shadow"];
+   const fontFamily = vibeData?.fontFamily || "var(--font-astronomus)";
++  const bodyFont = vibeData?.bodyFont || fontFamily;
+   const aspectRatio = activeTab === "poster" ? posterDim.w / posterDim.h : (currentFormat.width / currentFormat.height || 4 / 5);
+ 
+   // ─── Render ───────────────────────────────────────────────────────
+   if (!activeEvent) {
+     return (
+-      <div className="p-12 text-center glass-panel rounded-[3rem] space-y-4">
+-        <Loader2 className="w-8 h-8 animate-spin mx-auto text-gold-500/40" />
+-        <h3 className="text-xl font-bold text-white">Syncing Event Data...</h3>
+-        <p className="text-xs text-zinc-400 max-w-xs mx-auto">We're having trouble connecting to the design database. Please check your internet or select an event from the sidebar.</p>
++      <div className="fixed inset-0 z-[90] bg-[#1E1E1E] flex items-center justify-center">
++        <div className="text-center space-y-4">
++          <Loader2 className="w-8 h-8 animate-spin mx-auto text-[#0D99FF]" />
++          <h3 className="text-sm font-medium text-white">Syncing Event Data...</h3>
++          <p className="text-xs text-[#808080] max-w-xs mx-auto">Please check your internet or select an event from the sidebar.</p>
++        </div>
+       </div>
+     );
+   }
+ 
+   return (
++    <div className="fixed inset-0 z-[90] bg-[#181818] flex flex-col select-none" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+ 
+-    <div className="space-y-8">
+-      {/* Section Header */}
+-      <div className="flex flex-col gap-2">
+-        <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Design Studio</h2>
+-        <p className="text-[10px] text-zinc-100 font-bold uppercase tracking-[0.2em]">AI-Powered Visual Asset Engine</p>
+-      </div>
+-
+-      {/* Tab Navigation */}
+-      <div className="flex gap-2 p-1.5 bg-black/60 rounded-2xl border border-white/5 overflow-x-auto scrollbar-none">
+-        {FORMATS.map(f => (
++      {/* ─── TOP TOOLBAR ──────────────────────────────────────────── */}
++      <div className="h-10 bg-[#2C2C2C] border-b border-[#383838] flex items-center justify-between px-3 shrink-0 z-[92]">
++        {/* Left: Back + Event Name */}
++        <div className="flex items-center gap-3">
++          <button
++            onClick={onClose}
++            className="flex items-center gap-1.5 text-[11px] text-[#B0B0B0] hover:text-white transition-colors px-2 py-1 rounded hover:bg-white/5"
++          >
++            <ChevronLeft className="w-3.5 h-3.5" />
++            Back
++          </button>
++          <div className="w-px h-4 bg-[#383838]" />
++          <span className="text-[11px] text-white font-medium truncate max-w-[200px]">{activeEvent.name}</span>
++          <span className="text-[10px] text-[#808080]">— Design Studio</span>
++        </div>
++
++        {/* Center: Zoom Controls */}
++        <div className="flex items-center gap-1">
++          <button onClick={() => setZoom(prev => Math.max(0.1, prev - 0.1))} className="w-6 h-6 flex items-center justify-center text-[#B0B0B0] hover:text-white hover:bg-white/5 rounded text-sm">−</button>
++          <button onClick={handleFitToView} className="px-2 py-0.5 text-[10px] text-[#B0B0B0] hover:text-white hover:bg-white/5 rounded font-mono">{Math.round(zoom * 100)}%</button>
++          <button onClick={() => setZoom(prev => Math.min(2, prev + 0.1))} className="w-6 h-6 flex items-center justify-center text-[#B0B0B0] hover:text-white hover:bg-white/5 rounded text-sm">+</button>
++        </div>
++
++        {/* Right: Actions */}
++        <div className="flex items-center gap-2">
+           <button
+-            key={f.id}
+-            onClick={() => setActiveTab(f.id)}
+-            className={`px-5 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 whitespace-nowrap transition-all ${activeTab === f.id ? "bg-gold-500 text-black shadow-lg shadow-gold-500/10" : "text-white hover:text-white"}`}
++            onClick={handleGenerateImage}
++            disabled={imageGen.status === "generating" || (!vibeAccepted && !useOverride)}
++            className="flex items-center gap-1.5 px-3 py-1 bg-[#0D99FF] text-white rounded text-[11px] font-medium hover:bg-[#0B85E0] transition-colors disabled:opacity-40"
+           >
+-            <f.icon className="w-3.5 h-3.5" />
+-            {f.label}
++            <Sparkles className={`w-3 h-3 ${imageGen.status === "generating" ? "animate-spin" : ""}`} />
++            {imageGen.status === "generating" ? "Rendering..." : "Render Canvas"}
+           </button>
+-        ))}
++          {imageGen.status === "success" && (
++            <button onClick={handleExport} className="flex items-center gap-1.5 px-3 py-1 bg-white/10 text-white rounded text-[11px] font-medium hover:bg-white/15 transition-colors">
++              <Download className="w-3 h-3" />
++              Export
++            </button>
++          )}
++        </div>
+       </div>
+ 
+-      <AnimatePresence mode="wait">
+-        {/* ─── CERTIFICATE TAB ─────────────────────────────────────── */}
+-        {activeTab === "certificate" && (
+-          <motion.div key="cert" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="glass-panel rounded-[3rem] p-10 text-center space-y-8 relative overflow-hidden group">
+-            <div className="w-20 h-20 bg-gold-500/10 border border-gold-500/20 rounded-3xl flex items-center justify-center mx-auto relative z-10">
+-              <Award className="w-10 h-10 text-gold-500" />
++      <div className="flex flex-1 overflow-hidden">
++
++        {/* ─── LEFT PANEL: Layers ──────────────────────────────────── */}
++        <div className="w-[200px] shrink-0 bg-[#252525] border-r border-[#383838] flex flex-col overflow-hidden z-[91]">
++          {/* Artboards List */}
++          <div className="p-2 border-b border-[#383838]">
++            <h3 className="text-[10px] font-medium text-[#808080] uppercase tracking-wider px-2 py-1">Artboards</h3>
++            <div className="space-y-3 mt-2">
++            {FORMATS.filter(f => f.id !== "certificate").map(f => (
++              <button
++                key={f.id}
++                onClick={() => { setSelectedArtboard(f.id); setActiveTab(f.id); }}
++                className={`w-full text-left px-2 py-1.5 rounded-sm text-[11px] font-medium transition-colors flex items-center gap-2 ${selectedArtboard === f.id ? 'bg-[#0d99ff] text-white' : 'text-[#C0C0C0] hover:bg-white/5 border border-transparent transition-all duration-300'}`}
++              >
++                <f.icon className="w-3 h-3" />
++                {f.label}
++                <span className="ml-auto text-[9px] text-[#808080]">{f.dim}</span>
++              </button>
++            ))}
+             </div>
+-            <div className="space-y-2">
+-              <h3 className="text-2xl font-bold text-white">Certificate Design</h3>
+-              <p className="text-white text-sm max-w-md mx-auto">For professional certificate designs, we recommend using Canva&apos;s template library. We&apos;ve selected the best category for your event type.</p>
++          </div>
++
++          {/* Layers for Selected Artboard */}
++          <div className="p-2 flex-1 overflow-y-auto">
++            <h3 className="text-[10px] font-medium text-[#808080] uppercase tracking-wider px-2 py-1 flex items-center gap-1.5">
++              <Layout className="w-3 h-3" /> Layers
++            </h3>
++            <div className="space-y-3 mt-2">
++            {(["header", "title", "tagline", "details", "tags", "footer", "background"] as Layer[]).map(layer => (
++              <button
++                key={layer}
++                onClick={() => setSelectedLayer(layer)}
++                className={`w-full text-left px-2 py-1.5 rounded-sm text-[11px] font-medium transition-colors flex items-center justify-between ${selectedLayer === layer ? 'bg-[#0d99ff] text-white' : 'text-[#C0C0C0] hover:bg-white/5 border border-transparent transition-all duration-300'}`}
++              >
++                {layer}
++                {selectedLayer === layer && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
++              </button>
++            ))}
+             </div>
+-            <a
+-              href={getCertificateUrl(config.subType)}
+-              target="_blank"
+-              rel="noreferrer"
+-              className="inline-flex items-center gap-3 px-10 py-4 bg-gold-500 text-black rounded-2xl text-[11px] font-black uppercase tracking-widest hover:scale-[1.02] transition-all shadow-xl"
+-            >
+-              Open Canva Templates <ExternalLink className="w-4 h-4" />
+-            </a>
+-            <p className="text-[9px] text-zinc-100 uppercase tracking-widest">Best match: <span className="text-signature-gradient font-bold">{config.subType || "Event"} Certificate</span></p>
+-          </motion.div>
+-        )}
+-
+-        {/* ─── VISUAL DESIGN TABS (poster, banner, standee, forms-header) ── */}
+-        {activeTab !== "certificate" && (
+-          <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+-            <div className="grid grid-cols-1 xl:grid-cols-5 gap-8">
+-
+-              {/* ─── LEFT: Controls (2 cols) ─────────────────────────── */}
+-              <div className="xl:col-span-2 space-y-8">
+-                {/* Poster sub-dimensions */}
+-                {activeTab === "poster" && (
+-                  <section className="glass-panel rounded-[2rem] p-6 space-y-4">
+-                    <label className="text-[10px] text-signature-gradient font-bold uppercase tracking-widest flex items-center gap-2">
+-                      <LucideImage className="w-3 h-3" /> Poster Size
+-                    </label>
+-                    <div className="flex gap-2">
+-                      {POSTER_DIMS.map(d => (
+-                        <button
+-                          key={d.label}
+-                          onClick={() => setPosterDim(d)}
+-                          className={`flex-1 px-3 py-2 rounded-xl text-[9px] font-bold uppercase transition-all border ${posterDim.label === d.label ? "bg-gold-500 text-black border-gold-500" : "bg-black/40 text-white border-white/5 hover:border-white/10"}`}
+-                        >
+-                          {d.label}
+-                        </button>
+-                      ))}
+-                    </div>
+-                  </section>
+-                )}
+-
+-                {/* Creativity Slider */}
+-                <section className="glass-panel rounded-[2rem] p-6 space-y-4">
+-                  <label className="text-[10px] text-signature-gradient font-bold uppercase tracking-widest flex items-center gap-2">
+-                    <Sliders className="w-3 h-3" /> Creativity Level: <span className="text-white ml-1">{creativityLevel}/10</span>
+-                  </label>
+-                  <input
+-                    type="range"
+-                    min={1}
+-                    max={10}
+-                    value={creativityLevel}
+-                    onChange={e => setCreativityLevel(Number(e.target.value))}
+-                    className="w-full accent-gold-500 cursor-pointer"
+-                  />
+-                  <div className="flex justify-between text-[8px] text-zinc-100 uppercase tracking-widest font-bold">
+-                    <span>Clean & Minimal</span>
+-                    <span>Bold & Artistic</span>
+-                  </div>
+-                </section>
+-
+-                {/* AI Vibe Suggestion */}
+-                <section className="glass-panel rounded-[2rem] p-6 space-y-5 relative overflow-hidden group">
+-                  <div className="flex justify-between items-center relative z-10">
+-                    <label className="text-[10px] text-signature-gradient font-bold uppercase tracking-widest flex items-center gap-2">
+-                      <Sparkles className="w-3 h-3" /> AI Vibe Direction
+-                    </label>
+-                    <button
+-                      onClick={handleSuggestVibe}
+-                      disabled={vibeGen.status === "generating"}
+-                      className="px-4 py-1.5 bg-gold-500/10 border border-gold-500/20 rounded-full text-[9px] font-black uppercase tracking-widest text-signature-gradient hover:bg-gold-500/20 transition-all disabled:opacity-50 flex items-center gap-2"
+-                    >
+-                      {vibeGen.status === "generating" ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
+-                      {vibeGen.status === "generating" ? "Thinking..." : vibeData ? "Re-Suggest" : "Suggest Vibe"}
+-                    </button>
+-                  </div>
+-
+-                  {vibeGen.status === "generating" && (
+-                    <div className="py-8 flex flex-col items-center gap-3 animate-pulse relative z-10">
+-                      <BorderBeam duration={3} size={200} />
+-                      <Sparkles className="w-6 h-6 text-gold-500/40" />
+-                      <p className="text-[9px] text-white font-bold uppercase tracking-widest">Analyzing event profile...</p>
+-                    </div>
+-                  )}
+-
+-                  {vibeData && vibeGen.status === "success" && (
+-                    <div className="space-y-4 relative z-10">
+-                      <div className="bg-black/60 p-5 rounded-2xl border border-white/5 text-[11px] text-white leading-relaxed">
+-                        {vibeData.vibe}
+-                      </div>
+-                      <div className="flex gap-2 text-[9px]">
+-                        <span className="px-3 py-1 bg-gold-500/10 border border-gold-500/20 rounded-full text-signature-gradient font-bold">Font: {vibeData.fontFamily}</span>
+-                        <span className="px-3 py-1 bg-white/5 border border-white/5 rounded-full text-white font-bold">Effect: {vibeData.effectStyle}</span>
+-                      </div>
+-                      {!vibeAccepted && (
+-                        <div className="flex gap-3">
+-                          <button onClick={() => setVibeAccepted(true)} className="flex-1 py-3 bg-gold-500 text-black rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:brightness-110 transition-all">
+-                            <Check className="w-3 h-3" /> Accept
+-                          </button>
+-                          <button onClick={() => { setUseOverride(true); setVibeAccepted(true); }} className="flex-1 py-3 bg-white/5 border border-white/10 text-white rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-white/10 transition-all">
+-                            Override
+-                          </button>
+-                        </div>
+-                      )}
+-                    </div>
+-                  )}
++          </div>
+ 
+-                  {vibeGen.error && (
+-                    <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-[10px] font-bold text-center">
+-                      {vibeGen.error}
+-                    </div>
+-                  )}
+-                </section>
+-
+-                {/* User Vibe Override */}
+-                {useOverride && (
+-                  <section className="glass-panel rounded-[2rem] p-6 space-y-4">
+-                    <label className="text-[10px] text-signature-gradient font-bold uppercase tracking-widest">Your Vibe Description</label>
+-                    <textarea
+-                      value={vibeOverride}
+-                      onChange={e => setVibeOverride(e.target.value)}
+-                      placeholder="Describe the color theme, mood, and overall vibe you want for the poster..."
+-                      className="w-full bg-black border border-white/10 rounded-xl p-4 text-sm text-white focus:border-gold-500/50 outline-none resize-none min-h-[100px]"
++          {/* Generation Progress */}
++          {imageGen.status === "generating" && (
++            <div className="p-2 border-t border-[#383838]">
++              <div className="w-full bg-[#383838] rounded-full h-1 overflow-hidden">
++                <motion.div className="h-full bg-[#0d99ff] rounded-full" initial={{ width: "0%" }} animate={{ width: `${imageGen.progress}%` }} transition={{ duration: 0.5 }} />
++              </div>
++              <p className="text-[9px] text-[#808080] mt-1 text-center">Rendering...</p>
++            </div>
++          )}
++        </div>
++
++        {/* ─── CENTER: Infinite Canvas ────────────────────────────── */}
++        <div
++          ref={canvasContainerRef}
++          className="flex-1 overflow-hidden relative"
++          style={{ cursor: isPanning ? 'grabbing' : 'default', background: '#121212' }}
++          onWheel={handleCanvasWheel}
++          onMouseDown={handleCanvasMouseDown}
++          onMouseMove={handleCanvasMouseMove}
++          onMouseUp={handleCanvasMouseUp}
++          onMouseLeave={handleCanvasMouseUp}
++        >
++          {/* Subtle grid pattern */}
++          <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{
++            backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)',
++            backgroundSize: `${20 * zoom}px ${20 * zoom}px`,
++            backgroundPosition: `${pan.x % (20 * zoom)}px ${pan.y % (20 * zoom)}px`
++          }} />
++
++          {/* Transform Container */}
++          <div
++            className="absolute"
++            style={{
++              transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
++              transformOrigin: '0 0',
++              willChange: 'transform',
++            }}
++          >
++            {/* ─── POSTER ARTBOARD ────────────────────────────── */}
++            <div
++              className="absolute"
++              style={{ left: ARTBOARD_POSITIONS.poster.x, top: ARTBOARD_POSITIONS.poster.y }}
++              onClick={() => { setSelectedArtboard("poster"); setActiveTab("poster"); }}
++            >
++              {/* Artboard Label */}
++              <div className="mb-2 flex items-center gap-2">
++                <span className="text-[11px] text-[#808080] font-medium">Poster</span>
++                <span className="text-[9px] text-[#555]">{posterDim.dim}</span>
++              </div>
++              {/* Artboard Frame */}
++              <div
++                className={`relative transition-shadow duration-200 ${selectedArtboard === "poster" ? "ring-2 ring-[#0D99FF]" : "ring-1 ring-[#383838]"}`}
++                style={{ width: ARTBOARD_POSITIONS.poster.w, height: ARTBOARD_POSITIONS.poster.h }}
++              >
++                <div
++                  ref={posterRef}
++                  className="relative w-full h-full overflow-hidden bg-black"
++                >
++                  {/* Background canvas */}
++                  <canvas ref={canvasRef} className="absolute inset-0 w-full h-full object-cover opacity-90" />
++
++                  {/* Direct Image */}
++                  {(typeof imageGen.result === 'string' && (imageGen.result.startsWith("data:image") || imageGen.result.startsWith("http"))) && (
++                    <div
++                      className="absolute inset-0 w-full h-full bg-cover bg-center transition-all duration-1000"
++                      style={{
++                        backgroundImage: `url(${imageGen.result})`,
++                        filter: `blur(${layerBlur}px) brightness(${exposure}%) contrast(${contrast}%) saturate(${saturation}%) sepia(${temperature > 0 ? temperature : 0}%) hue-rotate(${tint}deg)`,
++                        transform: 'scale(1.05)'
++                      }}
+                     />
+-                  </section>
+-                )}
+-
+-                {/* Reference Image Upload */}
+-                <section className="glass-panel rounded-[2rem] p-6 space-y-4">
+-                  <label className="text-[10px] text-signature-gradient font-bold uppercase tracking-widest flex items-center gap-2">
+-                    <Upload className="w-3 h-3" /> Reference Image (Optional)
+-                  </label>
+-                  {referenceImage ? (
+-                    <div className="relative rounded-xl overflow-hidden border border-white/10">
+-                      <NextImage 
+-                        src={referenceImage} 
+-                        alt="Reference" 
+-                        width={400} 
+-                        height={128} 
+-                        className="w-full h-32 object-cover" 
+-                        unoptimized
+-                      />
+-                      <button onClick={() => setReferenceImage(null)} className="absolute top-2 right-2 px-3 py-1 bg-black/80 rounded-full text-[9px] font-bold text-red-400 border border-red-500/20">Remove</button>
+-                    </div>
+-                  ) : (
+-                    <label className="flex flex-col items-center gap-3 py-8 border-2 border-dashed border-white/10 rounded-2xl cursor-pointer hover:border-gold-500/30 transition-all group">
+-                      <Upload className="w-6 h-6 text-white group-hover:text-gold-500 transition-colors" />
+-                      <span className="text-[9px] text-white font-bold uppercase tracking-widest">Drop or click to upload</span>
+-                      <input type="file" accept="image/*" onChange={handleRefUpload} className="hidden" />
+-                    </label>
+                   )}
+-                </section>
+-
+-
+-
+-
+-
+-
+-
+-                  {/* Generate Button */}
+-                <button
+-                  onClick={handleGenerateImage}
+-                  disabled={imageGen.status === "generating" || (!vibeAccepted && !useOverride)}
+-                  className="w-full py-5 bg-gradient-to-r from-gold-600 to-gold-500 text-black rounded-2xl text-[11px] font-black uppercase tracking-[0.2em] shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+-                >
+-                  <Sparkles className={`w-4 h-4 ${imageGen.status === "generating" ? "animate-spin" : ""}`} />
+-                  {imageGen.status === "generating" ? "Creating AI Magic..." : "Generate AI Poster"}
+-                </button>
+-
+-
+-
+-                {!vibeAccepted && !useOverride && (
+-                  <p className="text-[9px] text-zinc-100 text-center uppercase tracking-widest">Suggest and accept a vibe first, or override with your own</p>
+-                )}
+ 
+-                {imageGen.status === "generating" && (
+-                  <div className="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+-                    <motion.div className="h-full bg-gold-500 rounded-full" initial={{ width: "0%" }} animate={{ width: `${imageGen.progress}%` }} transition={{ duration: 0.5 }} />
+-                  </div>
+-                )}
+-              </div>
+-
+-              {/* ─── RIGHT: Live Preview (3 cols) ────────────────────── */}
+-              <div className="xl:col-span-3 space-y-6">
+-                <div className="flex justify-between items-center">
+-                  <label className="text-[10px] text-white font-bold uppercase tracking-widest">Live Preview — {currentFormat.label} {activeTab === "poster" ? `(${posterDim.dim})` : `(${currentFormat.dim})`}</label>
+-                  {imageGen.status === "success" && (
+-                    <button onClick={handleExport} className="px-6 py-2 bg-white text-black rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:bg-gold-500 transition-all shadow-lg">
+-                      <Download className="w-3 h-3" /> Export Digital
+-                    </button>
++                  {/* SVG fallback */}
++                  {typeof imageGen.result === 'string' && imageGen.result.startsWith("data:image/svg") && (
++                    <div className="absolute inset-0 w-full h-full" style={{ backgroundImage: `url(${imageGen.result})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+                   )}
+-                </div>
+ 
+-                {/* UI Wrapper with rounded corners for the preview window */}
+-                <div className="rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl bg-zinc-950 mx-auto relative group" style={{ maxWidth: activeTab === "forms-header" ? "100%" : "480px" }}>
+-                  <BorderBeam duration={6} size={400} className="opacity-0 group-hover:opacity-100 transition-opacity" />
++                  {/* Gradient Overlay */}
+                   <div
+-                    ref={posterRef}
+-                    className="relative w-full overflow-hidden bg-black"
+-                    style={{ aspectRatio: `${aspectRatio}` }}
+-                  >
+-                    {/* Background canvas (for raster AI images) */}
+-                    <canvas ref={canvasRef} className="absolute inset-0 w-full h-full object-cover opacity-90" />
+-
+-                    {/* Direct Image Fallback (Ensures visibility if canvas draw is slow/fails) */}
+-                    {(typeof imageGen.result === 'string' && imageGen.result.startsWith("data:image")) && (
+-                      <div 
+-                        className="absolute inset-0 w-full h-full bg-cover bg-center opacity-90 transition-opacity duration-1000"
+-                        style={{ backgroundImage: `url(${imageGen.result})` }}
+-                      />
+-                    )}
++                    className="absolute inset-0 transition-all duration-500"
++                    style={{
++                      background: gradientType === 'radial'
++                        ? `radial-gradient(circle, ${gradientStart}${Math.round((gradientOpacity/100)*255).toString(16).padStart(2,'0')}, ${gradientEnd}${Math.round((gradientOpacity/100)*255).toString(16).padStart(2,'0')})`
++                        : `linear-gradient(${gradientAngle}deg, ${gradientStart}${Math.round((gradientOpacity/100)*255).toString(16).padStart(2,'0')}, ${gradientEnd}${Math.round((gradientOpacity/100)*255).toString(16).padStart(2,'0')})`
++                    }}
++                  />
+ 
++                  {/* Grain Overlay */}
++                  {grainOpacity > 0 && (
++                    <div
++                      className="absolute inset-0 mix-blend-overlay pointer-events-none"
++                      style={{
++                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
++                        opacity: grainOpacity / 100
++                      }}
++                    />
++                  )}
+ 
+-                    {/* SVG fallback background (for gradient fallback) */}
+-                    {typeof imageGen.result === 'string' && imageGen.result.startsWith("data:image/svg") && (
+-                      <div className="absolute inset-0 w-full h-full" style={{ backgroundImage: `url(${imageGen.result})`, backgroundSize: "cover", backgroundPosition: "center" }} />
++                  {/* Generation Loader */}
++                  <AnimatePresence>
++                    {imageGen.status === "generating" && (
++                      <motion.div
++                        initial={{ opacity: 0 }}
++                        animate={{ opacity: 1 }}
++                        exit={{ opacity: 0 }}
++                        className="absolute inset-0 z-50 flex items-center justify-center bg-black/40"
++                      >
++                        <div className="scale-50">
++                          <DesignLoader />
++                          <p className="text-[8px] text-white font-medium text-center mt-2 animate-pulse">Designing...</p>
++                        </div>
++                      </motion.div>
+                     )}
++                  </AnimatePresence>
+ 
++                  {/* Editable content overlay */}
++                  <div
++                    className="absolute inset-0 p-4 flex flex-col justify-between transition-all duration-300 cursor-pointer"
++                    style={{ fontFamily: bodyFont, fontSize: '8px' }}
++                    onClick={() => setSelectedLayer('background')}
++                  >
++                    <FigmaBox isSelected={selectedLayer === 'background'} />
+ 
+-                    {/* Overlay gradient for readability */}
+-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40" />
++                    {/* HEADER */}
++                    <div
++                      className="flex flex-col items-center gap-2 p-1 relative cursor-pointer group/layer"
++                      onClick={(e) => { e.stopPropagation(); setSelectedLayer('header'); }}
++                    >
++                      <div className="absolute inset-0 group-hover/layer:ring-1 group-hover/layer:ring-[#0d99ff]/50 pointer-events-none" />
++                      <FigmaBox isSelected={selectedLayer === 'header'} />
++                      <div className="flex justify-between items-start w-full px-2">
++                        <div className="w-10 h-10 border border-dashed border-white/20 rounded-full flex items-center justify-center bg-black/20">
++                          <span className="text-[4px] text-white/50 uppercase text-center font-bold">Logo</span>
++                        </div>
++                        <div className="w-12 h-10 border border-dashed border-white/20 rounded-md flex items-center justify-center bg-black/20">
++                          <span className="text-[4px] text-white/50 uppercase text-center font-bold">Club</span>
++                        </div>
++                        <div className="w-10 h-10 border border-dashed border-white/20 rounded-full flex items-center justify-center bg-black/20">
++                          <span className="text-[4px] text-white/50 uppercase text-center font-bold">Collab</span>
++                        </div>
++                      </div>
++                      <textarea
++                        value={editIntro}
++                        onChange={e => setEditIntro(e.target.value)}
++                        className="w-full bg-transparent text-center text-[6px] text-white/90 font-medium tracking-widest outline-none resize-none"
++                        rows={2}
++                      />
++                    </div>
+ 
+-                    {/* Generation Loader Overlay */}
+-                    <AnimatePresence>
+-                      {imageGen.status === "generating" && (
+-                        <motion.div 
+-                          initial={{ opacity: 0 }}
+-                          animate={{ opacity: 1 }}
+-                          exit={{ opacity: 0 }}
+-                          className="absolute inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/20"
++                    {/* TITLE */}
++                    <div className="flex flex-col justify-center items-center">
++                      {aiTitleImage ? (
++                        <div className="relative h-20 flex items-center justify-center group/title">
++                          <img src={aiTitleImage} alt="AI Title" className="h-full w-auto object-contain mix-blend-screen filter brightness-125" />
++                          <button onClick={() => setAiTitleImage(null)} className="absolute -top-1 -right-1 p-1 bg-red-500 rounded-full text-white opacity-0 group-hover/title:opacity-100 transition-opacity">
++                            <RefreshCw className="w-2 h-2" />
++                          </button>
++                        </div>
++                      ) : (
++                        <div
++                          className="w-full min-h-[3rem] relative group transition-all duration-300 flex items-center justify-center cursor-text group/layer"
++                          onClick={(e) => { e.stopPropagation(); setSelectedLayer('title'); }}
++                          style={{
++                            fontFamily: titleFont,
++                            backdropFilter: textBackdropBlur > 0 ? `blur(${textBackdropBlur}px)` : 'none',
++                            backgroundColor: textBackdropBlur > 0 ? 'rgba(0,0,0,0.1)' : 'transparent',
++                          }}
+                         >
+-                          <div className="scale-75 sm:scale-100">
+-                            <DesignLoader />
+-                            <p className="text-[10px] text-white font-bold uppercase tracking-[0.3em] text-center mt-4 animate-pulse">
+-                              Designing Poster...
+-                            </p>
+-                          </div>
+-                        </motion.div>
+-                      )}
+-                    </AnimatePresence>
+-
+-                    {/* Editable content overlay */}
+-                    <div className="absolute inset-0 p-8 flex flex-col justify-between" style={{ fontFamily }}>
+-                      {/* Top: Title + Subtitle */}
+-                      <div className="space-y-4 pt-4 text-center">
+-                        {aiTitleImage ? (
+-                          <div className="relative h-32 sm:h-48 flex items-center justify-center group/title">
+-                            <img 
+-                              src={aiTitleImage} 
+-                              alt="AI Title" 
+-                              className="h-full w-auto object-contain mix-blend-screen filter brightness-125"
+-                            />
+-                            <button 
+-                              onClick={() => setAiTitleImage(null)}
+-                              className="absolute -top-2 -right-2 p-2 bg-red-500 rounded-full text-white opacity-0 group-hover/title:opacity-100 transition-opacity"
+-                            >
+-                              <RefreshCw className="w-3 h-3" />
+-                            </button>
+-                          </div>
+-                        ) : (
++                          <AutoFitText
++                            text={editTitle || "EVENT TITLE"}
++                            maxFontSize={80}
++                            className={`uppercase ${titleBold ? 'font-black' : 'font-normal'}`}
++                            gradientColors={[textGradientStart, textGradientEnd]}
++                            gradientType={textGradientType}
++                            gradientAngle={textGradientAngle}
++                            strokeWidth={textStrokeWidth}
++                            strokeColor={textStrokeColor}
++                            shadowOpacity={textShadowOpacity}
++                          />
+                           <input
+                             value={editTitle}
+                             onChange={e => setEditTitle(e.target.value)}
+-                            className="w-full bg-transparent text-center outline-none text-4xl sm:text-6xl font-black uppercase tracking-tighter leading-[0.9] text-white"
+-                            style={{ ...effectCSS, fontFamily }}
+-                            placeholder="EVENT TITLE"
++                            className="absolute inset-0 w-full h-full opacity-0 cursor-text"
+                           />
+-                        )}
++                        </div>
++                      )}
+ 
++                      {/* Tagline */}
++                      <div
++                        className="relative mx-auto w-full max-w-[80%] z-10 p-1 transition-all duration-300 cursor-text group/layer"
++                        onClick={(e) => { e.stopPropagation(); setSelectedLayer('tagline'); }}
++                      >
++                        <div className="absolute inset-0 group-hover/layer:ring-1 group-hover/layer:ring-[#0d99ff]/50 pointer-events-none" />
++                        <FigmaBox isSelected={selectedLayer === 'tagline'} />
+                         <input
+                           value={editSubtitle}
+                           onChange={e => setEditSubtitle(e.target.value)}
+-                          className="w-full bg-transparent text-center outline-none text-base font-bold tracking-[0.3em] uppercase text-white/80"
+-                          placeholder="ADD EVENT TAGLINE"
++                          className="bg-transparent text-center w-full outline-none text-[7px] font-medium tracking-[0.2em] transition-all duration-300"
++                          style={{ fontFamily: bodyFont, color: textGradientEnd }}
++                          placeholder="Add Event Tagline"
+                         />
+                       </div>
++                    </div>
+ 
+-                      {/* Middle: Event Details */}
+-                      <div className="space-y-4 text-center">
+-                        <div className="flex justify-center items-center gap-6">
+-                          <input value={editDate} onChange={e => setEditDate(e.target.value)} className="bg-transparent outline-none text-lg font-black text-white text-center w-36 border-b border-white/10 focus:border-gold-500/50" placeholder="DATE" />
+-                          <span className="text-gold-500/40 text-xl font-bold">|</span>
+-                          <input value={editTime} onChange={e => setEditTime(e.target.value)} className="bg-transparent outline-none text-lg font-black text-white text-center w-28 border-b border-white/10 focus:border-gold-500/50" placeholder="TIME" />
+-                        </div>
+-                        <input value={editVenue} onChange={e => setEditVenue(e.target.value)} className="w-full bg-transparent outline-none text-lg font-bold text-white/90 text-center uppercase tracking-wide" placeholder="VENUE NAME & LOCATION" />
+-                        
+-                        <div className="flex justify-center gap-6 pt-2">
+-                          <div className="flex flex-col gap-1 items-center">
+-                            <span className="text-[8px] text-gold-500/60 font-black uppercase">Team Size</span>
+-                            <input value={editTeamSize} onChange={e => setEditTeamSize(e.target.value)} className="bg-black/40 px-3 py-1 rounded-lg outline-none text-xs font-bold text-white text-center w-24 border border-white/5" placeholder="Size" />
++                    {/* DETAILS */}
++                    <div className="flex flex-col items-center space-y-2 pb-1 w-full px-1 mt-auto">
++                      <div
++                        className="w-full bg-black/40 border border-white/10 rounded-md flex overflow-hidden relative cursor-pointer group/layer"
++                        onClick={(e) => { e.stopPropagation(); setSelectedLayer('details'); }}
++                      >
++                        <div className="absolute inset-0 group-hover/layer:ring-1 group-hover/layer:ring-[#0d99ff]/50 pointer-events-none" />
++                        <FigmaBox isSelected={selectedLayer === 'details'} />
++                        <div className="w-1/2 p-2 flex flex-col justify-center space-y-1 border-r border-white/10 text-left">
++                          <div className="flex items-center gap-1 w-full">
++                            <span className={`text-[6px] tracking-widest w-8 shrink-0 ${labelsBold ? 'font-bold' : 'font-normal'} ${labelsUppercase ? 'uppercase' : 'capitalize'}`} style={{ color: textGradientEnd }}>Date:</span>
++                            <input value={editDate} onChange={e => setEditDate(e.target.value)} className="bg-transparent outline-none text-[6px] font-medium text-white tracking-wider flex-grow" placeholder="24th March 2026" />
+                           </div>
+-                          <div className="flex flex-col gap-1 items-center">
+-                            <span className="text-[8px] text-gold-500/60 font-black uppercase">Entry Fee</span>
+-                            <input value={editFee} onChange={e => setEditFee(e.target.value)} className="bg-black/40 px-3 py-1 rounded-lg outline-none text-xs font-bold text-white text-center w-24 border border-white/5" placeholder="Free" />
++                          <div className="flex items-center gap-1 w-full">
++                            <span className={`text-[6px] tracking-widest w-8 shrink-0 ${labelsBold ? 'font-bold' : 'font-normal'} ${labelsUppercase ? 'uppercase' : 'capitalize'}`} style={{ color: textGradientEnd }}>Time:</span>
++                            <input value={editTime} onChange={e => setEditTime(e.target.value)} className="bg-transparent outline-none text-[6px] font-medium text-white tracking-wider flex-grow" placeholder="4:30 PM to 6:30 PM" />
+                           </div>
++                          <div className="flex items-start gap-1 w-full">
++                            <span className={`text-[6px] tracking-widest w-8 shrink-0 mt-0.5 ${labelsBold ? 'font-bold' : 'font-normal'} ${labelsUppercase ? 'uppercase' : 'capitalize'}`} style={{ color: textGradientEnd }}>Venue:</span>
++                            <textarea value={editVenue} onChange={e => setEditVenue(e.target.value)} className="bg-transparent outline-none text-[6px] font-medium text-white tracking-wider flex-grow resize-none leading-tight" rows={2} placeholder="AIML Lab, 7th Floor" />
++                          </div>
++                        </div>
++                        <div className="w-1/2 p-2 flex flex-col justify-center text-left space-y-1">
++                          <span className={`text-[6px] tracking-widest ${labelsBold ? 'font-bold' : 'font-normal'} ${labelsUppercase ? 'uppercase' : 'capitalize'}`} style={{ color: textGradientEnd }}>Registration Fee:</span>
++                          <textarea value={editFee} onChange={e => setEditFee(e.target.value)} className="bg-transparent outline-none text-[6px] font-medium text-white tracking-wider w-full resize-none leading-tight" rows={3} placeholder="Registration is free for all!" />
+                         </div>
+                       </div>
+ 
+-                      {/* Bottom: POC Details */}
+-                      <div className="grid grid-cols-2 gap-4 items-end pt-4 pb-2 border-t border-white/10">
+-                        <div className="space-y-1">
+-                          <span className="text-[8px] text-white/40 font-bold uppercase tracking-widest block">Contact Info</span>
+-                          <input value={editPoc1} onChange={e => setEditPoc1(e.target.value)} className="bg-transparent outline-none text-[10px] text-white/80 font-black w-full" placeholder="NAME | PHONE" />
+-                        </div>
+-                        <div className="space-y-1 text-right">
+-                          <span className="text-[8px] text-white/40 font-bold uppercase tracking-widest block">Coordinator</span>
+-                          <input value={editPoc2} onChange={e => setEditPoc2(e.target.value)} className="bg-transparent outline-none text-[10px] text-white/80 font-black w-full text-right" placeholder="NAME | PHONE" />
+-                        </div>
++                      {/* Tags */}
++                      <div
++                        className="flex flex-col items-center gap-1 mt-2 p-1 w-full relative cursor-pointer group/layer"
++                        onClick={(e) => { e.stopPropagation(); setSelectedLayer('tags'); }}
++                      >
++                        <div className="absolute inset-0 group-hover/layer:ring-1 group-hover/layer:ring-[#0d99ff]/50 pointer-events-none" />
++                        <FigmaBox isSelected={selectedLayer === 'tags'} />
++                        <input value={editTeamSize} onChange={e => setEditTeamSize(e.target.value)} className="bg-transparent outline-none text-[7px] font-medium text-white/90 tracking-[0.15em] text-center w-full" placeholder="Participate in teams of 2-4" />
++                        <textarea
++                          value={editPrizePool}
++                          onChange={e => setEditPrizePool(e.target.value)}
++                          className="bg-black/60 border rounded-md px-3 py-1 outline-none text-[8px] font-black uppercase tracking-widest text-center min-w-[100px] resize-none leading-tight"
++                          style={{ color: textGradientEnd, borderColor: `${textGradientEnd}40` }}
++                          rows={2}
++                          placeholder={"PRIZE POOL\n₹3000"}
++                        />
+                       </div>
+                     </div>
++
++                    {/* FOOTER */}
++                    <div
++                      className="flex justify-between items-end w-full px-1 mb-1 pt-2 relative cursor-pointer group/layer"
++                      onClick={(e) => { e.stopPropagation(); setSelectedLayer('footer'); }}
++                    >
++                      <div className="absolute inset-0 group-hover/layer:ring-1 group-hover/layer:ring-[#0d99ff]/50 pointer-events-none" />
++                      <FigmaBox isSelected={selectedLayer === 'footer'} />
++                      <input value={editPoc1} onChange={e => setEditPoc1(e.target.value)} className="bg-transparent outline-none text-[6px] font-medium tracking-widest w-1/3" style={{ color: textGradientEnd }} placeholder="Name: Phone" />
++                      <input value={editPoc2} onChange={e => setEditPoc2(e.target.value)} className="bg-transparent outline-none text-[6px] font-medium tracking-widest w-1/3 text-right" style={{ color: textGradientEnd }} placeholder="Name: Phone" />
++                    </div>
++                  </div>
++                </div>
++              </div>
++            </div>
++
++            {/* ─── BANNER ARTBOARD ────────────────────────────── */}
++            <div
++              className="absolute"
++              style={{ left: ARTBOARD_POSITIONS.banner.x, top: ARTBOARD_POSITIONS.banner.y }}
++              onClick={() => { setSelectedArtboard("banner"); setActiveTab("banner"); }}
++            >
++              <div className="mb-2">
++                <span className="text-[11px] text-[#808080] font-medium">Banner</span>
++                <span className="text-[9px] text-[#555] ml-2">8×10 ft</span>
++              </div>
++              <div
++                className={`relative bg-black flex items-center justify-center transition-shadow duration-200 ${selectedArtboard === "banner" ? "ring-2 ring-[#0D99FF]" : "ring-1 ring-[#383838]"}`}
++                style={{ width: ARTBOARD_POSITIONS.banner.w, height: ARTBOARD_POSITIONS.banner.h }}
++              >
++                <div className="text-center space-y-2 p-4">
++                  <LucideImage className="w-8 h-8 text-[#383838] mx-auto" />
++                  <p className="text-[10px] text-[#555]">Banner Preview</p>
++                  <p className="text-[8px] text-[#444]">Same content as poster,<br/>optimized for 8×10 ft print</p>
++                </div>
++              </div>
++            </div>
++
++            {/* ─── STANDEE ARTBOARD ───────────────────────────── */}
++            <div
++              className="absolute"
++              style={{ left: ARTBOARD_POSITIONS.standee.x, top: ARTBOARD_POSITIONS.standee.y }}
++              onClick={() => { setSelectedArtboard("standee"); setActiveTab("standee"); }}
++            >
++              <div className="mb-2">
++                <span className="text-[11px] text-[#808080] font-medium">Standee</span>
++                <span className="text-[9px] text-[#555] ml-2">3×5 ft</span>
++              </div>
++              <div
++                className={`relative bg-black flex items-center justify-center transition-shadow duration-200 ${selectedArtboard === "standee" ? "ring-2 ring-[#0D99FF]" : "ring-1 ring-[#383838]"}`}
++                style={{ width: ARTBOARD_POSITIONS.standee.w, height: ARTBOARD_POSITIONS.standee.h }}
++              >
++                <div className="text-center space-y-2 p-4">
++                  <Columns2 className="w-8 h-8 text-[#383838] mx-auto" />
++                  <p className="text-[10px] text-[#555]">Standee Preview</p>
++                  <p className="text-[8px] text-[#444]">3×5 ft vertical standee</p>
++                </div>
++              </div>
++            </div>
++
++            {/* ─── FORMS HEADER ARTBOARD ──────────────────────── */}
++            <div
++              className="absolute"
++              style={{ left: ARTBOARD_POSITIONS["forms-header"].x, top: ARTBOARD_POSITIONS["forms-header"].y }}
++              onClick={() => { setSelectedArtboard("forms-header"); setActiveTab("forms-header"); }}
++            >
++              <div className="mb-2">
++                <span className="text-[11px] text-[#808080] font-medium">Forms Header</span>
++                <span className="text-[9px] text-[#555] ml-2">1600×400</span>
++              </div>
++              <div
++                className={`relative bg-black flex items-center justify-center transition-shadow duration-200 ${selectedArtboard === "forms-header" ? "ring-2 ring-[#0D99FF]" : "ring-1 ring-[#383838]"}`}
++                style={{ width: ARTBOARD_POSITIONS["forms-header"].w, height: ARTBOARD_POSITIONS["forms-header"].h }}
++              >
++                <div className="text-center space-y-2 p-4">
++                  <FileText className="w-8 h-8 text-[#383838] mx-auto" />
++                  <p className="text-[10px] text-[#555]">Forms Header</p>
++                  <p className="text-[8px] text-[#444]">Google Forms / Registration</p>
++                </div>
++              </div>
++            </div>
++
++            {/* ─── CERTIFICATE CARD ──────────────────────────── */}
++            <div
++              className="absolute"
++              style={{ left: ARTBOARD_POSITIONS.certificate.x, top: ARTBOARD_POSITIONS.certificate.y }}
++            >
++              <div className="mb-2">
++                <span className="text-[11px] text-[#808080] font-medium">Certificate</span>
++                <span className="text-[9px] text-[#555] ml-2">Canva</span>
++              </div>
++              <div
++                className="relative bg-[#1E1E1E] border border-[#383838] rounded-md flex flex-col items-center justify-center p-6"
++                style={{ width: ARTBOARD_POSITIONS.certificate.w, height: ARTBOARD_POSITIONS.certificate.h }}
++              >
++                <Award className="w-10 h-10 text-[#555] mb-3" />
++                <p className="text-[11px] text-[#C0C0C0] font-medium mb-2">Certificate Design</p>
++                <a
++                  href={getCertificateUrl(config.subType)}
++                  target="_blank"
++                  rel="noreferrer"
++                  className="px-4 py-1.5 bg-[#0D99FF] text-white rounded text-[10px] font-medium hover:bg-[#0B85E0] transition-colors flex items-center gap-1.5"
++                >
++                  Open Canva <ExternalLink className="w-3 h-3" />
++                </a>
++              </div>
++            </div>
++
++          </div>
++        </div>
++
++                {/* ─── RIGHT PANEL: Properties ────────────────────────────── */}
++        <div className="w-[320px] shrink-0 bg-[#2C2C2C] border-l border-[#1E1E1E] overflow-y-auto z-[201] custom-scrollbar flex flex-col text-white pb-32">
++          {/* Header */}
++          <div className="p-3 border-b border-[#383838] flex items-center justify-between sticky top-0 bg-[#2C2C2C] z-10 text-[11px] font-medium">
++            <span className="flex items-center gap-2">
++              <Layout className="w-3.5 h-3.5 text-[#808080]" />
++              <span className="capitalize">{selectedLayer === 'background' ? 'Image' : selectedLayer === 'title' || selectedLayer === 'tagline' || selectedLayer === 'details' ? 'Text' : selectedLayer}</span>
++            </span>
++            <div className="flex gap-3 text-[#808080]">
++               <LayoutGrid className="w-3.5 h-3.5 hover:text-white cursor-pointer" />
++               <ChevronDown className="w-3.5 h-3.5 hover:text-white cursor-pointer" />
++            </div>
++          </div>
++
++          {/* Position */}
++          <section className="p-4 border-b border-[#383838]">
++            <label className="text-[11px] font-bold mb-3 block">Position</label>
++            <div className="flex items-center justify-between mb-3 bg-[#1E1E1E] p-1 rounded border border-transparent">
++              <button className="p-1.5 rounded hover:bg-[#383838] text-[#808080]"><AlignLeft className="w-3 h-3" /></button>
++              <button className="p-1.5 rounded hover:bg-[#383838] text-[#808080]"><AlignCenter className="w-3 h-3" /></button>
++              <button className="p-1.5 rounded hover:bg-[#383838] text-[#808080]"><AlignRight className="w-3 h-3" /></button>
++              <div className="w-px h-3 bg-[#383838] mx-1" />
++              <button className="p-1.5 rounded hover:bg-[#383838] text-[#808080]"><AlignVerticalSpaceAround className="w-3 h-3" /></button>
++              <button className="p-1.5 rounded hover:bg-[#383838] text-[#808080]"><AlignHorizontalSpaceAround className="w-3 h-3" /></button>
++            </div>
++            <div className="grid grid-cols-2 gap-2">
++              <div className="flex items-center bg-[#1E1E1E] border border-transparent hover:border-[#444] rounded overflow-hidden">
++                <span className="pl-2 text-[#808080] text-[9px] w-5">X</span>
++                <input type="text" value="3247.75" readOnly className="w-full bg-transparent border-none py-1.5 pl-1 outline-none text-[10px]" />
++              </div>
++              <div className="flex items-center bg-[#1E1E1E] border border-transparent hover:border-[#444] rounded overflow-hidden">
++                <span className="pl-2 text-[#808080] text-[9px] w-5">Y</span>
++                <input type="text" value="277.36" readOnly className="w-full bg-transparent border-none py-1.5 pl-1 outline-none text-[10px]" />
++              </div>
++            </div>
++            <div className="grid grid-cols-[1fr_auto_auto_auto] gap-2 mt-2 items-center">
++              <div className="flex items-center bg-[#1E1E1E] border border-transparent hover:border-[#444] rounded overflow-hidden">
++                <span className="pl-2 text-[#808080] text-[9px] w-5">∠</span>
++                <input type="text" value="0°" readOnly className="w-full bg-transparent border-none py-1.5 pl-1 outline-none text-[10px]" />
++              </div>
++              <button className="p-1.5 rounded hover:bg-[#383838] text-[#808080] bg-[#1E1E1E]"><RefreshCw className="w-3 h-3" /></button>
++              <button className="p-1.5 rounded hover:bg-[#383838] text-[#808080] bg-[#1E1E1E]"><Columns2 className="w-3 h-3" /></button>
++              <button className="p-1.5 rounded hover:bg-[#383838] text-[#808080] bg-[#1E1E1E]"><Layout className="w-3 h-3" /></button>
++            </div>
++          </section>
++
++          {/* Layout */}
++          <section className="p-4 border-b border-[#383838]">
++            <label className="text-[11px] font-bold mb-3 block">Layout</label>
++            <div className="grid grid-cols-2 gap-2">
++              <div className="flex items-center bg-[#1E1E1E] border border-transparent hover:border-[#444] rounded overflow-hidden">
++                <span className="pl-2 text-[#808080] text-[9px] w-5">W</span>
++                <input type="text" value="3498.27" readOnly className="w-full bg-transparent border-none py-1.5 pl-1 outline-none text-[10px]" />
++              </div>
++              <div className="flex items-center bg-[#1E1E1E] border border-transparent hover:border-[#444] rounded overflow-hidden">
++                <span className="pl-2 text-[#808080] text-[9px] w-5">H</span>
++                <input type="text" value="365" readOnly className="w-full bg-transparent border-none py-1.5 pl-1 outline-none text-[10px]" />
++              </div>
++            </div>
++          </section>
++
++          {/* Appearance */}
++          <section className="p-4 border-b border-[#383838]">
++            <div className="flex items-center justify-between mb-3">
++              <label className="text-[11px] font-bold">Appearance</label>
++              <div className="flex gap-3 text-[#808080]">
++                <Eye className="w-3.5 h-3.5 hover:text-white cursor-pointer" />
++                <Droplets className="w-3.5 h-3.5 hover:text-white cursor-pointer" />
++              </div>
++            </div>
++            <div className="grid grid-cols-2 gap-2">
++              <div className="flex flex-col gap-1">
++                <span className="text-[9px] text-[#808080]">Opacity</span>
++                <div className="flex items-center bg-[#1E1E1E] border border-transparent hover:border-[#444] rounded overflow-hidden">
++                  <span className="pl-2 text-[#808080] text-[9px]"><LayoutGrid className="w-3 h-3" /></span>
++                  <input type="text" value="100%" readOnly className="w-full bg-transparent border-none py-1.5 pl-2 outline-none text-[10px]" />
++                </div>
++              </div>
++              <div className="flex flex-col gap-1">
++                <span className="text-[9px] text-[#808080]">Corner radius</span>
++                <div className="flex items-center bg-[#1E1E1E] border border-transparent hover:border-[#444] rounded overflow-hidden">
++                  <span className="pl-2 text-[#808080] text-[9px]">⌜ ⌝</span>
++                  <input type="text" value="0" readOnly className="w-full bg-transparent border-none py-1.5 pl-2 outline-none text-[10px]" />
++                </div>
++              </div>
++            </div>
++          </section>
++
++          {/* Typography */}
++          {(selectedLayer === "title" || selectedLayer === "tagline" || selectedLayer === "details" || selectedLayer === "tags") && (
++            <section className="p-4 border-b border-[#383838]">
++              <div className="flex items-center justify-between mb-4">
++                <label className="text-[11px] font-bold">Typography</label>
++                <LayoutGrid className="w-3.5 h-3.5 text-[#808080]" />
++              </div>
++              
++              <div className="space-y-2 text-[10px]">
++                <div className="relative group">
++                  <select value={titleFont} onChange={e => setTitleFont(e.target.value)} className="w-full appearance-none bg-[#1E1E1E] border border-transparent hover:border-[#444] focus:border-[#FBBF24]/50 rounded px-2.5 py-1.5 outline-none cursor-pointer text-white">
++                    <option value="Inter">Inter</option>
++                    <option value="var(--font-destrubia)">Destrubia</option>
++                    <option value="var(--font-astronomus)">Astronomus</option>
++                  </select>
++                  <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 text-[#808080] pointer-events-none" />
++                </div>
++
++                <div className="flex gap-2">
++                  <div className="relative flex-1 group">
++                    <select className="w-full appearance-none bg-[#1E1E1E] border border-transparent hover:border-[#444] focus:border-[#FBBF24]/50 rounded px-2.5 py-1.5 outline-none cursor-pointer text-white" value={titleBold ? "Bold" : "Regular"} onChange={(e) => setTitleBold(e.target.value === "Bold")}>
++                      <option>Regular</option>
++                      <option>Bold</option>
++                    </select>
++                    <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 text-[#808080] pointer-events-none" />
++                  </div>
++                  <div className="relative w-20 group">
++                    <input type="number" defaultValue="362.35" className="w-full bg-[#1E1E1E] border border-transparent hover:border-[#444] focus:border-[#FBBF24]/50 rounded px-2.5 py-1.5 outline-none text-white" />
++                    <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 text-[#808080] pointer-events-none" />
++                  </div>
++                </div>
++
++                <div className="flex gap-2 mt-3">
++                  <div className="flex flex-col gap-1 flex-1">
++                     <span className="text-[9px] text-[#808080]">Line height</span>
++                     <div className="flex items-center bg-[#1E1E1E] border border-transparent hover:border-[#444] focus-within:border-[#FBBF24]/50 rounded px-2 overflow-hidden">
++                       <span className="text-[#808080] w-5 pr-1"><Type className="w-3 h-3" /></span>
++                       <input value={textLineHeight} onChange={e => setTextLineHeight(e.target.value)} className="w-full bg-transparent border-none py-1.5 pl-2 outline-none text-[10px] text-white" />
++                     </div>
++                  </div>
++                  <div className="flex flex-col gap-1 flex-1">
++                     <span className="text-[9px] text-[#808080]">Letter spacing</span>
++                     <div className="flex items-center bg-[#1E1E1E] border border-transparent hover:border-[#444] focus-within:border-[#FBBF24]/50 rounded px-2 overflow-hidden">
++                       <span className="text-[#808080] w-6 pr-1 flex gap-0.5"><span className="text-[8px]">|</span>A<span className="text-[8px]">|</span></span>
++                       <input value={textLetterSpacing + "%"} onChange={e => setTextLetterSpacing(Number(e.target.value.replace("%","")))} className="w-full bg-transparent border-none py-1.5 pl-2 outline-none text-[10px] text-white" />
++                     </div>
++                  </div>
++                </div>
++
++                <div className="mt-3 flex flex-col gap-1">
++                   <span className="text-[9px] text-[#808080]">Alignment</span>
++                   <div className="flex items-center gap-1 bg-[#1E1E1E] p-1 rounded border border-transparent w-fit">
++                     <button onClick={() => setTextAlign("left")} className={`p-1.5 rounded hover:bg-[#383838] ${textAlign === "left" ? "bg-[#383838] text-white" : "text-[#808080]"}`}><AlignLeft className="w-3 h-3" /></button>
++                     <button onClick={() => setTextAlign("center")} className={`p-1.5 rounded hover:bg-[#383838] ${textAlign === "center" ? "bg-[#383838] text-white" : "text-[#808080]"}`}><AlignCenter className="w-3 h-3" /></button>
++                     <button onClick={() => setTextAlign("right")} className={`p-1.5 rounded hover:bg-[#383838] ${textAlign === "right" ? "bg-[#383838] text-white" : "text-[#808080]"}`}><AlignRight className="w-3 h-3" /></button>
++                   </div>
++                </div>
++              </div>
++            </section>
++          )}
++
++          {/* Fill */}
++          <section className="p-4 border-b border-[#383838]">
++            <div className="flex items-center justify-between mb-4">
++              <label className="text-[11px] font-bold">Fill</label>
++              <div className="flex gap-3 text-[#808080]">
++                <LayoutGrid className="w-3.5 h-3.5 hover:text-white cursor-pointer" />
++                <Plus className="w-3.5 h-3.5 hover:text-white cursor-pointer" />
++              </div>
++            </div>
++            
++            {selectedLayer === 'background' ? (
++              <div className="space-y-2">
++                <div className="flex items-center gap-2 group hover:bg-[#1E1E1E] -mx-2 px-2 py-1 rounded cursor-pointer">
++                  <div className="w-4 h-4 rounded-sm border border-[#383838] shrink-0 relative overflow-hidden">
++                    <input type="color" value={gradientStart} onChange={e => setGradientStart(e.target.value)} className="absolute -inset-2 w-8 h-8 cursor-pointer" />
++                  </div>
++                  <input type="text" value={gradientStart.toUpperCase().replace('#', '')} onChange={e => setGradientStart('#' + e.target.value)} className="bg-transparent border-none py-1 text-[10px] text-white outline-none w-16 uppercase" />
++                  <div className="flex-1" />
++                  <input type="text" value="100%" className="bg-transparent border-none text-[10px] text-[#808080] outline-none w-10 text-right" readOnly />
++                  <Eye className="w-3.5 h-3.5 text-[#808080] ml-2 hover:text-white cursor-pointer shrink-0 opacity-0 group-hover:opacity-100" />
++                  <Minus className="w-3.5 h-3.5 text-[#808080] ml-2 hover:text-white cursor-pointer shrink-0 opacity-0 group-hover:opacity-100" />
++                </div>
++                <div className="flex items-center gap-2 group hover:bg-[#1E1E1E] -mx-2 px-2 py-1 rounded cursor-pointer">
++                  <div className="w-4 h-4 rounded-sm border border-[#383838] shrink-0 relative overflow-hidden">
++                    <input type="color" value={gradientEnd} onChange={e => setGradientEnd(e.target.value)} className="absolute -inset-2 w-8 h-8 cursor-pointer" />
++                  </div>
++                  <input type="text" value={gradientEnd.toUpperCase().replace('#', '')} onChange={e => setGradientEnd('#' + e.target.value)} className="bg-transparent border-none py-1 text-[10px] text-white outline-none w-16 uppercase" />
++                  <div className="flex-1" />
++                  <input type="text" value={gradientOpacity + "%"} onChange={e => setGradientOpacity(Number(e.target.value.replace("%","")))} className="bg-transparent border-none text-[10px] text-[#808080] outline-none w-10 text-right" />
++                  <Eye className="w-3.5 h-3.5 text-[#808080] ml-2 hover:text-white cursor-pointer shrink-0 opacity-0 group-hover:opacity-100" />
++                  <Minus className="w-3.5 h-3.5 text-[#808080] ml-2 hover:text-white cursor-pointer shrink-0 opacity-0 group-hover:opacity-100" />
++                </div>
++              </div>
++            ) : (
++              <div className="flex items-center gap-2 group hover:bg-[#1E1E1E] -mx-2 px-2 py-1 rounded cursor-pointer">
++                <div className="w-4 h-4 rounded-sm border border-[#383838] shrink-0 relative overflow-hidden">
++                  <input type="color" value={textGradientEnd} onChange={e => { setTextGradientEnd(e.target.value); setTextGradientStart(e.target.value); }} className="absolute -inset-2 w-8 h-8 cursor-pointer" />
++                </div>
++                <input type="text" value={textGradientEnd.toUpperCase().replace('#', '')} onChange={e => { const v = '#' + e.target.value; setTextGradientEnd(v); setTextGradientStart(v); }} className="bg-transparent border-none py-1 text-[10px] text-white outline-none w-16 uppercase" />
++                <div className="flex-1" />
++                <input type="text" value="100%" className="bg-transparent border-none text-[10px] text-[#808080] outline-none w-10 text-right" readOnly />
++                <Eye className="w-3.5 h-3.5 text-[#808080] ml-2 hover:text-white cursor-pointer shrink-0 opacity-0 group-hover:opacity-100" />
++                <Minus className="w-3.5 h-3.5 text-[#808080] ml-2 hover:text-white cursor-pointer shrink-0 opacity-0 group-hover:opacity-100" />
++              </div>
++            )}
++          </section>
++
++          {/* Stroke (Only for Text) */}
++          {(selectedLayer === "title" || selectedLayer === "tagline" || selectedLayer === "details" || selectedLayer === "tags") && (
++            <section className="p-4 border-b border-[#383838]">
++              <div className="flex items-center justify-between mb-4">
++                <label className="text-[11px] font-bold">Stroke</label>
++                <div className="flex gap-3 text-[#808080]">
++                  <LayoutGrid className="w-3.5 h-3.5 hover:text-white cursor-pointer" />
++                  <Plus className="w-3.5 h-3.5 hover:text-white cursor-pointer" />
++                </div>
++              </div>
++              
++              <div className="space-y-3">
++                <div className="flex items-center gap-2 group hover:bg-[#1E1E1E] -mx-2 px-2 py-1 rounded cursor-pointer">
++                  <div className="w-4 h-4 rounded-sm border border-[#383838] shrink-0 relative overflow-hidden bg-white">
++                    <input type="color" value={textStrokeColor} onChange={e => setTextStrokeColor(e.target.value)} className="absolute -inset-2 w-8 h-8 cursor-pointer" />
++                  </div>
++                  <input type="text" value={textStrokeColor.toUpperCase().replace('#', '')} onChange={e => setTextStrokeColor('#' + e.target.value)} className="bg-transparent border-none py-1 text-[10px] text-white outline-none w-16 uppercase" />
++                  <div className="flex-1" />
++                  <input type="text" value="100%" className="bg-transparent border-none text-[10px] text-[#808080] outline-none w-10 text-right" readOnly />
++                  <EyeOff className="w-3.5 h-3.5 text-[#808080] ml-2 hover:text-white cursor-pointer shrink-0 opacity-0 group-hover:opacity-100" />
++                  <Minus className="w-3.5 h-3.5 text-[#808080] ml-2 hover:text-white cursor-pointer shrink-0 opacity-0 group-hover:opacity-100" />
++                </div>
++                
++                <div className="grid grid-cols-2 gap-2 text-[10px]">
++                  <div className="flex flex-col gap-1">
++                     <span className="text-[9px] text-[#808080]">Position</span>
++                     <div className="relative group">
++                       <select value={strokePosition} onChange={(e) => setStrokePosition(e.target.value as any)} className="w-full appearance-none bg-[#1E1E1E] border border-transparent hover:border-[#444] focus:border-[#FBBF24]/50 rounded px-2.5 py-1.5 outline-none cursor-pointer text-white">
++                         <option value="Outside">Outside</option>
++                         <option value="Inside">Inside</option>
++                         <option value="Center">Center</option>
++                       </select>
++                       <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 text-[#808080] pointer-events-none" />
++                     </div>
++                  </div>
++                  <div className="flex flex-col gap-1">
++                     <span className="text-[9px] text-[#808080]">Weight</span>
++                     <div className="flex items-center bg-[#1E1E1E] border border-transparent hover:border-[#444] focus-within:border-[#FBBF24]/50 rounded px-2 overflow-hidden">
++                       <span className="text-[#808080] pr-1.5 flex items-center"><AlignHorizontalSpaceAround className="w-3 h-3" /></span>
++                       <input type="number" value={textStrokeWidth} onChange={e => setTextStrokeWidth(Number(e.target.value))} className="w-full bg-transparent border-none py-1.5 outline-none text-[10px] text-white" />
++                     </div>
++                  </div>
++                </div>
++              </div>
++            </section>
++          )}
++
++          {/* Effects */}
++          <section className="p-4 border-b border-[#383838]">
++            <div className="flex items-center justify-between mb-4">
++              <label className="text-[11px] font-bold">Effects</label>
++              <div className="flex gap-3 text-[#808080]">
++                <LayoutGrid className="w-3.5 h-3.5 hover:text-white cursor-pointer" />
++                <Plus className="w-3.5 h-3.5 hover:text-white cursor-pointer" />
++              </div>
++            </div>
++            
++            <div className="flex items-center justify-between text-[10px] text-white group cursor-pointer hover:bg-[#1E1E1E] -mx-2 px-2 py-1 rounded">
++              <div className="flex items-center gap-2">
++                <span>{selectedLayer === 'background' ? 'Layer blur' : 'Drop shadow'}</span>
++              </div>
++              <div className="flex gap-3 opacity-0 group-hover:opacity-100">
++                <Droplets className="w-3.5 h-3.5 text-[#808080] hover:text-white" />
++                <Eye className="w-3.5 h-3.5 text-[#808080] hover:text-white" />
++                <Minus className="w-3.5 h-3.5 text-[#808080] hover:text-white" />
++              </div>
++            </div>
++            
++            {selectedLayer === 'background' ? (
++              <div className="mt-3 bg-[#1E1E1E] border border-[#383838] rounded-xl p-3">
++                <div className="grid grid-cols-[60px_1fr] gap-2 items-center">
++                  <span className="text-[10px] text-[#808080]">Blur</span>
++                  <div className="flex items-center bg-[#2C2C2C] border border-transparent rounded overflow-hidden">
++                    <span className="pl-2 text-[#808080] text-[9px]"><LayoutGrid className="w-2.5 h-2.5" /></span>
++                    <input type="number" value={layerBlur} onChange={e => setLayerBlur(Number(e.target.value))} className="w-full bg-transparent border-none py-1.5 pl-2 pr-1 outline-none text-[10px] text-white" />
++                  </div>
++                </div>
++              </div>
++            ) : (
++              <div className="mt-3 bg-[#1E1E1E] border border-[#383838] rounded-xl p-3 space-y-3">
++                <div className="grid grid-cols-[60px_1fr] gap-2 items-center">
++                  <span className="text-[10px] text-[#808080]">Position</span>
++                  <div className="flex gap-2">
++                    <div className="flex items-center bg-[#2C2C2C] border border-transparent rounded overflow-hidden flex-1">
++                      <span className="pl-2 text-[#808080] text-[9px]">X</span>
++                      <input type="number" value={textShadowX} onChange={e => setTextShadowX(Number(e.target.value))} className="w-full bg-transparent border-none py-1.5 pl-2 pr-1 outline-none text-[10px] text-white" />
++                    </div>
++                    <div className="flex items-center bg-[#2C2C2C] border border-transparent rounded overflow-hidden flex-1">
++                      <span className="pl-2 text-[#808080] text-[9px]">Y</span>
++                      <input type="number" value={textShadowY} onChange={e => setTextShadowY(Number(e.target.value))} className="w-full bg-transparent border-none py-1.5 pl-2 pr-1 outline-none text-[10px] text-white" />
++                    </div>
++                  </div>
++                </div>
++                
++                <div className="grid grid-cols-[60px_1fr] gap-2 items-center">
++                  <span className="text-[10px] text-[#808080]">Blur</span>
++                  <div className="flex items-center bg-[#2C2C2C] border border-transparent rounded overflow-hidden">
++                    <span className="pl-2 text-[#808080] text-[9px]"><LayoutGrid className="w-2.5 h-2.5" /></span>
++                    <input type="number" value={textShadowBlur} onChange={e => setTextShadowBlur(Number(e.target.value))} className="w-full bg-transparent border-none py-1.5 pl-2 pr-1 outline-none text-[10px] text-white" />
++                  </div>
++                </div>
++
++                <div className="grid grid-cols-[60px_1fr] gap-2 items-center">
++                  <span className="text-[10px] text-[#808080]">Spread</span>
++                  <div className="flex items-center bg-[#2C2C2C] border border-transparent rounded overflow-hidden opacity-50 cursor-not-allowed">
++                    <span className="pl-2 text-[#808080] text-[9px]"><Sparkles className="w-2.5 h-2.5" /></span>
++                    <input type="number" value={0} disabled className="w-full bg-transparent border-none py-1.5 pl-2 pr-1 outline-none text-[10px] text-white cursor-not-allowed" />
+                   </div>
+                 </div>
+ 
+-                {/* Error display */}
+-                {imageGen.error && (
+-                  <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-[10px] font-bold uppercase tracking-widest text-center">
+-                    {imageGen.error}
++                <div className="grid grid-cols-[60px_1fr] gap-2 items-center">
++                  <span className="text-[10px] text-[#808080]">Color</span>
++                  <div className="flex items-center bg-[#2C2C2C] border border-transparent rounded px-2">
++                    <div className="w-3 h-3 rounded-sm border border-[#383838] relative overflow-hidden flex-shrink-0">
++                      <input type="color" value={textShadowColor} onChange={e => setTextShadowColor(e.target.value)} className="absolute -inset-2 w-8 h-8 cursor-pointer" />
++                    </div>
++                    <input type="text" value={textShadowColor.toUpperCase().replace('#', '')} onChange={e => setTextShadowColor('#' + e.target.value)} className="flex-1 bg-transparent border-none py-1.5 pl-2 outline-none text-[10px] text-white uppercase" />
++                    <div className="w-px h-3 bg-[#444] mx-2" />
++                    <input type="text" value={textShadowOpacity + "%"} onChange={e => setTextShadowOpacity(Number(e.target.value.replace("%","")))} className="w-10 bg-transparent border-none py-1.5 text-right outline-none text-[10px] text-white" />
+                   </div>
+-                )}
++                </div>
+               </div>
++            )}
++          </section>
++          
++          {/* Image Adjustments (Only for background) */}
++          {selectedLayer === 'background' && (
++            <section className="p-4 border-b border-[#383838]">
++              <div className="flex items-center justify-between mb-4">
++                <label className="text-[11px] font-bold">Adjustments</label>
++                <Sliders className="w-3.5 h-3.5 text-[#808080]" />
++              </div>
++              <div className="grid grid-cols-[1fr_40px] gap-x-2 gap-y-3 items-center text-[10px]">
++                <div className="flex items-center gap-2">
++                  <span className="text-[#808080] w-14">Exposure</span>
++                  <input type="range" min={0} max={200} value={exposure} onChange={e => setExposure(Number(e.target.value))} className="flex-1 accent-[#808080]" />
++                </div>
++                <span className="text-white text-right">{exposure}%</span>
++                
++                <div className="flex items-center gap-2">
++                  <span className="text-[#808080] w-14">Contrast</span>
++                  <input type="range" min={0} max={200} value={contrast} onChange={e => setContrast(Number(e.target.value))} className="flex-1 accent-[#808080]" />
++                </div>
++                <span className="text-white text-right">{contrast}%</span>
++
++                <div className="flex items-center gap-2">
++                  <span className="text-[#808080] w-14">Saturation</span>
++                  <input type="range" min={0} max={200} value={saturation} onChange={e => setSaturation(Number(e.target.value))} className="flex-1 accent-[#808080]" />
++                </div>
++                <span className="text-white text-right">{saturation}%</span>
++
++                <div className="flex items-center gap-2">
++                  <span className="text-[#808080] w-14">Temp</span>
++                  <input type="range" min={0} max={100} value={temperature} onChange={e => setTemperature(Number(e.target.value))} className="flex-1 accent-[#808080]" />
++                </div>
++                <span className="text-white text-right">{temperature}</span>
++              </div>
++            </section>
++          )}
++
++          {/* Label Rules (Only for details, tags) */}
++          {(selectedLayer === 'details' || selectedLayer === 'tags' || selectedLayer === 'footer' || selectedLayer === 'header') && (
++            <section className="p-4 border-b border-[#383838]">
++              <label className="text-[11px] font-bold mb-3 block">Label Rules</label>
++              <div className="flex gap-2 mb-3 text-[10px]">
++                <button onClick={() => setLabelsBold(!labelsBold)} className={`flex-1 py-1.5 rounded font-medium ${labelsBold ? "bg-[#1E1E1E] text-white border border-[#444]" : "bg-[#2C2C2C] text-[#808080] border border-transparent"}`}>Bold</button>
++                <button onClick={() => setLabelsUppercase(!labelsUppercase)} className={`flex-1 py-1.5 rounded font-medium ${labelsUppercase ? "bg-[#1E1E1E] text-white border border-[#444]" : "bg-[#2C2C2C] text-[#808080] border border-transparent"}`}>Uppercase</button>
++              </div>
++              <div className="p-3 bg-[#1E1E1E] border border-[#383838] rounded text-[10px] text-[#808080]">
++                Edit values directly on the canvas.
++              </div>
++            </section>
++          )}
++
++          {/* Export */}
++          <section className="p-4 flex items-center justify-between">
++             <label className="text-[11px] font-bold">Export</label>
++             <Plus className="w-3.5 h-3.5 text-[#808080] hover:text-white cursor-pointer" />
++          </section>
++
++          {/* Error display */}
++          {imageGen.error && (
++            <div className="m-3 p-3 bg-red-500/10 border border-red-500/20 rounded text-red-400 text-[10px] font-medium text-center">
++              {imageGen.error}
+             </div>
+-          </motion.div>
+-        )}
+-      </AnimatePresence>
++          )}
++        </div>
++      </div>
+     </div>
+   );
+-}
+\ No newline at end of file
++}

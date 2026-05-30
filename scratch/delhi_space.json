@@ -1,0 +1,302 @@
+[
+  {
+    "id": "del-space-001",
+    "name": "PAC IITD",
+    "organization": "IIT Delhi",
+    "category": "Astronomy/Space",
+    "description": "Physics and Astronomy Club of IIT Delhi, the premier hub for space enthusiasts, organizing stargazing nights and the 'Cosmicon' fest.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/pac_iitd",
+      "website": "https://brca.iitd.ac.in"
+    },
+    "approxMemberCount": "120+",
+    "founded": "2005",
+    "keyEvents": ["Cosmicon", "Stargazing Nights"]
+  },
+  {
+    "id": "del-space-002",
+    "name": "Celestial Flare",
+    "organization": "DTU",
+    "category": "Astronomy/Space",
+    "description": "The Astronomy and Cosmology society of DTU, focusing on observational astronomy and astrophysics workshops.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/celestialflare.dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "2010",
+    "keyEvents": ["Astro-Weeks", "Observational Sessions"]
+  },
+  {
+    "id": "del-space-003",
+    "name": "Nakshatra",
+    "organization": "NSUT",
+    "category": "Astronomy/Space",
+    "description": "The official Astronomy society of NSUT, fostering a passion for space science and telescope handling.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/nakshatra_nsut",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "2012",
+    "keyEvents": ["Messier Marathons", "Sky Watching"]
+  },
+  {
+    "id": "del-space-004",
+    "name": "Physoc Astronomy",
+    "organization": "St. Stephen's College",
+    "category": "Astronomy/Space",
+    "description": "The dedicated astronomy wing of the Physics Society at St. Stephen's, focusing on theoretical astrophysics.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/physoc.ssc",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "60+",
+    "founded": "1990",
+    "keyEvents": ["Astro-Symposiums", "Quiz Nights"]
+  },
+  {
+    "id": "del-space-005",
+    "name": "Astronomy Society Hindu",
+    "organization": "Hindu College",
+    "category": "Astronomy/Space",
+    "description": "Hindu College's hub for space enthusiasts, promoting interest in cosmology and space missions.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/astrosoc_hindu",
+      "website": "https://hinducollege.ac.in"
+    },
+    "approxMemberCount": "70+",
+    "founded": "1995",
+    "keyEvents": ["Space-Con", "Telescope Workshops"]
+  },
+  {
+    "id": "del-space-006",
+    "name": "Astronomy Society Miranda",
+    "organization": "Miranda House",
+    "category": "Astronomy/Space",
+    "description": "Empowering women in space science through hands-on observational sessions and guest lectures.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/astrosoc_mh",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "65+",
+    "founded": "1998",
+    "keyEvents": ["Women in Space Talks", "Stargazing"]
+  },
+  {
+    "id": "del-space-007",
+    "name": "Astronomy Society LSR",
+    "organization": "LSR",
+    "category": "Astronomy/Space",
+    "description": "Promoting space science and astronomical awareness among students at LSR.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/astrosoc_lsr",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "2000",
+    "keyEvents": ["Astro-Nights", "Seminars"]
+  },
+  {
+    "id": "del-space-008",
+    "name": "Astronomy Society Gargi",
+    "organization": "Gargi College",
+    "category": "Astronomy/Space",
+    "description": "Gargi's society for exploring the universe, organizing educational trips and sky observation.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/astrosoc_gargi",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "55+",
+    "founded": "2002",
+    "keyEvents": ["Science Day Astro-Exhibition", "Sky Viewing"]
+  },
+  {
+    "id": "del-space-009",
+    "name": "Astronomy Society Venky",
+    "organization": "Sri Venkateswara College",
+    "category": "Astronomy/Space",
+    "description": "The official astronomy club of Venky, active in participating in citizen science projects like asteroid hunts.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/astrosoc_venky",
+      "website": "https://svc.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "2005",
+    "keyEvents": ["Asteroid Hunt Campaigns", "Stargazing"]
+  },
+  {
+    "id": "del-space-010",
+    "name": "Astronomy Society Ramjas",
+    "organization": "Ramjas College",
+    "category": "Astronomy/Space",
+    "description": "Ramjas College's space club, fostering interest in the mysteries of the cosmos.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/astrosoc_ramjas",
+      "website": "https://ramjas.du.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "1995",
+    "keyEvents": ["Cosmology Workshops", "Quiz Events"]
+  },
+  {
+    "id": "del-space-011",
+    "name": "Astronomy Society Hansraj",
+    "organization": "Hansraj College",
+    "category": "Astronomy/Space",
+    "description": "The space science wing of Hansraj, active in promoting amateur astronomy.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/astronomy_hrc",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "65+",
+    "founded": "1992",
+    "keyEvents": ["Night Sky Observation", "Workshops"]
+  },
+  {
+    "id": "del-space-012",
+    "name": "Astronomy Society JMI",
+    "organization": "Jamia Millia Islamia",
+    "category": "Astronomy/Space",
+    "description": "JMI's hub for astrophysics and observational astronomy.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/astrosoc_jmi",
+      "website": "https://jmi.ac.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "1988",
+    "keyEvents": ["Space Science Symposia", "Stargazing"]
+  },
+  {
+    "id": "del-space-013",
+    "name": "AAAD",
+    "organization": "Independent",
+    "category": "Astronomy/Space",
+    "description": "Amateur Astronomers Association Delhi, the oldest and largest independent astronomy body in Delhi.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/aaad_delhi",
+      "website": "https://aaadelhi.org"
+    },
+    "approxMemberCount": "500+",
+    "founded": "1980",
+    "keyEvents": ["Public Stargazing", "Astro-Photography Workshops"]
+  },
+  {
+    "id": "del-space-014",
+    "name": "Delhi Astronomy Club",
+    "organization": "Independent",
+    "category": "Astronomy/Space",
+    "description": "A community of amateur and professional astronomers in Delhi-NCR.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/delhiastronomyclub",
+      "website": "https://delhiastronomyclub.com"
+    },
+    "approxMemberCount": "300+",
+    "founded": "2015",
+    "keyEvents": ["Rural Sky Trips", "Astro-Talks"]
+  },
+  {
+    "id": "del-space-015",
+    "name": "Astronomy Society ARSD",
+    "organization": "ARSD College",
+    "category": "Astronomy/Space",
+    "description": "ARSD's society for astronomy, active in university-level science outreach.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/astrosoc_arsd",
+      "website": "https://arsdcollege.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2000",
+    "keyEvents": ["Science Exhibitions", "Quizzes"]
+  },
+  {
+    "id": "del-space-016",
+    "name": "Astronomy Society Shivaji",
+    "organization": "Shivaji College",
+    "category": "Astronomy/Space",
+    "description": "Shivaji College's space enthusiasts club, promoting observational techniques.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/astrosoc_shivaji",
+      "website": "https://shivajicollege.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "2005",
+    "keyEvents": ["Sky Observation", "Astro-Lectures"]
+  },
+  {
+    "id": "del-space-017",
+    "name": "Astronomy Society DDU",
+    "organization": "Deen Dayal Upadhyaya College",
+    "category": "Astronomy/Space",
+    "description": "DDU College's astronomy society, focusing on astrophysics and cosmology.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/astrosoc_ddu",
+      "website": "https://dducollegedu.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2008",
+    "keyEvents": ["Annual Astro-Fest", "Workshops"]
+  },
+  {
+    "id": "del-space-018",
+    "name": "Astronomy Society KNC",
+    "organization": "Kamala Nehru College",
+    "category": "Astronomy/Space",
+    "description": "KNC's hub for women in space science and amateur astronomy.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/astrosoc_knc",
+      "website": "https://knc.edu.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1998",
+    "keyEvents": ["Sky Viewing", "Astro-Quizzes"]
+  },
+  {
+    "id": "del-space-019",
+    "name": "Astronomy Society Maitreyi",
+    "organization": "Maitreyi College",
+    "category": "Astronomy/Space",
+    "description": "Maitreyi's society for astronomy and celestial phenomena exploration.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/astrosoc_maitreyi",
+      "website": "https://maitreyi.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "2000",
+    "keyEvents": ["Science Day Astro-Corner", "Seminars"]
+  },
+  {
+    "id": "del-space-020",
+    "name": "Astronomy Society Rajdhani",
+    "organization": "Rajdhani College",
+    "category": "Astronomy/Space",
+    "description": "The space science club of Rajdhani College, promoting telescope handling and star-charting.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/astronomy_rajdhani",
+      "website": "https://rajdhanicollege.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "1995",
+    "keyEvents": ["Sky Watching", "Science Fests"]
+  }
+]

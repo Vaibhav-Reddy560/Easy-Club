@@ -2,16 +2,16 @@ import { useState, useCallback, useRef } from 'react';
 import { GenerationStatus, GenerationState } from '@/lib/types';
 import { useTasks } from '@/lib/TaskContext';
 
-export function useGenerator(taskName?: string) {
+export function useGenerator(taskName?: string, initialData?: any) {
   const { startTask, updateTaskProgress, finishTask } = useTasks();
   // Generate a stable unique ID for this instance's task lifecycle
   const taskIdRef = useRef(`task_${Math.random().toString(36).substr(2, 9)}`);
 
   const [state, setState] = useState<GenerationState>({
-    status: 'idle',
-    progress: 0,
+    status: initialData ? 'success' : 'idle',
+    progress: initialData ? 100 : 0,
     error: null,
-    result: null,
+    result: initialData || null,
   });
 
   const reset = useCallback(() => {

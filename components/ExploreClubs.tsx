@@ -36,6 +36,8 @@ export default function ExploreClubs() {
     const [showSaved, setShowSaved] = useState(false);
     const [saveToast, setSaveToast] = useState<string | null>(null);
 
+    const isCollege = category === "College";
+
     // Sync saved clubs with Firestore
     useEffect(() => {
         if (!userId) {
@@ -61,12 +63,17 @@ export default function ExploreClubs() {
             })();
         }
 
-        const unsubscribe = subscribeSavedExploreClubs(userId, (clubs) => {
-            setSavedClubs(clubs);
-            setSavedClubKeys(new Set(clubs.map(c => `${c.name}__${c.college}`)));
-        });
-
-        return () => unsubscribe();
+        if (userId) {
+            try {
+                const unsubscribe = subscribeSavedExploreClubs(userId, (clubs) => {
+                    setSavedClubs(clubs);
+                    setSavedClubKeys(new Set(clubs.map(c => `${c.name}__${c.college}`)));
+                });
+                return () => unsubscribe();
+            } catch (err) {
+                console.warn("[ExploreClubs] Saved clubs sync failed (Permissions). Continuing in guest mode.");
+            }
+        }
     }, [userId]);
 
     const toggleSaveClub = async (club: ScrapedClub) => {
@@ -87,44 +94,10 @@ export default function ExploreClubs() {
         setTimeout(() => setSaveToast(null), 2500);
     };
 
-    const MOCK_CLUBS: ScrapedClub[] = [
-        {
-            name: "Ashwa Racing",
-            description: "A premier Formula Student team from RVCE Bangalore, designing and building high-performance combustion and electric race cars.",
-            location: "Bangalore, Karnataka",
-            college: "RV College of Engineering",
-            website: "https://ashwaracing.com",
-            social: { instagram: "https://instagram.com/ashwaracing", linkedin: "https://linkedin.com/company/ashwaracing" },
-            imageUrl: "https://images.unsplash.com/photo-1547915720-307fa29d18bc?q=80&w=800"
-        },
-        {
-            name: "Shunya ramjas",
-            description: "The official dramatics society of Ramjas College, known for its powerful street plays and social message-driven theater.",
-            location: "New Delhi, Delhi",
-            college: "Ramjas College, DU",
-            website: "https://ramjas.du.ac.in",
-            social: { instagram: "https://instagram.com/shunyaramjas" },
-            imageUrl: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?q=80&w=800"
-        },
-        {
-            name: "Gradient IIITS",
-            description: "A vibrant coding and development club focused on competitive programming, hackathons, and open source projects.",
-            location: "Sri City, AP",
-            college: "IIIT Sri City",
-            website: "https://iiits.ac.in",
-            social: { linkedin: "https://linkedin.com/company/gradient-iiits" },
-            imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800"
-        },
-        {
-            name: "AeroClub IIST",
-            description: "Focusing on aerospace innovation, aeromodelling, and rocketry projects at the premier space science institute.",
-            location: "Thiruvananthapuram, KL",
-            college: "IIST",
-            website: "https://iist.ac.in",
-            social: { instagram: "https://instagram.com/aeroclub_iist" },
-            imageUrl: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=800"
-        }
-    ];
+    interface DiscoveryError {
+        name?: string;
+        message?: string;
+    }
 
 
 
@@ -154,25 +127,32 @@ export default function ExploreClubs() {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.error || "Search Service Unavailable");
+                throw new Error(data.error || "Discovery service is optimizing. Stand by.");
             }
 
             if (Array.isArray(data) && data.length > 0) {
-                setScrapedClubs(data);
+                // Map the new 3-Phase backend structure to the UI structure
+                const formattedClubs: ScrapedClub[] = data.map((c: any) => ({
+                    name: c.club_name,
+                    description: `Official ${c.category} organization based in ${c.region}. Verified via ${c.parent_org || 'independent portal'}.`,
+                    location: c.region,
+                    college: c.parent_org || "",
+                    website: c.official_website,
+                    social: c.social_media || {},
+                    imageUrl: "" // Will use fallback based on category
+                }));
+                setScrapedClubs(formattedClubs);
+                setError(null);
             } else {
-                throw new Error("No organizations found. Try adjusting your search criteria.");
+                setError("No verified clubs matching your criteria were found on authoritative portals.");
+                setScrapedClubs([]);
             }
         } catch (err: unknown) {
             const discoveryErr = err as DiscoveryError;
             clearTimeout(timeoutId);
-            console.error("Discovery Engine Error:", discoveryErr);
-            
-            const isTimeout = discoveryErr.name === 'AbortError';
-            const displayError = isTimeout ? "Search timed out" : (discoveryErr.message || "Network Fault");
-            setError(displayError);
-
-            setScrapedClubs(MOCK_CLUBS);
-            setIsMock(true);
+            console.warn("Discovery failed:", discoveryErr);
+            setError(discoveryErr.message || "Cloud sync is adjusting. Please try a different category or region.");
+            setScrapedClubs([]);
         } finally {
             setLoading(false);
         }
@@ -204,7 +184,7 @@ export default function ExploreClubs() {
             <header className="border-b border-white/5 pb-8 flex justify-between items-end">
                 <div>
                     <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Explore Clubs</h2>
-                    <p className="text-zinc-100 text-[10px] mt-1 uppercase font-bold tracking-[0.2em] ml-1"> Discover clubs in a region</p>
+                    <p className="text-zinc-100 text-[11px] mt-1 font-bold tracking-[0.2em] uppercase ml-1">Discover clubs in a region</p>
                 </div>
                 <div className="flex gap-4 items-end">
                     <button
@@ -363,13 +343,15 @@ export default function ExploreClubs() {
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
-                                className="glass-card overflow-hidden group hover:border-gold-500/30 transition-all flex flex-col"
+                                className="glass-card rounded-3xl overflow-hidden group hover:border-gold-500/30 transition-all flex flex-col h-full border border-white/10"
                             >
-                                <div className="h-48 relative overflow-hidden bg-zinc-800">
-                                    <div className="absolute top-4 left-4 z-10 flex gap-2">
-                                        <div className="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 flex items-center gap-1.5 shadow-lg">
-                                            <Globe className="w-3.5 h-3.5 text-blue-400" />
-                                            <span className="text-[8px] font-black text-white/70 uppercase tracking-widest">Search Result</span>
+                                <div className="h-48 relative overflow-hidden bg-zinc-900">
+                                    <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
+                                        <div className={`backdrop-blur-md px-3 py-1 rounded-full border flex items-center gap-1.5 shadow-lg ${
+                                            isCollege ? "bg-blue-500/10 border-blue-500/30 text-blue-400" : "bg-purple-500/10 border-purple-500/30 text-purple-400"
+                                        }`}>
+                                            <Globe className="w-3 h-3" />
+                                            <span className="text-[9px] font-black uppercase tracking-widest">{isCollege ? "College Club" : "Organization"}</span>
                                         </div>
                                     </div>
                                     {/* Save button */}
@@ -377,10 +359,9 @@ export default function ExploreClubs() {
                                         onClick={() => toggleSaveClub(club)}
                                         className={`absolute top-4 right-4 z-10 p-2.5 rounded-full border backdrop-blur-md transition-all hover:scale-110 ${
                                             isSaved
-                                                ? "bg-gold-500/90 border-gold-500 text-black shadow-lg shadow-gold-500/30"
-                                                : "bg-black/50 border-white/15 text-white/60 hover:text-white hover:border-white/30"
+                                                ? "bg-gold-500 border-gold-500 text-black shadow-lg shadow-gold-500/30"
+                                                : "bg-black/40 border-white/10 text-white/60 hover:text-white hover:border-white/30"
                                         }`}
-                                        title={isSaved ? "Remove from saved" : "Save this club"}
                                     >
                                         {isSaved ? <BookmarkCheck className="w-4 h-4" /> : <Bookmark className="w-4 h-4" />}
                                     </button>
@@ -390,70 +371,62 @@ export default function ExploreClubs() {
                                         width={800}
                                         height={400}
                                         unoptimized
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[0.5] group-hover:grayscale-0"
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[0.2] group-hover:grayscale-0"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
-                                    {club.college && !["Academic Campus", "Independent", "None", "No", "N/A", "Independent Collective", "N/a", "no", "", location].includes(club.college) && (
-                                        <div className="absolute bottom-4 left-6 pr-6 z-20">
-                                            <div className="flex flex-col gap-0.5">
-                                                <span className="text-[8px] font-black uppercase tracking-[0.3em] text-signature-gradient leading-none">Institution</span>
-                                                <p className="text-[11px] font-black uppercase tracking-[0.05em] text-white drop-shadow-xl leading-tight line-clamp-2">{club.college}</p>
-                                            </div>
-                                        </div>
-                                    )}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
                                 </div>
 
-                                <div className="p-8 space-y-4 flex-1 flex flex-col">
-                                    <div className="space-y-1">
-                                        <h3 className="text-xl font-bold text-white tracking-tight leading-tight group-hover:text-signature-gradient transition-colors">{club.name}</h3>
-                                        <div className="flex items-center gap-1.5 text-white">
-                                            <MapPin className="w-3 h-3 text-gold-500/50" />
-                                            <span className="text-[10px] font-bold uppercase tracking-wider">{club.location}</span>
+                                <div className="p-6 flex-1 flex flex-col gap-4">
+                                    <div className="space-y-2">
+                                        <div className="space-y-1">
+                                            <h3 className="text-xl font-bold text-white tracking-tight leading-tight group-hover:text-gold-400 transition-colors line-clamp-2">{club.name}</h3>
+                                            <div className="flex items-center gap-2">
+                                                <MapPin className="w-3 h-3 text-gold-500" />
+                                                <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">{club.location}</span>
+                                            </div>
                                         </div>
+
+                                        {club.college && !["Academic Campus", "Independent", "None", "No", "N/A", "Independent Collective", "N/a", "no", "", location].includes(club.college) && (
+                                            <div className="bg-white/5 border border-white/10 rounded-xl px-3 py-2">
+                                                <span className="text-[8px] font-black uppercase tracking-[0.2em] text-gold-500/70 block mb-0.5">Primary Institution</span>
+                                                <p className="text-[11px] font-bold text-white uppercase tracking-tight line-clamp-1">{club.college}</p>
+                                            </div>
+                                        )}
                                     </div>
 
-                                    <p className="text-xs text-zinc-100 leading-relaxed line-clamp-3">
+                                    <p className="text-xs text-zinc-400 leading-relaxed line-clamp-3">
                                         {club.description}
                                     </p>
 
                                     <div className="pt-4 mt-auto border-t border-white/5 flex items-center justify-between">
-                                        {/* LEFT: Social media icons */}
+                                        {/* Social Links */}
                                         <div className="flex gap-3">
-                                            {club.social?.instagram && club.social.instagram.trim() !== "" && (
-                                                <a href={club.social.instagram} target="_blank" rel="noreferrer" className="text-white/40 hover:text-pink-500 transition-all hover:scale-110" title="Instagram">
+                                            {club.social?.instagram && (
+                                                <a href={club.social.instagram} target="_blank" rel="noreferrer" className="text-zinc-500 hover:text-pink-500 transition-colors">
                                                     <Instagram className="w-4 h-4" />
                                                 </a>
                                             )}
-                                            {club.social?.linkedin && club.social.linkedin.trim() !== "" && (
-                                                <a href={club.social.linkedin} target="_blank" rel="noreferrer" className="text-white/40 hover:text-blue-400 transition-all hover:scale-110" title="LinkedIn">
+                                            {club.social?.linkedin && (
+                                                <a href={club.social.linkedin} target="_blank" rel="noreferrer" className="text-zinc-500 hover:text-blue-400 transition-colors">
                                                     <Linkedin className="w-4 h-4" />
                                                 </a>
                                             )}
-                                            {club.social?.twitter && club.social.twitter.trim() !== "" && (
-                                                <a href={club.social.twitter} target="_blank" rel="noreferrer" className="text-white/40 hover:text-sky-400 transition-all hover:scale-110" title="Twitter / X">
-                                                    <Twitter className="w-4 h-4" />
-                                                </a>
-                                            )}
-                                            {club.social?.facebook && club.social.facebook.trim() !== "" && (
-                                                <a href={club.social.facebook} target="_blank" rel="noreferrer" className="text-white/40 hover:text-blue-500 transition-all hover:scale-110" title="Facebook">
-                                                    <Facebook className="w-4 h-4" />
-                                                </a>
-                                            )}
-                                            {club.social?.youtube && club.social.youtube.trim() !== "" && (
-                                                <a href={club.social.youtube} target="_blank" rel="noreferrer" className="text-white/40 hover:text-red-500 transition-all hover:scale-110" title="YouTube">
+                                            {club.social?.youtube && (
+                                                <a href={club.social.youtube} target="_blank" rel="noreferrer" className="text-zinc-500 hover:text-red-500 transition-colors">
                                                     <Youtube className="w-4 h-4" />
                                                 </a>
                                             )}
                                         </div>
-                                        {/* RIGHT: Visit Portal — ONLY for actual website, never social media */}
-                                        {club.website && club.website.trim() !== "" && (
+
+                                        {/* Website Button */}
+                                        {club.website && !club.website.includes('instagram.com') && !club.website.includes('facebook.com') && !club.website.includes('linkedin.com') && (
                                             <a
                                                 href={club.website}
                                                 target="_blank"
                                                 rel="noreferrer"
-                                                className="flex items-center gap-2 text-signature-gradient font-black text-[9px] uppercase tracking-widest hover:text-white transition-colors"
+                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-gold-500/10 border border-gold-500/20 rounded-xl text-[9px] font-black uppercase tracking-widest text-gold-500 hover:bg-gold-500 hover:text-black transition-all"
                                             >
-                                                Visit Portal <ExternalLink className="w-3 h-3 text-gold-500" />
+                                                Visit Website <ExternalLink className="w-3 h-3" />
                                             </a>
                                         )}
                                     </div>

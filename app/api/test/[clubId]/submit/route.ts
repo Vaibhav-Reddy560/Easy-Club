@@ -23,7 +23,17 @@ export async function POST(request: Request, { params }: { params: Promise<{ clu
     }
 
     const clubRef = doc(db, 'clubs', clubId);
-    const clubSnap = await getDoc(clubRef);
+    let clubSnap;
+    try {
+      clubSnap = await getDoc(clubRef);
+    } catch (e: any) {
+      if (e.code === 'permission-denied') {
+         return NextResponse.json({ 
+          error: 'Firebase Security Rules are blocking access. Please update your firestore.rules to allow read/write for test submissions.' 
+        }, { status: 403 });
+      }
+      throw e;
+    }
 
     if (!clubSnap.exists()) {
       return NextResponse.json({ error: 'Club not found' }, { status: 404 });
@@ -54,7 +64,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ clu
       const submittedAnswer = answers[q.id];
 
       if (q.type === 'mcq' || q.type === 'short') {
-        if (typeof submittedAnswer === 'string' && submittedAnswer.trim().toLowerCase() === (q.correctAnswer as string).trim().toLowerCase()) {
+        if (typeof submittedAnswer === 'string' && typeof q.correctAnswer === 'string' && submittedAnswer.trim().toLowerCase() === (q.correctAnswer).trim().toLowerCase()) {
           totalScore += q.marks;
         }
       } else if (q.type === 'multi') {
@@ -87,9 +97,6 @@ export async function POST(request: Request, { params }: { params: Promise<{ clu
     // Construct updates
     const updates: Record<string, any> = {};
 
-    // For simplicity, we could store attempts in a subcollection or on the club document.
-    // Given the types, we don't have a place for attempts in Club yet, so we won't clutter it right now, 
-    // but we can add the member to the roster if they pass!
     if (passed) {
       const newMember: ClubMember = {
         id: Math.random().toString(36).substr(2, 9),
@@ -105,7 +112,16 @@ export async function POST(request: Request, { params }: { params: Promise<{ clu
     }
 
     if (Object.keys(updates).length > 0) {
-      await updateDoc(clubRef, updates);
+      try {
+        await updateDoc(clubRef, updates);
+      } catch(e: any) {
+        if (e.code === 'permission-denied') {
+          return NextResponse.json({ 
+            error: 'You passed the test, but Firebase Rules blocked saving your membership. Update firestore.rules to allow write access.' 
+          }, { status: 403 });
+        }
+        throw e;
+      }
     }
 
     return NextResponse.json({

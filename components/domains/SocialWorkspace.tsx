@@ -38,6 +38,13 @@ export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWor
   const [outreachTemplate, setOutreachTemplate] = useState<string | null>((activeEvent?.config?.workspaceData as any)?.outreach || null);
   const [copied, setCopied] = useState(false);
   
+  // Scripts state
+  const scriptOptions = ["EMCEE Script", "Vote of Thanks", "Volunteer Briefing Document"];
+  const [selectedScriptType, setSelectedScriptType] = useState<string | null>(null);
+  const [generatedScripts, setGeneratedScripts] = useState<Record<string, string>>((activeEvent?.config?.workspaceData as any)?.social?.scripts || {});
+  const [isGeneratingScript, setIsGeneratingScript] = useState(false);
+  const scriptSaveTimeout = React.useRef<NodeJS.Timeout | null>(null);
+  
   const { startTask, finishTask } = useTasks();
   
   const config = activeEvent?.config || {};
@@ -69,6 +76,49 @@ export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWor
       roles.push({ name: "Domain Specialist", role: "Guest Speaker", expertise: "Industry Insights", location: city });
     }
     return roles;
+  };
+
+  const handleGenerateScript = async (type: string) => {
+    setIsGeneratingScript(true);
+    setSelectedScriptType(type);
+    const taskId = 'script-' + Date.now();
+    startTask(taskId, `Drafting ${type}`);
+    try {
+      const response = await fetch("/api/generate-document", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          type: 'script',
+          scriptType: type,
+          event: activeEvent, 
+          club: { name: "Your Club" }, 
+          config 
+        })
+      });
+      if (!response.ok) throw new Error("Script generation failed");
+      const data = await response.json();
+      
+      const newText = data.content;
+      setGeneratedScripts(prev => {
+        const updated = { ...prev, [type]: newText };
+        updateConfig({
+          workspaceData: {
+            ...config.workspaceData,
+            social: {
+              ...(config.workspaceData?.social as any || {}),
+              scripts: updated
+            }
+          }
+        });
+        return updated;
+      });
+      finishTask(taskId, true);
+    } catch (err) {
+      console.error(err);
+      finishTask(taskId, false);
+    } finally {
+      setIsGeneratingScript(false);
+    }
   };
 
   const experts = getResourcePersons();
@@ -219,6 +269,83 @@ export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWor
             </motion.div>
           </div>
         )}
+      </AnimatePresence>
+
+      {/* Event Scripting & Briefing Engine */}
+      <div className="p-8 bg-zinc-900/50 rounded-[2.5rem] border border-white/5 space-y-6">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-12 h-12 bg-gold-500/20 rounded-2xl flex items-center justify-center">
+            <Radio className="w-6 h-6 text-gold-500" />
+          </div>
+          <div>
+            <h6 className="font-bold text-lg text-white">Event Scripting & Briefing</h6>
+            <p className="text-xs text-zinc-400">Generate detailed scripts and volunteer manuals</p>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-3">
+          {scriptOptions.map(script => (
+            <button
+              key={script}
+              onClick={() => {
+                 setSelectedScriptType(script);
+                 if (!generatedScripts[script]) {
+                   handleGenerateScript(script);
+                 }
+              }}
+              className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all ${selectedScriptType === script ? 'bg-gold-500 text-black shadow-[0_0_15px_rgba(251,191,36,0.3)]' : 'bg-white/5 border border-white/10 text-zinc-400 hover:text-white hover:border-white/20'}`}
+            >
+              {script}
+            </button>
+          ))}
+        </div>
+
+        {selectedScriptType && (
+           <div className="flex flex-col flex-1 min-h-[300px] mt-6 animate-in fade-in">
+             {isGeneratingScript && !generatedScripts[selectedScriptType] ? (
+                <div className="py-16 flex flex-col items-center justify-center space-y-6 border border-white/5 rounded-3xl">
+                   <Loader2 className="w-8 h-8 text-gold-500 animate-spin" />
+                   <p className="text-[10px] font-bold text-white uppercase tracking-widest animate-pulse">Drafting {selectedScriptType}</p>
+                </div>
+             ) : (
+                <div className="flex flex-col flex-1 min-h-0">
+                  <textarea
+                    className="bg-black/80 p-6 rounded-3xl border border-gold-500/20 flex-1 min-h-[400px] overflow-auto text-[11px] text-zinc-300 font-mono leading-relaxed whitespace-pre-wrap resize-none focus:outline-none focus:border-gold-500/50 transition-colors"
+                    value={generatedScripts[selectedScriptType] || ''}
+                    onChange={(e) => {
+                      const newText = e.target.value;
+                      setGeneratedScripts(prev => ({ ...prev, [selectedScriptType]: newText }));
+                      
+                      if (scriptSaveTimeout.current) clearTimeout(scriptSaveTimeout.current);
+                      scriptSaveTimeout.current = setTimeout(() => {
+                        updateConfig({ 
+                          workspaceData: { 
+                            ...config.workspaceData, 
+                            social: {
+                              ...(config.workspaceData?.social as any || {}),
+                              scripts: { ...generatedScripts, [selectedScriptType]: newText }
+                            }
+                          } 
+                        });
+                      }, 1000);
+                    }}
+                  />
+                  <div className="flex justify-end gap-4 mt-4 shrink-0">
+                    <button 
+                      onClick={() => handleGenerateScript(selectedScriptType)}
+                      disabled={isGeneratingScript}
+                      className="px-6 py-3 bg-white/5 border border-white/15 text-white rounded-2xl text-[10px] font-bold uppercase hover:bg-white/10 disabled:opacity-50"
+                    >
+                      {isGeneratingScript ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Regenerate Script'}
+                    </button>
+                  </div>
+                </div>
+             )}
+           </div>
+        )}
+      </div>
+
+      <AnimatePresence>
       </AnimatePresence>
     </div>
   );

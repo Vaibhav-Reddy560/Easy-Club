@@ -206,7 +206,7 @@ export default function AccountView({ user, onBack }: AccountViewProps) {
                   <Bell className="w-5 h-5 text-gold-500" />
                 </div>
                 <div>
-                  <h4 className="text-lg font-black text-white uppercase tracking-tighter">Communication Feed</h4>
+                  <h4 className="text-lg font-black text-white uppercase tracking-widest">Communication Feed</h4>
                   <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">Manage how the hub reaches you</p>
                 </div>
               </div>

@@ -1,0 +1,4050 @@
+[
+  {
+    "id": "g-001",
+    "name": "AIESEC Global",
+    "organization": "Independent",
+    "category": "Leadership",
+    "description": "The world's largest student-led organization focusing on leadership development, cross-cultural internships, and global volunteer exchange experiences.",
+    "location": "Global / Multiple Chapters",
+    "links": {
+      "website": "https://aiesec.org",
+      "instagram": "https://instagram.com/aiesecglobal",
+      "linkedin": "https://linkedin.com/company/aiesec"
+    }
+  },
+  {
+    "id": "g-002",
+    "name": "Model United Nations (MUN)",
+    "organization": "Multiple Universities",
+    "category": "Diplomacy",
+    "description": "A simulation of the UN General Assembly and other multilateral bodies where students represent different countries and debate global issues.",
+    "location": "Global",
+    "links": {
+      "website": "https://www.un.org/en/mun",
+      "instagram": "https://instagram.com/modelunitednations",
+      "linkedin": "https://linkedin.com/company/model-united-nations"
+    }
+  },
+  {
+    "id": "g-003",
+    "name": "Enactus",
+    "organization": "Global Network",
+    "category": "Entrepreneurship",
+    "description": "A community of student, academic, and business leaders committed to using the power of entrepreneurial action to transform lives and shape a better more sustainable world.",
+    "location": "Worldwide",
+    "links": {
+      "website": "https://enactus.org",
+      "instagram": "https://instagram.com/enactusglobal",
+      "linkedin": "https://linkedin.com/company/enactus"
+    }
+  },
+  {
+    "id": "g-004",
+    "name": "Society for Creative Anachronism (SCA)",
+    "organization": "Independent",
+    "category": "History & Arts",
+    "description": "An international living history group with over 30,000 members dedicated to researching and re-creating the arts and traditions of pre-17th-century Europe.",
+    "location": "Global",
+    "links": {
+      "website": "https://www.sca.org",
+      "instagram": "https://instagram.com/scasocial",
+      "linkedin": "https://linkedin.com/company/society-for-creative-anachronism"
+    }
+  },
+  {
+    "id": "del-001",
+    "name": "iGEM Club",
+    "organization": "IIT Delhi",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "Focuses on engineering biological systems; participates in global iGEM competitions.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://caic.iitd.ac.in/clubs"
+    }
+  },
+  {
+    "id": "del-002",
+    "name": "BETA",
+    "organization": "IIT Delhi",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "The Biotech Society; networking for industry and academia research.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://caic.iitd.ac.in/societies"
+    }
+  },
+  {
+    "id": "del-003",
+    "name": "CyFuse",
+    "organization": "IIIT Delhi",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "Tackles multi-domain problems by combining biotech with computing.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://studentcouncil.iiitd.edu.in"
+    }
+  },
+  {
+    "id": "del-004",
+    "name": "Division of Biotech",
+    "organization": "NSUT",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "Core engineering and research in applied life sciences.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://nsut.ac.in"
+    }
+  },
+  {
+    "id": "del-005",
+    "name": "Doctor Eduzone",
+    "organization": "Independent",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "Medical and bio-preparation; provides structured materials and lab workshops.",
+    "location": "Mughal Canal, Delhi",
+    "links": {
+      "website": "https://doctoreduzone.com"
+    }
+  },
+  {
+    "id": "del-006",
+    "name": "NIFA",
+    "organization": "National Institute of Fine Arts",
+    "category": "Fine Arts, Painting, and Creative Design",
+    "description": "National hub for professional arts; offers diploma courses and exhibitions.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://nifafinearts.com"
+    }
+  },
+  {
+    "id": "del-007",
+    "name": "IIP Academy",
+    "organization": "Indian Institute of Photography",
+    "category": "Photography, Cinematography, and Visual Media",
+    "description": "Professional photography education with state-of-the-art studio facilities.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://iipacademy.edu.in"
+    }
+  },
+  {
+    "id": "del-008",
+    "name": "PAIPA",
+    "organization": "Pradeep Adwani's Academy",
+    "category": "Dance and Choreography",
+    "description": "Award-winning dance academy for Bollywood, western, and classical forms.",
+    "location": "Lajpat Nagar, Delhi",
+    "links": {
+      "website": "https://paipa.in"
+    }
+  },
+  {
+    "id": "del-009",
+    "name": "PyDelhi",
+    "organization": "Independent",
+    "category": "Coding, Web Development, and Cybersecurity",
+    "description": "Python user group; hosts massive open-source meetups and DevSprints.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://pydelhi.org"
+    }
+  },
+  {
+    "id": "del-010",
+    "name": "GDG Delhi",
+    "organization": "Google Developer Group",
+    "category": "Coding, Web Development, and Cybersecurity",
+    "description": "Google technology hub for developers; focuses on Flutter, Firebase, and AI.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://gdg.community.dev/gdg-delhi"
+    }
+  },
+  {
+    "id": "del-011",
+    "name": "Delhi Poetry Slam",
+    "organization": "Independent",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "Largest poetry community; hosts slam events and workshops across the city.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://delhipoetryslam.com"
+    }
+  },
+  {
+    "id": "del-012",
+    "name": "Asmita Theatre",
+    "organization": "Independent",
+    "category": "Theatre, Acting, and Dramatics",
+    "description": "Leading social-political theatre group known for impactful street plays.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://asmitatheatregroup.com"
+    }
+  },
+  {
+    "id": "del-013",
+    "name": "The Piano Man",
+    "organization": "Independent",
+    "category": "Singing and Musical Performance",
+    "description": "Elite jazz club and musical performance space; hosts global artists.",
+    "location": "Safdarjung Enclave, Delhi",
+    "links": {
+      "website": "https://thepianoman.in"
+    }
+  },
+  {
+    "id": "del-014",
+    "name": "AAFT",
+    "organization": "Asian Academy of Film and Television",
+    "category": "Photography, Cinematography, and Visual Media",
+    "description": "International hub for media education; specialized film production tracks.",
+    "location": "Noida/Delhi",
+    "links": {
+      "website": "https://aaft.com"
+    }
+  },
+  {
+    "id": "del-015",
+    "name": "CSI Delhi",
+    "organization": "Computer Society of India",
+    "category": "Coding, Web Development, and Cybersecurity",
+    "description": "Professional body for IT practitioners; focuses on tech-policy and innovation.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://csi-delhi.org"
+    }
+  },
+  {
+    "id": "del-016",
+    "name": "Mathematical Society",
+    "organization": "St. Stephen's",
+    "category": "Mathematics and Quantitative Analysis",
+    "description": "Rigorous academic club for theorem exploration and math fests.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://ststephens.edu"
+    }
+  },
+  {
+    "id": "del-017",
+    "name": "PhysSoc",
+    "organization": "Hindu College",
+    "category": "Physics and Theoretical Research",
+    "description": "Celebrates fundamental physics through seminars and 'Quasar' festival.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://hinducollege.ac.in"
+    }
+  },
+  {
+    "id": "del-018",
+    "name": "The DebSoc",
+    "organization": "SRCC",
+    "category": "Debating, Public Speaking, and Rhetoric",
+    "description": "Elite debating society known for high-stakes national wins.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://srcc.edu"
+    }
+  },
+  {
+    "id": "del-019",
+    "name": "Fine Arts Society",
+    "organization": "DTU",
+    "category": "Fine Arts, Painting, and Creative Design",
+    "description": "Focuses on digital arts, graffiti, and professional design projects.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://dtu.ac.in"
+    }
+  },
+  {
+    "id": "del-020",
+    "name": "Enactus NSUT",
+    "organization": "NSUT",
+    "category": "Social Service and Community Outreach",
+    "description": "Social entrepreneurship hub; develops projects for sustainable impact.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://nsut.ac.in"
+    }
+  },
+  {
+    "id": "del-021",
+    "name": "Robotics Club",
+    "organization": "IIT Delhi",
+    "category": "Robotics, Artificial Intelligence, and Automation",
+    "description": "Technical hub for bot-building; focuses on mechanical and AI integration.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://caic.iitd.ac.in"
+    }
+  },
+  {
+    "id": "del-022",
+    "name": "E-Cell",
+    "organization": "IIT Delhi",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Nurturing startups via mentorship; hosts 'Startup Expo' and incubation.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://ecell-iitd.org"
+    }
+  },
+  {
+    "id": "del-023",
+    "name": "Quizzing Society",
+    "organization": "Miranda House",
+    "category": "General Knowledge & Quizzing",
+    "description": "Leading knowledge club; hosts national level quiz championships.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://mirandahouse.ac.in"
+    }
+  },
+  {
+    "id": "del-024",
+    "name": "Astronomy Club",
+    "organization": "IIT Delhi",
+    "category": "Astronomy, Space Science, and Rocketry",
+    "description": "Hosts stargazing sessions and telescope handling workshops.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://caic.iitd.ac.in"
+    }
+  },
+  {
+    "id": "del-025",
+    "name": "Dramatics Society",
+    "organization": "LSR",
+    "category": "Theatre, Acting, and Dramatics",
+    "description": "High-caliber stage performance group focused on feminist themes.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://lsr.edu.in"
+    }
+  },
+  {
+    "id": "del-026",
+    "name": "Shutterbug",
+    "organization": "Hansraj College",
+    "category": "Photography, Cinematography, and Visual Media",
+    "description": "Photography society capturing campus life and city heritage.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://hansrajcollege.ac.in"
+    }
+  },
+  {
+    "id": "del-027",
+    "name": "NSS IIT Delhi",
+    "organization": "IIT Delhi",
+    "category": "Social Service and Community Outreach",
+    "description": "Welfare group working on literacy, sanitation, and blood donation.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://nss.iitd.ac.in"
+    }
+  },
+  {
+    "id": "del-028",
+    "name": "Tryst",
+    "organization": "IIT Delhi",
+    "category": "Coding, Web Development, and Cybersecurity",
+    "description": "North India's largest technical festival hosting massive hackathons.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://tryst-iitd.org"
+    }
+  },
+  {
+    "id": "del-029",
+    "name": "Finance Society",
+    "organization": "SSCBS",
+    "category": "Mathematics and Quantitative Analysis",
+    "description": "Focuses on equity research, portfolio management, and stock markets.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://sscbs.du.ac.in"
+    }
+  },
+  {
+    "id": "del-030",
+    "name": "Delhi University Music Faculty",
+    "organization": "University of Delhi",
+    "category": "Singing and Musical Performance",
+    "description": "Academic and performance hub for Hindustani and Carnatic music.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://music.du.ac.in"
+    }
+  },
+  {
+    "id": "del-031",
+    "name": "Spic Macay",
+    "organization": "Independent",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "Global movement promoting Indian classical music and culture in schools.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://spicmacay.org"
+    }
+  },
+  {
+    "id": "del-032",
+    "name": "Racing Club",
+    "organization": "DTU",
+    "category": "Racing and Automotive Engineering",
+    "description": "Design and fabrication of formula student combustion and electric cars.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://dtu.ac.in"
+    }
+  },
+  {
+    "id": "del-033",
+    "name": "Literary Society",
+    "organization": "Ramjas College",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "Promotes creative writing and literary discourse through 'Word-Craft'.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://ramjas.du.ac.in"
+    }
+  },
+  {
+    "id": "del-034",
+    "name": "Toxics Link",
+    "organization": "Independent",
+    "category": "Environmental Conservation & Sustainability",
+    "description": "Environmental research body focusing on e-waste and chemical safety.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://toxicslink.org"
+    }
+  },
+  {
+    "id": "del-035",
+    "name": "Wildlife Trust of India",
+    "organization": "Independent",
+    "category": "Environmental Conservation & Sustainability",
+    "description": "National NGO focusing on wildlife rescue and habitat protection.",
+    "location": "Noida/Delhi",
+    "links": {
+      "website": "https://wti.org.in"
+    }
+  },
+  {
+    "id": "del-036",
+    "name": "Swechha",
+    "organization": "Independent",
+    "category": "Social Service and Community Outreach",
+    "description": "Youth-led NGO focusing on environment and education for urban poor.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://swechha.in"
+    }
+  },
+  {
+    "id": "del-037",
+    "name": "Delhi Bird Foundation",
+    "organization": "Independent",
+    "category": "Environmental Conservation & Sustainability",
+    "description": "Largest bird-watching community in North India; hosts 'Big Bird Day'.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://delhibirdfoundation.org"
+    }
+  },
+  {
+    "id": "del-038",
+    "name": "Rotaract Club",
+    "organization": "Rotary International",
+    "category": "Social Service and Community Outreach",
+    "description": "Service club for young professionals; focuses on community impact.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://rotaract3011.org"
+    }
+  },
+  {
+    "id": "del-039",
+    "name": "Amnesty International Delhi",
+    "organization": "Independent",
+    "category": "Law, Policy, and Human Rights",
+    "description": "Global movement focusing on human rights advocacy and education.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://amnesty.org.in"
+    }
+  },
+  {
+    "id": "del-040",
+    "name": "National Museum Institute",
+    "organization": "Independent",
+    "category": "History & Arts",
+    "description": "Hub for conservation and museum studies; hosts heritage walks.",
+    "location": "Janpath, Delhi",
+    "links": {
+      "website": "https://nmi.gov.in"
+    }
+  },
+  {
+    "id": "del-041",
+    "name": "French Cultural Centre",
+    "organization": "Independent",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "Alliance Fran\u00e7aise de Delhi; hub for French language and culture.",
+    "location": "Lodhi Road, Delhi",
+    "links": {
+      "website": "https://delhi.afindia.org"
+    }
+  },
+  {
+    "id": "del-042",
+    "name": "Max Mueller Bhavan",
+    "organization": "Goethe-Institut",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "German cultural hub; hosts international film screenings and art.",
+    "location": "K.G. Marg, Delhi",
+    "links": {
+      "website": "https://goethe.de/delhi"
+    }
+  },
+  {
+    "id": "del-043",
+    "name": "India Habitat Centre",
+    "organization": "Independent",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "Premier venue for art exhibitions, theatre, and intellectual fests.",
+    "location": "Lodhi Road, Delhi",
+    "links": {
+      "website": "https://indiahabitat.org"
+    }
+  },
+  {
+    "id": "del-044",
+    "name": "Lalit Kala Akademi",
+    "organization": "Independent",
+    "category": "Fine Arts, Painting, and Creative Design",
+    "description": "National academy of fine arts; hosts the 'National Exhibition of Art'.",
+    "location": "Ferozeshah Road, Delhi",
+    "links": {
+      "website": "https://lalitkala.gov.in"
+    }
+  },
+  {
+    "id": "del-045",
+    "name": "National School of Drama",
+    "organization": "Independent",
+    "category": "Theatre, Acting, and Dramatics",
+    "description": "World-renowned theatre training institute; hosts 'Bharat Rang Mahotsav'.",
+    "location": "Mandi House, Delhi",
+    "links": {
+      "website": "https://nsd.gov.in"
+    }
+  },
+  {
+    "id": "del-046",
+    "name": "Sahitya Akademi",
+    "organization": "Independent",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "India's national academy of letters; preserves 24 Indian languages.",
+    "location": "Mandi House, Delhi",
+    "links": {
+      "website": "https://sahitya-akademi.gov.in"
+    }
+  },
+  {
+    "id": "del-047",
+    "name": "Indian Law Institute",
+    "organization": "Independent",
+    "category": "Law, Policy, and Human Rights",
+    "description": "Premier legal research institute; publishes law journals and reports.",
+    "location": "Bhagwan Das Road, Delhi",
+    "links": {
+      "website": "https://ili.ac.in"
+    }
+  },
+  {
+    "id": "del-048",
+    "name": "ICCR",
+    "organization": "Independent",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "Indian Council for Cultural Relations; manages global cultural exchanges.",
+    "location": "IP Estate, Delhi",
+    "links": {
+      "website": "https://iccr.gov.in"
+    }
+  },
+  {
+    "id": "del-049",
+    "name": "TERI",
+    "organization": "Independent",
+    "category": "Environmental Conservation & Sustainability",
+    "description": "The Energy and Resources Institute; global leader in sustainable R&D.",
+    "location": "Lodhi Road, Delhi",
+    "links": {
+      "website": "https://teriin.org"
+    }
+  },
+  {
+    "id": "del-050",
+    "name": "IDSA",
+    "organization": "Independent",
+    "category": "Law, Policy, and Human Rights",
+    "description": "Manohar Parrikar Institute for Defence Studies; security think-tank.",
+    "location": "Delhi Cantt, Delhi",
+    "links": {
+      "website": "https://idsa.in"
+    }
+  },
+  {
+    "id": "del-051",
+    "name": "Indian Institute of Management",
+    "organization": "IIM Ahmedabad",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Delhi alumni network; hosts networking for global business leaders.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://iima.ac.in"
+    }
+  },
+  {
+    "id": "del-052",
+    "name": "ORF Delhi",
+    "organization": "Observer Research Foundation",
+    "category": "Law, Policy, and Human Rights",
+    "description": "Leading global think-tank focusing on policy, economy, and climate.",
+    "location": "Chanakyapuri, Delhi",
+    "links": {
+      "website": "https://orfonline.org"
+    }
+  },
+  {
+    "id": "del-053",
+    "name": "CPR Delhi",
+    "organization": "Centre for Policy Research",
+    "category": "Law, Policy, and Human Rights",
+    "description": "Public policy think-tank; focuses on urbanization and governance.",
+    "location": "Dharam Marg, Delhi",
+    "links": {
+      "website": "https://cprindia.org"
+    }
+  },
+  {
+    "id": "del-054",
+    "name": "INTACH Delhi",
+    "organization": "Independent",
+    "category": "History & Arts",
+    "description": "National Trust for Art and Cultural Heritage; preserves city monuments.",
+    "location": "Lodhi Estate, Delhi",
+    "links": {
+      "website": "https://intach.org"
+    }
+  },
+  {
+    "id": "del-055",
+    "name": "Delhi Medical Association",
+    "organization": "Independent",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "State wing of IMA; provides networking for medical professionals.",
+    "location": "Daryaganj, Delhi",
+    "links": {
+      "website": "https://delhimedicalassociation.com"
+    }
+  },
+  {
+    "id": "del-056",
+    "name": "Bar Council of Delhi",
+    "organization": "Independent",
+    "category": "Law, Policy, and Human Rights",
+    "description": "Statutory body for legal practitioners; manages professional ethics.",
+    "location": "Siri Fort, Delhi",
+    "links": {
+      "website": "https://delhibarcouncil.com"
+    }
+  },
+  {
+    "id": "del-057",
+    "name": "ICAI Delhi",
+    "organization": "Independent",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Institute of Chartered Accountants; hub for financial excellence.",
+    "location": "ITO, Delhi",
+    "links": {
+      "website": "https://icai.org"
+    }
+  },
+  {
+    "id": "del-058",
+    "name": "FICCI",
+    "organization": "Independent",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Federation of Indian Chambers of Commerce; industrial policy hub.",
+    "location": "Tansen Marg, Delhi",
+    "links": {
+      "website": "https://ficci.in"
+    }
+  },
+  {
+    "id": "del-059",
+    "name": "CII North",
+    "organization": "Confederation of Indian Industry",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Premier business association for Northern India; hosts trade fests.",
+    "location": "Lodhi Road, Delhi",
+    "links": {
+      "website": "https://cii.in"
+    }
+  },
+  {
+    "id": "del-060",
+    "name": "PHD Chamber",
+    "organization": "Independent",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "PHD Chamber of Commerce; supporting MSMEs and trade growth.",
+    "location": "August Kranti Marg, Delhi",
+    "links": {
+      "website": "https://phdcci.in"
+    }
+  },
+  {
+    "id": "del-061",
+    "name": "IEI Delhi",
+    "organization": "Institution of Engineers",
+    "category": "Electronics and Embedded Systems",
+    "description": "Global professional body for engineers; hosts technical symposia.",
+    "location": "Bahadur Shah Zafar Marg, Delhi",
+    "links": {
+      "website": "https://ieindia.org"
+    }
+  },
+  {
+    "id": "del-062",
+    "name": "IEEE Delhi Section",
+    "organization": "Independent",
+    "category": "Electronics and Embedded Systems",
+    "description": "Technical hub for electronics and electrical engineers in North India.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://ieeedelhi.org"
+    }
+  },
+  {
+    "id": "del-063",
+    "name": "IETE Delhi",
+    "organization": "Institution of Electronics",
+    "category": "Electronics and Embedded Systems",
+    "description": "Focuses on advancement of electronics, telecomm, and IT.",
+    "location": "Lodi Road, Delhi",
+    "links": {
+      "website": "https://iete.org"
+    }
+  },
+  {
+    "id": "del-064",
+    "name": "ISRO Delhi Office",
+    "organization": "Independent",
+    "category": "Astronomy, Space Science, and Rocketry",
+    "description": "Nodal office for ISRO programs and space research outreach in Delhi.",
+    "location": "IP Estate, Delhi",
+    "links": {
+      "website": "https://isro.gov.in"
+    }
+  },
+  {
+    "id": "del-065",
+    "name": "DRDO Delhi",
+    "organization": "Independent",
+    "category": "Physics and Theoretical Research",
+    "description": "Defence research hub; focuses on advanced physics and missile tech.",
+    "location": "Metcalfe House, Delhi",
+    "links": {
+      "website": "https://drdo.gov.in"
+    }
+  },
+  {
+    "id": "del-066",
+    "name": "CSIR Delhi",
+    "organization": "Independent",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "Council of Scientific and Industrial Research; leading science hub.",
+    "location": "Rafi Marg, Delhi",
+    "links": {
+      "website": "https://csir.res.in"
+    }
+  },
+  {
+    "id": "del-067",
+    "name": "Nehru Memorial Museum",
+    "organization": "Independent",
+    "category": "History & Arts",
+    "description": "Library and museum focused on Indian history and public policy.",
+    "location": "Teen Murti, Delhi",
+    "links": {
+      "website": "https://nehrumemorial.nic.in"
+    }
+  },
+  {
+    "id": "del-068",
+    "name": "British Council",
+    "organization": "Independent",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "UK's cultural institute; hosts English exams, libraries, and arts fests.",
+    "location": "K.G. Marg, Delhi",
+    "links": {
+      "website": "https://britishcouncil.in"
+    }
+  },
+  {
+    "id": "del-069",
+    "name": "American Center",
+    "organization": "Independent",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "Hub for US culture and education; massive library and info-sessions.",
+    "location": "K.G. Marg, Delhi",
+    "links": {
+      "website": "https://in.usembassy.gov"
+    }
+  },
+  {
+    "id": "del-070",
+    "name": "Japan Foundation",
+    "organization": "Independent",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "Promotes Japanese language and culture; hosts film festivals.",
+    "location": "Lajpat Nagar, Delhi",
+    "links": {
+      "website": "https://jfindia.org.in"
+    }
+  },
+  {
+    "id": "del-071",
+    "name": "Delhi Public Library",
+    "organization": "Independent",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "Largest state-funded library network; hub for local bibliophiles.",
+    "location": "Chandni Chowk, Delhi",
+    "links": {
+      "website": "https://dpl.gov.in"
+    }
+  },
+  {
+    "id": "del-072",
+    "name": "National Archives of India",
+    "organization": "Independent",
+    "category": "History & Arts",
+    "description": "Central repository for historical records and public research.",
+    "location": "Janpath, Delhi",
+    "links": {
+      "website": "https://nationalarchives.nic.in"
+    }
+  },
+  {
+    "id": "del-073",
+    "name": "IGNCA",
+    "organization": "Indira Gandhi National Centre",
+    "category": "History & Arts",
+    "description": "National hub for Indian arts; research and archival facilities.",
+    "location": "Janpath, Delhi",
+    "links": {
+      "website": "https://ignca.gov.in"
+    }
+  },
+  {
+    "id": "del-074",
+    "name": "National Gallery of Modern Art",
+    "organization": "Independent",
+    "category": "Fine Arts, Painting, and Creative Design",
+    "description": "Premier museum for modern Indian art; hosts global exhibitions.",
+    "location": "India Gate, Delhi",
+    "links": {
+      "website": "https://ngmaindia.gov.in"
+    }
+  },
+  {
+    "id": "del-075",
+    "name": "Sahitya Kala Parishad",
+    "organization": "Delhi Government",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "Cultural academy of Delhi; promotes folk and classical arts.",
+    "location": "Vikas Bhawan, Delhi",
+    "links": {
+      "website": "https://artandculture.delhi.gov.in"
+    }
+  },
+  {
+    "id": "del-076",
+    "name": "Ghalib Institute",
+    "organization": "Independent",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "Preserves Urdu literature and the legacy of Mirza Ghalib.",
+    "location": "Mata Sundri Lane, Delhi",
+    "links": {
+      "website": "https://ghalibinstitute.com"
+    }
+  },
+  {
+    "id": "del-077",
+    "name": "National Press Club",
+    "organization": "Independent",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "Professional body for journalists; hub for media policy and events.",
+    "location": "Raisina Road, Delhi",
+    "links": {
+      "website": "https://pressclubofindia.org"
+    }
+  },
+  {
+    "id": "del-078",
+    "name": "Foreign Correspondents Club",
+    "organization": "Independent",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "Network for international media personnel based in South Asia.",
+    "location": "Mathura Road, Delhi",
+    "links": {
+      "website": "https://fccsouthasia.com"
+    }
+  },
+  {
+    "id": "del-079",
+    "name": "Constitution Club of India",
+    "organization": "Independent",
+    "category": "Law, Policy, and Human Rights",
+    "description": "Elite hub for public policy debate and political interaction.",
+    "location": "Rafi Marg, Delhi",
+    "links": {
+      "website": "https://constitutionclub.in"
+    }
+  },
+  {
+    "id": "del-080",
+    "name": "India International Centre",
+    "organization": "Independent",
+    "category": "Law, Policy, and Human Rights",
+    "description": "Premier cultural and intellectual hub; hosts global policy fests.",
+    "location": "Lodhi Estate, Delhi",
+    "links": {
+      "website": "https://iicdelhi.in"
+    }
+  },
+  {
+    "id": "del-081",
+    "name": "AIIMS Research Society",
+    "organization": "AIIMS Delhi",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "Focuses on translational medical research and clinical trials.",
+    "location": "Ansari Nagar, Delhi",
+    "links": {
+      "website": "https://aiims.edu"
+    }
+  },
+  {
+    "id": "del-082",
+    "name": "NPL Delhi",
+    "organization": "National Physical Laboratory",
+    "category": "Physics and Theoretical Research",
+    "description": "Custodian of measurement standards; advanced physics R&D hub.",
+    "location": "Pusa, Delhi",
+    "links": {
+      "website": "https://nplindia.org"
+    }
+  },
+  {
+    "id": "del-083",
+    "name": "Mathematical Sciences Foundation",
+    "organization": "Independent",
+    "category": "Mathematics and Quantitative Analysis",
+    "description": "Promotes math education via projects and real-world application.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://msf.org.in"
+    }
+  },
+  {
+    "id": "del-084",
+    "name": "Indian Society of Genetics",
+    "organization": "Independent",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "Promotes advancement in plant breeding and genetic research.",
+    "location": "IARI Pusa, Delhi",
+    "links": {
+      "website": "https://isgpb.org"
+    }
+  },
+  {
+    "id": "del-085",
+    "name": "Society of Biological Chemists",
+    "organization": "Independent",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "Oldest scientific society for biochemists in India.",
+    "location": "Delhi Chapter",
+    "links": {
+      "website": "https://sbci.org.in"
+    }
+  },
+  {
+    "id": "del-086",
+    "name": "Materials Research Society",
+    "organization": "Independent",
+    "category": "Physics and Theoretical Research",
+    "description": "Focuses on advanced materials and nanotechnology research.",
+    "location": "Delhi Chapter",
+    "links": {
+      "website": "https://mrsi.org.in"
+    }
+  },
+  {
+    "id": "del-087",
+    "name": "Delhi Photography Club",
+    "organization": "Independent",
+    "category": "Photography, Cinematography, and Visual Media",
+    "description": "Largest amateur community; organizes city heritage photo-walks.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://delhiphotographyclub.com"
+    }
+  },
+  {
+    "id": "del-088",
+    "name": "Delhi Film Club",
+    "organization": "Independent",
+    "category": "Photography, Cinematography, and Visual Media",
+    "description": "Screening society for world cinema and independent Indian films.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://delhifilmclub.com"
+    }
+  },
+  {
+    "id": "del-089",
+    "name": "The Poetry Society",
+    "organization": "Independent",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "Oldest poetry forum in Delhi; promotes multi-lingual verse.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://thepoetrysociety.org.in"
+    }
+  },
+  {
+    "id": "del-090",
+    "name": "Delhi Heritage Society",
+    "organization": "Independent",
+    "category": "History & Arts",
+    "description": "Focuses on architectural preservation and city history documentation.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://delhiheritage.org"
+    }
+  },
+  {
+    "id": "del-091",
+    "name": "IUCAA Delhi",
+    "organization": "Inter-University Centre",
+    "category": "Astronomy, Space Science, and Rocketry",
+    "description": "Hub for astrophysics and solar research for university faculty.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://iucaa.in"
+    }
+  },
+  {
+    "id": "del-092",
+    "name": "Indian Institute of Science alumni",
+    "organization": "IISc Bangalore",
+    "category": "Physics and Theoretical Research",
+    "description": "Delhi chapter networking for high-end researchers and scientists.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://iisc.ac.in"
+    }
+  },
+  {
+    "id": "del-093",
+    "name": "Delhi Heritage Society",
+    "organization": "Independent",
+    "category": "History & Arts",
+    "description": "Focuses on architectural preservation and city history documentation.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://delhiheritage.org"
+    }
+  },
+  {
+    "id": "del-094",
+    "name": "Division of Biotech",
+    "organization": "NSUT",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "Core engineering and research in applied life sciences.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://nsut.ac.in"
+    }
+  },
+  {
+    "id": "del-095",
+    "name": "Doctor Eduzone",
+    "organization": "Independent",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "Medical and bio-preparation; provides structured materials and lab workshops.",
+    "location": "Mughal Canal, Delhi",
+    "links": {
+      "website": "https://doctoreduzone.com"
+    }
+  },
+  {
+    "id": "del-096",
+    "name": "NIFA",
+    "organization": "National Institute of Fine Arts",
+    "category": "Fine Arts, Painting, and Creative Design",
+    "description": "National hub for professional arts; offers diploma courses and exhibitions.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://nifafinearts.com"
+    }
+  },
+  {
+    "id": "del-097",
+    "name": "IIP Academy",
+    "organization": "Indian Institute of Photography",
+    "category": "Photography, Cinematography, and Visual Media",
+    "description": "Professional photography education with state-of-the-art studio facilities.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://iipacademy.edu.in"
+    }
+  },
+  {
+    "id": "del-098",
+    "name": "PAIPA",
+    "organization": "Pradeep Adwani's Academy",
+    "category": "Dance and Choreography",
+    "description": "Award-winning dance academy for Bollywood, western, and classical forms.",
+    "location": "Lajpat Nagar, Delhi",
+    "links": {
+      "website": "https://paipa.in"
+    }
+  },
+  {
+    "id": "del-099",
+    "name": "PyDelhi",
+    "organization": "Independent",
+    "category": "Coding, Web Development, and Cybersecurity",
+    "description": "Python user group; hosts massive open-source meetups and DevSprints.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://pydelhi.org"
+    }
+  },
+  {
+    "id": "del-100",
+    "name": "GDG Delhi",
+    "organization": "Google Developer Group",
+    "category": "Coding, Web Development, and Cybersecurity",
+    "description": "Google technology hub for developers; focuses on Flutter, Firebase, and AI.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://gdsc.community.dev/gdg-delhi"
+    }
+  },
+  {
+    "id": "del-101",
+    "name": "Delhi Poetry Slam",
+    "organization": "Independent",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "Largest poetry community; hosts slam events and workshops across the city.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://delhipoetryslam.com"
+    }
+  },
+  {
+    "id": "del-102",
+    "name": "Asmita Theatre",
+    "organization": "Independent",
+    "category": "Theatre, Acting, and Dramatics",
+    "description": "Leading social-political theatre group known for impactful street plays.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://asmitatheatregroup.com"
+    }
+  },
+  {
+    "id": "del-103",
+    "name": "The Piano Man",
+    "organization": "Independent",
+    "category": "Singing and Musical Performance",
+    "description": "Elite jazz club and musical performance space; hosts global artists.",
+    "location": "Safdarjung Enclave, Delhi",
+    "links": {
+      "website": "https://thepianoman.in"
+    }
+  },
+  {
+    "id": "del-104",
+    "name": "AAFT",
+    "organization": "Asian Academy of Film and Television",
+    "category": "Photography, Cinematography, and Visual Media",
+    "description": "International hub for media education; specialized film production tracks.",
+    "location": "Noida/Delhi",
+    "links": {
+      "website": "https://aaft.com"
+    }
+  },
+  {
+    "id": "del-105",
+    "name": "CSI Delhi",
+    "organization": "Computer Society of India",
+    "category": "Coding, Web Development, and Cybersecurity",
+    "description": "Professional body for IT practitioners; focuses on tech-policy and innovation.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://csi-delhi.org"
+    }
+  },
+  {
+    "id": "del-106",
+    "name": "Mathematical Society",
+    "organization": "St. Stephen's",
+    "category": "Mathematics and Quantitative Analysis",
+    "description": "Rigorous academic club for theorem exploration and math fests.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://ststephens.edu"
+    }
+  },
+  {
+    "id": "del-107",
+    "name": "PhysSoc",
+    "organization": "Hindu College",
+    "category": "Physics and Theoretical Research",
+    "description": "Celebrates fundamental physics through seminars and 'Quasar' festival.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://hinducollege.ac.in"
+    }
+  },
+  {
+    "id": "del-108",
+    "name": "The DebSoc",
+    "organization": "SRCC",
+    "category": "Debating, Public Speaking, and Rhetoric",
+    "description": "Elite debating society known for high-stakes national wins.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://srcc.edu"
+    }
+  },
+  {
+    "id": "del-109",
+    "name": "Fine Arts Society",
+    "organization": "DTU",
+    "category": "Fine Arts, Painting, and Creative Design",
+    "description": "Focuses on digital arts, graffiti, and professional design projects.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://dtu.ac.in"
+    }
+  },
+  {
+    "id": "del-110",
+    "name": "Enactus NSUT",
+    "organization": "NSUT",
+    "category": "Social Service and Community Outreach",
+    "description": "Social entrepreneurship hub; develops projects for sustainable impact.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://nsut.ac.in"
+    }
+  },
+  {
+    "id": "del-111",
+    "name": "Robotics Club",
+    "organization": "IIT Delhi",
+    "category": "Robotics, Artificial Intelligence, and Automation",
+    "description": "Technical hub for bot-building; focuses on mechanical and AI integration.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://caic.iitd.ac.in"
+    }
+  },
+  {
+    "id": "del-112",
+    "name": "E-Cell",
+    "organization": "IIT Delhi",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Nurturing startups via mentorship; hosts 'Startup Expo' and incubation.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://ecell-iitd.org"
+    }
+  },
+  {
+    "id": "del-113",
+    "name": "Quizzing Society",
+    "organization": "Miranda House",
+    "category": "General Knowledge & Quizzing",
+    "description": "Leading knowledge club; hosts national level quiz championships.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://mirandahouse.ac.in"
+    }
+  },
+  {
+    "id": "del-114",
+    "name": "Astronomy Club",
+    "organization": "IIT Delhi",
+    "category": "Astronomy, Space Science, and Rocketry",
+    "description": "Hosts stargazing sessions and telescope handling workshops.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://caic.iitd.ac.in"
+    }
+  },
+  {
+    "id": "del-115",
+    "name": "Dramatics Society",
+    "organization": "LSR",
+    "category": "Theatre, Acting, and Dramatics",
+    "description": "High-caliber stage performance group focused on feminist themes.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://lsr.edu.in"
+    }
+  },
+  {
+    "id": "del-116",
+    "name": "Shutterbug",
+    "organization": "Hansraj College",
+    "category": "Photography, Cinematography, and Visual Media",
+    "description": "Photography society capturing campus life and city heritage.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://hansrajcollege.ac.in"
+    }
+  },
+  {
+    "id": "del-117",
+    "name": "NSS IIT Delhi",
+    "organization": "IIT Delhi",
+    "category": "Social Service and Community Outreach",
+    "description": "Welfare group working on literacy, sanitation, and blood donation.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://nss.iitd.ac.in"
+    }
+  },
+  {
+    "id": "del-118",
+    "name": "Tryst",
+    "organization": "IIT Delhi",
+    "category": "Coding, Web Development, and Cybersecurity",
+    "description": "North India's largest technical festival hosting massive hackathons.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://tryst-iitd.org"
+    }
+  },
+  {
+    "id": "del-119",
+    "name": "Finance Society",
+    "organization": "SSCBS",
+    "category": "Mathematics and Quantitative Analysis",
+    "description": "Focuses on equity research, portfolio management, and stock markets.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://sscbs.du.ac.in"
+    }
+  },
+  {
+    "id": "del-120",
+    "name": "Delhi University Music Faculty",
+    "organization": "University of Delhi",
+    "category": "Singing and Musical Performance",
+    "description": "Academic and performance hub for Hindustani and Carnatic music.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://music.du.ac.in"
+    }
+  },
+  {
+    "id": "del-121",
+    "name": "Spic Macay",
+    "organization": "Independent",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "Global movement promoting Indian classical music and culture in schools.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://spicmacay.org"
+    }
+  },
+  {
+    "id": "del-122",
+    "name": "Racing Club",
+    "organization": "DTU",
+    "category": "Racing and Automotive Engineering",
+    "description": "Design and fabrication of formula student combustion and electric cars.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://dtu.ac.in"
+    }
+  },
+  {
+    "id": "del-123",
+    "name": "Literary Society",
+    "organization": "Ramjas College",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "Promotes creative writing and literary discourse through 'Word-Craft'.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://ramjas.du.ac.in"
+    }
+  },
+  {
+    "id": "del-124",
+    "name": "Toxics Link",
+    "organization": "Independent",
+    "category": "Environmental Conservation & Sustainability",
+    "description": "Environmental research body focusing on e-waste and chemical safety.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://toxicslink.org"
+    }
+  },
+  {
+    "id": "del-125",
+    "name": "Wildlife Trust of India",
+    "organization": "Independent",
+    "category": "Environmental Conservation & Sustainability",
+    "description": "National NGO focusing on wildlife rescue and habitat protection.",
+    "location": "Noida/Delhi",
+    "links": {
+      "website": "https://wti.org.in"
+    }
+  },
+  {
+    "id": "del-126",
+    "name": "Swechha",
+    "organization": "Independent",
+    "category": "Social Service and Community Outreach",
+    "description": "Youth-led NGO focusing on environment and education for urban poor.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://swechha.in"
+    }
+  },
+  {
+    "id": "del-127",
+    "name": "Delhi Bird Foundation",
+    "organization": "Independent",
+    "category": "Environmental Conservation & Sustainability",
+    "description": "Largest bird-watching community in North India; hosts 'Big Bird Day'.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://delhibirdfoundation.org"
+    }
+  },
+  {
+    "id": "del-128",
+    "name": "Rotaract Club",
+    "organization": "Rotary International",
+    "category": "Social Service and Community Outreach",
+    "description": "Service club for young professionals; focuses on community impact.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://rotaract3011.org"
+    }
+  },
+  {
+    "id": "del-129",
+    "name": "Amnesty International Delhi",
+    "organization": "Independent",
+    "category": "Law, Policy, and Human Rights",
+    "description": "Global movement focusing on human rights advocacy and education.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://amnesty.org.in"
+    }
+  },
+  {
+    "id": "del-130",
+    "name": "National Museum Institute",
+    "organization": "Independent",
+    "category": "History & Arts",
+    "description": "Hub for conservation and museum studies; hosts heritage walks.",
+    "location": "Janpath, Delhi",
+    "links": {
+      "website": "https://nmi.gov.in"
+    }
+  },
+  {
+    "id": "del-131",
+    "name": "French Cultural Centre",
+    "organization": "Independent",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "Alliance Fran\u00e7aise de Delhi; hub for French language and culture.",
+    "location": "Lodhi Road, Delhi",
+    "links": {
+      "website": "https://delhi.afindia.org"
+    }
+  },
+  {
+    "id": "del-132",
+    "name": "Max Mueller Bhavan",
+    "organization": "Goethe-Institut",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "German cultural hub; hosts international film screenings and art.",
+    "location": "K.G. Marg, Delhi",
+    "links": {
+      "website": "https://goethe.de/delhi"
+    }
+  },
+  {
+    "id": "del-133",
+    "name": "India Habitat Centre",
+    "organization": "Independent",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "Premier venue for art exhibitions, theatre, and intellectual fests.",
+    "location": "Lodhi Road, Delhi",
+    "links": {
+      "website": "https://indiahabitat.org"
+    }
+  },
+  {
+    "id": "del-134",
+    "name": "Lalit Kala Akademi",
+    "organization": "Independent",
+    "category": "Fine Arts, Painting, and Creative Design",
+    "description": "National academy of fine arts; hosts the 'National Exhibition of Art'.",
+    "location": "Ferozeshah Road, Delhi",
+    "links": {
+      "website": "https://lalitkala.gov.in"
+    }
+  },
+  {
+    "id": "del-135",
+    "name": "National School of Drama",
+    "organization": "Independent",
+    "category": "Theatre, Acting, and Dramatics",
+    "description": "World-renowned theatre training institute; hosts 'Bharat Rang Mahotsav'.",
+    "location": "Mandi House, Delhi",
+    "links": {
+      "website": "https://nsd.gov.in"
+    }
+  },
+  {
+    "id": "del-136",
+    "name": "Sahitya Akademi",
+    "organization": "Independent",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "India's national academy of letters; preserves 24 Indian languages.",
+    "location": "Mandi House, Delhi",
+    "links": {
+      "website": "https://sahitya-akademi.gov.in"
+    }
+  },
+  {
+    "id": "del-137",
+    "name": "Indian Law Institute",
+    "organization": "Independent",
+    "category": "Law, Policy, and Human Rights",
+    "description": "Premier legal research institute; publishes law journals and reports.",
+    "location": "Bhagwan Das Road, Delhi",
+    "links": {
+      "website": "https://ili.ac.in"
+    }
+  },
+  {
+    "id": "del-138",
+    "name": "ICCR",
+    "organization": "Independent",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "Indian Council for Cultural Relations; manages global cultural exchanges.",
+    "location": "IP Estate, Delhi",
+    "links": {
+      "website": "https://iccr.gov.in"
+    }
+  },
+  {
+    "id": "del-139",
+    "name": "TERI",
+    "organization": "Independent",
+    "category": "Environmental Conservation & Sustainability",
+    "description": "The Energy and Resources Institute; global leader in sustainable R&D.",
+    "location": "Lodhi Road, Delhi",
+    "links": {
+      "website": "https://teriin.org"
+    }
+  },
+  {
+    "id": "del-140",
+    "name": "IDSA",
+    "organization": "Independent",
+    "category": "Law, Policy, and Human Rights",
+    "description": "Manohar Parrikar Institute for Defence Studies; security think-tank.",
+    "location": "Delhi Cantt, Delhi",
+    "links": {
+      "website": "https://idsa.in"
+    }
+  },
+  {
+    "id": "del-141",
+    "name": "Indian Institute of Management",
+    "organization": "IIM Ahmedabad",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Delhi alumni network; hosts networking for global business leaders.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://iima.ac.in"
+    }
+  },
+  {
+    "id": "del-142",
+    "name": "ORF Delhi",
+    "organization": "Observer Research Foundation",
+    "category": "Law, Policy, and Human Rights",
+    "description": "Leading global think-tank focusing on policy, economy, and climate.",
+    "location": "Chanakyapuri, Delhi",
+    "links": {
+      "website": "https://orfonline.org"
+    }
+  },
+  {
+    "id": "del-143",
+    "name": "CPR Delhi",
+    "organization": "Centre for Policy Research",
+    "category": "Law, Policy, and Human Rights",
+    "description": "Public policy think-tank; focuses on urbanization and governance.",
+    "location": "Dharam Marg, Delhi",
+    "links": {
+      "website": "https://cprindia.org"
+    }
+  },
+  {
+    "id": "del-144",
+    "name": "INTACH Delhi",
+    "organization": "Independent",
+    "category": "History & Arts",
+    "description": "National Trust for Art and Cultural Heritage; preserves city monuments.",
+    "location": "Lodhi Estate, Delhi",
+    "links": {
+      "website": "https://intach.org"
+    }
+  },
+  {
+    "id": "del-145",
+    "name": "Delhi Medical Association",
+    "organization": "Independent",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "State wing of IMA; provides networking for medical professionals.",
+    "location": "Daryaganj, Delhi",
+    "links": {
+      "website": "https://delhimedicalassociation.com"
+    }
+  },
+  {
+    "id": "del-146",
+    "name": "Bar Council of Delhi",
+    "organization": "Independent",
+    "category": "Law, Policy, and Human Rights",
+    "description": "Statutory body for legal practitioners; manages professional ethics.",
+    "location": "Siri Fort, Delhi",
+    "links": {
+      "website": "https://delhibarcouncil.com"
+    }
+  },
+  {
+    "id": "del-147",
+    "name": "ICAI Delhi",
+    "organization": "Independent",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Institute of Chartered Accountants; hub for financial excellence.",
+    "location": "ITO, Delhi",
+    "links": {
+      "website": "https://icai.org"
+    }
+  },
+  {
+    "id": "del-148",
+    "name": "FICCI",
+    "organization": "Independent",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Federation of Indian Chambers of Commerce; industrial policy hub.",
+    "location": "Tansen Marg, Delhi",
+    "links": {
+      "website": "https://ficci.in"
+    }
+  },
+  {
+    "id": "del-149",
+    "name": "CII North",
+    "organization": "Confederation of Indian Industry",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Premier business association for Northern India; hosts trade fests.",
+    "location": "Lodhi Road, Delhi",
+    "links": {
+      "website": "https://cii.in"
+    }
+  },
+  {
+    "id": "del-150",
+    "name": "PHD Chamber",
+    "organization": "Independent",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "PHD Chamber of Commerce; supporting MSMEs and trade growth.",
+    "location": "August Kranti Marg, Delhi",
+    "links": {
+      "website": "https://phdcci.in"
+    }
+  },
+  {
+    "id": "del-151",
+    "name": "IEI Delhi",
+    "organization": "Institution of Engineers",
+    "category": "Electronics and Embedded Systems",
+    "description": "Global professional body for engineers; hosts technical symposia.",
+    "location": "Bahadur Shah Zafar Marg, Delhi",
+    "links": {
+      "website": "https://ieindia.org"
+    }
+  },
+  {
+    "id": "del-152",
+    "name": "IEEE Delhi Section",
+    "organization": "Independent",
+    "category": "Electronics and Embedded Systems",
+    "description": "Technical hub for electronics and electrical engineers in North India.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://ieeedelhi.org"
+    }
+  },
+  {
+    "id": "del-153",
+    "name": "IETE Delhi",
+    "organization": "Institution of Electronics",
+    "category": "Electronics and Embedded Systems",
+    "description": "Focuses on advancement of electronics, telecomm, and IT.",
+    "location": "Lodi Road, Delhi",
+    "links": {
+      "website": "https://iete.org"
+    }
+  },
+  {
+    "id": "del-154",
+    "name": "Misfits",
+    "organization": "Independent",
+    "category": "Cultural",
+    "description": "Community Club; 40+ hobby clubs; 120k+ members.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/_misfits_official",
+      "website": "https://misfits.net.in"
+    }
+  },
+  {
+    "id": "del-155",
+    "name": "Step Out",
+    "organization": "Independent",
+    "category": "Cultural",
+    "description": "Dinner Club; Curates intimate dinners with 6 strangers.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/stepout_world"
+    }
+  },
+  {
+    "id": "del-156",
+    "name": "E-Cell NSUT",
+    "organization": "NSUT",
+    "category": "Business",
+    "description": "NSUT Entrepreneurship Cell; incubation and ideathon models.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ecell_nsut"
+    }
+  },
+  {
+    "id": "del-157",
+    "name": "BnC",
+    "organization": "IIT Delhi",
+    "category": "Business",
+    "description": "Business and Consulting Club; case studies and strategy.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://caic.iitd.ac.in"
+    }
+  },
+  {
+    "id": "del-158",
+    "name": "FIC",
+    "organization": "SRCC",
+    "category": "Business",
+    "description": "Finance and Investment Cell; high-stakes case battles.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://srcc.edu"
+    }
+  },
+  {
+    "id": "del-159",
+    "name": "Finnexia",
+    "organization": "IIIT Delhi",
+    "category": "Business",
+    "description": "Finance club fostering campus financial literacy.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/finnexia_iiitd"
+    }
+  },
+  {
+    "id": "del-160",
+    "name": "180DC SSCBS",
+    "organization": "SSCBS",
+    "category": "Business",
+    "description": "SSCBS Global Best Strategy Project Award winner.",
+    "location": "Delhi",
+    "links": {
+      "website": "mailto:cbs@180dc.org"
+    }
+  },
+  {
+    "id": "del-161",
+    "name": "Sahayak Club",
+    "organization": "Independent",
+    "category": "Business",
+    "description": "Business Net; Started with 10 members; vision to reach 500 by 2026. Tel: 8506996650.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/sahayak_business_club"
+    }
+  },
+  {
+    "id": "del-162",
+    "name": "Delhi Angel Net",
+    "organization": "Independent",
+    "category": "Business",
+    "description": "Angel Group; Supporting high-potential tech startups with funding.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/delhiangelnetwork",
+      "website": "https://delhiangelnetwork.in"
+    }
+  },
+  {
+    "id": "del-163",
+    "name": "Startup Grind",
+    "organization": "Independent",
+    "category": "Business",
+    "description": "Global Comm; Founders and investors; regular networking events.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/startupgrinddelhi",
+      "website": "https://startupgrind.com/delhi"
+    }
+  },
+  {
+    "id": "del-164",
+    "name": "HEN India",
+    "organization": "Independent",
+    "category": "Business",
+    "description": "Women Net.; Her Entrepreneurial Network; weekly learning sessions.",
+    "location": "Delhi",
+    "links": {
+      "website": "https://henindia.com"
+    }
+  },
+  {
+    "id": "mum-001",
+    "name": "BioX Club",
+    "organization": "IIT Bombay",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "Blends biology with technology; focuses on synthetic biology, bioinformatics, and low-cost diagnostics. Developed open-source hardware for biological experiments; hosts \"Bio-Hackathons\".",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://tech-iitb.org/clubs/"
+    }
+  },
+  {
+    "id": "mum-002",
+    "name": "Bio-Engineering Association",
+    "organization": "IITB",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "Department-specific body promoting advanced research in cellular and tissue engineering. Organized international seminars on neural engineering and regenerative medicine.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://bio.iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-003",
+    "name": "Microzone Association",
+    "organization": "MCC",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "Focuses on microbiology and genetic research through student-led symposiums. Conducted \"Microcampus Odyssey\" and workshops on gene editing in food revolutions.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://mccblr.edu.in"
+    }
+  },
+  {
+    "id": "mum-004",
+    "name": "Department of Biotechnology",
+    "organization": "ICT",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "Technical student body overseeing specialized research in fermentation and polymer science. Facilitated research collaborations with NCL-IISER for biotechnology students.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://ictmumbai.edu.in"
+    }
+  },
+  {
+    "id": "mum-005",
+    "name": "Home Science Association",
+    "organization": "MCC",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "Interdisciplinary body focusing on nutrition, bio-science, and family resource management. Collaborated with Toastmasters for leadership workshops in health sciences.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://mccblr.edu.in"
+    }
+  },
+  {
+    "id": "mum-006",
+    "name": "Indian Society of Chemists and Biologists",
+    "organization": "ISCB",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "Promotes interdisciplinary cooperation in medicinal and biomolecular chemistry. Signed MoU with EFMC; features top 2% global scientists (e.g., Dr. PMS Chauhan).",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iscbindia.com"
+    }
+  },
+  {
+    "id": "mum-007",
+    "name": "Society for Materials Chemistry",
+    "organization": "Bio-Materials",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "Focuses on biocompatible materials for medical implants and drug delivery. Conducts national workshops on SPC-MAT focusing on bio-structure correlations.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://smcindia.org"
+    }
+  },
+  {
+    "id": "mum-008",
+    "name": "Nehru Planetarium",
+    "organization": "Science Wing",
+    "category": "Biological Sciences and Biotechnology",
+    "description": "While astronomy-focused, it hosts regular biological science lectures on astrobiology and the origin of life. Conducts \"Science Day\" exhibitions featuring regional biological research models.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://nehru-centre.org"
+    }
+  },
+  {
+    "id": "mum-009",
+    "name": "Quant Club",
+    "organization": "IIT Bombay",
+    "category": "Mathematics and Quantitative Analysis",
+    "description": "Focuses on quantitative finance, probability, and algorithmic trading strategies. Conducts workshops on derivatives pricing and financial modeling.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://tech-iitb.org/clubs/"
+    }
+  },
+  {
+    "id": "mum-010",
+    "name": "Maths and Physics Club",
+    "organization": "MnP - IITB",
+    "category": "Mathematics and Quantitative Analysis",
+    "description": "Celebrates basic sciences through symposiums, lectures, and research funding. Successfully pass the \"torch\" annually via structured convener selections; funds experimental setups.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://mnp-club.github.io"
+    }
+  },
+  {
+    "id": "mum-011",
+    "name": "Mathletics",
+    "organization": "MCC Math Association",
+    "category": "Mathematics and Quantitative Analysis",
+    "description": "Encourages interest in mathematics through puzzles, logic competitions, and \"Hypatia\" (Math Day). Organized the \"Fibonacci Feast\" and \"TechSigma\" for inter-college participation.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://mccblr.edu.in"
+    }
+  },
+  {
+    "id": "mum-012",
+    "name": "Artha",
+    "organization": "Department of Economics",
+    "category": "Mathematics and Quantitative Analysis",
+    "description": "While economic, it focuses heavily on quantitative analysis and statistical modeling. Conducts workshops on data analysis using statistical software for B.Sc. students.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://mccblr.edu.in"
+    }
+  },
+  {
+    "id": "mum-013",
+    "name": "Academic Discussion Forum",
+    "organization": "IITB",
+    "category": "Mathematics and Quantitative Analysis",
+    "description": "A peer-led forum for discussing complex mathematical theorems and problem-solving. Acts as a support network for postgraduate students tackling high-level calculus.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-014",
+    "name": "The Mathematics Consortium",
+    "organization": "TMC",
+    "category": "Mathematics and Quantitative Analysis",
+    "description": "A consortium of mathematical societies in India and SAARC for research collaboration. Organized joint conferences with the American Mathematical Society (AMS).",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://themathconsortium.in"
+    }
+  },
+  {
+    "id": "mum-015",
+    "name": "Indian Mathematical Society",
+    "organization": "IMS",
+    "category": "Mathematics and Quantitative Analysis",
+    "description": "The oldest scientific society in India for promoting mathematical study. Publishes \"The Mathematics Student\"; maintains life and student membership tiers.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://indianmathsoc.org"
+    }
+  },
+  {
+    "id": "mum-016",
+    "name": "Ramanujan Mathematical Society",
+    "organization": "RMS",
+    "category": "Mathematics and Quantitative Analysis",
+    "description": "Promotes mathematical education and the legacy of Srinivasa Ramanujan. Conducts annual training programs for Ph.D. scholars in advanced algebra.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://ramanujanmathsociety.org"
+    }
+  },
+  {
+    "id": "mum-017",
+    "name": "Indian Statistical Association",
+    "organization": "ISA",
+    "category": "Mathematics and Quantitative Analysis",
+    "description": "Professional body for statisticians focusing on probability and research methodology. Hosts workshops on Big Data and statistical inference in Mumbai.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://isa.org.in"
+    }
+  },
+  {
+    "id": "mum-018",
+    "name": "Maths and Physics Club",
+    "organization": "IITB",
+    "category": "Physics and Theoretical Research",
+    "description": "Aim to reignite inquisitiveness for basic sciences through lectures and lab visits. Organized visits to campus labs and off-campus research facilities for experimental work.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://mnp-club.github.io"
+    }
+  },
+  {
+    "id": "mum-019",
+    "name": "Physics Association",
+    "organization": "MCC",
+    "category": "Physics and Theoretical Research",
+    "description": "Organizes \"fun activities with physics\" to encourage undergraduate interest. Conducts \"Electro-Hunt\" and science fests focusing on electronics-themed crosswords.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://mccblr.edu.in"
+    }
+  },
+  {
+    "id": "mum-020",
+    "name": "Engineering Physics Society",
+    "organization": "IITB",
+    "category": "Physics and Theoretical Research",
+    "description": "Departmental body focusing on the application of physics in modern engineering. Hosts symposiums on photonics, semiconductor devices, and quantum optics.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-021",
+    "name": "AR VR Club",
+    "organization": "VJTI",
+    "category": "Physics and Theoretical Research",
+    "description": "Explores the physics of light, optics, and perception through augmented and virtual reality. Developed educational modules using immersive technology for engineering courses.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vjti.ac.in"
+    }
+  },
+  {
+    "id": "mum-022",
+    "name": "Academic Mentorship Club",
+    "organization": "VJTI",
+    "category": "Physics and Theoretical Research",
+    "description": "Provides academic support for students in difficult physics and engineering courses. Acts as a peer-to-peer tutoring network for first-year engineering students.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vjti.ac.in"
+    }
+  },
+  {
+    "id": "mum-023",
+    "name": "Society for Materials Chemistry",
+    "organization": "SMC",
+    "category": "Physics and Theoretical Research",
+    "description": "Professional body promoting research in materials chemistry and physics. Hosted the 7th National Workshop on Materials Chemistry (NWMC-2025).",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://smcindia.org"
+    }
+  },
+  {
+    "id": "mum-024",
+    "name": "Indian Academy of Mathematics",
+    "organization": "Independent",
+    "category": "Physics and Theoretical Research",
+    "description": "Promotes theoretical research at the intersection of math and theoretical physics. Organizes specialized seminars for researchers in applied mathematics and physics.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iam.org.in"
+    }
+  },
+  {
+    "id": "mum-025",
+    "name": "Nehru Centre",
+    "organization": "Science Wing",
+    "category": "Physics and Theoretical Research",
+    "description": "Conducts high-level lectures by renowned scientists like Dr. Jayant Narlikar on physics. Acts as the primary public outreach center for theoretical physics in Mumbai.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://nehru-centre.org"
+    }
+  },
+  {
+    "id": "mum-026",
+    "name": "Chemistry Club",
+    "organization": "IIT Bombay",
+    "category": "Chemical Technology and Chemistry",
+    "description": "Unites students with a love for chemistry through experimental and academic exploration. Collaborates with the Tinkerers' Lab for hands-on chemical engineering projects.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://tech-iitb.org/clubs/"
+    }
+  },
+  {
+    "id": "mum-027",
+    "name": "Technological Association",
+    "organization": "ICT Mumbai",
+    "category": "Chemical Technology and Chemistry",
+    "description": "The overarching student body overseeing 29 representatives for technical and cultural fests. Organizes \"Vortex,\" the inter-collegiate technical festival drawing participants nationwide.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://ictmumbai.edu.in"
+    }
+  },
+  {
+    "id": "mum-028",
+    "name": "Chemical Engineering Association",
+    "organization": "ChEA - IITB",
+    "category": "Chemical Technology and Chemistry",
+    "description": "Department-specific body promoting process engineering and industrial chemistry. Conducts \"AZeotropy,\" India\u2019s largest chemical engineering symposium.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://che.iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-029",
+    "name": "Chemistry Association",
+    "organization": "MCC",
+    "category": "Chemical Technology and Chemistry",
+    "description": "Organizes \"Culinary Chemix\" and \"Academicia\" to promote chemistry through flavor and food. Conducts Trick or Taste events and Heist to Harvest workshops on Science Day.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://mccblr.edu.in"
+    }
+  },
+  {
+    "id": "mum-030",
+    "name": "Bombay Technologists",
+    "organization": "ICT",
+    "category": "Chemical Technology and Chemistry",
+    "description": "Runs the in-house technical journal focusing on scientific writing and chemical research. Encourages students to publish peer-reviewed articles on industrial chemistry.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://ictmumbai.edu.in"
+    }
+  },
+  {
+    "id": "mum-031",
+    "name": "Society for Materials Chemistry",
+    "organization": "SMC",
+    "category": "Chemical Technology and Chemistry",
+    "description": "Professional body promoting materials chemistry among scientists and engineers. Over 2,300 life members; organizes biennial international symposia (ISMC).",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://smcindia.org"
+    }
+  },
+  {
+    "id": "mum-032",
+    "name": "Indian Society of Chemists and Biologists",
+    "organization": "ISCB",
+    "category": "Chemical Technology and Chemistry",
+    "description": "Focuses on interdisciplinary coop and promoting awareness of recent developments in science. MoUs with EFMC; publishes high-impact journals in medicinal chemistry.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iscbindia.com"
+    }
+  },
+  {
+    "id": "mum-033",
+    "name": "Udct Alumni Association",
+    "organization": "Independent",
+    "category": "Chemical Technology and Chemistry",
+    "description": "Networking platform for former chemical technology students of ICT Mumbai. Provides infrastructure support and industry linkages for current students.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://udctalumni.org.in"
+    }
+  },
+  {
+    "id": "mum-034",
+    "name": "IIT Bombay Racing",
+    "organization": "Independent",
+    "category": "Racing and Automotive Engineering",
+    "description": "Student-led team designing and fabricating high-performance formula electric race cars. Multiple national and international Formula Student awards; innovators in EV powertrains.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iitbracing.org"
+    }
+  },
+  {
+    "id": "mum-035",
+    "name": "VJTI Racing",
+    "organization": "Independent",
+    "category": "Racing and Automotive Engineering",
+    "description": "Focuses on All-Terrain Vehicles (ATVs) and engines for BAJA SAE competitions. Consistent top finishers in BAJA SAE India; experts in suspension and chassis design.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vjti.ac.in"
+    }
+  },
+  {
+    "id": "mum-036",
+    "name": "SAE Racing Club",
+    "organization": "VJTI",
+    "category": "Racing and Automotive Engineering",
+    "description": "Collegiate chapter of the Society of Automotive Engineers promoting racing excellence. Organizes workshops on automotive engines and corporate networking.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vjti.ac.in"
+    }
+  },
+  {
+    "id": "mum-037",
+    "name": "Hyperloop IITB",
+    "organization": "Independent",
+    "category": "Racing and Automotive Engineering",
+    "description": "Redefining speed by developing high-speed pod transportation systems. Represented India at international SpaceX Hyperloop Pod competitions.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://hyperloopiitb.com"
+    }
+  },
+  {
+    "id": "mum-038",
+    "name": "Team Shunya",
+    "organization": "IITB",
+    "category": "Racing and Automotive Engineering",
+    "description": "Focuses on net-zero energy building, though utilizes automotive thermal management principles. Multiple international awards in the Solar Decathlon China and India.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://teamshunya.in"
+    }
+  },
+  {
+    "id": "mum-039",
+    "name": "Royal Western India Turf Club",
+    "organization": "Independent",
+    "category": "Racing and Automotive Engineering",
+    "description": "While primarily horse racing, it is a historical hub for the city\u2019s elite sporting culture. Hosts the Indian Derby and provides world-class racing infrastructure in Mahalaxmi.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://rwitc.com"
+    }
+  },
+  {
+    "id": "mum-040",
+    "name": "Enfield Riders Club",
+    "organization": "Independent",
+    "category": "Racing and Automotive Engineering",
+    "description": "A community for Royal Enfield enthusiasts focusing on long-distance touring and mechanical DIY. Organizes cross-country tours and basic engine maintenance workshops for members.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://enfieldriders.com"
+    }
+  },
+  {
+    "id": "mum-041",
+    "name": "Palm Beach Riders",
+    "organization": "Independent",
+    "category": "Racing and Automotive Engineering",
+    "description": "Navi Mumbai-based motorcycling group focused on safety and community riding events. Conducts \"Ride for Safety\" campaigns along the Palm Beach Road corridor.",
+    "location": "Navi Mumbai",
+    "links": {
+      "website": "https://FB: PBR"
+    }
+  },
+  {
+    "id": "mum-042",
+    "name": "Montage",
+    "organization": "NMIMS ASMSOC",
+    "category": "Dance and Choreography",
+    "description": "The official cultural club; focuses on interconnecting dance, drama, and fashion. Organized \"Cultural Days\" and \"Talent Hunt\" with participation from across the school.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://commerce.nmims.edu"
+    }
+  },
+  {
+    "id": "mum-043",
+    "name": "Culturals@IITB",
+    "organization": "Independent",
+    "category": "Dance and Choreography",
+    "description": "Umbrella body for performing arts; hosts diverse genres including Classical and Folk. Manages the \"Dance GC\" and coordinates massive teams for inter-IIT meets.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iitb-culturals.org"
+    }
+  },
+  {
+    "id": "mum-044",
+    "name": "Pratibimb Dance Wing",
+    "organization": "Independent",
+    "category": "Dance and Choreography",
+    "description": "VJTI's national cultural festival wing that showcases versatility in street and classical dance. Organized high-energy contests that draw thousands of participants annually.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vjti.ac.in"
+    }
+  },
+  {
+    "id": "mum-045",
+    "name": "Ami-Cult",
+    "organization": "Amity Mumbai",
+    "category": "Dance and Choreography",
+    "description": "Performing arts club focusing on hones professional and leadership skills through dance. Conducts hands-on activities that improve communication through rhythmic expression.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://amity.edu/mumbai"
+    }
+  },
+  {
+    "id": "mum-046",
+    "name": "Performing Arts Club",
+    "organization": "VJTI",
+    "category": "Dance and Choreography",
+    "description": "Focuses on the academic and artistic integration of performing arts into student life. Managed by faculty to ensure a high standard of creative production and wellness.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vjti.ac.in"
+    }
+  },
+  {
+    "id": "mum-047",
+    "name": "NCPA",
+    "organization": "National Centre for the Performing Arts",
+    "category": "Dance and Choreography",
+    "description": "India's premier cultural institution for preserving and promoting classical dance. Hosts 700+ events annually; features international contemporary and folk troupes.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://ncpamumbai.com"
+    }
+  },
+  {
+    "id": "mum-048",
+    "name": "AcroYoga Mumbai",
+    "organization": "Jenny Hoessler",
+    "category": "Dance and Choreography",
+    "description": "Focuses on the solar and lunar parts of acrobatics\u2014basing, flying, and core training. Integrates games and communication skills with high-intensity partner exercises.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://smcindia.org"
+    }
+  },
+  {
+    "id": "mum-049",
+    "name": "Zumba Workshop",
+    "organization": "VIT Hobby Club",
+    "category": "Dance and Choreography",
+    "description": "Provides high-energy fitness and dance training for local residents and students. Conducted as part of the \"Bollywood Flashback\" and health-wellness initiatives.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vit.edu.in"
+    }
+  },
+  {
+    "id": "mum-050",
+    "name": "Country Club",
+    "organization": "Wellness Wing",
+    "category": "Dance and Choreography",
+    "description": "Offers daily dance and fitness classes including Bollywood and Aerobics. Popular among South Mumbai residents for community-based fitness engagement.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://countryclubindia.net"
+    }
+  },
+  {
+    "id": "mum-051",
+    "name": "Indian Music Group",
+    "organization": "IMG - St. Xavier's",
+    "category": "Singing and Musical Performance",
+    "description": "Promotes Indian Classical Music through concerts and appreciation courses. Organizes \"Jan-Fest,\" one of Mumbai's most highly rated annual music festivals.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://xaviers.edu"
+    }
+  },
+  {
+    "id": "mum-052",
+    "name": "Treblemakers",
+    "organization": "NMIMS SBM",
+    "category": "Singing and Musical Performance",
+    "description": "Interest-based music cell for management students; focuses on contemporary genres. Managed large-scale performances for \"RangPunch\" and intra-college fests.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://sbm.nmims.edu"
+    }
+  },
+  {
+    "id": "mum-053",
+    "name": "Music Club of ICT",
+    "organization": "Independent",
+    "category": "Singing and Musical Performance",
+    "description": "Focuses on vocal and instrumental music development for chemical tech students. Core performer for the \"ManZar\" and \"FunTech\" annual cultural events.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://ictmumbai.edu.in"
+    }
+  },
+  {
+    "id": "mum-054",
+    "name": "Music Association",
+    "organization": "MCC",
+    "category": "Singing and Musical Performance",
+    "description": "Organizes \"Open Mic\" events and \"Nostalgia Knockout\" to foster musical bonding. Managed the \"Electro Quiz\" and \"Febonacci Feast\" entertainment segments.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://mccblr.edu.in"
+    }
+  },
+  {
+    "id": "mum-055",
+    "name": "Roots",
+    "organization": "IIT Bombay Music Club",
+    "category": "Singing and Musical Performance",
+    "description": "Dedicated to Indian classical and folk music within the IITB cultural ecosystem. Organized workshops with maestros and maintained a high standard in inter-IIT music.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iitb-culturals.org"
+    }
+  },
+  {
+    "id": "mum-056",
+    "name": "Sofar Sounds Mumbai",
+    "organization": "Independent",
+    "category": "Singing and Musical Performance",
+    "description": "Community of music-lovers hosting secret gigs in unique city locations. Intimate gatherings in living rooms and terraces where listening is prioritized.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://sofarsounds.com"
+    }
+  },
+  {
+    "id": "mum-057",
+    "name": "Music Jammin",
+    "organization": "Independent",
+    "category": "Singing and Musical Performance",
+    "description": "Platform for budding artists and local talent to showcase and collaborate. Meets twice a month for sessions aimed at safe and supportive evolution of talent.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://musicjammin.in"
+    }
+  },
+  {
+    "id": "mum-058",
+    "name": "My Music Gym",
+    "organization": "Independent",
+    "category": "Singing and Musical Performance",
+    "description": "A head-office hub for vocational music training and community jamming. Rated for its collaborative atmosphere and professional voice training courses.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://mymusicgym.com"
+    }
+  },
+  {
+    "id": "mum-059",
+    "name": "The Bandra Base",
+    "organization": "Independent",
+    "category": "Singing and Musical Performance",
+    "description": "A community space and cultural club dedicated to intimate musical performances. Acts as a boutique venue for jazz, indie, and alternative music in West Mumbai.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://thebandrabase.in"
+    }
+  },
+  {
+    "id": "mum-060",
+    "name": "Fourthwall",
+    "organization": "IIT Bombay",
+    "category": "Theatre, Acting, and Dramatics",
+    "description": "The official dramatics club focusing on street plays and stage performances. Consistently wins national street-play competitions; organizes the annual Dramatics GC.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://fourthwall.iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-061",
+    "name": "Rangawardhan",
+    "organization": "VJTI",
+    "category": "Theatre, Acting, and Dramatics",
+    "description": "Dedicated to Marathi culture through drama, adaptations, and literature. Celebrated its 25th anniversary in 2024 with a mascot and logo unveiling by state ministers.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://rangawardhan.com"
+    }
+  },
+  {
+    "id": "mum-062",
+    "name": "Ami-Theatre",
+    "organization": "Amity Mumbai",
+    "category": "Theatre, Acting, and Dramatics",
+    "description": "Theatre club focusing on professional skills and harnessing student potential. Organizes meaningful cultural activities based on hands-on production experiences.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://amity.edu.in"
+    }
+  },
+  {
+    "id": "mum-063",
+    "name": "Nepathya",
+    "organization": "NMIMS SBM",
+    "category": "Theatre, Acting, and Dramatics",
+    "description": "Interest-based cell for stage performances and theatrical management. Managed major productions for \"RangPunch\" and internal management festivals.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://sbm.nmims.edu"
+    }
+  },
+  {
+    "id": "mum-064",
+    "name": "Montage Drama Wing",
+    "organization": "Independent",
+    "category": "Theatre, Acting, and Dramatics",
+    "description": "Focuses on interconnecting art forms through stagecraft and performance. Successfully hosted intra-college fests like \"Euphoria\" and \"Parichay\".",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://commerce.nmims.edu"
+    }
+  },
+  {
+    "id": "mum-065",
+    "name": "Naatakwaale Theatre Company",
+    "organization": "Independent",
+    "category": "Theatre, Acting, and Dramatics",
+    "description": "Professional group performing stage, street, and corporate plays. Performed 1200+ street plays on social issues; conducted 300+ workshops.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://naatakwaale.in"
+    }
+  },
+  {
+    "id": "mum-066",
+    "name": "Prithvi Theatre",
+    "organization": "Caferati",
+    "category": "Theatre, Acting, and Dramatics",
+    "description": "Hosting open-mic sessions for written and performed theatrical work. The fourth Monday of every month features budding stand-up and dramatic talent.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://prithvitheatre.org"
+    }
+  },
+  {
+    "id": "mum-067",
+    "name": "Manch & More",
+    "organization": "Independent",
+    "category": "Theatre, Acting, and Dramatics",
+    "description": "Cultural and theatrical club focusing on regional and modern drama in Malad. Provides a platform for unlearning experiences and experimental stagecraft.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://manchandmore.in"
+    }
+  },
+  {
+    "id": "mum-068",
+    "name": "New Acropolis",
+    "organization": "Philosophical Theatre",
+    "category": "Theatre, Acting, and Dramatics",
+    "description": "Uses theatre to explore philosophical themes like the \"Way of the Samurai\". Conducts \"Living Philosophy\" courses integrated with performed narratives.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://acropolis.org.in"
+    }
+  },
+  {
+    "id": "mum-069",
+    "name": "Krittika",
+    "organization": "IIT Bombay",
+    "category": "Astronomy, Space Science, and Rocketry",
+    "description": "The official astronomy club; aims to reignite curiosity for the cosmos. Conducts stargazing sessions and theoretical lectures on planetary science.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://tech-iitb.org/clubs/"
+    }
+  },
+  {
+    "id": "mum-070",
+    "name": "Vishwa",
+    "organization": "VJTI",
+    "category": "Astronomy, Space Science, and Rocketry",
+    "description": "Space science club aiming to launch VJTI\u2019s first student satellite. Participates in international competitions like IRC, URC, and CanSat.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vjti.ac.in"
+    }
+  },
+  {
+    "id": "mum-071",
+    "name": "Ami-Astro",
+    "organization": "Amity Mumbai",
+    "category": "Astronomy, Space Science, and Rocketry",
+    "description": "Focuses on the study of space sciences and observational astronomy. Organizes campus-wide events for eclipses and planetary transits.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://amity.edu.in"
+    }
+  },
+  {
+    "id": "mum-072",
+    "name": "Aero VJTI",
+    "organization": "Independent",
+    "category": "Astronomy, Space Science, and Rocketry",
+    "description": "Specialized wing focusing on aerospace engineering and high-altitude ballooning. Managed by faculty to provide technical skill development in aerospace.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vjti.ac.in"
+    }
+  },
+  {
+    "id": "mum-073",
+    "name": "Pratham Team",
+    "organization": "IITB",
+    "category": "Astronomy, Space Science, and Rocketry",
+    "description": "Focused exclusively on satellite design and launch logistics. Successfully managed the documentation and hardware for student satellite missions.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-074",
+    "name": "Khagol Mandal",
+    "organization": "Independent",
+    "category": "Astronomy, Space Science, and Rocketry",
+    "description": "Registered voluntary organization (est. 1985) focusing on public sky sessions. Hosted first International Pro-Am Meeting in Mumbai; 39 years of sky sessions.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://khagolmandal.com"
+    }
+  },
+  {
+    "id": "mum-075",
+    "name": "Akashmitra Mandal",
+    "organization": "Kalyan",
+    "category": "Astronomy, Space Science, and Rocketry",
+    "description": "Amateur astronomers organization focusing on systematic study and research. Discovered first SOHO comet in India; conducts Basic Astronomy courses.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://akashmitra.org"
+    }
+  },
+  {
+    "id": "mum-076",
+    "name": "i-RoboChakra",
+    "organization": "Space Wing",
+    "category": "Astronomy, Space Science, and Rocketry",
+    "description": "ISRO Registered Official Space Tutor Program for young innovators. Journey through space technology and understanding real-world ISRO projects.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://navimumbai.irobochakra.com"
+    }
+  },
+  {
+    "id": "mum-077",
+    "name": "The Himalayan Club",
+    "organization": "Library",
+    "category": "Astronomy, Space Science, and Rocketry",
+    "description": "While mountaineering-focused, maintains a world-class library of maps and stars. Provides resources for high-altitude astronomical research and expedition logistics.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://himalayanclub.org"
+    }
+  },
+  {
+    "id": "mum-078",
+    "name": "Web and Coding Club",
+    "organization": "WnCC - IITB",
+    "category": "Coding, Web Development, and Cybersecurity",
+    "description": "The official programming club promoting everything from web-dev to competitive coding. Runs \"Seasons of Code,\" a collaborative summer program for open-source growth.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://tech-iitb.org/clubs/"
+    }
+  },
+  {
+    "id": "mum-079",
+    "name": "Community of Coders",
+    "organization": "CoC - VJTI",
+    "category": "Coding, Web Development, and Cybersecurity",
+    "description": "Focuses on data structures, algorithms, and collaborative development. Consistent top finishers in national hackathons; manages institutional software repos.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://cocvjti.org"
+    }
+  },
+  {
+    "id": "mum-080",
+    "name": "DevCom",
+    "organization": "IIT Bombay",
+    "category": "Coding, Web Development, and Cybersecurity",
+    "description": "Dedicated development community within IITB focusing on institutional portals. Maintained and upgraded critical student-management and certificate portals.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-081",
+    "name": "GDSC VJTI",
+    "organization": "Independent",
+    "category": "Coding, Web Development, and Cybersecurity",
+    "description": "Google Developer Student Club focusing on Google cloud and mobile tech. Organized workshops on Flutter, AI, and cloud computing for engineering students.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://gdsc.community.dev"
+    }
+  },
+  {
+    "id": "mum-082",
+    "name": "Cybersecurity Community",
+    "organization": "IITB",
+    "category": "Coding, Web Development, and Cybersecurity",
+    "description": "Focused on network security, ethical hacking, and data protection. Conducts \"Capture the Flag\" events to test vulnerability assessment skills.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-083",
+    "name": "Mumbai Coding Club",
+    "organization": "Independent",
+    "category": "Coding, Web Development, and Cybersecurity",
+    "description": "Professional training hub focusing on full-stack development and Python. Reports 100% Avg Salary Hike for participants; captured 2.5 Cr+ market value.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://mumbaicodingclub.com"
+    }
+  },
+  {
+    "id": "mum-084",
+    "name": "SP Robotics Maker Lab",
+    "organization": "Independent",
+    "category": "Coding, Web Development, and Cybersecurity",
+    "description": "National chain focusing on coding, drones, and IOT for young creators. India\u2019s No. 1 Coding & Robotics Learning Centre with 75+ branches.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://sproboticworks.com"
+    }
+  },
+  {
+    "id": "mum-085",
+    "name": "La Electronics Lab",
+    "organization": "Coding Wing",
+    "category": "Coding, Web Development, and Cybersecurity",
+    "description": "Master Arduino, ESP32, and Raspberry Pi through structured courses. Provided invaluable assistance for final-year projects on accident detection.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://laelectronicslab.in"
+    }
+  },
+  {
+    "id": "mum-086",
+    "name": "i-RoboChakra",
+    "organization": "Coding Track",
+    "category": "Coding, Web Development, and Cybersecurity",
+    "description": "Teaches machine learning and AI concepts to young innovators in Navi Mumbai. Prepares children for careers in the fastest-growing tech fields.",
+    "location": "Navi Mumbai",
+    "links": {
+      "website": "https://navimumbai.irobochakra.com"
+    }
+  },
+  {
+    "id": "mum-087",
+    "name": "Adventure Sports",
+    "organization": "IIT Bombay",
+    "category": "Mountaineering, Trekking, and Adventure Sports",
+    "description": "Focuses on trekking, rock climbing, paragliding, and mountaineering courses. Organized various expeditions in the Sahyadri ranges and high-altitude courses.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://gymkhana.iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-088",
+    "name": "Hobby Club",
+    "organization": "VIT Mumbai",
+    "category": "Mountaineering, Trekking, and Adventure Sports",
+    "description": "Promotes networking and personality development through trekking and stargazing. Conducted workshops and guided trekking sessions in the hills and forts of Mumbai.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vit.edu.in"
+    }
+  },
+  {
+    "id": "mum-089",
+    "name": "Cycling Club",
+    "organization": "IIT Bombay",
+    "category": "Mountaineering, Trekking, and Adventure Sports",
+    "description": "Promotes sustainable travel and high-intensity fitness through long-distance rides. Conducts intra-campus and inter-city cycling tours regularly.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://gymkhana.iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-090",
+    "name": "Skating Club",
+    "organization": "IIT Bombay",
+    "category": "Mountaineering, Trekking, and Adventure Sports",
+    "description": "Focuses on rhythmic movement and high-speed balance through skating events. Managed by the Adventure and General Sports council for student wellness.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://gymkhana.iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-091",
+    "name": "Girivihar",
+    "organization": "Independent",
+    "category": "Mountaineering, Trekking, and Adventure Sports",
+    "description": "Founded in 1954; premier mountaineering club in India focusing on high altitudes. Organized 50+ Himalayan expeditions; successfully climbed peaks beyond 8000m.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://girivihar.org"
+    }
+  },
+  {
+    "id": "mum-092",
+    "name": "The Himalayan Club",
+    "organization": "Independent",
+    "category": "Mountaineering, Trekking, and Adventure Sports",
+    "description": "Established in 1928; one of the oldest clubs for travel and exploration in the Himalayas. Publishes the authentic \"Himalayan Journal\"; maintains massive libraries in Mumbai.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://himalayanclub.org"
+    }
+  },
+  {
+    "id": "mum-093",
+    "name": "Chakram Hikers",
+    "organization": "Independent",
+    "category": "Mountaineering, Trekking, and Adventure Sports",
+    "description": "NGO focusing on non-profit adventure sports and forest conservation. Recognized for true efforts in leadership development and rural outreach.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://chakramhikers.org"
+    }
+  },
+  {
+    "id": "mum-094",
+    "name": "Gorilla Adventures",
+    "organization": "Independent",
+    "category": "Mountaineering, Trekking, and Adventure Sports",
+    "description": "Outdoor sports store and tour operator specializing in hiking and climbing. Offers adventure tours in rappelling, valley crossing, and rock climbing.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://gorillaadventures.in"
+    }
+  },
+  {
+    "id": "mum-095",
+    "name": "Let's Get Lost",
+    "organization": "Independent",
+    "category": "Mountaineering, Trekking, and Adventure Sports",
+    "description": "Travel community organizing overnight camps and offbeat weekend getaways. Hosted unique events like watching movies under the stars at Rajmachi Fort.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://letsgetlost.in"
+    }
+  },
+  {
+    "id": "mum-096",
+    "name": "Montage Fashion Committee",
+    "organization": "Independent",
+    "category": "Fashion, Style, and Lifestyle",
+    "description": "Part of ASMSOC's cultural club; focuses on runway events and professional styling. Organizes \"Vaayu Fashion Week,\" a highlight of the international-level college fest.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://commerce.nmims.edu"
+    }
+  },
+  {
+    "id": "mum-097",
+    "name": "Ami-Trendz",
+    "organization": "Amity Mumbai",
+    "category": "Fashion, Style, and Lifestyle",
+    "description": "Style club aimed at honing professional and leadership skills through fashion. Conducts hands-on activities to improve intellectual and communication skills through style.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://amity.edu.in"
+    }
+  },
+  {
+    "id": "mum-098",
+    "name": "FAD Department",
+    "organization": "MCC",
+    "category": "Fashion, Style, and Lifestyle",
+    "description": "Departmental association focusing on fashion and interior design. Organized visits to specialized departments for AICTE lab exposure in fashion.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://mccblr.edu.in"
+    }
+  },
+  {
+    "id": "mum-099",
+    "name": "Lifestyle Genre",
+    "organization": "IITB Cult",
+    "category": "Fashion, Style, and Lifestyle",
+    "description": "Umbrella body for style, design, and classical arts within the cultural council. Manages \"Lifestyle GC\" focusing on personal branding and stage presence.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iitb-culturals.org"
+    }
+  },
+  {
+    "id": "mum-100",
+    "name": "Montage Admin/Finance",
+    "organization": "Independent",
+    "category": "Fashion, Style, and Lifestyle",
+    "description": "While organizational, it handles the massive budget and logistics for fashion shows. Successfully managed the sponsorship for \"Talent Hunt\" and \"Vaayu\" events.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://commerce.nmims.edu"
+    }
+  },
+  {
+    "id": "mum-101",
+    "name": "FTP Institute",
+    "organization": "Fashion Wing",
+    "category": "Fashion, Style, and Lifestyle",
+    "description": "Provides weekend courses in basic and advanced digital fashion photography. Led by celebrity fashion photographers like Viraj sir for detailed mentorship.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://ftpinstitute.com"
+    }
+  },
+  {
+    "id": "mum-102",
+    "name": "Kids Fun Club - Creativities",
+    "organization": "Independent",
+    "category": "Fashion, Style, and Lifestyle",
+    "description": "Head of Creativities focusing on new business and creative play for kids in Malabar Hill. Promotes \"Ridge Road\" events for high-end creative and lifestyle training.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://kidsfunclub.in"
+    }
+  },
+  {
+    "id": "mum-103",
+    "name": "Ami-Psyche",
+    "organization": "Lifestyle Wing",
+    "category": "Fashion, Style, and Lifestyle",
+    "description": "Focuses on holistic development and emotional well-being as part of university lifestyle. Integrates style with emotional intelligence for well-rounded student growth.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://amity.edu.in"
+    }
+  },
+  {
+    "id": "mum-104",
+    "name": "Silverscreen",
+    "organization": "IIT Bombay",
+    "category": "Photography, Cinematography, and Visual Media",
+    "description": "The official film and media club focusing on cinematography and storytelling. Produced high-quality short films for inter-college and internal festivals.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://gymkhana.iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-105",
+    "name": "Snap-Squad",
+    "organization": "Amity Mumbai",
+    "category": "Photography, Cinematography, and Visual Media",
+    "description": "Dedicated photography club aiming to harness student potential through visual media. Members take part in several exhibitions and photo-walks both on and off campus.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://amity.edu.in"
+    }
+  },
+  {
+    "id": "mum-106",
+    "name": "Ami-Cine",
+    "organization": "Amity Mumbai",
+    "category": "Photography, Cinematography, and Visual Media",
+    "description": "Movie production club focusing on the technical aspects of filmmaking. Organizes Meaningful cultural activities through the lens of production.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://amity.edu.in"
+    }
+  },
+  {
+    "id": "mum-107",
+    "name": "Photography Head",
+    "organization": "ICT",
+    "category": "Photography, Cinematography, and Visual Media",
+    "description": "Part of the Technological Association managing the institute's visual documentation. Manages photography for \"Vortex\" and inter-college cultural festivals.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://ictmumbai.edu.in"
+    }
+  },
+  {
+    "id": "mum-108",
+    "name": "Media & Creative Production",
+    "organization": "VJTI",
+    "category": "Photography, Cinematography, and Visual Media",
+    "description": "Focused on institutional branding and digital media production for student events. Managed by faculty to ensure high-quality visual outputs for Technovanza.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vjti.ac.in"
+    }
+  },
+  {
+    "id": "mum-109",
+    "name": "Photographic Society of India",
+    "organization": "PSI",
+    "category": "Photography, Cinematography, and Visual Media",
+    "description": "Established in 1937; focuses on promotion and advancement of photographic art. Hosts Members' Annual Exhibition 2026; publishes the \"Click Magazine\".",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://photographicsocietyofindia.com"
+    }
+  },
+  {
+    "id": "mum-110",
+    "name": "National Institute of Photography",
+    "organization": "Independent",
+    "category": "Photography, Cinematography, and Visual Media",
+    "description": "Offers professional courses in wedding, fashion, and lifestyle photography. Renowned for commitment to excellence and expert instructors in Mumbai.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://focusnip.com"
+    }
+  },
+  {
+    "id": "mum-111",
+    "name": "Mumbai Weekend Shoot",
+    "organization": "Independent",
+    "category": "Photography, Cinematography, and Visual Media",
+    "description": "Independent photography group organizing weekly heritage and street walks. Active community on Flickr and Facebook for amateur street photography.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://mumbaiweekendshoot.in"
+    }
+  },
+  {
+    "id": "mum-112",
+    "name": "The Raw Lab",
+    "organization": "Independent",
+    "category": "Photography, Cinematography, and Visual Media",
+    "description": "Specialized photography group focusing on high-quality post-production and editing. Rated for its eye for detail and creative approach to visual storytelling.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://therawlab.in"
+    }
+  },
+  {
+    "id": "mum-113",
+    "name": "Mumbai Photography Workshops",
+    "organization": "Independent",
+    "category": "Photography, Cinematography, and Visual Media",
+    "description": "Custom-tailored workshops in street photography (Sassoon Docks, Chor Bazaar). Led by experts like Craig Boehman focusing on ICM and station photography.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://craigboehman.com"
+    }
+  },
+  {
+    "id": "mum-114",
+    "name": "Abhyuday",
+    "organization": "IIT Bombay",
+    "category": "Social Service and Community Outreach",
+    "description": "The social body of IITB focusing on sensitization and hands-on welfare projects. Organized Mumbai's largest blood donation drives and rural activity camps.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://abhyudayiitb.org"
+    }
+  },
+  {
+    "id": "mum-115",
+    "name": "Social Service League",
+    "organization": "St. Xavier's",
+    "category": "Social Service and Community Outreach",
+    "description": "Operating for over 50 years focusing on altruism and rural work. Conducts \"Project Care\" for economically challenged or differently-abled children.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://xaviers.edu"
+    }
+  },
+  {
+    "id": "mum-116",
+    "name": "Social Responsibility Forum",
+    "organization": "NMIMS",
+    "category": "Social Service and Community Outreach",
+    "description": "Conduit for social welfare through exhilarating events and taboo awareness. Successfully organized \"WEvolve\" and distribution drives in local slums.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://commerce.nmims.edu"
+    }
+  },
+  {
+    "id": "mum-117",
+    "name": "Enactus",
+    "organization": "NMIMS ASMSOC",
+    "category": "Social Service and Community Outreach",
+    "description": "Focuses on entrepreneurial action and social innovation through revenue-generating projects. Managed \"Project Neev\" and \"Project Aaranya\" to empower local beneficiaries.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://enactus.org"
+    }
+  },
+  {
+    "id": "mum-118",
+    "name": "Social & Community Activities",
+    "organization": "VJTI",
+    "category": "Social Service and Community Outreach",
+    "description": "Faculty-led body overseeing community-focused cultural activities. Conducts \"National Unity Day\" and collaboration with Matunga Police for harmony.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vjti.ac.in"
+    }
+  },
+  {
+    "id": "mum-119",
+    "name": "Robin Hood Army",
+    "organization": "RHA Mumbai",
+    "category": "Social Service and Community Outreach",
+    "description": "Volunteer-based organization redistributing surplus food from restaurants. Served 118 million+ people; operates the \"Robin Hood Academy\" for street children.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://robinhoodarmy.com"
+    }
+  },
+  {
+    "id": "mum-120",
+    "name": "iVolunteer",
+    "organization": "Independent",
+    "category": "Social Service and Community Outreach",
+    "description": "Social enterprise connecting volunteers with high-impact NGO opportunities in Mumbai. Facilitates skills-based volunteering for over 500 active NGOs in the city.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://ivolunteer.in"
+    }
+  },
+  {
+    "id": "mum-121",
+    "name": "Girija Welfare Association",
+    "organization": "Independent",
+    "category": "Social Service and Community Outreach",
+    "description": "Community-based NGO focusing on health and social development in Mumbai Central. Rated 4.3 stars for its long-term social impact and disciplinary welfare committees.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://girijawelfare.com"
+    }
+  },
+  {
+    "id": "mum-122",
+    "name": "Rotary Club of Bombay Bandra",
+    "organization": "Independent",
+    "category": "Social Service and Community Outreach",
+    "description": "Professional network focusing on large-scale community and rural development. Part of a global network for polio eradication and local education initiatives.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://rotarybombaybandra.org"
+    }
+  },
+  {
+    "id": "mum-123",
+    "name": "DLA Society",
+    "organization": "VJTI",
+    "category": "Debating, Public Speaking, and Rhetoric",
+    "description": "The only non-technical society in VJTI focusing on quizzes, debates, and MUNs. Organizes regular seminars on economics and creative writing.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vjti.ac.in"
+    }
+  },
+  {
+    "id": "mum-124",
+    "name": "Debating Society",
+    "organization": "NMIMS ASMSOC",
+    "category": "Debating, Public Speaking, and Rhetoric",
+    "description": "Focuses on critical thinking and clear, convincing arguments for corporate readiness. Organized workshops on \"Problem Solving\" and \"Analytical Thinking\".",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://commerce.nmims.edu"
+    }
+  },
+  {
+    "id": "mum-125",
+    "name": "SAMSOE Debating Division",
+    "organization": "Independent",
+    "category": "Debating, Public Speaking, and Rhetoric",
+    "description": "Undergraduate division of the School of Economics focusing on Oxford-style debates. Hosts \"Shastrarth,\" the flagship annual debate festival drawing 1000+ participants.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://samsoe.nmims.edu"
+    }
+  },
+  {
+    "id": "mum-126",
+    "name": "Speaking Genre",
+    "organization": "IITB Cult",
+    "category": "Debating, Public Speaking, and Rhetoric",
+    "description": "Part of the Culturals council focusing on formal debates and spoken word. Manages the \"Speaking GC\" and trains teams for international debating forums.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iitb-culturals.org"
+    }
+  },
+  {
+    "id": "mum-127",
+    "name": "NMIMS Mumbai Toastmasters",
+    "organization": "Independent",
+    "category": "Debating, Public Speaking, and Rhetoric",
+    "description": "A specialized collegiate chapter of Toastmasters for management students. Focuses on integrating the Toastmasters curriculum into the MBA experience.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://sbm.nmims.edu"
+    }
+  },
+  {
+    "id": "mum-128",
+    "name": "Mumbai Toastmasters",
+    "organization": "Independent",
+    "category": "Debating, Public Speaking, and Rhetoric",
+    "description": "Open community club meeting at R D National College, Bandra West. One of the oldest Toastmasters clubs in the city (est. 2007).",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://toastmasters.org"
+    }
+  },
+  {
+    "id": "mum-129",
+    "name": "The Talking Club",
+    "organization": "Navi Mumbai",
+    "category": "Debating, Public Speaking, and Rhetoric",
+    "description": "A massive meetup-based group focusing on unlearning and discussion. 1,711 members dedicated to free-form debate and conversational skill development.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://meetup.com"
+    }
+  },
+  {
+    "id": "mum-130",
+    "name": "Mulund Toastmasters",
+    "organization": "Independent",
+    "category": "Debating, Public Speaking, and Rhetoric",
+    "description": "Community club for Northeast Mumbai focusing on leadership and public speaking. Rated for its consistent weekend meetings and high-quality speech evaluations.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://mulundtoastmasters.org"
+    }
+  },
+  {
+    "id": "mum-131",
+    "name": "South Mumbai Toastmasters",
+    "organization": "Sobo",
+    "category": "Debating, Public Speaking, and Rhetoric",
+    "description": "Elite community club focusing on advanced rhetorical skills and leadership. Meets twice a month to foster professional-grade communication skills.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://toastmasters.org"
+    }
+  },
+  {
+    "id": "mum-132",
+    "name": "Expedition Toastmasters Mumbai",
+    "organization": "Independent",
+    "category": "Debating, Public Speaking, and Rhetoric",
+    "description": "Specialized club with professional and educational prerequisites for membership. Focuses on high-level executive communication and strategic leadership.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://toastmasters.org"
+    }
+  },
+  {
+    "id": "mum-133",
+    "name": "Fine Arts Society",
+    "organization": "VJTI",
+    "category": "Fine Arts, Painting, and Creative Design",
+    "description": "An independent society aiming to nurture the artist within engineering students. Responsible for institutional murals and maintaining the scenic beauty of VJTI.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vjti.ac.in"
+    }
+  },
+  {
+    "id": "mum-134",
+    "name": "PFA",
+    "organization": "Photography & Fine Arts - IITB",
+    "category": "Fine Arts, Painting, and Creative Design",
+    "description": "Dual-focus club promoting sketching, painting, and clay modeling. Organizes the \"Fine Arts GC\" and massive on-campus art exhibitions.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iitb-culturals.org"
+    }
+  },
+  {
+    "id": "mum-135",
+    "name": "Montage Fine Arts Wing",
+    "organization": "Independent",
+    "category": "Fine Arts, Painting, and Creative Design",
+    "description": "ASMSOC's cultural wing focusing on aesthetic stage design and painting. Successfully integrated fine arts into the \"Talent Hunt\" and \"Vaayu\" festivals.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://commerce.nmims.edu"
+    }
+  },
+  {
+    "id": "mum-136",
+    "name": "Art Club of ICT",
+    "organization": "Independent",
+    "category": "Fine Arts, Painting, and Creative Design",
+    "description": "Comprises Fine Arts and Performing Arts wings for chemical tech students. Manages the \"ManZar\" art gallery and regional literature fests.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://ictmumbai.edu.in"
+    }
+  },
+  {
+    "id": "mum-137",
+    "name": "Fine Arts & Creative Club",
+    "organization": "VJTI",
+    "category": "Fine Arts, Painting, and Creative Design",
+    "description": "Faculty-led body focusing on academic integration of fine arts. Managed by Prof. Kavita Fasate for a high standard of creative production.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vjti.ac.in"
+    }
+  },
+  {
+    "id": "mum-138",
+    "name": "Bombay Art Society",
+    "organization": "Independent",
+    "category": "Fine Arts, Painting, and Creative Design",
+    "description": "Established in 1888; non-profit institution promoting art in the city. Houses three exhibition galleries, an auditorium, and an art library in Bandra.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://bombayartsociety.org"
+    }
+  },
+  {
+    "id": "mum-139",
+    "name": "Art Society of India",
+    "organization": "ASI",
+    "category": "Fine Arts, Painting, and Creative Design",
+    "description": "Established in 1918; landmark institution for visual arts independence. Organizing the 108th All India Annual Art Exhibition in 2026.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://artsocietyofindia.org"
+    }
+  },
+  {
+    "id": "mum-140",
+    "name": "The Fine Arts Society",
+    "organization": "Chembur",
+    "category": "Fine Arts, Painting, and Creative Design",
+    "description": "Suburban temple of arts promoting classical culture and aesthetic education. Landmark prestigious cultural organization since the Republic Day of 1962.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://thefineartssociety.in"
+    }
+  },
+  {
+    "id": "mum-141",
+    "name": "Hobby Club",
+    "organization": "Painting Wing",
+    "category": "Fine Arts, Painting, and Creative Design",
+    "description": "Vidyalankar Institute\u2019s wing for public art exhibitions and cartoon workshops. Conducted painting workshops led by student artists like Amol Koli.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vit.edu.in"
+    }
+  },
+  {
+    "id": "mum-142",
+    "name": "Umbrella Painting Workshop",
+    "organization": "Independent",
+    "category": "Fine Arts, Painting, and Creative Design",
+    "description": "Seasonal community group focused on functional and decorative art. Promotes accessible community art through workshops in suburban Mumbai.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://mtcultureclub.com"
+    }
+  },
+  {
+    "id": "mum-143",
+    "name": "DLA Society",
+    "organization": "VJTI",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "Manages institutional newsletters (VJ News) and literary seminars. Only non-technical society; organizes quizzes, debates, and creative writing fests.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vjti.ac.in"
+    }
+  },
+  {
+    "id": "mum-144",
+    "name": "Literary Arts",
+    "organization": "IIT Bombay",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "Dedicated to prose, poetry, and journalistic writing within the cultural council. Hosts \"Litrati,\" a national literary festival for students across India.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iitb-culturals.org"
+    }
+  },
+  {
+    "id": "mum-145",
+    "name": "Literary Association",
+    "organization": "MCC",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "Organizes \"Art Thou Among Us\" and \"Conversations with Authors\" events. Managed the \"Academicia\" and \"Nostalgia Knockout\" literary segments.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://mccblr.edu.in"
+    }
+  },
+  {
+    "id": "mum-146",
+    "name": "Literary Club",
+    "organization": "ICT Mumbai",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "Manages English and regional literature events for technical students. Core component of the \"ManZar\" cultural and literary festival.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://ictmumbai.edu.in"
+    }
+  },
+  {
+    "id": "mum-147",
+    "name": "Manthan",
+    "organization": "ICT Mumbai",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "Regional literary and cultural club focusing on Marathi and vernacular arts. Promotes deep cultural roots through poetry and traditional literary fests.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://ictmumbai.edu.in"
+    }
+  },
+  {
+    "id": "mum-148",
+    "name": "Broke Bibliophiles",
+    "organization": "Independent",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "Mumbai chapter aiming to build a massive community of bibliophiles. Organizes theme-based meetings (e.g., Harry Potter month) in restaurants.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://brokebibliophiles.org"
+    }
+  },
+  {
+    "id": "mum-149",
+    "name": "Juhu Book Club",
+    "organization": "Independent",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "Founded in 2006 to review books and talk \"endlessly\" about them. Extremely active social media presence; known for monthly shortlisted reviews.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://juhubookclub.blogspot.com"
+    }
+  },
+  {
+    "id": "mum-150",
+    "name": "Bring Your Own Book",
+    "organization": "BYOB",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "Pan-India network chapter allowing members to borrow/lend books for free. Maintains an online library; meets in cafes and parks across Mumbai.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://bringyourownbook.org"
+    }
+  },
+  {
+    "id": "mum-151",
+    "name": "Mumbai Bookworms",
+    "organization": "Independent",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "GoodReads group for \"buddy reads,\" reviews, and banter on myriad topics. 796 members; focuses on engaging book-lovers in everything dealing with books.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://goodreads.com"
+    }
+  },
+  {
+    "id": "mum-152",
+    "name": "Bound Together Bombay",
+    "organization": "Independent",
+    "category": "Literary Arts and Journalistic Writing",
+    "description": "Free and independent book club meeting at bars/cafes for deep analysis. Explores diverse themes from contemporary French to sports fiction.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://boundtogether.in"
+    }
+  },
+  {
+    "id": "mum-153",
+    "name": "Comedy Cons",
+    "organization": "IIT Bombay",
+    "category": "Stand-up Comedy and Improvisation",
+    "description": "Official humor club aiming to promote stand-up and improvisation. Organizes the \"Humour GC\" and open-mic nights across campus hostels.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://gymkhana.iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-154",
+    "name": "Montage Talent Wing",
+    "organization": "Independent",
+    "category": "Stand-up Comedy and Improvisation",
+    "description": "NMIMS branch focusing on identifying and nurturing comedic talent. Successfully hosted \"Open Mic 2021\" and \"Open Mic 2022\" for performers.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://commerce.nmims.edu"
+    }
+  },
+  {
+    "id": "mum-155",
+    "name": "Talent Hunt",
+    "organization": "ASMSOC",
+    "category": "Stand-up Comedy and Improvisation",
+    "description": "Organizes university-level competitions to discover new comedic voices. Feeder program for major college festivals like \"Vaayu\" and \"Euphoria\".",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://commerce.nmims.edu"
+    }
+  },
+  {
+    "id": "mum-156",
+    "name": "FunTech Performers",
+    "organization": "Independent",
+    "category": "Stand-up Comedy and Improvisation",
+    "description": "ICT branch dedicated to intra-college comedic and variety performances. Focuses on providing a stage for chemistry students to delight and awe.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://ictmumbai.edu.in"
+    }
+  },
+  {
+    "id": "mum-157",
+    "name": "The Habitat",
+    "organization": "Khar",
+    "category": "Stand-up Comedy and Improvisation",
+    "description": "Vibrant community space hosting open-mic nights and live entertainment. Features the \"Guftugu\" interaction show; highly rated for clean, creative humor.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://thehabitat.in"
+    }
+  },
+  {
+    "id": "mum-158",
+    "name": "That Comedy Club",
+    "organization": "Independent",
+    "category": "Stand-up Comedy and Improvisation",
+    "description": "Popular venue in Bandra conducting shows Tuesday through Sunday. Witnessed live performances by India's finest comedians like Masoom Rajwani.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://thatcomedyclub.com"
+    }
+  },
+  {
+    "id": "mum-159",
+    "name": "The Integral Space",
+    "organization": "Independent",
+    "category": "Stand-up Comedy and Improvisation",
+    "description": "South Mumbai hub for \"Women Slay Wednesdays\" and open-mic comedy. Focuses on relatable themes like adulting and sibling rivalry for laughter.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://theintegralspace.com"
+    }
+  },
+  {
+    "id": "mum-160",
+    "name": "Standup Labs",
+    "organization": "Khar",
+    "category": "Stand-up Comedy and Improvisation",
+    "description": "Mini comedy club run by comics experimenting with trial and solo shows. Organizes daily shows to keep up with the vibrant local comedy scene.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://standuplabs.com"
+    }
+  },
+  {
+    "id": "mum-161",
+    "name": "Cuckoo Club",
+    "organization": "Bandra",
+    "category": "Stand-up Comedy and Improvisation",
+    "description": "Intimate venue hosting outstation comedians and fresh faces on Thursdays. Known for its attractive setting and proximity between performers and audience.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://thecuckooclub.in"
+    }
+  },
+  {
+    "id": "mum-162",
+    "name": "Electronics and Robotics Club",
+    "organization": "ERC",
+    "category": "Electronics and Embedded Systems",
+    "description": "Cater to the institute's electronics community through tinkering and innovation. Conducts \"XLR8,\" a flagship robotics competition for technical students.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://tech-iitb.org/clubs/"
+    }
+  },
+  {
+    "id": "mum-163",
+    "name": "Tinkerers' Laboratory",
+    "organization": "IITB",
+    "category": "Electronics and Embedded Systems",
+    "description": "Hub for practical solutions; bridges theory with hands-on learning. Features 250+ workstations for laser cutting, 3D printing, and testing.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://makerspace.iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-164",
+    "name": "EESA",
+    "organization": "Electrical Eng. Assc.",
+    "category": "Electronics and Embedded Systems",
+    "description": "Promotes research sharing through \"EE Students' Reading Group\". Organized symposiums on microelectronics and power systems.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-165",
+    "name": "Ham Radio Club",
+    "organization": "IITB",
+    "category": "Electronics and Embedded Systems",
+    "description": "Amateur radio club focusing on electronics and communication technology. Maintains an active base station for global amateur communication.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://ham.iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-166",
+    "name": "Electronics Association",
+    "organization": "MCC",
+    "category": "Electronics and Embedded Systems",
+    "description": "Organizes \"Electro-Hunt\" and \"Electro Quiz\" to encourage technical curiosity. Managed \"Sapienza\" (Science Day) events focusing on electronic crosswords.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://mccblr.edu.in"
+    }
+  },
+  {
+    "id": "mum-167",
+    "name": "La Electronics Lab",
+    "organization": "Independent",
+    "category": "Electronics and Embedded Systems",
+    "description": "Premier lab Master Arduino, ESP32, and Raspberry Pi for kids and engineers. Provided critical assistance for final year projects on real-time detection.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://laelectronicslab.in"
+    }
+  },
+  {
+    "id": "mum-168",
+    "name": "SP Robotics Maker Lab",
+    "organization": "Independent",
+    "category": "Electronics and Embedded Systems",
+    "description": "India's largest chain of Maker Spaces for advanced IoT and VR learning. India's first STEM Accredited Maker Lab; trusted by national tech awards.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://sproboticworks.com"
+    }
+  },
+  {
+    "id": "mum-169",
+    "name": "Makerspace",
+    "organization": "Shishuvan School",
+    "category": "Electronics and Embedded Systems",
+    "description": "Creative space for hands-on STEM and arts-integrated projects. Successfully built robots and IoT sensors using Arduino and Raspberry Pi.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://shishuvan.com"
+    }
+  },
+  {
+    "id": "mum-170",
+    "name": "NatureNurture Innovation Lab",
+    "organization": "Independent",
+    "category": "Electronics and Embedded Systems",
+    "description": "Reimagining education with hands-on prototypes and DIY tools. Partners with schools to set up customized makerspaces for future innovators.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://naturenurture.org"
+    }
+  },
+  {
+    "id": "mum-171",
+    "name": "AUV-IITB",
+    "organization": "Independent",
+    "category": "Robotics, Artificial Intelligence, and Automation",
+    "description": "Underwater robotics team developing autonomous exploration vehicles. Successfully competed in international AUVSI competitions with custom subs.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://auv-iitb.org"
+    }
+  },
+  {
+    "id": "mum-172",
+    "name": "SRA",
+    "organization": "Society of Robotics - VJTI",
+    "category": "Robotics, Artificial Intelligence, and Automation",
+    "description": "Hub for innovation, AI, and embedded systems through exciting projects. Consistent top finisher in national robotics hackathons and competitions.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://sra.vjti.org.in"
+    }
+  },
+  {
+    "id": "mum-173",
+    "name": "Mars Rover Team",
+    "organization": "IITB",
+    "category": "Robotics, Artificial Intelligence, and Automation",
+    "description": "Designs and fabricates rovers for simulated Martian terrain exploration. Regularly participates in the international University Rover Challenge (URC).",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-174",
+    "name": "RAC",
+    "organization": "Robotics and Automation - TSEC",
+    "category": "Robotics, Artificial Intelligence, and Automation",
+    "description": "Hands-on sensor interfacing and autonomous system assembly workshops. Developed IoT cloud apps for agriculture and line-following robots.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://tsecmumbai.in"
+    }
+  },
+  {
+    "id": "mum-175",
+    "name": "AI Community",
+    "organization": "IITB",
+    "category": "Robotics, Artificial Intelligence, and Automation",
+    "description": "Collaborative community for everything related to Artificial Intelligence. Conducts neural network workshops and AI-driven predictive modeling fests.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-176",
+    "name": "i-RoboChakra",
+    "organization": "Independent",
+    "category": "Robotics, Artificial Intelligence, and Automation",
+    "description": "Complete STEAM education focusing on robotics, AI, and space technology. Trusted by 2000+ parents and 26+ institutions; STEM certified curriculum.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://irobochakra.com"
+    }
+  },
+  {
+    "id": "mum-177",
+    "name": "CreativeLinks Club",
+    "organization": "Independent",
+    "category": "Robotics, Artificial Intelligence, and Automation",
+    "description": "Empowering children with problem-solving using Lego Robotics tools. Prepared children to thrive in the age of AI through structured building kits.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://creativelinksclub.com"
+    }
+  },
+  {
+    "id": "mum-178",
+    "name": "Makerspace",
+    "organization": "Mumbai Port",
+    "category": "Robotics, Artificial Intelligence, and Automation",
+    "description": "Innovation lab where learning becomes interactive, practical, and fun. Partners with learning centers and NGOs for STEM skills-building.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://naturenurture.org"
+    }
+  },
+  {
+    "id": "mum-179",
+    "name": "SP Robotics Maker Lab",
+    "organization": "Independent",
+    "category": "Robotics, Artificial Intelligence, and Automation",
+    "description": "Edu-tainment center to build robots, drones, and android apps in Mumbai. India's No. 1 robotics chain with kits and kits-based learning tracks.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://sproboticworks.com"
+    }
+  },
+  {
+    "id": "mum-180",
+    "name": "Technological Association",
+    "organization": "ICT",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "Umbrella student body (est. 1934) managing all technical and cultural fests. Organizes \"ManZar\" and \"FunTech\" festivals with 29 student representatives.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://ictmumbai.edu.in"
+    }
+  },
+  {
+    "id": "mum-181",
+    "name": "Culturals@IITB",
+    "organization": "Independent",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "The primary body responsible for dance, music, literary arts, and lifestyle. Manages the massive Mood Indigo festival and inter-IIT cultural contingents.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://iitb-culturals.org"
+    }
+  },
+  {
+    "id": "mum-182",
+    "name": "Pratibimb Council",
+    "organization": "VJTI",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "National cultural festival reflecting energy, enthusiasm, and camaraderie. Organized three-day extravaganzas focusing on versatility and managerial skills.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vjti.ac.in"
+    }
+  },
+  {
+    "id": "mum-183",
+    "name": "Montage",
+    "organization": "NMIMS",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "Cultural club believing in interconnecting art forms for a taste of all crafts. Successfully hosted \"Talent Hunt\" and \"Cultural Days\" for years.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://commerce.nmims.edu"
+    }
+  },
+  {
+    "id": "mum-184",
+    "name": "Ami-Cult",
+    "organization": "Amity Mumbai",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "Performing arts body aiming to harness potential through cultural events. Organizes meaningful activities to improve intellectual and professional skills.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://amity.edu.in"
+    }
+  },
+  {
+    "id": "mum-185",
+    "name": "Mumbai Tamil Sangham",
+    "organization": "Independent",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "Promotes Tamil language, literature, and cultural heritage in Mumbai. Landmark organization for the Tamil community; hosts annual regional festivals.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://mumbaitamilsangham.in"
+    }
+  },
+  {
+    "id": "mum-186",
+    "name": "Telugu Sahitya Samiti",
+    "organization": "Independent",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "Dedicated to Telugu literature and regional cultural preservation. Acts as a community hub for the Telugu-speaking population in Chembur East.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://tssmumbai.org"
+    }
+  },
+  {
+    "id": "mum-187",
+    "name": "Navi Mumbai Bihar Association",
+    "organization": "Independent",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "Promotes the welfare and heritage of the Bihari diaspora in Navi Mumbai. Organizes Chhath Puja and regional networking events annually.",
+    "location": "Navi Mumbai",
+    "links": {
+      "website": "https://nmbahome.in"
+    }
+  },
+  {
+    "id": "mum-188",
+    "name": "New Acropolis Cultural Org",
+    "organization": "Independent",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "International school of philosophy hosting \"Living Philosophy\" talks and art. Aiming to help individuals become more complete through cultural unlearning.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://acropolis.org.in"
+    }
+  },
+  {
+    "id": "mum-189",
+    "name": "Kerala Kala Samithi",
+    "organization": "Independent",
+    "category": "Cultural Umbrella Bodies and Regional Sanghams",
+    "description": "Dedicated to preserving the rich artistic and literary culture of Kerala in Mumbai. Hosts Kathakali and Mohiniyattam performances for the local community.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://kksmumbai.in"
+    }
+  },
+  {
+    "id": "mum-190",
+    "name": "E-Cell",
+    "organization": "IIT Bombay",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Manifest the latent entrepreneurial spirit through mentorship and funding. Organizes \"Eureka!\" and the annual \"Entrepreneurship Summit\" (E-Summit).",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://ecell.in"
+    }
+  },
+  {
+    "id": "mum-191",
+    "name": "E-Cell",
+    "organization": "VJTI Mumbai",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Role in promoting entrepreneurship; transforms ideas into institutions. Provides mentors and establishes healthy networks for young innovators.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://vjti.ac.in"
+    }
+  },
+  {
+    "id": "mum-192",
+    "name": "SOMA",
+    "organization": "SJMSOM IITB",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "School of Management Association focusing on peer learning and activities. Oversees functional clubs in operations, marketing, and systems standpoints.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://som.iitb.ac.in"
+    }
+  },
+  {
+    "id": "mum-193",
+    "name": "E-Cell",
+    "organization": "NMIMS ASMSOC",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Bridging the gap between \"I think\" and \"I do\" for budding entrepreneurs. Organized \"Reverse Shark Tank\" and \"Unicorn Panel Discussions\".",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://commerce.nmims.edu"
+    }
+  },
+  {
+    "id": "mum-194",
+    "name": "Ami-E-Cell",
+    "organization": "Amity Mumbai",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Dedicated to fostering entrepreneurial skills through professional training. Organizes meaningful activities to improve intellectual and leadership skills.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://amity.edu.in"
+    }
+  },
+  {
+    "id": "mum-195",
+    "name": "SME Business Club",
+    "organization": "Independent",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Professional platform for strategic management and capital access for SMEs. Facilitated national and international trade networking for local businesses.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://smebusinessclub.org"
+    }
+  },
+  {
+    "id": "mum-196",
+    "name": "India Merchants' Chamber",
+    "organization": "LW",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Century-old wing focusing on female leadership and business development. Organizes annual \"Women Entrepreneurs\" (WE) exhibition in Churchgate.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://imcnet.org"
+    }
+  },
+  {
+    "id": "mum-197",
+    "name": "Marathi Business Club",
+    "organization": "Independent",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Platform for Marathi-speaking business owners to collaborate and grow. Promotes vernacular business culture through banquets and mixers in Mahim.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://marathibusinessclub.com"
+    }
+  },
+  {
+    "id": "mum-198",
+    "name": "Shamkris Business Club",
+    "organization": "Independent",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Focuses on management consulting, ISO training, and strategic growth. Recognized for its commitment to high-standard business development.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://shamkris.com"
+    }
+  },
+  {
+    "id": "mum-199",
+    "name": "Indian Business Club",
+    "organization": "Independent",
+    "category": "Business, Entrepreneurship, and Startups",
+    "description": "Dedicated to professional networking and regional trade development in Kurla. Landmark hub for Eastern Suburb business owners to connect.",
+    "location": "Mumbai",
+    "links": {
+      "website": "https://ibcmumbai.in"
+    }
+  }
+]

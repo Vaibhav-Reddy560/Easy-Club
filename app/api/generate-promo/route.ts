@@ -66,7 +66,10 @@ export async function POST(req: Request) {
          ${club.name} Members: ₹...
          Non ${club.name} Members: ₹...
          Register here: [Link]
-      7. Contact: POC Name & number for both contacts.
+      7. Contact: Must be formatted exactly as:
+         For any queries,
+         [POC 1 Name]: [POC 1 Phone]
+         [POC 2 Name]: [POC 2 Phone]
 
       Return as JSON: { "standard": "...", "concise": "..." }
     `;

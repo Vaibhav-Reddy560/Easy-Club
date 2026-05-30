@@ -1,0 +1,302 @@
+[
+  {
+    "id": "del-elec-001",
+    "name": "The Electronics Society",
+    "organization": "St. Stephen's College",
+    "category": "Electronics",
+    "description": "St. Stephen's academic society for physics and electronics, focusing on hardware projects and technical workshops.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/esoc_stephens",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1980",
+    "keyEvents": ["Annual Tech Symposium", "Arduino Workshops"]
+  },
+  {
+    "id": "del-elec-002",
+    "name": "LUMEN",
+    "organization": "Hansraj College",
+    "category": "Electronics",
+    "description": "The Physics and Electronics society of Hansraj, promoting experimentation and technical innovation.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/lumen_hansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "1995",
+    "keyEvents": ["Annual Science Fest", "Electronics Exhibition"]
+  },
+  {
+    "id": "del-elec-003",
+    "name": "IEEE DTU",
+    "organization": "DTU",
+    "category": "Electronics",
+    "description": "One of the largest IEEE student branches, focusing on robotics, electronics, and technical research.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ieee.dtu",
+      "website": "https://ieeedtu.in"
+    },
+    "approxMemberCount": "200+",
+    "founded": "1985",
+    "keyEvents": ["Troika", "Vihaan Hackathon"]
+  },
+  {
+    "id": "del-elec-004",
+    "name": "IEEE NSUT",
+    "organization": "NSUT",
+    "category": "Electronics",
+    "description": "The IEEE branch at NSUT, a hub for electronics enthusiasts and technical leaders.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ieee_nsut",
+      "website": "https://ieeensut.com"
+    },
+    "approxMemberCount": "150+",
+    "founded": "1990",
+    "keyEvents": ["Aventuro", "Tech Workshops"]
+  },
+  {
+    "id": "del-elec-005",
+    "name": "Robotics Club IITD",
+    "organization": "IIT Delhi",
+    "category": "Robotics",
+    "description": "The premier robotics body at IIT Delhi, building everything from small bots to formula racing vehicles.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/robotics_iitd",
+      "website": "https://roboticshub.iitd.ac.in"
+    },
+    "approxMemberCount": "120+",
+    "founded": "2000",
+    "keyEvents": ["RoboSoccer", "Bot Wars"]
+  },
+  {
+    "id": "del-elec-006",
+    "name": "Society of Robotics DTU",
+    "organization": "DTU",
+    "category": "Robotics",
+    "description": "A student body at DTU dedicated to research and competition in the field of robotics and automation.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/sr_dtu",
+      "website": "https://sr.dtu.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "2010",
+    "keyEvents": ["Technophilia", "Bot Building Camps"]
+  },
+  {
+    "id": "del-elec-007",
+    "name": "Control Delvers",
+    "organization": "NSUT",
+    "category": "Robotics",
+    "description": "NSUT's specialist robotics and control engineering society.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/control_delvers",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "2012",
+    "keyEvents": ["Robo-Race", "Project Exhibitions"]
+  },
+  {
+    "id": "del-busi-008",
+    "name": "E-Cell SRCC",
+    "organization": "SRCC",
+    "category": "Business",
+    "description": "The Entrepreneurship Cell of SRCC, fostering a spirit of innovation and startup culture.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ecell.srcc",
+      "website": "https://ecellsrcc.com"
+    },
+    "approxMemberCount": "100+",
+    "founded": "2012",
+    "keyEvents": ["Annual Startup Summit", "B-Plan Competitions"]
+  },
+  {
+    "id": "del-busi-009",
+    "name": "Finance & Investment Cell SRCC",
+    "organization": "SRCC",
+    "category": "Business",
+    "description": "The Finance and Investment Cell of SRCC, known for high-level financial analysis and stock market simulations.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/finance.srcc",
+      "website": "https://srcc.edu"
+    },
+    "approxMemberCount": "80+",
+    "founded": "1998",
+    "keyEvents": ["Bullz & Bearz", "Episteme"]
+  },
+  {
+    "id": "del-busi-010",
+    "name": "MarkUs Hansraj",
+    "organization": "Hansraj College",
+    "category": "Business",
+    "description": "The Marketing Society of Hansraj College, exploring creative branding and market strategies.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/markus_hansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2015",
+    "keyEvents": ["Marketing Fest", "Case Study Competitions"]
+  },
+  {
+    "id": "del-busi-011",
+    "name": "FIC KMC",
+    "organization": "Kirori Mal College",
+    "category": "Business",
+    "description": "The Finance and Investment Cell of KMC, promoting financial literacy and investment acumen.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/fic_kmc",
+      "website": "https://kmc.du.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "2013",
+    "keyEvents": ["Fin-Fest", "Mock Trading"]
+  },
+  {
+    "id": "del-busi-012",
+    "name": "E-Cell LSR",
+    "organization": "LSR",
+    "category": "Business",
+    "description": "LSR's hub for entrepreneurship, empowering women to lead in the corporate and startup world.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ecell_lsr",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "70+",
+    "founded": "2014",
+    "keyEvents": ["Startup Week", "Entrepreneurship Summit"]
+  },
+  {
+    "id": "del-busi-013",
+    "name": "The Marketing Society Gargi",
+    "organization": "Gargi College",
+    "category": "Business",
+    "description": "Gargi's platform for creative marketers, focusing on branding and ad-strategy.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/marketing_gargi",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2016",
+    "keyEvents": ["Ad-Mad Show", "Marketing Workshops"]
+  },
+  {
+    "id": "del-busi-014",
+    "name": "E-Cell NSUT",
+    "organization": "NSUT",
+    "category": "Business",
+    "description": "The Entrepreneurship Cell of NSUT, fostering a startup ecosystem in the technical campus.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ecell_nsut",
+      "website": "https://ecellnsut.com"
+    },
+    "approxMemberCount": "100+",
+    "founded": "2010",
+    "keyEvents": ["E-Summit", "B-Plan Competitions"]
+  },
+  {
+    "id": "del-busi-015",
+    "name": "E-Cell DTU",
+    "organization": "DTU",
+    "category": "Business",
+    "description": "DTU's entrepreneurship hub, active in incubation and startup support.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ecell_dtu",
+      "website": "https://ecelldtu.in"
+    },
+    "approxMemberCount": "120+",
+    "founded": "2008",
+    "keyEvents": ["Entrepreneurship Summit", "Startup Internship Fair"]
+  },
+  {
+    "id": "del-busi-016",
+    "name": "E-Cell IIT Delhi",
+    "organization": "IIT Delhi",
+    "category": "Business",
+    "description": "The premier E-Cell at IIT Delhi, driving national scale entrepreneurship initiatives.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ecell_iitd",
+      "website": "https://ecell-iitd.org"
+    },
+    "approxMemberCount": "150+",
+    "founded": "2005",
+    "keyEvents": ["Business Plan Competition", "Global Entrepreneurship Summit"]
+  },
+  {
+    "id": "del-busi-017",
+    "name": "Commerce Society Miranda",
+    "organization": "Miranda House",
+    "category": "Business",
+    "description": "The academic and professional society for commerce students at Miranda House.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/commerce_miranda",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "1998",
+    "keyEvents": ["Commerce Fest", "Professional Seminars"]
+  },
+  {
+    "id": "del-busi-018",
+    "name": "E-Cell Venky",
+    "organization": "Sri Venkateswara College",
+    "category": "Business",
+    "description": "Venky's platform for budding entrepreneurs and innovators.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ecell_venky",
+      "website": "https://svc.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2015",
+    "keyEvents": ["Startup Conclave", "Idea Pitching"]
+  },
+  {
+    "id": "del-busi-019",
+    "name": "Finance Society Stephens",
+    "organization": "St. Stephen's College",
+    "category": "Business",
+    "description": "The Finance Society of St. Stephen's, exploring economic and financial trends through a rigorous academic lens.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/finance_stephens",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "45+",
+    "founded": "2012",
+    "keyEvents": ["Financial Literacy Week", "Stock Market Simulations"]
+  },
+  {
+    "id": "del-busi-020",
+    "name": "E-Cell KMC",
+    "organization": "Kirori Mal College",
+    "category": "Business",
+    "description": "The Entrepreneurship Cell of Kirori Mal College, fostering innovation and leadership skills.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ecell_kmc",
+      "website": "https://kmc.du.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "2014",
+    "keyEvents": ["Entrepreneurship Summit", "Case Study Competitions"]
+  }
+]

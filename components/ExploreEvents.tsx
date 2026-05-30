@@ -109,7 +109,7 @@ export default function ExploreEvents() {
             <header className="border-b border-white/5 pb-8 flex justify-between items-end">
                 <div>
                     <h2 className="text-4xl font-astronomus text-signature-gradient uppercase tracking-tighter">Explore Events</h2>
-                    <p className="text-zinc-100 text-[10px] mt-1 uppercase font-bold tracking-[0.2em] ml-1">Discover Events in a region</p>
+                    <p className="text-zinc-100 text-[11px] mt-1 font-bold tracking-[0.2em] uppercase ml-1">Discover Events in a region</p>
                 </div>
                 <div className="flex gap-4">
                     <div className="text-right">
@@ -214,77 +214,79 @@ export default function ExploreEvents() {
                 )}
                 <AnimatePresence mode="popLayout">
                     {!loading && events.map((event, idx) => (
-                        <motion.div
-                            key={event.name + idx}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.9 }}
-                            className="glass-card overflow-hidden group hover:border-gold-500/30 transition-all flex flex-col relative"
-                        >
-                            <div className="absolute top-6 right-6 z-10">
-                                <div className="bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 text-[9px] font-black text-signature-gradient uppercase tracking-widest">
-                                    {event.date}
-                                </div>
-                            </div>
-
-                            <div className="h-48 relative overflow-hidden">
-                                <Image
-                                    src={event.imageUrl}
-                                    alt={event.name}
-                                    width={400}
-                                    height={200}
-                                    unoptimized
-                                    className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-                            </div>
-
-                            <div className="p-8 space-y-4 flex-1 flex flex-col">
-                                <div className="space-y-1">
-                                    <h3 className="text-xl font-bold text-white tracking-tight leading-tight group-hover:text-signature-gradient transition-colors uppercase italic">{event.name}</h3>
-                                    <div className="flex flex-col gap-1">
-                                        <div className="flex items-center gap-2 text-[10px] font-black text-zinc-100 uppercase tracking-widest leading-none">
-                                            <Trophy className="w-3 h-3 text-gold-500" />
-                                            <span>{event.clubName}</span>
+                            <motion.div
+                                key={event.name + idx}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                className="glass-card rounded-3xl overflow-hidden group hover:border-gold-500/30 transition-all flex flex-col h-full border border-white/10"
+                            >
+                                <div className="h-48 relative overflow-hidden bg-zinc-900">
+                                    <div className="absolute top-4 right-4 z-10">
+                                        <div className="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-[9px] font-black text-gold-400 uppercase tracking-widest shadow-lg">
+                                            {event.date}
                                         </div>
+                                    </div>
+
+                                    <Image
+                                        src={event.imageUrl}
+                                        alt={event.name}
+                                        width={400}
+                                        height={200}
+                                        unoptimized
+                                        className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                                </div>
+
+                                <div className="p-6 flex-1 flex flex-col gap-4">
+                                    <div className="space-y-2">
+                                        <div className="space-y-1">
+                                            <h3 className="text-xl font-bold text-white tracking-tight leading-tight group-hover:text-gold-400 transition-colors uppercase italic line-clamp-2">{event.name}</h3>
+                                            <div className="flex items-center gap-2">
+                                                <Trophy className="w-3 h-3 text-gold-500" />
+                                                <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">{event.clubName}</span>
+                                            </div>
+                                        </div>
+
                                         {event.college && event.college !== event.location && (
-                                            <div className="text-[9px] font-bold text-signature-gradient uppercase tracking-widest pl-5">
-                                                @{event.college}
+                                            <div className="bg-white/5 border border-white/10 rounded-xl px-3 py-2">
+                                                <span className="text-[8px] font-black uppercase tracking-[0.2em] text-gold-500/70 block mb-0.5">Hosting Institution</span>
+                                                <p className="text-[11px] font-bold text-white uppercase tracking-tight line-clamp-1">{event.college}</p>
                                             </div>
                                         )}
                                     </div>
-                                </div>
 
-                                <p className="text-xs text-zinc-100 leading-relaxed line-clamp-2">
-                                    {event.description}
-                                </p>
+                                    <p className="text-xs text-zinc-400 leading-relaxed line-clamp-2">
+                                        {event.description}
+                                    </p>
 
-                                <div className="flex flex-wrap gap-2 py-2">
-                                    {event.tags?.map(tag => (
-                                        <span key={tag} className="px-2 py-1 bg-white/5 rounded-md text-[8px] font-black text-white uppercase tracking-tighter border border-white/5 whitespace-nowrap">
-                                            #{tag}
-                                        </span>
-                                    ))}
-                                </div>
-
-                                <div className="pt-4 mt-auto border-t border-white/5 flex items-center justify-between">
-                                    <div className="flex items-center gap-2 text-white">
-                                        <MapPin className="w-3 h-3" />
-                                        <span className="text-[9px] font-bold uppercase">{event.location}</span>
+                                    <div className="flex flex-wrap gap-1.5">
+                                        {event.tags?.map(tag => (
+                                            <span key={tag} className="px-2 py-0.5 bg-white/5 rounded-md text-[8px] font-black text-white/50 uppercase tracking-widest border border-white/5">
+                                                {tag}
+                                            </span>
+                                        ))}
                                     </div>
-                                    {event.website && event.website.trim() !== "" && (
-                                        <a
-                                            href={event.website}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            className="flex items-center gap-2 text-white font-black text-[10px] uppercase tracking-widest hover:text-signature-gradient transition-colors"
-                                        >
-                                            Visit Source <ExternalLink className="w-3 h-3 text-gold-500" />
-                                        </a>
-                                    )}
+
+                                    <div className="pt-4 mt-auto border-t border-white/5 flex items-center justify-between">
+                                        <div className="flex items-center gap-1.5 text-zinc-500">
+                                            <MapPin className="w-3 h-3" />
+                                            <span className="text-[9px] font-bold uppercase tracking-wider">{event.location}</span>
+                                        </div>
+                                        {event.website && event.website.trim() !== "" && (
+                                            <a
+                                                href={event.website}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-gold-500/10 border border-gold-500/20 rounded-xl text-[9px] font-black uppercase tracking-widest text-gold-500 hover:bg-gold-500 hover:text-black transition-all"
+                                            >
+                                                Details <ExternalLink className="w-3 h-3" />
+                                            </a>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
-                        </motion.div>
+                            </motion.div>
                     ))}
                 </AnimatePresence>
 

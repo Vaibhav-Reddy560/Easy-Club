@@ -1,0 +1,302 @@
+[
+  {
+    "id": "del-math-001",
+    "name": "MathSoc IITD",
+    "organization": "IIT Delhi",
+    "category": "Math",
+    "description": "The official Mathematics Society of IIT Delhi, organizing symposiums, workshops, and mathematical challenges for students.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/mathsociitd",
+      "website": "https://maths.iitd.ac.in"
+    },
+    "approxMemberCount": "200+",
+    "founded": "1990",
+    "keyEvents": ["Integration Bee", "Mathematical Colloquium"]
+  },
+  {
+    "id": "del-math-002",
+    "name": "MACS DTU",
+    "organization": "DTU",
+    "category": "Math",
+    "description": "Mathematics and Computing Society of DTU, bridging the gap between pure math and computer science through events and projects.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/macsdtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "250+",
+    "founded": "2005",
+    "keyEvents": ["Math-a-Thon", "Algorithmic Challenges"]
+  },
+  {
+    "id": "del-math-003",
+    "name": "CMS SRCC",
+    "organization": "SRCC",
+    "category": "Math",
+    "description": "Computers and Mathematics Society of SRCC, focusing on data analysis, mathematical modeling, and business logic.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/cms.srcc",
+      "website": "https://cmssrcc.com"
+    },
+    "approxMemberCount": "120+",
+    "founded": "2010",
+    "keyEvents": ["Enigma (Annual Fest)", "Math-o-Logic"]
+  },
+  {
+    "id": "del-math-004",
+    "name": "MathSoc St. Stephen's",
+    "organization": "St. Stephen's College",
+    "category": "Math",
+    "description": "The Mathematics Society of St. Stephen's College, one of the oldest and most prestigious math societies in Delhi University.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/mathsoc.stephens",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "150+",
+    "founded": "1920",
+    "keyEvents": ["Integration Bee", "Annual Mathematics Seminar"]
+  },
+  {
+    "id": "del-math-005",
+    "name": "Abacus",
+    "organization": "Hindu College",
+    "category": "Math",
+    "description": "The Mathematics Society of Hindu College, focusing on problem-solving, number theory, and hosting the annual fest 'Alpha'.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/abacus.hindu",
+      "website": "https://hinducollege.ac.in"
+    },
+    "approxMemberCount": "130+",
+    "founded": "1980",
+    "keyEvents": ["Alpha (Annual Fest)", "Math-e-Magic"]
+  },
+  {
+    "id": "del-math-006",
+    "name": "Sankhya",
+    "organization": "Miranda House",
+    "category": "Math",
+    "description": "The Mathematics Society of Miranda House, empowering women in mathematics through peer learning and research.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/sankhya.mh",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "110+",
+    "founded": "1995",
+    "keyEvents": ["Zeron (Annual Fest)", "Pi-Day Celebrations"]
+  },
+  {
+    "id": "del-math-007",
+    "name": "Symmetry",
+    "organization": "LSR",
+    "category": "Math",
+    "description": "The Mathematics Society of Lady Shri Ram College, promoting analytical thinking and research-based learning.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/symmetry.lsr",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "140+",
+    "founded": "1990",
+    "keyEvents": ["Enigma (Annual Fest)", "Math Workshops"]
+  },
+  {
+    "id": "del-math-008",
+    "name": "Pi",
+    "organization": "Hansraj College",
+    "category": "Math",
+    "description": "The Mathematics Society of Hansraj College, known for its creative approach to mathematics and problem solving.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/mathsdept_hansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "120+",
+    "founded": "1985",
+    "keyEvents": ["Integration (Annual Fest)", "Pi-Rates of the Caribbean"]
+  },
+  {
+    "id": "del-math-009",
+    "name": "Samyak",
+    "organization": "Ramjas College",
+    "category": "Math",
+    "description": "Ramjas College's Mathematics Society, dedicated to making math accessible and fun through community engagement.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/samyak.ramjas",
+      "website": "https://ramjas.du.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1992",
+    "keyEvents": ["QED (Annual Fest)", "Math Quizzes"]
+  },
+  {
+    "id": "del-math-010",
+    "name": "Mathema",
+    "organization": "Gargi College",
+    "category": "Math",
+    "description": "The Mathematics Society of Gargi College, promoting logical reasoning and mathematical awareness.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/mathema.gargi",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "90+",
+    "founded": "1998",
+    "keyEvents": ["Scimatics", "Math Olympiads"]
+  },
+  {
+    "id": "del-math-011",
+    "name": "Dimensions",
+    "organization": "Jesus & Mary College",
+    "category": "Math",
+    "description": "JMC's Mathematics Society, exploring the various dimensions of mathematics in real-world applications.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/mathsociety.jmc",
+      "website": "https://jmc.ac.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "2000",
+    "keyEvents": ["Tangent (Annual Fest)", "Data Interpretation Workshops"]
+  },
+  {
+    "id": "del-math-012",
+    "name": "Epsilon",
+    "organization": "Deen Dayal Upadhyaya College",
+    "category": "Math",
+    "description": "The Mathematics Society of DDU College, focusing on mathematical modeling and technical problem solving.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/epsilon.ddu",
+      "website": "https://dducollegedu.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "2005",
+    "keyEvents": ["Analytica", "Code-Math Contests"]
+  },
+  {
+    "id": "del-math-013",
+    "name": "QED",
+    "organization": "Sri Venkateswara College",
+    "category": "Math",
+    "description": "The Mathematics Society of Venky, promoting mathematical rigor and research-oriented academic culture.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/qed.venky",
+      "website": "https://svc.ac.in"
+    },
+    "approxMemberCount": "110+",
+    "founded": "1995",
+    "keyEvents": ["Exponents (Annual Fest)", "Integration Competitions"]
+  },
+  {
+    "id": "del-math-014",
+    "name": "MathSoc Kamala Nehru",
+    "organization": "Kamala Nehru College",
+    "category": "Math",
+    "description": "KNC's mathematics society, fostering an environment for women to excel in mathematics.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/mathsociety.knc",
+      "website": "https://knc.edu.in"
+    },
+    "approxMemberCount": "85+",
+    "founded": "1990",
+    "keyEvents": ["Math-Arena", "Problem Solving Sessions"]
+  },
+  {
+    "id": "del-math-015",
+    "name": "MathSoc Maitreyi",
+    "organization": "Maitreyi College",
+    "category": "Math",
+    "description": "Maitreyi's Mathematics Society, active in promoting math for social sciences and data analysis.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/mathsociety.maitreyi",
+      "website": "https://maitreyi.ac.in"
+    },
+    "approxMemberCount": "95+",
+    "founded": "1998",
+    "keyEvents": ["Convergence", "Vedic Math Workshops"]
+  },
+  {
+    "id": "del-math-016",
+    "name": "MathSoc Daulat Ram",
+    "organization": "Daulat Ram College",
+    "category": "Math",
+    "description": "DRC's Mathematics Society, promoting academic excellence and passion for mathematics.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/mathsoc.dr",
+      "website": "https://dr.du.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1992",
+    "keyEvents": ["Math-E-Magician", "Logic Contests"]
+  },
+  {
+    "id": "del-math-017",
+    "name": "MathSoc Shivaji",
+    "organization": "Shivaji College",
+    "category": "Math",
+    "description": "The Mathematics Society of Shivaji College, focusing on mathematical logic and competitive math.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/mathsoc.shivaji",
+      "website": "https://shivajicollege.ac.in"
+    },
+    "approxMemberCount": "90+",
+    "founded": "1995",
+    "keyEvents": ["Infinity (Annual Fest)", "Math Puzzles"]
+  },
+  {
+    "id": "del-math-018",
+    "name": "MathSoc Dyal Singh",
+    "organization": "Dyal Singh College",
+    "category": "Math",
+    "description": "Dyal Singh College's Mathematics Society, active in hosting inter-college math competitions.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/mathsociety.dsc",
+      "website": "https://dsc.du.ac.in"
+    },
+    "approxMemberCount": "120+",
+    "founded": "2000",
+    "keyEvents": ["Mathematical Mayhem", "Guest Lectures"]
+  },
+  {
+    "id": "del-math-019",
+    "name": "MathSoc Motilal Nehru",
+    "organization": "Motilal Nehru College",
+    "category": "Math",
+    "description": "The Mathematics Society of MLNC, promoting interest in pure and applied mathematics.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/mathsociety.mlnc",
+      "website": "https://mlncdu.ac.in"
+    },
+    "approxMemberCount": "100+",
+    "founded": "1995",
+    "keyEvents": ["Math-o-Mania", "Exhibitions"]
+  },
+  {
+    "id": "del-math-020",
+    "name": "MathSoc Aryabhatta",
+    "organization": "Aryabhatta College",
+    "category": "Math",
+    "description": "The official Mathematics society of Aryabhatta College, honoring the legacy of the great mathematician.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/mathsoc.aryabhatta",
+      "website": "https://aryabhattacollege.ac.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "2014",
+    "keyEvents": ["Math-E-Logic", "Seminars"]
+  }
+]

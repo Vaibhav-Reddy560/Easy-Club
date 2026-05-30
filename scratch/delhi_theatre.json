@@ -1,0 +1,302 @@
+[
+  {
+    "id": "del-thea-001",
+    "name": "The Players",
+    "organization": "Kirori Mal College",
+    "category": "Theatre/Acting",
+    "description": "The world-renowned dramatics society of KMC, known for producing icons of Indian cinema and theatre.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/theplayerskmc",
+      "website": "https://kmc.du.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "1958",
+    "keyEvents": ["Annual Production", "Inter-College Plays"]
+  },
+  {
+    "id": "del-thea-002",
+    "name": "Ibtida",
+    "organization": "Hindu College",
+    "category": "Theatre/Acting",
+    "description": "The dramatics society of Hindu College, founded by Imtiaz Ali, known for its powerful street and stage plays.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ibtida_hinducollege",
+      "website": "https://hinducollege.ac.in"
+    },
+    "approxMemberCount": "45+",
+    "founded": "1990",
+    "keyEvents": ["Medina (Annual Fest)", "Street Plays"]
+  },
+  {
+    "id": "del-thea-003",
+    "name": "Hansraj Dramatics Society",
+    "organization": "Hansraj College",
+    "category": "Theatre/Acting",
+    "description": "HDS is known for its experimental theatre and consistent performance in the DU circuit.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/hds.hansraj",
+      "website": "https://hansrajcollege.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1985",
+    "keyEvents": ["Annual Stage Production", "Street Play Circuit"]
+  },
+  {
+    "id": "del-thea-004",
+    "name": "Anukriti",
+    "organization": "Miranda House",
+    "category": "Theatre/Acting",
+    "description": "The Hindi Dramatics Society of Miranda House, focusing on social issues and classical Hindi literature.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/anukriti_mirandahouse",
+      "website": "https://mirandahouse.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1992",
+    "keyEvents": ["Annual Production", "Street Plays"]
+  },
+  {
+    "id": "del-thea-005",
+    "name": "Shunya",
+    "organization": "Ramjas College",
+    "category": "Theatre/Acting",
+    "description": "The dramatics society of Ramjas, known for its intellectual and thought-provoking scripts.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/shunya_ramjas",
+      "website": "https://ramjas.du.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1995",
+    "keyEvents": ["Annual Fest", "Stage Productions"]
+  },
+  {
+    "id": "del-thea-006",
+    "name": "LSR Dramatics Society",
+    "organization": "LSR",
+    "category": "Theatre/Acting",
+    "description": "The Dramatics Society of LSR, celebrating strong female narratives and contemporary theatre.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/lsrdramatics",
+      "website": "https://lsr.edu.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1980",
+    "keyEvents": ["Annual Production", "Tarang Performances"]
+  },
+  {
+    "id": "del-thea-007",
+    "name": "The Dramatics Society SRCC",
+    "organization": "SRCC",
+    "category": "Theatre/Acting",
+    "description": "SRCC's theatre society, focusing on professional-grade stage plays and social satires.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/thedramaticssocietysrcc",
+      "website": "https://srcc.edu"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1998",
+    "keyEvents": ["Histrionica (Annual Fest)", "Stage Plays"]
+  },
+  {
+    "id": "del-thea-008",
+    "name": "Theatrecv",
+    "organization": "Sri Venkateswara College",
+    "category": "Theatre/Acting",
+    "description": "The Dramatics Society of SVC, known for its creative street plays and versatile stage actors.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/theatrecv",
+      "website": "https://svc.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1995",
+    "keyEvents": ["Nexus Performances", "Street Play Circuit"]
+  },
+  {
+    "id": "del-thea-009",
+    "name": "Sabha",
+    "organization": "St. Stephen's College",
+    "category": "Theatre/Acting",
+    "description": "The Hindi Dramatics Society of St. Stephen's, focusing on classical Hindi plays and street theatre.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/sabha_stephens",
+      "website": "https://ststephens.edu"
+    },
+    "approxMemberCount": "30+",
+    "founded": "1920",
+    "keyEvents": ["Annual Production", "Inter-College Plays"]
+  },
+  {
+    "id": "del-thea-010",
+    "name": "Pratibimb",
+    "organization": "DTU",
+    "category": "Theatre/Acting",
+    "description": "The official dramatics society of DTU, bringing a blend of engineering logic and artistic passion to the stage.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/pratibimb.dtu",
+      "website": "https://dtu.ac.in"
+    },
+    "approxMemberCount": "60+",
+    "founded": "1990",
+    "keyEvents": ["Annual Stage Play", "Street Plays at Engifest"]
+  },
+  {
+    "id": "del-thea-011",
+    "name": "Ashwamedh",
+    "organization": "NSUT",
+    "category": "Theatre/Acting",
+    "description": "The dramatics society of NSUT, focusing on social awareness through high-impact street plays.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/ashwamedh_nsut",
+      "website": "https://nsut.ac.in"
+    },
+    "approxMemberCount": "50+",
+    "founded": "2005",
+    "keyEvents": ["Moksha Plays", "Annual Productions"]
+  },
+  {
+    "id": "del-thea-012",
+    "name": "IITD Dramatics Club",
+    "organization": "IIT Delhi",
+    "category": "Theatre/Acting",
+    "description": "The central dramatics body at IIT Delhi, performing everything from mimes to full-length stage productions.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/dramatics.iitd",
+      "website": "https://brca.iitd.ac.in"
+    },
+    "approxMemberCount": "80+",
+    "founded": "1970",
+    "keyEvents": ["Rendezvous Productions", "Workshops"]
+  },
+  {
+    "id": "del-thea-013",
+    "name": "Manthan",
+    "organization": "ARSD College",
+    "category": "Theatre/Acting",
+    "description": "ARSD's dramatics society, highly active in the Delhi street play circuit.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/manthan.arsd",
+      "website": "https://arsdcollege.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "1998",
+    "keyEvents": ["Annual Street Play", "Inter-College Wins"]
+  },
+  {
+    "id": "del-thea-014",
+    "name": "Navrang",
+    "organization": "Shivaji College",
+    "category": "Theatre/Acting",
+    "description": "The dramatics society of Shivaji College, focusing on cultural diversity through theatre.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/navrang.shivaji",
+      "website": "https://shivajicollege.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "2000",
+    "keyEvents": ["Spectra Plays", "Street Theatre"]
+  },
+  {
+    "id": "del-thea-015",
+    "name": "Kshama",
+    "organization": "Maitreyi College",
+    "category": "Theatre/Acting",
+    "description": "Maitreyi's Hindi Dramatics Society, empowering women through theatre and social scripts.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/kshama_maitreyi",
+      "website": "https://maitreyi.ac.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "2002",
+    "keyEvents": ["Annual Production", "Street Plays"]
+  },
+  {
+    "id": "del-thea-016",
+    "name": "Nativ",
+    "organization": "Jesus & Mary College",
+    "category": "Theatre/Acting",
+    "description": "The dramatics society of JMC, known for their artistic stage productions and sensitive street plays.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/nativ.jmc",
+      "website": "https://jmc.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1995",
+    "keyEvents": ["Annual Production", "Street Play Circuit"]
+  },
+  {
+    "id": "del-thea-017",
+    "name": "Kshitij",
+    "organization": "Gargi College",
+    "category": "Theatre/Acting",
+    "description": "The street play society of Gargi College, known for their high energy and impactful social messages.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/kshitij.gargi",
+      "website": "https://gargicollege.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1998",
+    "keyEvents": ["Annual Street Play", "Inter-College Events"]
+  },
+  {
+    "id": "del-thea-018",
+    "name": "Lakshya",
+    "organization": "Kamala Nehru College",
+    "category": "Theatre/Acting",
+    "description": "The Hindi Dramatics Society of KNC, active in both stage and street theatre forms.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/lakshya.knc",
+      "website": "https://knc.edu.in"
+    },
+    "approxMemberCount": "30+",
+    "founded": "1995",
+    "keyEvents": ["Annual Production", "Street Plays"]
+  },
+  {
+    "id": "del-thea-019",
+    "name": "Yavanika",
+    "organization": "DDU College",
+    "category": "Theatre/Acting",
+    "description": "The dramatics society of Deen Dayal Upadhyaya College, focusing on modern and realistic theatre.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/yavanika.ddu",
+      "website": "https://dducollegedu.ac.in"
+    },
+    "approxMemberCount": "40+",
+    "founded": "2005",
+    "keyEvents": ["Annual Stage Play", "Street Theatre"]
+  },
+  {
+    "id": "del-thea-020",
+    "name": "Mukhauta",
+    "organization": "Rajdhani College",
+    "category": "Theatre/Acting",
+    "description": "The dramatics society of Rajdhani College, promoting acting talent and theatre technical skills.",
+    "location": "Delhi",
+    "links": {
+      "instagram": "https://instagram.com/mukhauta.rajdhani",
+      "website": "https://rajdhanicollege.ac.in"
+    },
+    "approxMemberCount": "35+",
+    "founded": "1995",
+    "keyEvents": ["Annual Production", "Inter-College Plays"]
+  }
+]
