@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from 'react';
 import { GenerationStatus, GenerationState } from '@/lib/types';
-import { useTasks } from '@/lib/TaskContext';
+import { useTasks } from '@/lib/context/TaskContext';
 
 export function useGenerator(taskName?: string, initialData?: any) {
   const { startTask, updateTaskProgress, finishTask } = useTasks();

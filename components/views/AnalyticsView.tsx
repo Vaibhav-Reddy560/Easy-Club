@@ -61,7 +61,7 @@ export default function AnalyticsView({ clubsCount, eventsCount, onBack }: Analy
 
   useEffect(() => {
     // Basic check for supabase connectivity
-    import("@/lib/supabase").then(({ supabase }) => {
+    import("@/lib/services/supabase").then(({ supabase }) => {
       setIsSupabaseActive(!!supabase);
     });
   }, []);

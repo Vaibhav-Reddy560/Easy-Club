@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getEmbeddings } from "@/lib/huggingface";
+import { getEmbeddings } from "@/lib/services/huggingface";
 import { ScrapedClub } from "@/lib/types";
 
 /**

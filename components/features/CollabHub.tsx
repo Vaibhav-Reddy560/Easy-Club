@@ -27,7 +27,7 @@ import {
   sendCollabRequest, 
   respondToCollabRequest,
   sendCollabMessage 
-} from "@/lib/db";
+} from "@/lib/utils/db";
 import { BorderBeam } from "@/components/animations/BorderBeam";
 
 interface CollabHubProps {

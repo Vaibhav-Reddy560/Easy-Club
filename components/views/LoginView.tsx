@@ -3,9 +3,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { BorderBeam } from "./animations/BorderBeam";
+import { BorderBeam } from "@/components/animations/BorderBeam";
 
-import { resetAuth } from "@/lib/firebase";
+import { resetAuth } from "@/lib/services/firebase";
 
 interface LoginViewProps {
   onSignIn: () => void;

@@ -10,7 +10,7 @@ import {
   ChevronDown,
   Layers
 } from "lucide-react";
-import { useTasks, BackgroundTask } from "@/lib/TaskContext";
+import { useTasks, BackgroundTask } from "@/lib/context/TaskContext";
 
 interface DynamicIslandProps {
   isSaving?: boolean;

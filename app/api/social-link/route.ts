@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { generateSocialLinkJWT } from "@/lib/ayrshare";
+import { generateSocialLinkJWT } from "@/lib/services/ayrshare";
 
 export async function GET() {
   try {

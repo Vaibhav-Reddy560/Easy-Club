@@ -21,7 +21,7 @@ import {
   Lock
 } from "lucide-react";
 import { BorderBeam } from "@/components/animations/BorderBeam";
-import { getUserClubs } from "@/lib/db";
+import { getUserClubs } from "@/lib/utils/db";
 
 interface AccountViewProps {
   user: FirebaseUser | null;

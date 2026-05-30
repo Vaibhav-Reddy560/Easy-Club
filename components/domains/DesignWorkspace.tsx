@@ -2151,7 +2151,7 @@ export default function DesignWorkspace({ activeEvent, activeClub, user, updateC
         isExporting={isExporting}
       />
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-col lg:flex-row flex-1 overflow-y-auto lg:overflow-hidden">
         <LeftSidebar
           selectedArtboard={selectedArtboard}
           setSelectedArtboard={setSelectedArtboard}
@@ -2170,7 +2170,7 @@ export default function DesignWorkspace({ activeEvent, activeClub, user, updateC
         {/* Main Canvas Area */}
         <div 
           ref={canvasContainerRef}
-          className="flex-1 relative overflow-hidden bg-[#050505] cursor-default flex"
+          className="flex-1 min-h-[500px] lg:min-h-0 relative overflow-hidden bg-[#050505] cursor-default flex"
         >
           {showRulers && (
             <Rulers 

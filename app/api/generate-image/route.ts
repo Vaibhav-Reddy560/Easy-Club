@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { validateRequest, GenerateImageSchema } from "@/lib/validation";
-import { generateImageFromHF } from "@/lib/huggingface";
+import { validateRequest, GenerateImageSchema } from "@/lib/utils/validation";
+import { generateImageFromHF } from "@/lib/services/huggingface";
 
 // Fallback high-quality SVG themes
 const GRADIENT_THEMES: Record<string, { colors: string[]; patternType: string }> = {

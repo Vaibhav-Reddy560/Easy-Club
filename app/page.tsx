@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import EventIdeation from "@/components/EventIdeation";
-import SocialTracker from "@/components/SocialTracker";
-import SponsorshipManager from "@/components/SponsorshipManager";
+import EventIdeation from "@/components/features/EventIdeation";
+import SocialTracker from "@/components/features/SocialTracker";
+import SponsorshipManager from "@/components/features/SponsorshipManager";
 import {
   Trash2,
   ChevronLeft,
@@ -18,33 +18,33 @@ import {
 } from "lucide-react";
 
 // Import components from the components directory
-import Sidebar from "@/components/Sidebar";
-import AppSidebar, { NavSection } from "@/components/AppSidebar";
-import ClubGrid from "@/components/ClubGrid";
-import Questionnaire from "@/components/Questionnaire";
-import AboutPage from "@/components/AboutPage";
-import ExploreClubsView from "@/components/ExploreClubsView";
-import CollabHub from "@/components/CollabHub";
+import Sidebar from "@/components/layout/Sidebar";
+import AppSidebar, { NavSection } from "@/components/layout/AppSidebar";
+import ClubGrid from "@/components/features/ClubGrid";
+import Questionnaire from "@/components/features/Questionnaire";
+import AboutPage from "@/components/views/AboutPage";
+import ExploreClubsView from "@/components/views/ExploreClubsView";
+import CollabHub from "@/components/features/CollabHub";
 import PremiumLoader from "@/components/ui/PremiumLoader";
-import ExploreEvents from "@/components/ExploreEvents";
+import ExploreEvents from "@/components/features/ExploreEvents";
 import DesignWorkspace from "@/components/domains/DesignWorkspace";
 import ContentWorkspace from "@/components/domains/ContentWorkspace";
 import SocialWorkspace from "@/components/domains/SocialWorkspace";
-import EventStatusModal from "@/components/EventStatusModal";
-import EventReportModal from "@/components/EventReportModal";
+import EventStatusModal from "@/components/features/EventStatusModal";
+import EventReportModal from "@/components/features/EventReportModal";
 import { BorderBeam } from "@/components/animations/BorderBeam";
-import AccountView from "@/components/AccountView";
-import AnalyticsView from "@/components/AnalyticsView";
-import SettingsView from "@/components/SettingsView";
-import MembershipView from "@/components/MembershipView";
-import MyTeamView from "@/components/MyTeamView";
-import MobileNav from "@/components/MobileNav";
-import LoginView from "@/components/LoginView";
+import AccountView from "@/components/views/AccountView";
+import AnalyticsView from "@/components/views/AnalyticsView";
+import SettingsView from "@/components/views/SettingsView";
+import MembershipView from "@/components/views/MembershipView";
+import MyTeamView from "@/components/views/MyTeamView";
+import MobileNav from "@/components/layout/MobileNav";
+import LoginView from "@/components/views/LoginView";
 import { Club, ClubEvent, EventConfig, MemberRole, ActivityLogEvent, EventStatus, PostEventData } from "@/lib/types";
 import { useAuth } from "@/lib/auth";
-import { signInWithGoogle, logout } from "@/lib/firebase";
-import { subscribeUserClubs, saveClub, deleteClubFromDb } from "@/lib/db";
-import DynamicIsland from "@/components/DynamicIsland";
+import { signInWithGoogle, logout } from "@/lib/services/firebase";
+import { subscribeUserClubs, saveClub, deleteClubFromDb } from "@/lib/utils/db";
+import DynamicIsland from "@/components/layout/DynamicIsland";
 
 
 // --- MAIN APPLICATION ---

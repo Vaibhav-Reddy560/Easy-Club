@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Globe, Folder, Shield, Users, Zap, ChartBar, Banknote, Handshake, MoreHorizontal, X } from "lucide-react";
-import { NavSection } from "./AppSidebar";
+import { NavSection } from "@/components/layout/AppSidebar";
 import { MemberRole } from "@/lib/types";
 import { motion, AnimatePresence } from "framer-motion";
 

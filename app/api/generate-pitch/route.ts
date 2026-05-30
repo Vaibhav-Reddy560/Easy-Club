@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { callGeminiSafe } from "@/lib/gemini";
+import { callGeminiSafe } from "@/lib/services/gemini";
 
 export async function POST(req: NextRequest) {
     try {

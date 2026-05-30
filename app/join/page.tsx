@@ -3,8 +3,8 @@
 import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth";
-import { signInWithGoogle } from "@/lib/firebase";
-import { verifyAndAcceptInvite, getClubMetadata, signOutUser } from "@/lib/db";
+import { signInWithGoogle } from "@/lib/services/firebase";
+import { verifyAndAcceptInvite, getClubMetadata, signOutUser } from "@/lib/utils/db";
 import { CheckCircle2, AlertCircle, Loader2, Users, ArrowRight, LogOut, ShieldCheck } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 

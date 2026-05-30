@@ -22,8 +22,8 @@ import {
 } from "lucide-react";
 import PremiumLoader from "@/components/ui/PremiumLoader";
 import { Club, Sponsor, SponsorStage, SponsorTier, SponsorDeliverable } from "@/lib/types";
-import { useTasks } from "@/lib/TaskContext";
-import { exportToDocx } from "@/lib/export-utils";
+import { useTasks } from "@/lib/context/TaskContext";
+import { exportToDocx } from "@/lib/utils/export-utils";
 
 interface SponsorshipManagerProps {
     clubs: Club[];

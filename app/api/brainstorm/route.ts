@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { callGeminiSafe, callGeminiJSON } from "@/lib/gemini";
-import { searchSerper } from "@/lib/discovery";
+import { callGeminiSafe, callGeminiJSON } from "@/lib/services/gemini";
+import { searchSerper } from "@/lib/utils/discovery";
 
 /**
  * Event Brainstorming API v2.0 - "Architect" Upgrade
@@ -78,7 +78,7 @@ export async function POST(req: Request) {
             const chatHistory = messages.map(m => `[${m.role.toUpperCase()}]: ${m.content}`).join("\n\n");
             
             // Integrate Hugging Face Sentiment Analysis to adjust persona
-            const { analyzeSentiment } = await import("@/lib/huggingface");
+            const { analyzeSentiment } = await import("@/lib/services/huggingface");
             const sentimentResult = await analyzeSentiment(latestMessage);
             const sentimentTone = sentimentResult 
                 ? `The user's current tone is ${sentimentResult.label} (Confidence: ${(sentimentResult.score * 100).toFixed(0)}%).` 

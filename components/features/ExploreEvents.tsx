@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Search, MapPin, Calendar, Trophy, ExternalLink, Loader2, Sparkles } from "lucide-react";
-import RadarDiscoveryLoader from "./ui/RadarDiscoveryLoader";
+import RadarDiscoveryLoader from "@/components/ui/RadarDiscoveryLoader";
 
 const EVENT_CATEGORIES = ["Hackathon", "Workshop", "Summit", "Competition", "Cultural", "Webinar"];
 const EVENT_TYPES = ["Technical", "Non-Technical", "Mixed"];

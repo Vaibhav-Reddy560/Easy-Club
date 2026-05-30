@@ -12,9 +12,9 @@ import {
     getDocsFromCache,
     getDocsFromServer
   } from "firebase/firestore";
-  import { db, auth } from "./firebase";
+  import { db, auth } from "@/lib/services/firebase";
   import { signOut } from "firebase/auth";
-  import { Club, ScrapedClub, TeamInvite, ClubMember } from "./types";
+  import { Club, ScrapedClub, TeamInvite, ClubMember } from "@/lib/types";
   
   const CLUBS_COLLECTION = "clubs";
   const SAVED_CLUBS_COLLECTION = "saved_explore_clubs";

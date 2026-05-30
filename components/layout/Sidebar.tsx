@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { Settings, User, Info, LogOut, ShieldCheck, ChevronDown, Activity } from "lucide-react";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
-import DynamicIsland from "@/components/DynamicIsland";
+import DynamicIsland from "@/components/layout/DynamicIsland";
 
 interface UserMetadata {
   avatar_url?: string;

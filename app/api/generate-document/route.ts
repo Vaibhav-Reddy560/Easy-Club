@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { callGeminiSafe, callGeminiJSON } from "@/lib/gemini";
-import { validateRequest, GenerateDocumentSchema } from "@/lib/validation";
+import { callGeminiSafe, callGeminiJSON } from "@/lib/services/gemini";
+import { validateRequest, GenerateDocumentSchema } from "@/lib/utils/validation";
 
 export async function POST(req: Request) {
     try {

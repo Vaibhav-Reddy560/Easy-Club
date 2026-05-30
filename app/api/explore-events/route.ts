@@ -4,8 +4,8 @@ import {
     parseSerperResultsToEvents,
     getCachedDiscovery,
     setCachedDiscovery
-} from "@/lib/discovery";
-import { validateRequest, ExploreEventsSchema } from "@/lib/validation";
+} from "@/lib/utils/discovery";
+import { validateRequest, ExploreEventsSchema } from "@/lib/utils/validation";
 
 export async function POST(req: Request) {
     try {

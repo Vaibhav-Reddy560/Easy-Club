@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import TrendingIdeas from "@/components/TrendingIdeas";
-import IdeationBrainstorm from "@/components/IdeationBrainstorm";
+import TrendingIdeas from "@/components/features/TrendingIdeas";
+import IdeationBrainstorm from "@/components/features/IdeationBrainstorm";
 import { Club } from "@/lib/types";
 import { ChevronDown } from "lucide-react";
 

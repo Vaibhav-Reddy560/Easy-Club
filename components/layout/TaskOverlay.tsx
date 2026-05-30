@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, XCircle, Loader2, X } from "lucide-react";
-import { useTasks, BackgroundTask } from "@/lib/TaskContext";
+import { useTasks, BackgroundTask } from "@/lib/context/TaskContext";
 
 function TaskCard({ task, onClear }: { task: BackgroundTask; onClear: () => void }) {
     const isRunning = task.status === "running";

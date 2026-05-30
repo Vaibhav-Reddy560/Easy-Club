@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { callGeminiJSON } from "@/lib/gemini";
-import { searchSerper } from "@/lib/discovery";
-import { validateRequest, TrendingIdeasSchema } from "@/lib/validation";
+import { callGeminiJSON } from "@/lib/services/gemini";
+import { searchSerper } from "@/lib/utils/discovery";
+import { validateRequest, TrendingIdeasSchema } from "@/lib/utils/validation";
 
 export async function POST(req: Request) {
     try {

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Check, QrCode, Search, AlertCircle, Loader2 } from "lucide-react";
 import { collection, getDocs, doc, setDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/services/firebase";
 import { Club, ClubEvent } from "@/lib/types";
 
 export default function CheckinScanner() {

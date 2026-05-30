@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { intelligentClubDiscovery } from "@/lib/discovery";
-import { validateRequest, ExploreClubsSchema } from "@/lib/validation";
+import { intelligentClubDiscovery } from "@/lib/utils/discovery";
+import { validateRequest, ExploreClubsSchema } from "@/lib/utils/validation";
 
 export async function POST(req: Request) {
     console.log("[ExploreClubs] API Route Hit (Local-First Architecture)");

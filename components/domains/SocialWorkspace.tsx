@@ -16,8 +16,8 @@ import {
   X
 } from "lucide-react";
 import { ClubEvent, EventConfig } from "@/lib/types";
-import { useTasks } from "@/lib/TaskContext";
-import ResourceRadar from "../ResourceRadar";
+import { useTasks } from "@/lib/context/TaskContext";
+import ResourceRadar from "../features/ResourceRadar";
 
 interface SocialWorkspaceProps {
   activeEvent: ClubEvent | undefined;
@@ -141,14 +141,14 @@ export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWor
 
 
       {/* Shared Invitation Engine */}
-      <div className="p-8 bg-gold-500/5 rounded-[2.5rem] border border-gold-500/10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
-        <div className="flex items-center gap-6">
-          <div className="w-12 h-12 bg-gold-500 rounded-2xl flex items-center justify-center shadow-[0_0_20px_rgba(245,158,11,0.4)]">
+      <div className="p-8 bg-gold-500/5 rounded-[2.5rem] border border-gold-500/10 flex flex-col xl:flex-row items-center justify-between gap-6 shadow-xl">
+        <div className="flex flex-col md:flex-row items-center gap-6 w-full text-center md:text-left">
+          <div className="w-12 h-12 bg-gold-500 rounded-2xl flex shrink-0 items-center justify-center shadow-[0_0_20px_rgba(245,158,11,0.4)]">
             <Mail className="w-6 h-6 text-black" />
           </div>
           <div>
             <h6 className="font-bold text-lg text-white">Invitation Engine</h6>
-            <p className="text-[10px] text-white font-bold uppercase tracking-widest mt-1 text-center md:text-left">
+            <p className="text-[10px] text-white font-bold uppercase tracking-widest mt-1">
               {isGenerating ? "AI is drafting personalized outreach..." : "Generate professional expert invitations"}
             </p>
           </div>
@@ -189,7 +189,7 @@ export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWor
               setIsGenerating(false);
             }
           }}
-          className="px-8 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-[10px] font-black uppercase tracking-widest text-zinc-100 hover:text-signature-gradient hover:border-gold-500 transition-all flex items-center gap-2"
+          className="w-full xl:w-auto justify-center px-8 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-[10px] font-black uppercase tracking-widest text-zinc-100 hover:text-signature-gradient hover:border-gold-500 transition-all flex items-center gap-2"
         >
           {isGenerating ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
           {isGenerating ? "Processing..." : "Generate Master Invitation"}
@@ -224,7 +224,7 @@ export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWor
                 </pre>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <button
                   onClick={async () => {
                     await navigator.clipboard.writeText(outreachTemplate);
@@ -273,13 +273,13 @@ export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWor
 
       {/* Event Scripting & Briefing Engine */}
       <div className="p-8 bg-zinc-900/50 rounded-[2.5rem] border border-white/5 space-y-6">
-        <div className="flex items-center gap-4 mb-4">
-          <div className="w-12 h-12 bg-gold-500/20 rounded-2xl flex items-center justify-center">
+        <div className="flex flex-col md:flex-row items-center gap-4 mb-4 text-center md:text-left">
+          <div className="w-12 h-12 bg-gold-500/20 rounded-2xl flex shrink-0 items-center justify-center">
             <Radio className="w-6 h-6 text-gold-500" />
           </div>
           <div>
             <h6 className="font-bold text-lg text-white">Event Scripting & Briefing</h6>
-            <p className="text-xs text-zinc-400">Generate detailed scripts and volunteer manuals</p>
+            <p className="text-xs text-zinc-400 mt-1">Generate detailed scripts and volunteer manuals</p>
           </div>
         </div>
 

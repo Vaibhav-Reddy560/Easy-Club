@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/lib/services/supabase';
 import { CustomElement, CustomArtboard } from '@/components/domains/design/types';
 
 export interface CursorPosition {

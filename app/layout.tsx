@@ -1,7 +1,7 @@
-import { localAirstream, localAstronomus, localDymaxion, localDestrubia } from "@/lib/fonts";
+import { localAirstream, localAstronomus, localDymaxion, localDestrubia } from "@/lib/utils/fonts";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import { TaskProvider } from "@/lib/TaskContext";
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import { TaskProvider } from "@/lib/context/TaskContext";
 
 export const metadata = {
   title: "Easy Club",
@@ -15,7 +15,7 @@ export const metadata = {
 
 
 import { PremiumBackground } from "@/components/ui/PremiumBackground";
-import ClientInit from "@/components/ClientInit";
+import ClientInit from "@/components/providers/ClientInit";
 
 export default function RootLayout({
   children,

@@ -1,8 +1,8 @@
 // ─── Direct Discovery Engine (v5.0 - Local-First, Zero AI) ───────────────────
 import fs from "fs";
 import path from "path";
-import { callGeminiJSON } from "./gemini";
-import { callOpenAIJSON } from "./openai";
+import { callGeminiJSON } from "@/lib/services/gemini";
+import { callOpenAIJSON } from "@/lib/services/openai";
 
 const COLLEGES = [
     { name: "RV College of Engineering", acronyms: ["RVCE", "RV"] },

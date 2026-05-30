@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAyrshareAnalytics } from "@/lib/ayrshare";
+import { getAyrshareAnalytics } from "@/lib/services/ayrshare";
 
 export async function GET() {
     try {

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Shield, UserPlus, Check, ChevronDown, UserCheck, X, Users, Settings, Upload, Save, FileSpreadsheet, Vote, ClipboardList, Info, Trophy, Copy, Plus, TrendingUp } from "lucide-react";
 import { Club, ClubMember, MemberRole, RecruitmentBasis, MembershipConfig, Question, Skill, SkillLevel, JCApplication, JCSelectionConfig } from "@/lib/types";
-import { saveClub, updateMemberSkills } from "@/lib/db";
+import { saveClub, updateMemberSkills } from "@/lib/utils/db";
 
 interface MembershipViewProps {
   clubs: Club[];

@@ -4,8 +4,8 @@ import {
     parseSerperResultsToResources,
     verifyResourcesWithAI,
     BaseResource
-} from "@/lib/discovery";
-import { validateRequest, FindResourceSchema } from "@/lib/validation";
+} from "@/lib/utils/discovery";
+import { validateRequest, FindResourceSchema } from "@/lib/utils/validation";
 
 export async function POST(req: Request) {
     try {

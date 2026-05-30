@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/firebase';
+import { db } from '@/lib/services/firebase';
 import { doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { Club, Question, TestAttempt, ClubMember } from '@/lib/types';
 

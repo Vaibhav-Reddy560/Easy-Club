@@ -141,8 +141,8 @@ export default function LeftSidebar({
     }
   };
   return (
-    <div className="w-[260px] shrink-0 bg-transparent border-r border-white/5 flex flex-col z-[92]">
-      <div className="p-4 flex-1 overflow-y-auto custom-scrollbar">
+    <div className="w-full lg:w-[260px] shrink-0 bg-transparent lg:border-r border-b lg:border-b-0 border-white/5 flex flex-col z-[92]">
+      <div className="p-4 flex-none lg:flex-1 overflow-y-auto custom-scrollbar">
         
         {/* Artboards */}
         <div className="mb-8">

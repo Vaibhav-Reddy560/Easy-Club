@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { callGeminiSafe } from "@/lib/gemini";
-import { validateRequest, SuggestVibeSchema } from "@/lib/validation";
+import { callGeminiSafe } from "@/lib/services/gemini";
+import { validateRequest, SuggestVibeSchema } from "@/lib/utils/validation";
 
 // Map event types to Google Fonts style categories
 const FONT_SUGGESTIONS: Record<string, string[]> = {

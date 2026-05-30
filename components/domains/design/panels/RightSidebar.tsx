@@ -265,7 +265,7 @@ export default function RightSidebar(props: RightSidebarProps) {
                          (selectedLayer === "custom_element" && customElements.find(c => c.id === selectedElementId)?.type === "text");
 
   return (
-    <div className="w-[320px] shrink-0 bg-black/60 border-l border-[#1E1E1E] overflow-y-auto z-[201] custom-scrollbar flex flex-col text-white pb-32">
+    <div className="w-full lg:w-[320px] shrink-0 bg-black/60 lg:border-l lg:border-t-0 border-t border-[#1E1E1E] overflow-y-auto z-[201] custom-scrollbar flex flex-col text-white pb-32">
       {/* Header */}
       <div className="p-3 border-b border-white/10 flex items-center justify-between sticky top-0 bg-[#111111] z-50 text-[11px] font-medium">
         <span className="flex items-center gap-2">

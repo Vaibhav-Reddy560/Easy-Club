@@ -36,7 +36,7 @@ import {
     Sparkles
 } from "lucide-react";
 import { Club, MemberRole, TeamInvite, ActivityLogEvent, ClubMember, MeetingMinutes, AssignedTask, Skill, SkillLevel } from "@/lib/types";
-import { saveMeetingMinutes, assignTask, updateTaskProgress, updateMemberSkills } from "@/lib/db";
+import { saveMeetingMinutes, assignTask, updateTaskProgress, updateMemberSkills } from "@/lib/utils/db";
 
 interface MyTeamViewProps {
     clubs: Club[];

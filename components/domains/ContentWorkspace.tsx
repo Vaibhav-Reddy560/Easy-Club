@@ -4,9 +4,9 @@ import React, { useState, useCallback, useEffect } from "react";
 import { FileText, Share2, Table, Download, Check, Copy, File, Sparkles, Loader2, QrCode, UserCheck, Link, ExternalLink } from "lucide-react";
 import { Club, ClubEvent, EventConfig } from "@/lib/types";
 import { useGenerator } from "@/hooks/useGenerator";
-import { exportToDocx, exportToExcel } from "@/lib/export-utils";
+import { exportToDocx, exportToExcel } from "@/lib/utils/export-utils";
 import { BorderBeam } from "@/components/animations/BorderBeam";
-import { useTasks } from "@/lib/TaskContext";
+import { useTasks } from "@/lib/context/TaskContext";
 import TypewriterLoader from "@/components/ui/TypewriterLoader";
 import { QRCodeCanvas } from "qrcode.react";
 
@@ -552,34 +552,36 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
             <p className="text-[9px] text-zinc-400 uppercase tracking-widest mt-1">QR-Based Check-in synchronized with Registration Sheets</p>
           </div>
           
-          <div className="flex flex-col items-start gap-1">
-            <div className="flex flex-col md:flex-row items-center gap-3">
+          <div className="flex flex-col items-start gap-1 w-full md:w-auto">
+            <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3 w-full">
               <input 
                 type="text"
                 value={sheetUrlInput}
                 onChange={e => setSheetUrlInput(e.target.value)}
                 placeholder="Paste Google Form Response Sheet URL..."
-                className="bg-black/60 border border-white/10 rounded-xl px-4 py-2 text-[10px] text-white w-64 outline-none focus:border-gold-500/50"
+                className="bg-black/60 border border-white/10 rounded-xl px-4 py-2 text-[10px] text-white w-full md:w-64 outline-none focus:border-gold-500/50"
               />
-              <button
-                onClick={handleSyncSheet}
-                disabled={isSyncingSheet || !sheetUrlInput}
-                className="bg-gold-500 text-black px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:brightness-110 disabled:opacity-50 flex items-center gap-2"
-              >
-                {isSyncingSheet ? <Loader2 className="w-3 h-3 animate-spin" /> : <Link className="w-3 h-3" />} Sync
-              </button>
-              {!!activeEvent?.config?.responseSheetLink && (
-                <a 
-                    href={(activeEvent?.config?.responseSheetLink as string)} 
-                    target="_blank" 
-                    className="p-2.5 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all text-white"
-                    title="View Responses Spreadsheet"
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handleSyncSheet}
+                  disabled={isSyncingSheet || !sheetUrlInput}
+                  className="flex-1 md:flex-none bg-gold-500 text-black px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:brightness-110 disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                    <ExternalLink className="w-4 h-4" />
-                </a>
-              )}
+                  {isSyncingSheet ? <Loader2 className="w-3 h-3 animate-spin" /> : <Link className="w-3 h-3" />} Sync
+                </button>
+                {!!activeEvent?.config?.responseSheetLink && (
+                  <a 
+                      href={(activeEvent?.config?.responseSheetLink as string)} 
+                      target="_blank" 
+                      className="p-2.5 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all text-white flex shrink-0 items-center justify-center"
+                      title="View Responses Spreadsheet"
+                  >
+                      <ExternalLink className="w-4 h-4" />
+                  </a>
+                )}
+              </div>
             </div>
-            <p className="text-[8px] text-zinc-500 uppercase tracking-widest pl-2">
+            <p className="text-[8px] text-zinc-500 uppercase tracking-widest pl-1 mt-1">
               * Ensure sheet access is set to "Anyone with link can View"
             </p>
           </div>
