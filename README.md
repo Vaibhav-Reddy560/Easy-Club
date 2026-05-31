@@ -58,7 +58,7 @@ Easy Club is built utilizing modern web technologies to ensure optimal performan
 | **Lucide React** | UI Components | Consistent, scalable SVG iconography used universally across the dashboard. |
 | **AI APIs** | Generative AI | Native integrations with OpenAI, Gemini, and HuggingFace for natural language processing and asset generation. |
 
-## Platform Capabilities
+## Features
 
 <table>
 <tr>
