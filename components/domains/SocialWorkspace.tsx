@@ -13,7 +13,8 @@ import {
   Loader2,
   Check,
   Copy,
-  X
+  X,
+  RefreshCw
 } from "lucide-react";
 import { ClubEvent, EventConfig } from "@/lib/types";
 import { useTasks } from "@/lib/context/TaskContext";
@@ -34,8 +35,10 @@ interface Expert {
 export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWorkspaceProps) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSending, setIsSending] = useState(false);
-  // Restore from persisted state
-  const [outreachTemplate, setOutreachTemplate] = useState<string | null>((activeEvent?.config?.workspaceData as any)?.outreach || null);
+  
+  // Use local storage for persistence across reloads
+  const [outreachTemplate, setOutreachTemplate] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   
   // Scripts state
@@ -51,6 +54,16 @@ export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWor
   const city = config.city || "Bengaluru";
   const subType = config.subType || "Workshop";
   const tracks = (config.tracks || "").split(',').map((t: string) => t.trim()).filter((t: string) => t !== "");
+
+  // Load from local storage on mount
+  React.useEffect(() => {
+    if (activeEvent?.id) {
+        const saved = localStorage.getItem(`outreach-${activeEvent.id}`);
+        if (saved) {
+            setOutreachTemplate(saved);
+        }
+    }
+  }, [activeEvent?.id]);
 
   // Simulated logic to suggest resource persons based on event type and tracks
   const getResourcePersons = () => {
@@ -149,7 +162,7 @@ export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWor
           <div>
             <h6 className="font-bold text-lg text-white">Invitation Engine</h6>
             <p className="text-[10px] text-white font-bold uppercase tracking-widest mt-1">
-              {isGenerating ? "AI is drafting personalized outreach..." : "Generate professional expert invitations"}
+              {isGenerating ? "AI is drafting personalized outreach..." : outreachTemplate ? "View or regenerate your outreach template" : "Generate professional expert invitations"}
             </p>
           </div>
         </div>
@@ -157,6 +170,13 @@ export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWor
           disabled={isGenerating || !activeEvent}
           onClick={async () => {
             if (!activeEvent) return;
+            
+            // If already generated and saved, just open it!
+            if (outreachTemplate) {
+                setIsModalOpen(true);
+                return;
+            }
+
             setIsGenerating(true);
             const taskId = "outreach-" + activeEvent.id;
             startTask(taskId, "Drafting Speaker Invitations");
@@ -167,19 +187,14 @@ export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWor
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ 
                   event: activeEvent, 
-                  expert: experts[0] // Generate for the primary suggested expert
+                  expert: experts[0],
+                  club: { name: "Gradient" }
                 })
               });
               const data = await response.json();
               setOutreachTemplate(data.content);
-              
-              // Persist to Cloud
-              updateConfig({
-                workspaceData: {
-                  ...activeEvent.config.workspaceData,
-                  outreach: data.content
-                }
-              });
+              localStorage.setItem(`outreach-${activeEvent.id}`, data.content);
+              setIsModalOpen(true);
               
               finishTask(taskId, true);
             } catch (err) {
@@ -192,14 +207,14 @@ export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWor
           className="w-full xl:w-auto justify-center px-8 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-[10px] font-black uppercase tracking-widest text-zinc-100 hover:text-signature-gradient hover:border-gold-500 transition-all flex items-center gap-2"
         >
           {isGenerating ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
-          {isGenerating ? "Processing..." : "Generate Master Invitation"}
+          {isGenerating ? "Processing..." : outreachTemplate ? "View Master Invitation" : "Generate Master Invitation"}
         </button>
       </div>
 
       {/* Outreach Template Modal */}
       <AnimatePresence>
-        {outreachTemplate && (
-          <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/90 backdrop-blur-md">
+        {isModalOpen && outreachTemplate && (
+          <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/30 backdrop-blur-sm">
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -207,8 +222,8 @@ export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWor
               className="relative w-full max-w-2xl bg-[#0a0a0a] border border-gold-500/20 rounded-[2.5rem] p-10 shadow-3xl flex flex-col max-h-[80vh]"
             >
               <button 
-                onClick={() => setOutreachTemplate(null)}
-                className="absolute top-8 right-8 text-white"
+                onClick={() => setIsModalOpen(false)}
+                className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -225,6 +240,34 @@ export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWor
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
+                <button
+                  disabled={isGenerating}
+                  onClick={async () => {
+                    setIsGenerating(true);
+                    try {
+                      const response = await fetch("/api/generate-outreach", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ 
+                          event: activeEvent, 
+                          expert: experts[0],
+                          club: { name: "Gradient" }
+                        })
+                      });
+                      const data = await response.json();
+                      setOutreachTemplate(data.content);
+                      localStorage.setItem(`outreach-${activeEvent?.id}`, data.content);
+                    } catch (err) {
+                      console.error(err);
+                    } finally {
+                      setIsGenerating(false);
+                    }
+                  }}
+                  className="px-6 py-4 rounded-xl bg-zinc-900 border border-white/10 text-white text-[10px] font-black uppercase tracking-widest hover:border-gold-500 transition-all flex items-center justify-center gap-2"
+                >
+                  {isGenerating ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
+                  Regenerate
+                </button>
                 <button
                   onClick={async () => {
                     await navigator.clipboard.writeText(outreachTemplate);

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Globe, Folder, Shield, Users, Zap, ChartBar, Banknote, Handshake, MoreHorizontal, X } from "lucide-react";
+import { Globe, Folder, Shield, Users, Zap, ChartBar, Banknote, Handshake, Menu, X } from "lucide-react";
 import { NavSection } from "@/components/layout/AppSidebar";
 import { MemberRole } from "@/lib/types";
 import { motion, AnimatePresence } from "framer-motion";
@@ -20,8 +20,11 @@ const PRIMARY_SECTIONS = [
     { id: 'collab-hub' as NavSection, label: 'Collab', icon: Handshake },
 ];
 
-// Sections shown in the "More" tray
 const MORE_SECTIONS = [
+    { id: 'my-team' as NavSection, label: 'My Team', icon: Shield, group: 'Management' },
+    { id: 'my-clubs' as NavSection, label: 'My Clubs', icon: Folder, group: 'Management' },
+    { id: 'collab-hub' as NavSection, label: 'Collab Hub', icon: Handshake, group: 'Management' },
+    { id: 'explore-clubs' as NavSection, label: 'Explore Clubs', icon: Globe, group: 'Explore' },
     { id: 'ideation' as NavSection, label: 'Event Ideation', icon: Zap, group: 'Explore' },
     { id: 'membership' as NavSection, label: 'Membership X Recruitment', icon: Users, group: 'Growth', restricted: true },
     { id: 'social-tracker' as NavSection, label: 'Social Tracker', icon: ChartBar, group: 'Growth' },
@@ -83,7 +86,7 @@ export default function MobileNav({ activeSection, onSectionChange, userRole = '
                         </button>
 
                         {/* Group by category */}
-                        {['Explore', 'Growth'].map(group => {
+                        {['Management', 'Explore', 'Growth'].map(group => {
                             const items = filteredMore.filter(s => s.group === group);
                             if (items.length === 0) return null;
                             return (
@@ -148,18 +151,18 @@ export default function MobileNav({ activeSection, onSectionChange, userRole = '
                     );
                 })}
 
-                {/* More button */}
+                {/* Menu button */}
                 <button
                     onClick={() => setIsMoreOpen(!isMoreOpen)}
                     className={`flex flex-col items-center justify-center gap-1 px-3 py-1.5 rounded-xl transition-all duration-300 min-w-0 ${
                         isMoreOpen || isMoreActive ? 'text-gold-400' : 'text-zinc-500'
                     }`}
                 >
-                    <MoreHorizontal className={`w-5 h-5 ${isMoreOpen || isMoreActive ? 'text-gold-400' : 'text-zinc-500'}`} />
+                    <Menu className={`w-5 h-5 ${isMoreOpen || isMoreActive ? 'text-gold-400' : 'text-zinc-500'}`} />
                     <span className={`text-[8px] font-bold uppercase tracking-tight whitespace-nowrap ${
                         isMoreOpen || isMoreActive ? 'text-signature-gradient' : ''
                     }`}>
-                        More
+                        Menu
                     </span>
                     {isMoreActive && !isMoreOpen && (
                         <div className="w-1 h-1 rounded-full bg-gold-500" />

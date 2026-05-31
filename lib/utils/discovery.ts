@@ -17,7 +17,7 @@ const COLLEGES = [
     { name: "Christ University", acronyms: ["CU", "Christ"] }
 ];
 
-interface SerperResult {
+interface SearchResult {
     title: string;
     link: string;
     snippet: string;
@@ -425,16 +425,23 @@ function cleanName(title: string, college?: string): string {
     return name;
 }
 
-export async function searchSerper(query: string, serperKey: string, num = 25): Promise<SerperResult[]> {
+export async function searchWeb(query: string, searchKey: string, num = 25): Promise<SearchResult[]> {
     try {
-        const response = await fetch("https://google.serper.dev/search", {
+        const response = await fetch("https://api.tavily.com/search", {
             method: "POST",
-            headers: { "X-API-KEY": serperKey, "Content-Type": "application/json" },
-            body: JSON.stringify({ q: query, num }),
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ api_key: searchKey, query, max_results: num }),
             signal: AbortSignal.timeout(15000)
         });
         const data = await response.json();
-        return data.organic || [];
+        if (data.results) {
+            return data.results.map((r: any) => ({
+                title: r.title || "",
+                link: r.url || "",
+                snippet: r.content || ""
+            }));
+        }
+        return [];
     } catch { return []; }
 }
 
@@ -446,7 +453,7 @@ function extractCollege(text: string): string {
     return genericMatch ? genericMatch[0] : "";
 }
 
-export function parseSerperResultsToClubs(results: SerperResult[], location: string): Club[] {
+export function parseWebResultsToClubs(results: SearchResult[], location: string): Club[] {
     // Stage 1: Basic deduplication and noise removal
     const unique = Array.from(new Map(results.map(r => [r.link, r])).values());
     
@@ -518,7 +525,7 @@ ${rawContent}`;
     }
 }
 
-export function parseSerperResultsToEvents(results: SerperResult[], location: string): Event[] {
+export function parseWebResultsToEvents(results: SearchResult[], location: string): Event[] {
     return results.map(r => {
         const fullText = (r.title + " " + r.snippet).toLowerCase();
         let imageUrl = "https://images.unsplash.com/photo-1540575467063-178a50c2df87";
@@ -554,7 +561,7 @@ export async function setCachedDiscovery(key: string, results: any) {
     return;
 }
 
-export function parseSerperResultsToResources(results: SerperResult[], location: string): Resource[] {
+export function parseWebResultsToResources(results: SearchResult[], location: string): Resource[] {
     return results.map(r => {
         const url = r.link || "";
         const title = r.title || "";
@@ -619,14 +626,22 @@ export async function verifyResourcesWithAI(rawResources: BaseResource[], domain
     
     RETURN ONLY a JSON array: [{ name, role, college_affiliation, reason, website }].`;
 
-    // Try OpenAI first (GPT-4o-mini), fallback to Gemini
-    let verified = await callOpenAIJSON<{ results: VerifiedResource[] }>(prompt);
+    let results = null;
+    try {
+        // Try OpenAI first (GPT-4o-mini), fallback to Gemini
+        let verified = await callOpenAIJSON<{ results: VerifiedResource[] }>(prompt);
+        results = verified?.results || null;
+    } catch (err) {
+        console.warn("[Discovery] OpenAI Verification failed, falling back to Gemini.", err);
+    }
     
-    // If OpenAI returned a wrapped object or null, check and fallback
-    let results = verified?.results || null;
     if (!results) {
         // Fallback to Gemini if OpenAI fails or key is missing
-        results = await callGeminiJSON<VerifiedResource[]>(prompt);
+        try {
+            results = await callGeminiJSON<VerifiedResource[]>(prompt);
+        } catch (err) {
+            console.warn("[Discovery] Gemini Verification failed, returning raw resources.", err);
+        }
     }
     
     if (!results || !Array.isArray(results)) {

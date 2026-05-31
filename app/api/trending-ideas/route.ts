@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { callGeminiJSON } from "@/lib/services/gemini";
-import { searchSerper } from "@/lib/utils/discovery";
 import { validateRequest, TrendingIdeasSchema } from "@/lib/utils/validation";
 
 export async function POST(req: Request) {
@@ -10,44 +9,13 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: validationErr }, { status: 400 });
         }
         const { category } = body!;
-        const serperKey = process.env.SERPER_API_KEY;
 
-        if (!category) {
-            return NextResponse.json({ error: "Category is required" }, { status: 400 });
-        }
-
-        // Phase 1: Real-world research using Serper (Elite University Targeting)
-        const searchQueries = [
-            `successful ${category} club events IIT NIT BITS university`,
-            `annual ${category} fest campus activities India 2024`,
-            `best ${category} workshop student participation examples`
-        ];
-
-        let researchData = "Search for high-profile university events and industry-standard student fests.";
-        if (serperKey) {
-            try {
-                const results = await Promise.all(
-                    searchQueries.map(q => searchSerper(q, serperKey, 6))
-                );
-                const flatResults = results.flat().filter(r => r && r.title);
-                if (flatResults.length > 0) {
-                    researchData = flatResults.map(r => `SOURCE: ${r.title} | CONTENT: ${r.snippet}`).join("\n");
-                }
-            } catch (serperErr) {
-                console.error("Serper Research Error:", serperErr);
-            }
-        }
-
-        // Phase 2: AI synthesis into actionable blueprints
         const prompt = `
             You are a Market Intelligence Engine for College Clubs. 
             The user wants trending event ideas for a club in the category: "${category}".
 
-            REAL-WORLD RESEARCH DATA:
-            ${researchData}
-
             TASK:
-            Synthesize the research data into 6 (SIX) unique, high-fidelity, and PRACTICAL "Event Blueprints". 
+            Synthesize your knowledge into 6 (SIX) unique, high-fidelity, and PRACTICAL "Event Blueprints" for student clubs. 
             
             STRICT DIVERSITY RULES:
             1. NO COMMON NAMES: Do NOT use common suffixes or prefixes like "Arena", "League", "Innovation Day", "Workshop", "Express", "Expo", "Summit", or "Pulse" for every item. Every name must be completely distinct in structure.

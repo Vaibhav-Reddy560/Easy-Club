@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { callGeminiSafe, callGeminiJSON } from "@/lib/services/gemini";
-import { searchSerper } from "@/lib/utils/discovery";
 
 /**
  * Event Brainstorming API v2.0 - "Architect" Upgrade
@@ -11,24 +10,9 @@ export async function POST(req: Request) {
     try {
         const body = await req.json();
         const { action, clubName, category, messages } = body;
-        const serperKey = process.env.SERPER_API_KEY;
-
         if (action === "start") {
             let researchData = "General market knowledge.";
             let status = "Analyzing Basic Trends";
-
-            if (serperKey) {
-                try {
-                    const results = await searchSerper(`innovative student ${category} club events trends ${new Date().getFullYear()}`, serperKey, 5);
-                    const flatResults = results.filter(r => r && r.title);
-                    if (flatResults.length > 0) {
-                        researchData = flatResults.map(r => `Source: ${r.title} - ${r.snippet}`).join("\n");
-                        status = "Synthesizing Live Market Data";
-                    }
-                } catch (e) {
-                    console.error("Serper Research Error in Brainstorm:", e);
-                }
-            }
 
             const prompt = `
             You are an expert Event Architect for student organizations.
@@ -63,19 +47,7 @@ export async function POST(req: Request) {
             let internetContext = "";
             let status = "Processing Logic";
             
-            // Smart trigger: if user mentions a city, a specific competitor, or asks for "real examples"
-            const needsSearch = /(search|trend|online|look up|in\b|venue|example|competition|at\b|near\b)/.test(latestMessage);
-
-            if (needsSearch && serperKey) {
-                try {
-                    status = "Executing Deep Discovery Scan";
-                    const searchTerms = latestMessage.replace(/(search|look up|find me)/g, "").trim();
-                    const results = await searchSerper(`${searchTerms} best student events examples`, serperKey, 4);
-                    internetContext = results.map(r => r.title + " - " + r.snippet).join("\n");
-                } catch (e) {}
-            }
-
-            const chatHistory = messages.map(m => `[${m.role.toUpperCase()}]: ${m.content}`).join("\n\n");
+            const chatHistory = messages.map((m: any) => `[${m.role.toUpperCase()}]: ${m.content}`).join("\n\n");
             
             // Integrate Hugging Face Sentiment Analysis to adjust persona
             const { analyzeSentiment } = await import("@/lib/services/huggingface");

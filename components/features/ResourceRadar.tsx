@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Search, MapPin, Users, Award, ExternalLink, Linkedin, Twitter, Github, Globe, Loader2, Sparkles, Trophy, Mail, Briefcase } from "lucide-react";
+import { Search, MapPin, Users, Award, ExternalLink, Linkedin, Twitter, Github, Globe, Loader2, Sparkles, Trophy, Mail, Briefcase, User } from "lucide-react";
 import { BorderBeam } from "@/components/animations/BorderBeam";
 import RadarDiscoveryLoader from "@/components/ui/RadarDiscoveryLoader";
 
@@ -137,7 +137,7 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                                     <span className="text-[8px] font-black uppercase tracking-widest text-white">
                                         Expert Role
                                     </span>
-                                    <span className="text-[10px] font-bold uppercase tracking-tight leading-tight text-signature-gradient">
+                                    <span className="text-xs font-bold uppercase tracking-widest leading-tight text-signature-gradient mt-0.5">
                                         {persona.role}
                                     </span>
                                 </button>
@@ -171,12 +171,12 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                             className="flex flex-col items-center justify-center pt-8"
                         >
                             <RadarDiscoveryLoader 
-                                label="Discovery in Progress" 
+                                label=""
                                 className="scale-125"
                             />
-                            <div className="mt-8 text-center space-y-2">
-                                <p className="text-white text-xs font-black uppercase tracking-[0.3em] animate-pulse">Scanning Global Talent Network...</p>
-                                <p className="text-white text-[9px] font-bold uppercase tracking-widest">Identifying {domain} experts in {location}</p>
+                            <div className="mt-4 text-center space-y-1">
+                                <p className="text-signature-gradient text-sm font-bold font-destrubia tracking-[0.25em]">DISCOVERY IN PROGRESS</p>
+                                <p className="text-white text-[11px] font-bold uppercase tracking-[0.3em]">FINDING {domain} EXPERTS IN {location}...</p>
                             </div>
                         </motion.div>
                     ) : results.length > 0 ? (
@@ -196,15 +196,10 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                                     <div className="p-8 space-y-6 flex-1">
                                         <div className="flex items-start justify-between">
                                             <div className="relative">
-                                                <div className="absolute inset-0 bg-gold-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                                                <Image
-                                                    src={person.imageUrl}
-                                                    alt={person.name}
-                                                    width={72}
-                                                    height={72}
-                                                    unoptimized
-                                                    className="w-16 h-16 rounded-2xl object-cover border border-white/15 relative z-10"
-                                                />
+                                                <div className="absolute inset-0 bg-gold-500/10 blur-xl rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                <div className="w-[72px] h-[72px] rounded-2xl bg-[#1A1A1A] border border-[#333] flex items-center justify-center relative z-10 shadow-inner">
+                                                    <User className="w-8 h-8 text-gold-500" strokeWidth={1.5} />
+                                                </div>
                                             </div>
                                             <div className="px-3 py-1 bg-white/[0.03] rounded-full border border-white/5 flex items-center gap-2 text-[8px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-gold-500 transition-colors">
                                                 <Linkedin className="w-2.5 h-2.5" />
@@ -213,8 +208,8 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                                         </div>
 
                                         <div className="space-y-1">
-                                            <h3 className="text-xl font-black text-white uppercase tracking-tighter leading-tight">{person.name}</h3>
-                                            <p className="text-[10px] font-black text-signature-gradient uppercase tracking-[0.1em]">{person.role}</p>
+                                            <h3 className="text-xl font-bold text-white tracking-wide leading-tight">{person.name}</h3>
+                                            <p className="text-[10px] font-black text-signature-gradient uppercase tracking-widest">{person.role}</p>
                                         </div>
 
                                         <p className="text-[11px] text-white/60 font-medium leading-[1.8] italic line-clamp-3">
@@ -251,12 +246,12 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
                         animate={{ opacity: 1 }}
                         className="py-32 text-center space-y-6"
                     >
-                        <div className="w-24 h-24 bg-white/[0.01] rounded-full flex items-center justify-center mx-auto border border-white/5">
-                            <Search className="w-10 h-10 text-white/5" />
+                        <div className="w-24 h-24 bg-white/[0.03] rounded-full flex items-center justify-center mx-auto border border-white/10">
+                            <Search className="w-10 h-10 text-white/30" />
                         </div>
                         <div className="space-y-2">
                             <h3 className="text-md font-black text-white uppercase tracking-[0.3em]">Expert Engine Standby</h3>
-                            <p className="text-[10px] text-white/20 font-bold uppercase tracking-widest">Awaiting discovery scan for {domain}</p>
+                            <p className="text-[11px] text-signature-gradient font-bold uppercase tracking-[0.2em]">Awaiting discovery scan for {domain}</p>
                         </div>
                     </motion.div>
                 )}

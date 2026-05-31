@@ -3,36 +3,43 @@ import { callGeminiSafe } from "@/lib/services/gemini";
 
 export async function POST(req: NextRequest) {
     try {
-        const { event, expert } = await req.json();
+        const { event, expert, club } = await req.json();
 
         if (!event || !expert) {
             return NextResponse.json({ error: "Event and Expert data are required" }, { status: 400 });
         }
 
-        const prompt = `
-You are a professional outreach coordinator for a prestigious college club.
-Write a highly professional, persuasive, and tailored invitation email for the following expert:
+        const clubName = club?.name || "Easy Club";
 
-**Expert Name**: ${expert.name}
-**Assigned Role**: ${expert.role}
-**Expertise**: ${expert.expertise}
-**Location**: ${expert.location}
+        const prompt = `
+You are a professional outreach coordinator for ${clubName}.
+Write a highly professional, persuasive, and tailored "Master Invitation Template" that the club can send to industry experts.
+
+**Target Persona**:
+- Role: ${expert.role}
+- Expertise: ${expert.expertise}
+- Location: ${expert.location}
 
 **Event Context**:
 - Event Name: ${event.name}
 - Type: ${event.config?.type || 'Technical'}
 - Subtype: ${event.config?.subType || 'Workshop'}
 - Description: ${event.config?.description || 'A flagship event for students.'}
+- Hosting Organization: ${clubName}
 
 **Requirements**:
-1.  **Subject Line**: Engaging and professional (e.g., "Invitation: Guest Speaker Role at ${event.name}")
-2.  **Greeting**: Use "Dear ${expert.name},"
-3.  **Opening**: Introduce the club/organization and the event.
-4.  **Value Prop**: Explain why their specific expertise in ${expert.expertise} would be invaluable to the students.
-5.  **Logistics**: Mention it's an upcoming event in ${expert.location}. Ask for their availability.
-6.  **Closing**: Professional sign-off.
+1.  **Subject Line**: Engaging and professional.
+2.  **Greeting**: Start exactly with "Dear [Expert Name]," (use this exact placeholder).
+3.  **Opening**: Introduce ${clubName} as the organizing entity at [Your College Name], [City/Location], and mention the event. 
+4.  **Value Prop**: Explain why their expertise in ${expert.expertise} is invaluable to the attendees.
+5.  **Logistics**: Mention it's an upcoming event in ${expert.location}. Ask about their availability.
+6.  **Closing**: Professional sign-off. Include placeholders for the sender to fill out:
+    Sincerely,
+    [Your Name]
+    [Your Role]
+    ${clubName} Organizing Committee
 
-Format the output clearly. Do not use placeholders; if something is unknown, keep it general but professional.
+Format the output cleanly. Make it a ready-to-send template with [Expert Name], [Your Name], and [Your Role] as the ONLY placeholders.
 `.trim();
 
         const content = await callGeminiSafe(prompt, 20000);
