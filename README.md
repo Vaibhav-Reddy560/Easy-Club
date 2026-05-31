@@ -60,6 +60,19 @@ Easy Club is built utilizing modern web technologies to ensure optimal performan
 
 ## Features
 
+- **Interactive UI**: Fluid animations with Framer Motion and sleek, highly-curated dark mode aesthetics.
+- **Smart Forms**: Synchronize directly with Google Sheets for automated registration and data collection.
+- **QR Check-in System**: Built-in QR code scanner to track real-time attendee check-ins at physical events.
+- **Generative AI Design**: Generate custom social media assets, A3 posters, and certificates natively within the platform.
+- **AI Event Ideation**: Brainstorm trending event concepts, professional titles, pitches, and operational reports.
+- **Semantic Discovery**: A powerful search engine to discover relevant clubs and events based on natural language queries.
+- **Kanban Pipelines**: Visual drag-and-drop boards for seamless recruitment evaluations and sponsorship tracking.
+- **One-Click Exports**: Instantly export attendance records, member rosters, and activity logs to CSV format.
+- **Automated Social Scripts**: Draft professional outreach emails, social media captions, and WhatsApp templates using AI.
+- **Dynamic Task Management**: Granularly assign tasks across multiple domains with live completion metrics.
+
+## Platform Capabilities
+
 <table>
 <tr>
 <td width="50%">
