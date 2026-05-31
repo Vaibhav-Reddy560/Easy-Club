@@ -25,6 +25,11 @@
 
 From orchestrating large-scale hackathons and technical summits to managing internal recruitment pipelines, tracking financial sponsorships, and generating AI-assisted promotional assets, Easy Club integrates everything into one premium, distraction-free environment designed to reduce administrative overhead and improve team efficiency.
 
+<br />
+<p align="center">
+  <img src="./public/New_Image.png" alt="Easy Club App Screenshot" width="100%" />
+</p>
+
 ## Project Structure
 
 ```text
