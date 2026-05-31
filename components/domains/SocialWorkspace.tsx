@@ -10,11 +10,12 @@ import {
   Mail, 
   Radio, 
   Briefcase,
-  Users, 
-  Sparkles, 
+  Users,
   RefreshCw, 
   X, 
-  Loader2 
+  Loader2,
+  Check,
+  Copy
 } from "lucide-react";
 import { ClubEvent, EventConfig } from "@/lib/types";
 import { useTasks } from "@/lib/context/TaskContext";
