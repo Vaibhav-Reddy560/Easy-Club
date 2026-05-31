@@ -63,7 +63,7 @@ export default function MyTeamView({ clubs, user, onUpdateClub, defaultSelection
     // Role detection
     const currentUserMember = activeClub?.members?.find(m => m.email.toLowerCase() === user?.email?.toLowerCase());
     const currentUserRole = currentUserMember?.role || 'Member';
-    const isOwner = activeClub?.founderId === user?.uid || user?.email === activeClub?.founderEmail;
+    const isOwner = activeClub?.ownerId === user?.uid || user?.email === activeClub?.ownerEmail;
 
     const handleUpdateActiveClub = async (updatedClubFn: (c: Club) => Club) => {
         if (!selectedClubId || isGlobal) return;
