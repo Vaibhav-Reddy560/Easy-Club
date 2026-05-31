@@ -629,8 +629,12 @@ export async function verifyResourcesWithAI(rawResources: Resource[], domain: st
     let results = null;
     try {
         // Try OpenAI first (GPT-4o-mini), fallback to Gemini
-        let verified = await callOpenAIJSON<{ results: VerifiedResource[] }>(prompt);
-        results = verified?.results || null;
+        let verified = await callOpenAIJSON<any>(prompt);
+        if (Array.isArray(verified)) {
+            results = verified;
+        } else if (verified && Array.isArray(verified.results)) {
+            results = verified.results;
+        }
     } catch (err) {
         console.warn("[Discovery] OpenAI Verification failed, falling back to Gemini.", err);
     }
@@ -644,7 +648,7 @@ export async function verifyResourcesWithAI(rawResources: Resource[], domain: st
         }
     }
     
-    if (!results || !Array.isArray(results)) {
+    if (!results || !Array.isArray(results) || results.length === 0) {
         return rawResources.map(r => ({
             name: r.name,
             role: r.role || "Resource",
