@@ -44,7 +44,7 @@ export default function AIGuardModal({ isOpen, onClose, onGoSettings }: AIGuardM
                </div>
                
                <div className="pt-4 flex flex-col gap-3">
-                 <button onClick={onGoSettings} className="w-full h-12 bg-signature-gradient text-black font-bold uppercase tracking-widest text-xs rounded-2xl hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(250,164,26,0.3)]">
+                 <button onClick={onGoSettings} className="w-full h-12 bg-gold-500 text-black font-bold uppercase tracking-widest text-xs rounded-2xl hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(250,164,26,0.3)]">
                    <Settings className="w-4 h-4" />
                    Configure in Settings
                  </button>
