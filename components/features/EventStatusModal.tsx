@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, CheckCircle, Clock, XCircle, Loader2, Sparkles } from "lucide-react";
 import { ClubEvent, EventStatus, PostEventData } from "@/lib/types";
+import { requireAIKey } from "@/lib/utils/aiGuard";
 
 interface EventStatusModalProps {
   isOpen: boolean;
@@ -63,6 +64,8 @@ export default function EventStatusModal({ isOpen, event, clubName, onClose, onS
   };
 
   const handleCompletedSubmit = async () => {
+    if (!requireAIKey()) return;
+    
     const regs = parseInt(totalRegistrations) || 0;
     const attendees = parseInt(totalAttendees) || 0;
     const clubMem = parseInt(clubMembers) || 0;

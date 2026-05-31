@@ -10,15 +10,16 @@ import {
   Mail, 
   Radio, 
   Briefcase,
-  Loader2,
-  Check,
-  Copy,
-  X,
-  RefreshCw
+  Users, 
+  Sparkles, 
+  RefreshCw, 
+  X, 
+  Loader2 
 } from "lucide-react";
 import { ClubEvent, EventConfig } from "@/lib/types";
 import { useTasks } from "@/lib/context/TaskContext";
 import ResourceRadar from "../features/ResourceRadar";
+import { requireAIKey } from "@/lib/utils/aiGuard";
 
 interface SocialWorkspaceProps {
   activeEvent: ClubEvent | undefined;
@@ -92,6 +93,7 @@ export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWor
   };
 
   const handleGenerateScript = async (type: string) => {
+    if (!requireAIKey()) return;
     setIsGeneratingScript(true);
     setSelectedScriptType(type);
     const taskId = 'script-' + Date.now();
@@ -177,6 +179,8 @@ export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWor
                 return;
             }
 
+            if (!requireAIKey()) return;
+
             setIsGenerating(true);
             const taskId = "outreach-" + activeEvent.id;
             startTask(taskId, "Drafting Speaker Invitations");
@@ -243,6 +247,7 @@ export default function SocialWorkspace({ activeEvent, updateConfig }: SocialWor
                 <button
                   disabled={isGenerating}
                   onClick={async () => {
+                    if (!requireAIKey()) return;
                     setIsGenerating(true);
                     try {
                       const response = await fetch("/api/generate-outreach", {

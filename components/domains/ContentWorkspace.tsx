@@ -9,6 +9,7 @@ import { BorderBeam } from "@/components/animations/BorderBeam";
 import { useTasks } from "@/lib/context/TaskContext";
 import TypewriterLoader from "@/components/ui/TypewriterLoader";
 import { QRCodeCanvas } from "qrcode.react";
+import { requireAIKey } from "@/lib/utils/aiGuard";
 
 interface ContentWorkspaceProps {
   activeEvent: ClubEvent | undefined;
@@ -80,6 +81,7 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
 
   const handleGeneratePromo = useCallback(async () => {
     if (!activeEvent || !activeClub) return;
+    if (!requireAIKey()) return;
 
     setIsGeneratingPromo(true);
     setPromoError(null);
@@ -148,6 +150,8 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
 
   const handleGenerateLetter = async (letterType: string) => {
     if (!activeEvent || !activeClub) return;
+    if (!requireAIKey()) return;
+    
     letterGen.startGeneration();
     const taskId = 'letter-' + activeEvent.id;
     startTask(taskId, `Drafting ${letterType} for ${activeEvent.name}`);
@@ -181,6 +185,8 @@ export default function ContentWorkspace({ activeEvent, activeClub, updateConfig
 
   const handleGenerateSheet = async () => {
     if (!activeEvent || !activeClub) return;
+    if (!requireAIKey()) return;
+    
     sheetGen.startGeneration();
     const taskId = 'sheet-' + activeEvent.id;
     startTask(taskId, `Building Roster Data ${activeEvent.name}`);

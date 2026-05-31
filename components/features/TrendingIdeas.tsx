@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Loader2, ChevronRight, TrendingUp, Target, Info } from "lucide-react";
 import PremiumLoader from "@/components/ui/PremiumLoader";
+import { requireAIKey } from "@/lib/utils/aiGuard";
 
 const CLUB_TYPES = [
     "Bio", "Math", "Physics", "Chemistry", "Racing", "Dance", "Singing",
@@ -43,6 +44,8 @@ export default function TrendingIdeas({ onAdopt }: TrendingIdeasProps) {
     const [customInput, setCustomInput] = useState("");
 
     const fetchIdeas = React.useCallback(async (category: string) => {
+        if (!requireAIKey()) return;
+
         if (cache[category]) {
             setIdeas(cache[category]);
             return;

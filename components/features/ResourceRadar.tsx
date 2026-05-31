@@ -32,6 +32,8 @@ interface ResourceRadarProps {
     subType?: string;
 }
 
+import { requireAIKey } from "@/lib/utils/aiGuard";
+
 export default function ResourceRadar({ initialDomain, targetPersonas = [], city, subType }: ResourceRadarProps) {
     const [domain, setDomain] = useState(initialDomain || "AI & Machine Learning");
     const [location, setLocation] = useState(city || "Bengaluru");
@@ -50,6 +52,8 @@ export default function ResourceRadar({ initialDomain, targetPersonas = [], city
     }, [initialDomain, city]);
 
     const handleSearch = async () => {
+        if (!requireAIKey()) return;
+        
         setLoading(true);
         setError(null);
         try {

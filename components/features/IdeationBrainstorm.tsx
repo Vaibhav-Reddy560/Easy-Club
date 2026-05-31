@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Club } from "@/lib/types";
 import { Send, Loader2, Sparkles, BrainCircuit, Check, CheckCircle2, Search, Zap } from "lucide-react";
 import PremiumLoader from "@/components/ui/PremiumLoader";
+import { requireAIKey } from "@/lib/utils/aiGuard";
 
 interface IdeationBrainstormProps {
     clubs: Club[];
@@ -102,6 +103,8 @@ export default function IdeationBrainstorm({ clubs, selectedClubId, onAdopt }: I
 
     const handleStart = async () => {
         if (!selectedClubId || !selectedCategory) return;
+        if (!requireAIKey()) return;
+
         setStarted(true);
         setLoading(true);
         setCurrentStatus("Analyzing Trends...");

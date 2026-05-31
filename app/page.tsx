@@ -45,6 +45,8 @@ import { useAuth } from "@/lib/auth";
 import { signInWithGoogle, logout } from "@/lib/services/firebase";
 import { subscribeUserClubs, saveClub, deleteClubFromDb } from "@/lib/utils/db";
 import DynamicIsland from "@/components/layout/DynamicIsland";
+import AIGuardModal from "@/components/ui/AIGuardModal";
+
 
 
 // --- MAIN APPLICATION ---
@@ -78,6 +80,15 @@ export default function App() {
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [lifecycleTargetId, setLifecycleTargetId] = useState<string | null>(null);
+
+  // Global AI Guard State
+  const [showAIGuard, setShowAIGuard] = useState(false);
+
+  useEffect(() => {
+    const handleRequireAIKey = () => setShowAIGuard(true);
+    window.addEventListener("require-ai-key", handleRequireAIKey);
+    return () => window.removeEventListener("require-ai-key", handleRequireAIKey);
+  }, []);
 
   const activeClub = clubs.find(c => c.id === activeClubId);
   const activeEvent = activeClub?.events?.find((e: ClubEvent) => e.id === activeEventId);
@@ -893,6 +904,12 @@ export default function App() {
       )}
 
       <MobileNav activeSection={activeNav} onSectionChange={handleNavChange} />
+
+      <AIGuardModal 
+        isOpen={showAIGuard} 
+        onClose={() => setShowAIGuard(false)} 
+        onGoSettings={() => { setShowAIGuard(false); setView('settings'); setActiveNav('settings' as NavSection); }} 
+      />
     </div>
   );
 }
