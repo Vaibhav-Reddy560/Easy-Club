@@ -603,12 +603,12 @@ export interface VerifiedResource {
     website: string;
 }
 
-export async function verifyResourcesWithAI(rawResources: BaseResource[], domain: string, location: string): Promise<Resource[]> {
+export async function verifyResourcesWithAI(rawResources: Resource[], domain: string, location: string): Promise<Resource[]> {
     if (rawResources.length === 0) return [];
 
     const candidates = rawResources.slice(0, 15).map(r => ({
         name: r.name,
-        snippet: r.description,
+        snippet: r.reason,
         url: r.website
     }));
 
@@ -645,15 +645,15 @@ export async function verifyResourcesWithAI(rawResources: BaseResource[], domain
     }
     
     if (!results || !Array.isArray(results)) {
-        return (rawResources as BaseResource[]).map(r => ({
+        return rawResources.map(r => ({
             name: r.name,
-            role: "Resource",
+            role: r.role || "Resource",
             location,
             website: r.website,
-            platform: "web",
-            imageUrl: `https://ui-avatars.com/api/?name=${r.name.replace(/\s+/g, "+")}&background=random&color=fff`,
+            platform: r.platform || "web",
+            imageUrl: r.imageUrl || `https://ui-avatars.com/api/?name=${r.name.replace(/\s+/g, "+")}&background=random&color=fff`,
             tags: [domain, "Found"],
-            reason: r.description
+            reason: r.reason
         }));
     }
 

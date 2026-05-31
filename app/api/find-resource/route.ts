@@ -42,7 +42,7 @@ export async function POST(req: Request) {
         const rawResources = parseWebResultsToResources(allResults, location);
 
         // Phase 2: AI Verification (Semantic Expertise Mining)
-        const verifiedResources = await verifyResourcesWithAI(rawResources as BaseResource[], domain, location);
+        const verifiedResources = await verifyResourcesWithAI(rawResources, domain, location);
 
         return NextResponse.json(verifiedResources);
 
