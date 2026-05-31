@@ -294,7 +294,7 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                             <div key={p.stage} className="p-6 bg-black/60 border-2 border-white/15 rounded-3xl space-y-3 hover:border-white/30 hover:bg-black transition-all shadow-lg">
                                 <div className="flex items-center gap-2">
                                     <div className={`w-1.5 h-1.5 rounded-full ${STAGE_DOT[p.stage]}`} />
-                                    <span className="text-[10px] font-black uppercase text-white tracking-tighter">{p.stage}</span>
+                                    <span className="text-[10px] font-black uppercase text-white tracking-widest">{p.stage}</span>
                                 </div>
                                 <div>
                                     <p className="text-xl font-bold text-white font-destrubia">{p.count}</p>
@@ -305,12 +305,12 @@ export default function SponsorshipManager({ clubs, onUpdateClub }: SponsorshipM
                     </div>
 
                     {/* Deals Table */}
-                    <div className="bg-black/40 border border-white/5 rounded-[2.5rem] overflow-hidden">
+                    <div className="bg-black/40 border-2 border-white/15 rounded-[2.5rem] overflow-hidden shadow-lg transition-all hover:border-white/30">
                         {sponsors.length === 0 ? (
                             <div className="py-20 flex flex-col items-center justify-center text-center space-y-4">
-                                <Briefcase className="w-10 h-10 text-white/40" />
-                                <p className="text-[11px] font-bold text-white uppercase tracking-widest">No leads yet</p>
-                                <p className="text-[9px] text-zinc-100 max-w-xs">Click &ldquo;Add Lead&rdquo; above to log your first sponsorship deal.</p>
+                                <Briefcase className="w-12 h-12 text-white/40" />
+                                <p className="text-sm font-bold text-white uppercase tracking-[0.2em]">No leads yet</p>
+                                <p className="text-[11px] text-zinc-300 max-w-sm tracking-wider font-medium">Click &ldquo;Add Lead&rdquo; above to log your first sponsorship deal.</p>
                             </div>
                         ) : (
                             <table className="w-full text-left">
