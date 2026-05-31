@@ -19,6 +19,45 @@
 
 <br />
 
+## What is Easy Club?
+
+**Easy Club** is a robust, full-stack operational platform engineered specifically for student organizations, technical chapters, and university clubs. Moving away from scattered spreadsheets and disconnected messaging apps, it serves as a **centralized command center** for all organizational activities. 
+
+From orchestrating large-scale hackathons and technical summits to managing internal recruitment pipelines, tracking financial sponsorships, and generating AI-assisted promotional assets, Easy Club integrates everything into one premium, distraction-free environment designed to reduce administrative overhead and improve team efficiency.
+
+## Project Structure
+
+```text
+easy-club/
+├── app/                  Next.js App Router
+│   ├── api/              Serverless API routes (AI & integrations)
+│   └── */page.tsx        Frontend application views and routes
+├── components/           React UI component library
+│   ├── features/         Domain-specific complex features
+│   ├── layout/           Structural components (Navbars, Sidebars)
+│   ├── providers/        Context and Theme Providers
+│   └── views/            Standalone full-page component views
+├── lib/                  Application logic and backend services
+│   ├── context/          React Context state managers
+│   ├── services/         Firebase, Supabase, and AI API wrappers
+│   └── utils/            Helper functions, validations, and types
+├── hooks/                Custom React Hooks
+└── public/               Static assets and fonts
+```
+
+## Technical Architecture
+
+Easy Club is built utilizing modern web technologies to ensure optimal performance, scalability, and responsive design across all devices.
+
+| Technology | Purpose | Description |
+| :--- | :--- | :--- |
+| **Next.js 15** | Core Framework | Utilizes the App Router for full-stack React 19 architecture, SSR, and API routing. |
+| **Tailwind CSS** | Interface & Styling | Utility-first CSS framework combined with native CSS enhancements for deep custom design. |
+| **Framer Motion** | Animation Engine | Drives fluid, hardware-accelerated transitions and interactive micro-animations. |
+| **Firebase** | Database & Auth | Firestore and Firebase Auth for real-time data synchronization and secure role-based access. |
+| **Lucide React** | UI Components | Consistent, scalable SVG iconography used universally across the dashboard. |
+| **AI APIs** | Generative AI | Native integrations with OpenAI, Gemini, and HuggingFace for natural language processing and asset generation. |
+
 ## Platform Capabilities
 
 <table>
@@ -87,17 +126,6 @@ A specialized Kanban-style Customer Relationship Management (CRM) board for fina
 </td>
 </tr>
 </table>
-
-## Technical Architecture
-
-Easy Club is built utilizing modern web technologies to ensure optimal performance, scalability, and responsive design across all devices.
-
-*   **Core Framework**: [Next.js 15](https://nextjs.org/) (App Router) & React 19
-*   **Interface & Styling**: [Tailwind CSS](https://tailwindcss.com/) with native CSS enhancements for deep customizations.
-*   **Animation Engine**: [Framer Motion](https://www.framer.com/motion/) for fluid, hardware-accelerated transitions.
-*   **Database & Authentication**: [Firebase Firestore & Firebase Auth](https://firebase.google.com/) for real-time data synchronization and secure access.
-*   **UI Components & Icons**: [Lucide React](https://lucide.dev/) for consistent, scalable iconography.
-*   **AI Integrations**: Native API routes connecting to OpenAI, Gemini, and HuggingFace for robust natural language processing and generative tasks.
 
 ## Local Development Guide
 
