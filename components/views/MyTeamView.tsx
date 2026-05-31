@@ -741,7 +741,7 @@ export default function MyTeamView({ clubs, user, onUpdateClub, defaultSelection
                                                                             }`}>
                                                                                 {sLevel}
                                                                             </span>
-                                                                            {!isGlobal && (
+                                                                            {!isGlobal && user?.uid === member.id && (
                                                                                 <button onClick={() => handleRemoveSkill(member.id, sName)} className="hover:text-white transition-colors">
                                                                                     <X className="w-3 h-3" />
                                                                                 </button>
