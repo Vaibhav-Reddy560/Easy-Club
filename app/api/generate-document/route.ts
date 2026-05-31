@@ -183,6 +183,52 @@ STRICT CONSTRAINTS:
         const text = await callGeminiSafe(prompt);
         if (!text) {
             console.error("[generate-document] Gemini failed. Using Fallback Template.");
+            
+            if (type === 'script') {
+                const scriptType = body.scriptType || 'EMCEE Script';
+                let fallbackScript = "";
+                if (scriptType === 'EMCEE Script') {
+                    fallbackScript = `[Stage Directions: Wait for silence, then begin energetically]
+                    
+Good morning/evening to everyone present here! I am the Vice Chairperson of ${club.name}.
+
+It gives me immense pleasure to welcome our esteemed chief guests, our honorable faculty, and all the enthusiastic participants to ${event.name}. Today, we gather here under the theme of "${eventTheme}" to celebrate innovation, leadership, and collaboration.
+
+[Pause for applause]
+
+We have an incredible lineup of events planned, and we are absolutely thrilled to kick things off. Let's make this an unforgettable experience!`;
+                } else if (scriptType === 'Vote of Thanks') {
+                    fallbackScript = `[Stage Directions: Speak with gratitude and formal tone]
+
+Good evening everyone. I am the Chairperson of ${club.name}.
+
+As we come to the close of ${event.name}, it is my profound privilege to propose the vote of thanks on behalf of the entire organizing committee. 
+
+First and foremost, I would like to extend our deepest gratitude to our Chief Guests for gracing us with their presence and sharing their invaluable insights on "${eventTheme}". I also want to thank the college administration and our faculty advisors for their unwavering support. 
+
+Finally, a massive thank you to our executive committee, our tireless volunteers, and of course, all the participants who made this event a grand success. Thank you and have a wonderful evening!`;
+                } else {
+                    fallbackScript = `# Volunteer Briefing Document for ${event.name}
+
+## Event Context
+- **Theme**: ${eventTheme}
+- **Venue**: ${config.venue || 'TBD'}
+
+## Core Responsibilities
+1. **Registration Desk**: Ensure smooth check-ins and verify attendee details.
+2. **Crowd Management**: Guide participants to their seats and maintain decorum.
+3. **Guest Hospitality**: Assist the chief guests and speakers throughout the event.
+
+## Rules & Etiquette
+- Maintain a highly professional demeanor at all times.
+- Follow the prescribed dress code for the core team.
+- Ensure all technical setups are verified 30 minutes before the event begins.
+
+**Remember:** You represent ${club.name}. Let's make this event a massive success!`;
+                }
+                return NextResponse.json({ content: fallbackScript });
+            }
+
             const safeLetterType = body.letterType || 'Document';
             const fallbackText = `[DATE]
 

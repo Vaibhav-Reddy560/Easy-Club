@@ -38,7 +38,25 @@ Format the output clearly. Do not use placeholders; if something is unknown, kee
         const content = await callGeminiSafe(prompt, 20000);
 
         if (!content) {
-            return NextResponse.json({ error: "AI failed to generate outreach template" }, { status: 500 });
+            console.error("[generate-outreach] Gemini failed. Using Fallback Template.");
+            const fallbackText = `Subject: Invitation: Guest Speaker Role at ${event.name}
+
+Dear ${expert.name},
+
+I hope this email finds you well.
+
+I am writing to you on behalf of the organizing committee for ${event.name}, an upcoming ${event.config?.subType || 'event'} hosted by our organization. Given your remarkable expertise as a ${expert.role} in ${expert.expertise}, we would be absolutely honored to invite you as a distinguished Guest Speaker.
+
+Our attendees would greatly benefit from your insights and experience in the industry. The event will be taking place in ${expert.location}.
+
+We understand you have a busy schedule, but we would be immensely grateful if you could share your availability for a brief discussion regarding this opportunity.
+
+Thank you for your time and consideration.
+
+Best regards,
+The Organizing Committee
+${event.name}`;
+            return NextResponse.json({ content: fallbackText });
         }
 
         return NextResponse.json({ content });
