@@ -677,15 +677,15 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
         {activeTab === 'recruitment-pool' && (
           <div className="bg-[#050505] border border-white/15 rounded-[2rem] overflow-hidden">
             <div className="overflow-x-auto custom-scrollbar">
-              <table className="w-full text-left text-sm whitespace-nowrap min-w-[800px]">
+              <table className="w-full text-left text-sm whitespace-nowrap xl:whitespace-normal min-w-[800px]">
               <thead className="bg-black shadow-inner text-[10px] font-black uppercase tracking-widest text-signature-gradient border-b border-white/5">
                 <tr>
-                  <th className="px-8 py-5">Member</th>
-                  <th className="px-8 py-5">Role</th>
-                  <th className="px-8 py-5">Verification</th>
-                  <th className="px-8 py-5">Skills</th>
-                  <th className="px-8 py-5">Date Joined</th>
-                  <th className="px-8 py-5 text-center">Actions</th>
+                  <th className="px-4 xl:px-8 py-5">Member</th>
+                  <th className="px-4 xl:px-8 py-5">Role</th>
+                  <th className="px-4 xl:px-8 py-5">Verification</th>
+                  <th className="px-4 xl:px-8 py-5">Skills</th>
+                  <th className="px-4 xl:px-8 py-5">Date Joined</th>
+                  <th className="px-4 xl:px-8 py-5 text-center">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
@@ -699,24 +699,24 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                   members.map((member: ClubMember) => (
                     <React.Fragment key={member.id}>
                       <tr className="hover:bg-white/[0.02] transition-colors group">
-                        <td className="px-8 py-6">
+                        <td className="px-4 xl:px-8 py-6">
                           <p className="font-bold text-white mb-1">{member.name}</p>
                           <p className="text-[10px] text-zinc-100 uppercase tracking-wider">{member.email}</p>
                         </td>
-                        <td className="px-8 py-6">
+                        <td className="px-4 xl:px-8 py-6">
                           <span className="inline-flex px-4 py-2 bg-white/5 rounded-lg text-[9px] font-bold uppercase tracking-widest border border-transparent text-white">
                             {member.role}
                           </span>
                         </td>
-                        <td className="px-8 py-6">
+                        <td className="px-4 xl:px-8 py-6">
                           <div className="flex items-center gap-2">
                             <Check className="w-3 h-3 text-green-500" />
-                            <span className="text-[10px] font-bold text-white uppercase tracking-widest">
+                            <span className="text-[10px] font-bold text-white uppercase tracking-widest whitespace-nowrap">
                               {member.basis}
                             </span>
                           </div>
                         </td>
-                        <td className="px-8 py-6">
+                        <td className="px-4 xl:px-8 py-6">
                           <div className="flex flex-wrap gap-1.5 max-w-[250px]">
                             {(member.skills || []).map((skill, idx) => {
                               const sName = typeof skill === 'string' ? skill : skill.name;
@@ -746,27 +746,27 @@ export default function MembershipView({ clubs, onUpdateClub }: MembershipViewPr
                               <button 
                                 type="button"
                                 onClick={() => setIsAddingSkill(member.id)}
-                                className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-white/5 border border-white/10 text-zinc-400 hover:text-white hover:bg-white/10 transition-all"
+                                className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-white/5 border border-white/10 text-zinc-400 hover:text-white hover:bg-white/10 transition-all shrink-0"
                               >
                                 <Plus className="w-3 h-3" />
                               </button>
                             )}
                           </div>
                         </td>
-                        <td className="px-8 py-6 text-[11px] text-zinc-100 font-mono whitespace-nowrap">
+                        <td className="px-4 xl:px-8 py-6 text-[11px] text-zinc-100 font-mono whitespace-nowrap">
                           {member.joinDate.split('T')[0].split('-').reverse().join('-')}
                         </td>
-                        <td className="px-8 py-6 text-center">
+                        <td className="px-4 xl:px-8 py-6 text-center">
                           <div className="flex items-center justify-center gap-3 opacity-50 group-hover:opacity-100 transition-opacity">
                             <button
                               onClick={() => handlePromote(member.id, 'General Member')}
-                              className="px-4 py-2 bg-white/5 hover:bg-gold-500/20 text-white hover:brightness-110 rounded-lg text-[9px] font-bold uppercase tracking-widest border border-transparent hover:border-gold-500/30 transition-all"
+                              className="px-4 py-2 bg-white/5 hover:bg-gold-500/20 text-white hover:brightness-110 rounded-lg text-[9px] font-bold uppercase tracking-widest border border-transparent hover:border-gold-500/30 transition-all whitespace-nowrap"
                             >
                               Promote to Core Team
                             </button>
                             <button
                               onClick={() => handleRemove(member.id)}
-                              className="p-2 text-white hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
+                              className="p-2 text-white hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors shrink-0"
                               title="Remove Member"
                             >
                               <X className="w-4 h-4" />
