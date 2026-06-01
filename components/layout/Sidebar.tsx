@@ -44,7 +44,7 @@ export default function Sidebar({ user, onLogout, onAboutClick, onAccountClick, 
             height={40} 
             className="object-contain"
           />
-          <h1 className="text-4xl md:text-[42px] font-normal text-signature-gradient tracking-wider font-airstream leading-none">Easy Club</h1>
+          <h1 className="text-4xl md:text-[40px] font-normal text-signature-gradient tracking-wider font-airstream leading-none">Easy Club</h1>
         </div>
 
         <div className="flex gap-4 md:gap-8 items-center">
